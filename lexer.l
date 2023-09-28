@@ -113,7 +113,7 @@ yield		{ printf("Found keyword: %s\n", yytext); }
                     printf("Found bracket: %s\n", yytext);
                 } else {
                     nestingCount--;
-                    BEGIN(STRING);
+                    BEGIN(DOUBLE_QUOTE_STRING);
                     string[0] = 0;
                     printf("Found interpolation: +\n");
                 }
