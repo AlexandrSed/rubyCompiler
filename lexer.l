@@ -12,13 +12,27 @@ HEX_DIGIT [0-9A-Fa-f]
 BIN_DIGIT [01]
 OCT_DIGIT [0-7]
 EXPONENT [eE][+-]?[1-9]{DIGIT}*(_{DIGIT}+)*
+UNDERSCORE  _
 IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
+
+NUM_WITH_UNDERSCORE {DIGIT}+({UNDERSCORE}{DIGIT}+)+
+NUM_WITH_UNDERSCORE_DECIMAL {DIGIT}*\.{DIGIT}+{UNDERSCORE}{DIGIT}*
 
 %x DOUBLE_QUOTE_STRING
 %x SINGLE_QUOTE_STRING
 %x ML_COMMENT
 
 %%
+{NUM_WITH_UNDERSCORE}  { printf("Found number with underscore: %s\n", yytext); }
+{NUM_WITH_UNDERSCORE_DECIMAL}  { printf("Found number with underscore and decimal: %s\n", yytext); }
+{DIGIT}+\.{DIGIT}+     { printf("Found number with decimal: %s\n", yytext); }
+{UNDERSCORE}           { printf("Error: Underscore alone: %s\n", yytext); }
+{DIGIT}+{UNDERSCORE}$   { printf("Error: Underscore at the end: %s\n", yytext); }
+\.{DIGIT}+             { printf("Error: Decimal point at the beginning: %s\n", yytext); }
+{UNDERSCORE}{DIGIT}+             { printf("Error: Underscore at the beginning: %s\n", yytext); }
+{UNDERSCORE}{DIGIT}+\.{DIGIT}+             { printf("Error: Underscore at the beginning: %s\n", yytext); }
+
+
 
 %{
     int num;
@@ -129,6 +143,7 @@ yield		{ printf("Found keyword: %s\n", yytext); }
 ":"         { printf("Found special symbol: %s\n", yytext); }
 "::"        { printf("Found special symbol: %s\n", yytext); }
 ";"         { printf("Found special symbol: %s\n", yytext); }
+"\n"        { printf("Found line feed: %s\n", yytext); }
 
 \"          {
                 string[0] = '\0'; 
@@ -139,6 +154,7 @@ yield		{ printf("Found keyword: %s\n", yytext); }
                 string[0] = '\0'; 
                 BEGIN(SINGLE_QUOTE_STRING);    
             }
+
 
 {IDENTIFIER}    { printf("Found identifier: %s\n", yytext); }
 
@@ -156,7 +172,7 @@ yield		{ printf("Found keyword: %s\n", yytext); }
                             }
 
 <SINGLE_QUOTE_STRING>[^\\\']+ { strcat(string, yytext); }
-<DOUBLE_QUOTE_STRING>[^\\\"\'\n#{}]+ { strcat(string, yytext); }
+<DOUBLE_QUOTE_STRING>[^\\\"\'#{}]+ { strcat(string, yytext); }
 <DOUBLE_QUOTE_STRING>[#{}]           { strcat(string, yytext); }
 <DOUBLE_QUOTE_STRING>\\n             { strcat(string, "\n"); }
 <DOUBLE_QUOTE_STRING>\\a             { strcat(string, "\a"); }
@@ -167,10 +183,16 @@ yield		{ printf("Found keyword: %s\n", yytext); }
 <DOUBLE_QUOTE_STRING>\\r             { strcat(string, "\r"); }
 <DOUBLE_QUOTE_STRING>\\e             { strcat(string, "\e"); }
 <DOUBLE_QUOTE_STRING>\\s             { strcat(string, " "); }
-<SINGLE_QUOTE_STRING><DOUBLE_QUOTE_STRING>\\\\            { strcat(string, "\\"); }
+<SINGLE_QUOTE_STRING,DOUBLE_QUOTE_STRING>\\\\ { strcat(string, "\\"); printf("Test of work  %s\n", string);}
 <DOUBLE_QUOTE_STRING>\\\"        { strcat(string, "\""); }
+<DOUBLE_QUOTE_STRING>\\#             { strcat(string, "#"); }
+
+
 
 <SINGLE_QUOTE_STRING>\\\'        { strcat(string, "'"); }
+
+    
+
 <DOUBLE_QUOTE_STRING>\\{OCT_DIGIT}{1,3}  { 
                                 sscanf(yytext + 1, "%o", &num);
                                 temp1[0] = (char) num;
@@ -200,7 +222,7 @@ yield		{ printf("Found keyword: %s\n", yytext); }
 
 
 
-<INITIAL>"=begin" {
+"=begin" {
     BEGIN(ML_COMMENT);
     printf("Found multiline comment:\n");
 }
@@ -209,18 +231,69 @@ yield		{ printf("Found keyword: %s\n", yytext); }
     BEGIN(INITIAL);
 }
 
-<ML_COMMENT>.|\n {
+
+<ML_COMMENT>. {
     printf("%s", yytext);
 }
 
 
 
-{DIGIT}+       { printf("Found integer: %s\n", yytext); }
-0[xX]{HEX_DIGIT}+    { printf("Found hexadecimal integer: %s\n", yytext); }
-0[bB]{BIN_DIGIT}+    { printf("Found binary integer: %s\n", yytext); }
-{DIGIT}+"."{DIGIT}*   { printf("Found floating-point number: %s\n", yytext); }
-{DIGIT}+"."{DIGIT}*{EXPONENT}?  { printf("Found floating-point number: %s\n", yytext); }
-{DIGIT}+{EXPONENT}  { printf("Found floating-point number with exponent: %s\n", yytext); }
+{DIGIT}+ { 
+    int number = atoi(yytext);
+    printf("Found integer: %d\n", number); 
+}
+0[xX]{HEX_DIGIT}+ { 
+    int number = strtol(yytext, NULL, 16);
+    printf("Found hexadecimal integer: %d\n", number); 
+}
+
+0[bB]{BIN_DIGIT}+ {
+    int number = strtol(yytext + 2, NULL, 2);
+    printf("Found binary integer: %d\n", yytext);
+}
+
+{DIGIT}+"."{DIGIT}* { 
+    double number = atof(yytext);
+    printf("Found floating-point number: %f\n", number); 
+}
+
+{DIGIT}+"."{DIGIT}*{EXPONENT}?  { 
+    double number = atof(yytext);
+    printf("Found floating-point number: %f\n", number); 
+}
+
+{DIGIT}+{EXPONENT}  { 
+    double number = atof(yytext);
+    printf("Found floating-point number with exponent: %f\n", number); 
+}
+
+{DIGIT}+(_[{DIGIT},{EXPONENT}]+)+  { 
+    char cleanText[strlen(yytext) + 1];
+    int cleanIndex = 0;
+    for (int i = 0; i < strlen(yytext); i++) {
+        if (yytext[i] != '_') {
+            cleanText[cleanIndex++] = yytext[i];
+        }
+    }
+    cleanText[cleanIndex] = '\0';
+    
+    double number = atof(cleanText);
+    printf("Found underscore number: %f\n", number); 
+}
+
+{DIGIT}+(_[{DIGIT},{EXPONENT}]+)+\.{DIGIT}+(_[{DIGIT},{EXPONENT}]+)+  {
+    char cleanText[strlen(yytext) + 1];
+    int cleanIndex = 0;
+    for (int i = 0; i < strlen(yytext); i++) {
+        if (yytext[i] != '_') {
+            cleanText[cleanIndex++] = yytext[i];
+        }
+    }
+    cleanText[cleanIndex] = '\0';
+    
+    double number = atof(cleanText);
+    printf("Found underscore number: %f\n", number); 
+}
 
 
 %%
