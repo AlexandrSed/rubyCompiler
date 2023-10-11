@@ -79,3 +79,21 @@ class Note
     end
   end
   
+# Checking the numbers
+
+# Underscore error at the beginning
+puts _0.2234 
+# Error underline at the end
+puts 213_
+# right
+puts 2_123_123
+# right
+puts 2.1_23
+# Error point at the beginning
+.234
+# Error double dot
+12..33
+# Error point at the end
+123.
+# Error double underscore
+12__33

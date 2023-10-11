@@ -23,15 +23,10 @@ NUM_WITH_UNDERSCORE_DECIMAL {DIGIT}*\.{DIGIT}+{UNDERSCORE}{DIGIT}*
 %x ML_COMMENT
 
 %%
-{NUM_WITH_UNDERSCORE}  { printf("Found number with underscore: %s\n", yytext); }
-{NUM_WITH_UNDERSCORE_DECIMAL}  { printf("Found number with underscore and decimal: %s\n", yytext); }
-{DIGIT}+\.{DIGIT}+     { printf("Found number with decimal: %s\n", yytext); }
-{UNDERSCORE}           { printf("Error: Underscore alone: %s\n", yytext); }
-{DIGIT}+{UNDERSCORE}$   { printf("Error: Underscore at the end: %s\n", yytext); }
-\.{DIGIT}+             { printf("Error: Decimal point at the beginning: %s\n", yytext); }
-{UNDERSCORE}{DIGIT}+             { printf("Error: Underscore at the beginning: %s\n", yytext); }
-{UNDERSCORE}{DIGIT}+\.{DIGIT}+             { printf("Error: Underscore at the beginning: %s\n", yytext); }
-
+_[0-9_]+\.?[0-9_]*  { printf("Underscore at the start of a number: %s\n", yytext); }
+[0-9_]+\.?[0-9_]*_  { printf("Underscore at the end of a number: %s\n", yytext); }
+[0-9_]+_\._?[0-9_]+ { printf("Underscore before point: %s\n", yytext); }
+[0-9]+(_{DIGIT})+\._[0-9_]+ { printf("Underscore after point: %s\n", yytext); }
 
 
 %{
@@ -252,12 +247,12 @@ yield		{ printf("Found keyword: %s\n", yytext); }
     printf("Found binary integer: %d\n", yytext);
 }
 
-{DIGIT}+"."{DIGIT}* { 
+{DIGIT}+"."{DIGIT}+ { 
     double number = atof(yytext);
     printf("Found floating-point number: %f\n", number); 
 }
 
-{DIGIT}+"."{DIGIT}*{EXPONENT}?  { 
+{DIGIT}+"."{DIGIT}+{EXPONENT}?  { 
     double number = atof(yytext);
     printf("Found floating-point number: %f\n", number); 
 }
@@ -295,6 +290,9 @@ yield		{ printf("Found keyword: %s\n", yytext); }
     printf("Found underscore number: %f\n", number); 
 }
 
+[0-9_]+\.?[0-9_]* {printf("Underscore is repeated several times in a row: %s\n", yytext); }
+
+[0-9\.]+ {printf("Incorrect dots: %s\n", yytext); }
 
 %%
 
