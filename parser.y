@@ -161,5 +161,11 @@ expr: VAR_METHOD_NAME
 	| expr DOUBLE_COLON_SYMBOL expr
     ;
 
-expr_list:;
+expr_list: /* empty */
+	| expr_list_not_empty
+    ;
+
+expr_list_not_empty: expr
+    | expr_list_not_empty COMMA_SYMBOL expr
+    ;
 %%
