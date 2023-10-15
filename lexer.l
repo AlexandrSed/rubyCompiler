@@ -129,7 +129,6 @@ yield		{ printf("Found keyword: %s\n", yytext); }
             }
 "["         { printf("Found bracket: %s\n", yytext); }
 "]"         { printf("Found bracket: %s\n", yytext); }
-"@"         { printf("Found doge: %s\n", yytext); }
 
 "?"         { printf("Found question symbol: %s\n", yytext); }
 
