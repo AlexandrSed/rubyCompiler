@@ -42,7 +42,8 @@
 
 %right '='
 %left '+' '-'
-%left '*' '/'
+%right UMINUS
+%left '*' '/' '%'
 %token ARITHMETIC_POW_OP
 
 %token EQL_OP
@@ -79,10 +80,9 @@
 
 %nonassoc '(' ')'
 %nonassoc '{' '}'
-%nonassoc '[' ']'
+%left '.' '[' ']'
 
 %token QUESTION_SYMBOL
-%token DOT_SYMBOL
 %token COMMA_SYMBOL
 %token COLON_SYMBOL
 %token DOUBLE_COLON_SYMBOL
@@ -109,10 +109,57 @@ expr: VAR_METHOD_NAME
     | CLASS_VAR_NAME
     | CONSTANT_NAME
     | STRING
-    | expr ''
-    | expr '*' expr
+    | TRUE_KEYWORD
+    | FALSE_KEYWORD
+    | NIL_KEYWORD
+    | INTEGER_NUMBER
+    | FLOAT_NUMBER
     | expr '=' expr
+    | expr '[' expr ']'
+    | expr '/' expr
+    | expr '%' expr
+    | expr '*' expr
     | expr '+' expr
     | expr '-' expr
+    | '-' expr %prec UMINUS
+    | VAR_METHOD_NAME '(' expr_list ')'
+    | expr '.' VAR_METHOD_NAME
+    | expr AND_KEYWORD expr
+    | expr OR_KEYWORD expr
+    | NOT_KEYWORD expr
+    | expr ARITHMETIC_POW_OP expr
+    | expr EQL_OP expr
+    | expr NOT_EQL_OP expr
+    | expr GREATER_OP expr
+    | expr LESS_OP expr
+    | expr GREATER_OR_EQL_OP expr
+    | expr LESS_OR_EQL_OP expr
+    | expr COMB_COMPRASION_OP expr
+    | expr CASE_EQL_OP expr
+    | expr '.' RECEIVER_EQL_OP expr
+    | expr '.' OBJ_ID_EQL_OP expr
+	| expr ADD_ASSIGN_OP expr
+	| expr SUB_ASSIGN_OP expr
+	| expr MUL_ASSIGN_OP expr
+	| expr DIV_ASSIGN_OP expr
+	| expr MOD_ASSIGN_OP expr
+	| expr POW_ASSIGN_OP expr
+    | expr BIN_AND_OP expr
+	| expr BIN_OR_OP expr 
+	| expr BIN_XOR_OP expr
+	| expr BIN_ONES_COMPLEMENT_OP expr
+	| expr BIN_LEFT_SHIFT_OP expr
+	| expr BIN_RIGHT_SHIFT_OP expr
+	| expr LOGICAL_AND_OP expr
+	| expr LOGICAL_OR_OP expr
+	| LOGICAL_NOT_OP expr
+    | expr INCLUSIVE_RANGE_OP expr
+	| expr EXCLUSIVE_RANGE_OP expr
+    | '(' expr ')'
+    | DEFINED_KEYWORD expr
+	| DOUBLE_COLON_SYMBOL expr
+	| expr DOUBLE_COLON_SYMBOL expr
+    ;
 
+expr_list:;
 %%
