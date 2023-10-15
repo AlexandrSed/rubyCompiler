@@ -182,19 +182,37 @@ stmt: expr NEW_LINE_SYMBOL
 
 if_stmt:
     | IF_KEYWORD expr stmt END_KEYWORD
+    | IF_KEYWORD expr THEN_KEYWORD stmt END_KEYWORD
     | IF_KEYWORD expr stmt ELSE_KEYWORD stmt END_KEYWORD
-    | IF_KEYWORD expr stmt elseif_list stmt END_KEYWORD
-    | IF_KEYWORD expr stmt elseif_list NEW_LINE_SYMBOL ELSE_KEYWORD stmt END_KEYWORD
+    | IF_KEYWORD expr THEN_KEYWORD stmt ELSE_KEYWORD stmt END_KEYWORD
+    | IF_KEYWORD expr stmt elsif_list stmt END_KEYWORD
+    | IF_KEYWORD expr THEN_KEYWORD stmt elsif_list stmt END_KEYWORD
+    | IF_KEYWORD expr stmt elsif_list NEW_LINE_SYMBOL ELSE_KEYWORD stmt END_KEYWORD
+    | IF_KEYWORD expr THEN_KEYWORD stmt elsif_list NEW_LINE_SYMBOL ELSE_KEYWORD stmt END_KEYWORD
     ;
 
-elseif_list:
+unless_stmt:
+    | UNLESS_KEYWORD expr THEN_KEYWORD stmt END_KEYWORD
+    | UNLESS_KEYWORD expr stmt END_KEYWORD
+    | UNLESS_KEYWORD expr THEN_KEYWORD stmt ELSE_KEYWORD stmt END_KEYWORD
+    | UNLESS_KEYWORD expr stmt ELSE_KEYWORD stmt END_KEYWORD
+    
+
+elsif_list:
     | ELSIF_KEYWORD expr stmt
-    | elseif_list NEW_LINE_SYMBOL ELSIF_KEYWORD expr stmt
+    | ELSE_KEYWORD expr THEN_KEYWORD stmt
+    | elsif_list NEW_LINE_SYMBOL ELSIF_KEYWORD expr stmt
+    | elsif_list NEW_LINE_SYMBOL ELSE_KEYWORD expr THEN_KEYWORD stmt
     ;
 
 while_stmt:
     | WHILE_KEYWORD expr DO_KEYWORD stmt END_KEYWORD
     | WHILE_KEYWORD expr stmt END_KEYWORD
     ;
+
+for_stmt:
+        | FOR_KEYWORD expr IN_KEYWORD expr DO_KEYWORD stmt END_KEYWORD
+        | FOR_KEYWORD expr IN_KEYWORD expr stmt END_KEYWORD
+        ;
 
 %%
