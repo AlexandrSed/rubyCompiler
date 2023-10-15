@@ -89,7 +89,10 @@
 %token SEMICOLON_SYMBOL
 %token NEW_LINE_SYMBOL
 
-%token STRING 
+%token STRING
+%token INTEGER_NUMBER
+%token FLOAT_NUMBER
+
 %token VAR_METHOD_NAME
 %token VAR_NAME
 %token CLASS_NAME
@@ -100,7 +103,16 @@
 
 %%
 
-expr: ID
+expr: VAR_METHOD_NAME
+    | VAR_NAME
+    | CLASS_NAME
+    | CLASS_VAR_NAME
+    | CONSTANT_NAME
     | STRING
+    | expr ''
+    | expr '*' expr
     | expr '=' expr
+    | expr '+' expr
+    | expr '-' expr
+
 %%
