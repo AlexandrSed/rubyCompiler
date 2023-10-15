@@ -168,4 +168,33 @@ expr_list: /* empty */
 expr_list_not_empty: expr
     | expr_list_not_empty COMMA_SYMBOL expr
     ;
+
+stmt_list:
+    | stmt
+    | stmt_list stmt
+
+    
+stmt: expr NEW_LINE_SYMBOL
+    | if_stmt
+    | while_stmt
+    | for_stmt
+    | stmt_list
+
+if_stmt:
+    | IF_KEYWORD expr stmt END_KEYWORD
+    | IF_KEYWORD expr stmt ELSE_KEYWORD stmt END_KEYWORD
+    | IF_KEYWORD expr stmt elseif_list stmt END_KEYWORD
+    | IF_KEYWORD expr stmt elseif_list NEW_LINE_SYMBOL ELSE_KEYWORD stmt END_KEYWORD
+    ;
+
+elseif_list:
+    | ELSIF_KEYWORD expr stmt
+    | elseif_list NEW_LINE_SYMBOL ELSIF_KEYWORD expr stmt
+    ;
+
+while_stmt:
+    | WHILE_KEYWORD expr DO_KEYWORD stmt END_KEYWORD
+    | WHILE_KEYWORD expr stmt END_KEYWORD
+    ;
+
 %%
