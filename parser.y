@@ -156,6 +156,7 @@ expr: VAR_METHOD_NAME
     | expr INCLUSIVE_RANGE_OP expr
 	| expr EXCLUSIVE_RANGE_OP expr
     | '(' expr ')'
+    | '[' expr_list ']'
     | DEFINED_KEYWORD expr
 	| DOUBLE_COLON_SYMBOL expr
 	| expr DOUBLE_COLON_SYMBOL expr
