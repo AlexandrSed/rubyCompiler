@@ -168,6 +168,7 @@ yield		{ printf("Found keyword: %s\n", yytext); }
 <SINGLE_QUOTE_STRING>[^\\\']+ { strcat(string, yytext); }
 <DOUBLE_QUOTE_STRING>[^\\\"#{}]+ { strcat(string, yytext); }
 <DOUBLE_QUOTE_STRING>[#{}]           { strcat(string, yytext); }
+<DOUBLE_QUOTE_STRING>\\'            { strcat(string, "\\'"); }
 <DOUBLE_QUOTE_STRING>\\n             { strcat(string, "\n"); }
 <DOUBLE_QUOTE_STRING>\\a             { strcat(string, "\a"); }
 <DOUBLE_QUOTE_STRING>\\b             { strcat(string, "\b"); }
