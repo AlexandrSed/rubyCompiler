@@ -178,12 +178,12 @@ yield		{ printf("Found keyword: %s\n", yytext); }
 <DOUBLE_QUOTE_STRING>\\r             { strcat(string, "\r"); }
 <DOUBLE_QUOTE_STRING>\\e             { strcat(string, "\e"); }
 <DOUBLE_QUOTE_STRING>\\s             { strcat(string, " "); }
-<SINGLE_QUOTE_STRING,DOUBLE_QUOTE_STRING>\\\\ { strcat(string, "\\"); printf("Test of work  %s\n", string);}
+<SINGLE_QUOTE_STRING,DOUBLE_QUOTE_STRING>\\\\ { strcat(string, "\\");}
 <DOUBLE_QUOTE_STRING>\\\"        { strcat(string, "\""); }
 <DOUBLE_QUOTE_STRING>\\#             { strcat(string, "#"); }
 
 
-
+<SINGLE_QUOTE_STRING>\\\"        { strcat(string, "\\\""); }
 <SINGLE_QUOTE_STRING>\\\'        { strcat(string, "'"); }
 
     
