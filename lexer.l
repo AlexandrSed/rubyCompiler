@@ -23,10 +23,10 @@ NUM_WITH_UNDERSCORE_DECIMAL {DIGIT}*\.{DIGIT}+{UNDERSCORE}{DIGIT}*
 %x ML_COMMENT
 
 %%
-_[0-9_]+\.?[0-9_]*  { printf("Underscore at the start of a number: %s\n", yytext); }
-[0-9_]+\.?[0-9_]*_  { printf("Underscore at the end of a number: %s\n", yytext); }
-[0-9_]+_\._?[0-9_]+ { printf("Underscore before point: %s\n", yytext); }
-[0-9]+(_{DIGIT})+\._[0-9_]+ { printf("Underscore after point: %s\n", yytext); }
+_[0-9_]+\.?[0-9_]*  { printf("Error: Underscore at the start of a number: %s\n", yytext); }
+[0-9_]+\.?[0-9_]*_  { printf("Error: Underscore at the end of a number: %s\n", yytext); }
+[0-9_]+_\._?[0-9_]+ { printf("Error: Underscore before point: %s\n", yytext); }
+[0-9]+(_{DIGIT})+\._[0-9_]+ { printf("Error: Underscore after point: %s\n", yytext); }
 
 
 %{
@@ -166,7 +166,7 @@ yield		{ printf("Found keyword: %s\n", yytext); }
                             }
 
 <SINGLE_QUOTE_STRING>[^\\\']+ { strcat(string, yytext); }
-<DOUBLE_QUOTE_STRING>[^\\\"\'#{}]+ { strcat(string, yytext); }
+<DOUBLE_QUOTE_STRING>[^\\\"#{}]+ { strcat(string, yytext); }
 <DOUBLE_QUOTE_STRING>[#{}]           { strcat(string, yytext); }
 <DOUBLE_QUOTE_STRING>\\n             { strcat(string, "\n"); }
 <DOUBLE_QUOTE_STRING>\\a             { strcat(string, "\a"); }
@@ -289,9 +289,9 @@ yield		{ printf("Found keyword: %s\n", yytext); }
     printf("Found underscore number: %f\n", number); 
 }
 
-[0-9_]+\.?[0-9_]* {printf("Underscore is repeated several times in a row: %s\n", yytext); }
+[0-9_]+\.?[0-9_]* {printf("Error: Underscore is repeated several times in a row: %s\n", yytext); }
 
-[0-9\.]+ {printf("Incorrect dots: %s\n", yytext); }
+[0-9\.]+ {printf("Error: Incorrect dots: %s\n", yytext); }
 
 %%
 
