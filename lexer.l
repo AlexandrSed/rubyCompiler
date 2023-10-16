@@ -5,6 +5,21 @@
 	#include <stdio.h>
     #include <stdlib.h>
     #include <string.h>
+
+    char* removeUnderscores(const char* input) {
+    char* result = malloc(strlen(input) + 1);
+    int resultIndex = 0;
+    
+    for (int i = 0; input[i]; i++) {
+        if (input[i] != '_') {
+            result[resultIndex++] = input[i];
+        }
+    }
+    
+    result[resultIndex] = '\0';
+    return result;
+}
+
 %}
 
 DIGIT [0-9]
@@ -234,16 +249,11 @@ yield		{ printf("Found keyword: %s\n", yytext); }
 
 
 {DIGIT}+(_{DIGIT}+)* { 
-    char str[];
-    for(int i = 0; i < strlen(yytext); i++)
-    {
-        if (yytext[i] != '_')
-        {
-            strcat(str, yytext[i])
-        }
-    }
-    int number = atoi(str);
+    
+    char* cleanedText = removeUnderscores(yytext);
+    int number = atoi(cleanedText);
     printf("Found integer: %d\n", number); 
+    free(cleanedText); 
 }
 0[xX]{HEX_DIGIT}+(_{HEX_DIGIT}+)* { 
     int number = strtol(yytext, NULL, 16);
@@ -298,3 +308,4 @@ int main(int argc, char** argv) {
 
     return 0;
 }
+
