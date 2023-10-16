@@ -256,27 +256,32 @@ yield		{ printf("Found keyword: %s\n", yytext); }
     free(cleanedText); 
 }
 0[xX]{HEX_DIGIT}+(_{HEX_DIGIT}+)* { 
-    int number = strtol(yytext, NULL, 16);
+    char* cleanedText = removeUnderscores(yytext);
+    int number = strtol(cleanedText, NULL, 16);
     printf("Found hexadecimal integer: %d\n", number); 
 }
 
 0[bB]{BIN_DIGIT}+(_{BIN_DIGIT}+)* {
-    int number = strtol(yytext + 2, NULL, 2);
+    char* cleanedText = removeUnderscores(yytext + 2);
+    int number = strtol( cleanedText, NULL, 2);
     printf("Found binary integer: %d\n", yytext);
 }
 
 {DIGIT}+\.({DIGIT}+(_{DIGIT})+)* { 
-    double number = atof(yytext);
+    char* cleanedText = removeUnderscores(yytext);
+    double number = atof(cleanedText);
     printf("Found floating-point number: %f\n", number); 
 }
 
 {DIGIT}+\.{DIGIT}+{EXPONENT}  { 
-    double number = atof(yytext);
+    char* cleanedText = removeUnderscores(yytext);
+    double number = atof(cleanedText);
     printf("Found floating-point number: %f\n", number); 
 }
 
-{DIGIT}+(_{DIGIT}+)*{EXPONENT}  { 
-    double number = atof(yytext);
+{DIGIT}+(_{DIGIT}+)*{EXPONENT}  {
+    char* cleanedText = removeUnderscores(yytext);
+    double number = atof(cleanedText);
     printf("Found floating-point number with exponent: %f\n", number); 
 }
 
