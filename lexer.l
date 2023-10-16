@@ -233,61 +233,33 @@ yield		{ printf("Found keyword: %s\n", yytext); }
 
 
 
-{DIGIT}+ { 
+{DIGIT}(_{DIGIT}+)* { 
     int number = atoi(yytext);
     printf("Found integer: %d\n", number); 
 }
-0[xX]{HEX_DIGIT}+ { 
+0[xX]{HEX_DIGIT}(_{HEX_DIGIT}+)* { 
     int number = strtol(yytext, NULL, 16);
     printf("Found hexadecimal integer: %d\n", number); 
 }
 
-0[bB]{BIN_DIGIT}+ {
+0[bB]{BIN_DIGIT}(_{BIN_DIGIT}+)* {
     int number = strtol(yytext + 2, NULL, 2);
     printf("Found binary integer: %d\n", yytext);
 }
 
-{DIGIT}+"."{DIGIT}+ { 
+{DIGIT}+\.({DIGIT}+(_{DIGIT})+)* { 
     double number = atof(yytext);
     printf("Found floating-point number: %f\n", number); 
 }
 
-{DIGIT}+"."{DIGIT}+{EXPONENT}?  { 
+{DIGIT}+\.{DIGIT}+{EXPONENT}  { 
     double number = atof(yytext);
     printf("Found floating-point number: %f\n", number); 
 }
 
-{DIGIT}+{EXPONENT}  { 
+{DIGIT}(_{DIGIT}+)*{EXPONENT}  { 
     double number = atof(yytext);
     printf("Found floating-point number with exponent: %f\n", number); 
-}
-
-{DIGIT}+(_[{DIGIT},{EXPONENT}]+)+  { 
-    char cleanText[strlen(yytext) + 1];
-    int cleanIndex = 0;
-    for (int i = 0; i < strlen(yytext); i++) {
-        if (yytext[i] != '_') {
-            cleanText[cleanIndex++] = yytext[i];
-        }
-    }
-    cleanText[cleanIndex] = '\0';
-    
-    double number = atof(cleanText);
-    printf("Found underscore number: %f\n", number); 
-}
-
-{DIGIT}+(_[{DIGIT},{EXPONENT}]+)+\.{DIGIT}+(_[{DIGIT},{EXPONENT}]+)+  {
-    char cleanText[strlen(yytext) + 1];
-    int cleanIndex = 0;
-    for (int i = 0; i < strlen(yytext); i++) {
-        if (yytext[i] != '_') {
-            cleanText[cleanIndex++] = yytext[i];
-        }
-    }
-    cleanText[cleanIndex] = '\0';
-    
-    double number = atof(cleanText);
-    printf("Found underscore number: %f\n", number); 
 }
 
 [0-9_]+\.?[0-9_]* {printf("Error: Underscore is repeated several times in a row: %s\n", yytext); }
