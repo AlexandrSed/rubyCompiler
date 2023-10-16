@@ -233,16 +233,16 @@ yield		{ printf("Found keyword: %s\n", yytext); }
 
 
 
-{DIGIT}(_{DIGIT}+)* { 
+{DIGIT}+(_{DIGIT}+)* { 
     int number = atoi(yytext);
     printf("Found integer: %d\n", number); 
 }
-0[xX]{HEX_DIGIT}(_{HEX_DIGIT}+)* { 
+0[xX]{HEX_DIGIT}+(_{HEX_DIGIT}+)* { 
     int number = strtol(yytext, NULL, 16);
     printf("Found hexadecimal integer: %d\n", number); 
 }
 
-0[bB]{BIN_DIGIT}(_{BIN_DIGIT}+)* {
+0[bB]{BIN_DIGIT}+(_{BIN_DIGIT}+)* {
     int number = strtol(yytext + 2, NULL, 2);
     printf("Found binary integer: %d\n", yytext);
 }
@@ -257,7 +257,7 @@ yield		{ printf("Found keyword: %s\n", yytext); }
     printf("Found floating-point number: %f\n", number); 
 }
 
-{DIGIT}(_{DIGIT}+)*{EXPONENT}  { 
+{DIGIT}+(_{DIGIT}+)*{EXPONENT}  { 
     double number = atof(yytext);
     printf("Found floating-point number with exponent: %f\n", number); 
 }
