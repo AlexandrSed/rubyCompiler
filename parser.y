@@ -176,6 +176,7 @@ stmt_list:
 
     
 stmt: expr NEW_LINE_SYMBOL
+    | expr SEMICOLON_SYMBOL
     | if_stmt
     | while_stmt
     | for_stmt
@@ -239,6 +240,17 @@ redo_stmt:
     | REDO_KEYWORD IF_KEYWORD expr NEW_LINE_SYMBOL
     | REDO_KEYWORD expr IF_KEYWORD expr NEW_LINE_SYMBOL
 
+case_stmt:
+    | CASE_KEYWORD expr when_list END_KEYWORD NEW_LINE_SYMBOL
+    | CASE_KEYWORD expr when_list ELSE_KEYWORD stmt END_KEYWORD NEW_LINE_SYMBOL
 
+
+when_list:
+    | WHEN_KEYWORD expr_list NEW_LINE_SYMBOL stmt
+    | WHEN_KEYWORD expr_list THEN_KEYWORD stmt
+    | WHEN_KEYWORD expr_list SEMICOLON_SYMBOL stmt
+    | when_list expr_list NEW_LINE_SYMBOL stmt
+    | when_list expr_list THEN_KEYWORD stmt
+    | when_list expr_list SEMICOLON_SYMBOL stmt
 
 %%
