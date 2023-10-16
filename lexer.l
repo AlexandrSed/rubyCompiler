@@ -234,7 +234,15 @@ yield		{ printf("Found keyword: %s\n", yytext); }
 
 
 {DIGIT}+(_{DIGIT}+)* { 
-    int number = atoi(yytext);
+    char str[];
+    for(int i = 0; i < strlen(yytext); i++)
+    {
+        if (yytext[i] != '_')
+        {
+            strcat(str, yytext[i])
+        }
+    }
+    int number = atoi(str);
     printf("Found integer: %d\n", number); 
 }
 0[xX]{HEX_DIGIT}+(_{HEX_DIGIT}+)* { 
