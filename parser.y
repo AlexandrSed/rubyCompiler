@@ -207,6 +207,9 @@ elsif_list:
     | elsif_list NEW_LINE_SYMBOL ELSE_KEYWORD expr THEN_KEYWORD stmt
     ;
 
+ternary_op_stmt:
+    | expr QUESTION_SYMBOL '(' expr ')' COLON_SYMBOL '(' expr ')'
+
 while_stmt:
     | WHILE_KEYWORD expr DO_KEYWORD stmt END_KEYWORD
     | WHILE_KEYWORD expr stmt END_KEYWORD
