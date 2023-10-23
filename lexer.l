@@ -38,10 +38,10 @@ NUM_WITH_UNDERSCORE_DECIMAL {DIGIT}*\.{DIGIT}+{UNDERSCORE}{DIGIT}*
 %x ML_COMMENT
 
 %%
-_[0-9eE_]+\.?[eE0-9_]*  { printf("Error: Underscore at the start of a number: %s\n", yytext); }
-[eE0-9_]+\.?[eE0-9_]*_  { printf("Error: Underscore at the end of a number: %s\n", yytext); }
-[0-9_]+_\._?[0-9eE_]+ { printf("Error: Underscore before point: %s\n", yytext); }
-[0-9]+(_{DIGIT})+\._[eE0-9_]+ { printf("Error: Underscore after point: %s\n", yytext); }
+_[0-9_]+\.?[0-9_]*  { printf("Error: Underscore at the start of a number: %s\n", yytext); }
+[0-9_]+\.?[0-9_]*_  { printf("Error: Underscore at the end of a number: %s\n", yytext); }
+[0-9_]+_\._?[0-9_]+ { printf("Error: Underscore before point: %s\n", yytext); }
+{DIGIT}+(_{DIGIT}+)*\._[0-9_]+ { printf("Error: Underscore after point: %s\n", yytext); }
 
 
 %{
@@ -267,27 +267,32 @@ yield		{ printf("Found keyword: %s\n", yytext); }
     printf("Found binary integer: %d\n", yytext);
 }
 
-{DIGIT}+\.({DIGIT}+(_{DIGIT})+)* { 
+{DIGIT}+(_{DIGIT}+)*\.({DIGIT}+(_{DIGIT}+)*)? { 
     char* cleanedText = removeUnderscores(yytext);
     double number = atof(cleanedText);
     printf("Found floating-point number: %f\n", number); 
 }
 
-{DIGIT}+\.{DIGIT}+{EXPONENT}  { 
-    char* cleanedText = removeUnderscores(yytext);
-    double number = atof(cleanedText);
-    printf("Found floating-point number: %f\n", number); 
-}
-
-{DIGIT}+(_{DIGIT}+)*{EXPONENT}  {
+{DIGIT}+(_{DIGIT}+)*\.{DIGIT}+(_{DIGIT}+)*{EXPONENT}  { 
     char* cleanedText = removeUnderscores(yytext);
     double number = atof(cleanedText);
     printf("Found floating-point number with exponent: %f\n", number); 
 }
 
-[0-9eE_]+\.?[0-9eE_]* {printf("Error: Underscore is repeated several times in a row: %s\n", yytext); }
+{DIGIT}+(_{DIGIT}+)*{EXPONENT}  {
+    char* cleanedText = removeUnderscores(yytext);
+    double number = atof(cleanedText);
+    printf("Found number with exponent: %f\n", number); 
+}
 
-[0-9eE\.]+ {printf("Error: Incorrect dots: %s\n", yytext); }
+{DIGIT}+(_+{DIGIT}+)*(\.{DIGIT}+(_+{DIGIT}+)*)?{EXPONENT}?  {
+    printf("Error: Underscore is repeated several times in a row: %s\n", yytext); 
+}
+
+\.?{DIGIT}+(_{DIGIT}+)*(\.{DIGIT}+(_{DIGIT}+)*)?{EXPONENT}? {printf("Error: Dot at the start of a number: %s\n", yytext); }
+
+{DIGIT}+(_{DIGIT}+)*(\.+{DIGIT}+(_{DIGIT}+)*)+{EXPONENT}? {printf("Error: Dot is repeated several times in a row: %s\n", yytext); }
+
 
 %%
 
