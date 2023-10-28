@@ -28,6 +28,16 @@ class Note
     here
     end
     def
+    =begin
+    =end
+
+    =begin
+    My
+    multiline
+    comment 
+    here
+    end
+    def
     =end
   
     def view_notes

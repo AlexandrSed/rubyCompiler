@@ -237,12 +237,9 @@ yield		{ printf("Found keyword: %s\n", yytext); }
     printf("Found multiline comment:\n");
 }
 
-<ML_COMMENT>"=end" {
+
+<ML_COMMENT>.*=end {
     BEGIN(INITIAL);
-}
-
-
-<ML_COMMENT>. {
     printf("%s", yytext);
 }
 
