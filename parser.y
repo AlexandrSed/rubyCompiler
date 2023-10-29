@@ -93,7 +93,7 @@
 %token INTEGER_NUMBER
 %token FLOAT_NUMBER
 
-%token VAR_METHOD_NAME
+%token IDENTIFIER
 %token VAR_NAME
 %token CLASS_NAME
 %token CLASS_VAR_NAME
@@ -103,7 +103,7 @@
 
 %%
 
-expr: VAR_METHOD_NAME
+expr: IDENTIFIER
     | VAR_NAME
     | CLASS_NAME
     | CLASS_VAR_NAME
@@ -122,8 +122,8 @@ expr: VAR_METHOD_NAME
     | expr '+' expr
     | expr '-' expr
     | '-' expr %prec UMINUS
-    | VAR_METHOD_NAME '(' expr_list ')'
-    | expr '.' VAR_METHOD_NAME
+    | IDENTIFIER '(' expr_list ')'
+    | expr '.' IDENTIFIER
     | expr AND_KEYWORD expr
     | expr OR_KEYWORD expr
     | NOT_KEYWORD expr
@@ -193,6 +193,21 @@ stmt: expr NEW_LINE_SYMBOL
     | unless_stmt SEMICOLON_SYMBOL
     | ternary_op_stmt SEMICOLON_SYMBOL
     | stmt_list SEMICOLON_SYMBOL
+
+param_list_not_empty:
+    | IDENTIFIER
+    | param_list COMMA_SYMBOL IDENTIFIER
+    ;
+
+param_list: /* empty */
+    | param_list_not_empty
+    ;
+
+method_stmt:
+    | DEF_KEYWORD IDENTIFIER '(' param_list ')' NEW_LINE_SYMBOL stmt_list END_KEYWORD
+    | DEF_KEYWORD IDENTIFIER '(' param_list ')' SEMICOLON_SYMBOL stmt_list END_KEYWORD
+    | DEF_KEYWORD IDENTIFIER NEW_LINE_SYMBOL stmt_list END_KEYWORD
+    | DEF_KEYWORD IDENTIFIER SEMICOLON_SYMBOL stmt_list END_KEYWORD
 
 if_stmt:
     | IF_KEYWORD expr stmt END_KEYWORD
