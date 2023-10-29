@@ -94,8 +94,8 @@
 %token FLOAT_NUMBER
 
 %token IDENTIFIER
-%token VAR_NAME
-%token CLASS_VAR_NAME
+%token OBJECT_VAR_NAME // Поле класса, видно только в рамках одного объекта класса
+%token CLASS_VAR_NAME // Для всех объектов класса
 %token CONSTANT_NAME
 
 %token ID
@@ -103,7 +103,7 @@
 %%
 
 expr: IDENTIFIER
-    | VAR_NAME
+    | OBJECT_VAR_NAME
     | CLASS_VAR_NAME
     | CONSTANT_NAME
     | STRING
@@ -206,6 +206,20 @@ method_stmt:
     | DEF_KEYWORD IDENTIFIER '(' param_list ')' SEMICOLON_SYMBOL stmt_list END_KEYWORD
     | DEF_KEYWORD IDENTIFIER NEW_LINE_SYMBOL stmt_list END_KEYWORD
     | DEF_KEYWORD IDENTIFIER SEMICOLON_SYMBOL stmt_list END_KEYWORD
+
+method_list_not_empty:
+    | method_stmt
+    | method_list NEW_LINE_SYMBOL method_stmt
+    | method_list SEMICOLON_SYMBOL method_stmt
+    ;
+
+method_list: /* empty */
+    | method_stmt
+    ;
+
+class_stmt:
+    | CLASS_KEYWORD CONSTANT_NAME NEW_LINE_SYMBOL method_list END_KEYWORD
+    | CLASS_KEYWORD CONSTANT_NAME SEMICOLON_SYMBOL method_list END_KEYWORD
 
 if_stmt:
     | IF_KEYWORD expr stmt END_KEYWORD
