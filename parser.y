@@ -95,7 +95,6 @@
 
 %token IDENTIFIER
 %token VAR_NAME
-%token CLASS_NAME
 %token CLASS_VAR_NAME
 %token CONSTANT_NAME
 
@@ -105,7 +104,6 @@
 
 expr: IDENTIFIER
     | VAR_NAME
-    | CLASS_NAME
     | CLASS_VAR_NAME
     | CONSTANT_NAME
     | STRING
