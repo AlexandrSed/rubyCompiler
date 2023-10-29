@@ -217,9 +217,17 @@ method_list: /* empty */
     | method_stmt
     ;
 
+class_var_name:
+    | CLASS_VAR_NAME NEW_LINE_SYMBOL
+    | CLASS_VAR_NAME SEMICOLON_SYMBOL
+    | CLASS_VAR_NAME '=' expr NEW_LINE_SYMBOL
+    | CLASS_VAR_NAME '=' expr SEMICOLON_SYMBOL
+
 class_stmt:
     | CLASS_KEYWORD CONSTANT_NAME NEW_LINE_SYMBOL method_list END_KEYWORD
     | CLASS_KEYWORD CONSTANT_NAME SEMICOLON_SYMBOL method_list END_KEYWORD
+    | CLASS_KEYWORD CONSTANT_NAME NEW_LINE_SYMBOL class_var_name method_list END_KEYWORD
+    | CLASS_KEYWORD CONSTANT_NAME SEMICOLON_SYMBOL class_var_name method_list END_KEYWORD
 
 if_stmt:
     | IF_KEYWORD expr stmt END_KEYWORD
