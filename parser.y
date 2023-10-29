@@ -42,8 +42,8 @@
 
 %right '='
 %left '+' '-'
-%right UMINUS
 %left '*' '/' '%'
+%right UMINUS
 %token ARITHMETIC_POW_OP
 
 %token EQL_OP
