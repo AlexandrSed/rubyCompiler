@@ -28,7 +28,7 @@ BIN_DIGIT [01]
 OCT_DIGIT [0-7]
 EXPONENT [eE][+-]?[1-9]{DIGIT}*(_{DIGIT}+)*
 UNDERSCORE  _
-IDENTIFIER [a-zA-Z_][a-zA-Z0-9_]*
+IDENTIFIER [a-z_][a-zA-Z0-9_]*
 
 NUM_WITH_UNDERSCORE {DIGIT}+({UNDERSCORE}{DIGIT}+)+
 NUM_WITH_UNDERSCORE_DECIMAL {DIGIT}*\.{DIGIT}+{UNDERSCORE}{DIGIT}*
@@ -38,11 +38,6 @@ NUM_WITH_UNDERSCORE_DECIMAL {DIGIT}*\.{DIGIT}+{UNDERSCORE}{DIGIT}*
 %x ML_COMMENT
 
 %%
-_[0-9_]+\.?[0-9_]*  { printf("Error: Underscore at the start of a number: %s\n", yytext); }
-[0-9_]+\.?[0-9_]*_  { printf("Error: Underscore at the end of a number: %s\n", yytext); }
-[0-9_]+_\._?[0-9_]+ { printf("Error: Underscore before point: %s\n", yytext); }
-{DIGIT}+(_{DIGIT}+)*\._[0-9_]+ { printf("Error: Underscore after point: %s\n", yytext); }
-
 
 %{
     int num;
@@ -51,6 +46,12 @@ _[0-9_]+\.?[0-9_]*  { printf("Error: Underscore at the start of a number: %s\n",
     char string[1000];
     int nestingCount = 0;
 %}
+
+_[0-9_]+\.?[0-9_]*  { printf("Error: Underscore at the start of a number: %s\n", yytext); }
+[0-9_]+\.?[0-9_]*_  { printf("Error: Underscore at the end of a number: %s\n", yytext); }
+[0-9_]+_\._?[0-9_]+ { printf("Error: Underscore before point: %s\n", yytext); }
+{DIGIT}+(_{DIGIT}+)*\._[0-9_]+ { printf("Error: Underscore after point: %s\n", yytext); }
+
 
 alias		{ printf("Found keyword: %s\n", yytext); }
 and			{ printf("Found keyword: %s\n", yytext); }
@@ -165,13 +166,13 @@ yield		{ printf("Found keyword: %s\n", yytext); }
             }
 
 
-{IDENTIFIER}    { printf("Found identifier: %s\n", yytext); }
 
-[a-z_][a-zA-Z0-9_]* {printf("Found method name: %s\n", yytext); }
-[A-Z][a-zA-Z0-9_]* {printf("Found class name: %s\n", yytext); }
+
+[A-Z][a-zA-Z0-9_]* {printf("Found constant: %s\n", yytext); }
+
+{IDENTIFIER}    { printf("Found identifier: %s\n", yytext); }
 \@[a-z_][a-zA-Z0-9_]* {printf("Found var name: %s\n", yytext); }
 \@\@[a-z_][a-zA-Z0-9_]* {printf("Found class var name: %s\n", yytext); }
-[A-Z][a-zA-Z0-9_]* {printf("Found constant: %s\n", yytext); }
 
 <DOUBLE_QUOTE_STRING>"#{"   { 
                                 printf("Found string \"%s\"\n", string);

@@ -284,46 +284,46 @@ static void yy_fatal_error YY_PROTO(( yyconst char msg[] ));
 	*yy_cp = '\0'; \
 	yy_c_buf_p = yy_cp;
 
-#define YY_NUM_RULES 131
-#define YY_END_OF_BUFFER 132
+#define YY_NUM_RULES 129
+#define YY_END_OF_BUFFER 130
 static yyconst short int yy_accept[332] =
     {   0,
-        0,    0,    0,    0,    0,    0,    0,    0,  132,  131,
-       87,   72,   88,  119,   45,   64,   89,   75,   76,   43,
-       41,   83,   42,   82,   44,  122,  122,   84,   86,   50,
-       57,   49,   81,  131,   90,   79,   80,   66,   90,   90,
-       90,   90,   90,   90,   90,   90,   90,   90,   90,   90,
-       90,   90,   90,   90,   90,   90,   77,   65,   78,   67,
-       98,  117,   99,  131,   99,   97,  118,  131,  131,  131,
-       48,  119,   62,   70,   46,   60,   58,   59,   73,  129,
-       61,  125,  122,    0,    0,    0,    2,   85,   68,   52,
-       47,    0,   51,   69,    0,   93,   90,    0,    1,   90,
+        0,    0,    0,    0,    0,    0,    0,    0,  130,  129,
+       87,   72,   88,  117,   45,   64,   89,   75,   76,   43,
+       41,   83,   42,   82,   44,  120,  120,   84,   86,   50,
+       57,   49,   81,  129,   90,   79,   80,   66,   91,   91,
+       91,   91,   91,   91,   91,   91,   91,   91,   91,   91,
+       91,   91,   91,   91,   91,   91,   77,   65,   78,   67,
+       96,  115,   97,  129,   97,   95,  116,  129,  129,  129,
+       48,  117,   62,   70,   46,   60,   58,   59,   73,  127,
+       61,  123,  120,    0,    0,    0,    2,   85,   68,   52,
+       47,    0,   51,   69,    0,   92,   90,    0,    1,   91,
 
-        1,   90,   90,   90,   90,   90,   90,   90,   13,   90,
-       90,   90,   90,   90,   14,   21,   90,   90,   90,   90,
-       26,   90,   90,   90,   90,   90,   90,   90,   90,   71,
-       98,   96,  111,  112,  100,  115,  110,  102,  103,  108,
-      106,  101,  107,  109,  104,  105,    0,   97,  113,  114,
-        0,    0,    0,   63,   74,    0,    0,    0,    0,  125,
-        2,  124,    0,  127,  123,    0,  122,    2,   53,   54,
-        0,   94,   93,    0,    2,    1,    1,    1,    1,   90,
-        6,   90,   90,   90,   90,   11,   90,   17,   90,   90,
-       90,   90,   20,   90,   90,   24,   25,   90,   90,   90,
+        1,   91,   91,   91,   91,   91,   91,   91,   13,   91,
+       91,   91,   91,   91,   14,   21,   91,   91,   91,   91,
+       26,   91,   91,   91,   91,   91,   91,   91,   91,   71,
+       96,   94,  109,  110,   98,  113,  108,  100,  101,  106,
+      104,   99,  105,  107,  102,  103,    0,   95,  111,  112,
+        0,    0,    0,   63,   74,    0,    0,    0,    0,  123,
+        2,  122,    0,  125,  121,    0,  120,    2,   53,   54,
+        0,   93,   92,    0,    2,    1,    1,    1,    1,   91,
+        6,   91,   91,   91,   91,   11,   91,   17,   91,   91,
+       91,   91,   20,   91,   91,   24,   25,   91,   91,   91,
 
-       90,   90,   90,   90,   90,   90,   90,   90,   90,   90,
-      115,  116,    0,  129,    0,  129,  129,  130,    0,    2,
-        4,    2,    0,  127,    0,    0,    3,    2,  128,    0,
-       94,    1,    1,    1,    1,   90,   90,   90,    9,   90,
-       90,   15,   90,   90,   55,   90,   90,   90,   23,   27,
-       90,   90,   90,   31,   90,   33,   34,   90,   90,   90,
-       38,   90,   90,  115,  116,  121,    0,  129,    0,    0,
-        0,    0,  126,  125,    2,  124,  127,  123,    2,    0,
-        0,    0,    1,    5,    7,    8,   10,   90,   16,   90,
-       90,   19,   90,   90,   29,   90,   32,   35,   90,   37,
+       91,   91,   91,   91,   91,   91,   91,   91,   91,   91,
+      113,  114,    0,  127,    0,  127,  127,  128,    0,    2,
+        4,    2,    0,  125,    0,    0,    3,    2,  126,    0,
+       93,    1,    1,    1,    1,   91,   91,   91,    9,   91,
+       91,   15,   91,   91,   55,   91,   91,   91,   23,   27,
+       91,   91,   91,   31,   91,   33,   34,   91,   91,   91,
+       38,   91,   91,  113,  114,  119,    0,  127,    0,    0,
+        0,    0,  124,  123,    2,  122,  125,  121,    2,    0,
+        0,    0,    1,    5,    7,    8,   10,   91,   16,   91,
+       91,   19,   91,   91,   29,   91,   32,   35,   91,   37,
 
-       39,   40,  129,  129,    0,  130,  130,  126,    0,  128,
-      128,    0,  128,  120,   90,   18,   56,   22,   28,   30,
-       36,  130,    0,  126,  128,    0,   90,  130,  128,   12,
+       39,   40,  127,  127,    0,  128,  128,  124,    0,  126,
+      126,    0,  126,  118,   91,   18,   56,   22,   28,   30,
+       36,  128,    0,  124,  126,    0,   91,  128,  126,   12,
         0
     } ;
 
@@ -700,10 +700,10 @@ static char *yy_last_accepting_cpos;
 #define yymore() yymore_used_but_not_detected
 #define YY_MORE_ADJ 0
 char *yytext;
-#line 1 "lexer.l"
+#line 1 ".\\lexer.l"
 #define INITIAL 0
 #define YY_NEVER_INTERACTIVE 1
-#line 5 "lexer.l"
+#line 5 ".\\lexer.l"
 	#include <stdio.h>
     #include <stdlib.h>
     #include <string.h>
@@ -875,9 +875,18 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 40 "lexer.l"
+#line 40 ".\\lexer.l"
 
-#line 881 "lex.yy.c"
+
+
+    int num;
+    int doubleQuote;
+    char temp1[100];
+    char string[1000];
+    int nestingCount = 0;
+
+
+#line 890 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -962,399 +971,392 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 41 "lexer.l"
+#line 50 ".\\lexer.l"
 { printf("Error: Underscore at the start of a number: %s\n", yytext); }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 42 "lexer.l"
+#line 51 ".\\lexer.l"
 { printf("Error: Underscore at the end of a number: %s\n", yytext); }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 43 "lexer.l"
+#line 52 ".\\lexer.l"
 { printf("Error: Underscore before point: %s\n", yytext); }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 44 "lexer.l"
+#line 53 ".\\lexer.l"
 { printf("Error: Underscore after point: %s\n", yytext); }
 	YY_BREAK
-
-    int num;
-    int doubleQuote;
-    char temp1[100];
-    char string[1000];
-    int nestingCount = 0;
-
 case 5:
 YY_RULE_SETUP
-#line 55 "lexer.l"
+#line 56 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 56 "lexer.l"
+#line 57 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 57 "lexer.l"
+#line 58 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 58 "lexer.l"
+#line 59 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 59 "lexer.l"
+#line 60 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 60 "lexer.l"
+#line 61 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 61 "lexer.l"
+#line 62 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 62 "lexer.l"
+#line 63 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 63 "lexer.l"
+#line 64 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 64 "lexer.l"
+#line 65 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 65 "lexer.l"
+#line 66 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 66 "lexer.l"
+#line 67 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 67 "lexer.l"
+#line 68 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 68 "lexer.l"
+#line 69 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 69 "lexer.l"
+#line 70 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 70 "lexer.l"
+#line 71 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 71 "lexer.l"
+#line 72 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 72 "lexer.l"
+#line 73 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 73 "lexer.l"
+#line 74 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 74 "lexer.l"
+#line 75 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 75 "lexer.l"
+#line 76 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 76 "lexer.l"
+#line 77 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 77 "lexer.l"
+#line 78 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 78 "lexer.l"
+#line 79 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 79 "lexer.l"
+#line 80 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 80 "lexer.l"
+#line 81 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 81 "lexer.l"
+#line 82 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 82 "lexer.l"
+#line 83 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 83 "lexer.l"
+#line 84 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 84 "lexer.l"
+#line 85 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 85 "lexer.l"
+#line 86 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 86 "lexer.l"
+#line 87 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 87 "lexer.l"
+#line 88 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 88 "lexer.l"
+#line 89 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 89 "lexer.l"
+#line 90 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 90 "lexer.l"
+#line 91 ".\\lexer.l"
 { printf("Found keyword: %s\n", yytext); }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 92 "lexer.l"
+#line 93 ".\\lexer.l"
 { printf("Found arithmetic operation: %s\n", yytext); }   
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 93 "lexer.l"
+#line 94 ".\\lexer.l"
 { printf("Found arithmetic operation: %s\n", yytext); }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 94 "lexer.l"
+#line 95 ".\\lexer.l"
 { printf("Found arithmetic operation: %s\n", yytext); }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 95 "lexer.l"
+#line 96 ".\\lexer.l"
 { printf("Found arithmetic operation: %s\n", yytext); }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 96 "lexer.l"
+#line 97 ".\\lexer.l"
 { printf("Found arithmetic operation: %s\n", yytext); }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 97 "lexer.l"
+#line 98 ".\\lexer.l"
 { printf("Found arithmetic operation: %s\n", yytext); }
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 99 "lexer.l"
+#line 100 ".\\lexer.l"
 { printf("Found arithmetic operation: %s\n", yytext); }
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 100 "lexer.l"
+#line 101 ".\\lexer.l"
 { printf("Found arithmetic operation: %s\n", yytext); }
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 101 "lexer.l"
+#line 102 ".\\lexer.l"
 { printf("Found arithmetic operation: %s\n", yytext); }
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 102 "lexer.l"
+#line 103 ".\\lexer.l"
 { printf("Found arithmetic operation: %s\n", yytext); }
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 103 "lexer.l"
+#line 104 ".\\lexer.l"
 { printf("Found arithmetic operation: %s\n", yytext); }
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 104 "lexer.l"
+#line 105 ".\\lexer.l"
 { printf("Found arithmetic operation: %s\n", yytext); }
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 105 "lexer.l"
+#line 106 ".\\lexer.l"
 { printf("Found arithmetic operation: %s\n", yytext); }
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 106 "lexer.l"
+#line 107 ".\\lexer.l"
 { printf("Found arithmetic operation: %s\n", yytext); }
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 107 "lexer.l"
+#line 108 ".\\lexer.l"
 { printf("Found arithmetic operation: %s\n", yytext); }
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 108 "lexer.l"
+#line 109 ".\\lexer.l"
 { printf("Found arithmetic operation: %s\n", yytext); }
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 110 "lexer.l"
+#line 111 ".\\lexer.l"
 { printf("Found arithmetic operation: %s\n", yytext); }
 	YY_BREAK
 case 58:
 YY_RULE_SETUP
-#line 111 "lexer.l"
+#line 112 ".\\lexer.l"
 { printf("Found arithmetic operation: %s\n", yytext); }
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 112 "lexer.l"
+#line 113 ".\\lexer.l"
 { printf("Found arithmetic operation: %s\n", yytext); }
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 113 "lexer.l"
+#line 114 ".\\lexer.l"
 { printf("Found arithmetic operation: %s\n", yytext); }
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 114 "lexer.l"
+#line 115 ".\\lexer.l"
 { printf("Found arithmetic operation: %s\n", yytext); }
 	YY_BREAK
 case 62:
 YY_RULE_SETUP
-#line 115 "lexer.l"
+#line 116 ".\\lexer.l"
 { printf("Found arithmetic operation: %s\n", yytext); }
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 116 "lexer.l"
+#line 117 ".\\lexer.l"
 { printf("Found arithmetic operation: %s\n", yytext); }
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
-#line 118 "lexer.l"
+#line 119 ".\\lexer.l"
 { printf("Found operation: %s\n", yytext); }
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
-#line 119 "lexer.l"
+#line 120 ".\\lexer.l"
 { printf("Found operation: %s\n", yytext); }
 	YY_BREAK
 case 66:
 YY_RULE_SETUP
-#line 120 "lexer.l"
+#line 121 ".\\lexer.l"
 { printf("Found operation: %s\n", yytext); }
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
-#line 121 "lexer.l"
+#line 122 ".\\lexer.l"
 { printf("Found operation: %s\n", yytext); }
 	YY_BREAK
 case 68:
 YY_RULE_SETUP
-#line 122 "lexer.l"
+#line 123 ".\\lexer.l"
 { printf("Found comparison operation: %s\n", yytext); }
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
-#line 123 "lexer.l"
+#line 124 ".\\lexer.l"
 { printf("Found comparison operation: %s\n", yytext); }
 	YY_BREAK
 case 70:
 YY_RULE_SETUP
-#line 125 "lexer.l"
+#line 126 ".\\lexer.l"
 { printf("Found operation: %s\n", yytext); }
 	YY_BREAK
 case 71:
 YY_RULE_SETUP
-#line 126 "lexer.l"
+#line 127 ".\\lexer.l"
 { printf("Found operation: %s\n", yytext); }
 	YY_BREAK
 case 72:
 YY_RULE_SETUP
-#line 127 "lexer.l"
+#line 128 ".\\lexer.l"
 { printf("Found operation: %s\n", yytext); }
 	YY_BREAK
 case 73:
 YY_RULE_SETUP
-#line 129 "lexer.l"
+#line 130 ".\\lexer.l"
 { printf("Found operation: %s\n", yytext); }
 	YY_BREAK
 case 74:
 YY_RULE_SETUP
-#line 130 "lexer.l"
+#line 131 ".\\lexer.l"
 { printf("Found operation: %s\n", yytext); }
 	YY_BREAK
 case 75:
 YY_RULE_SETUP
-#line 132 "lexer.l"
+#line 133 ".\\lexer.l"
 { printf("Found bracket: %s\n", yytext); }
 	YY_BREAK
 case 76:
 YY_RULE_SETUP
-#line 133 "lexer.l"
+#line 134 ".\\lexer.l"
 { printf("Found bracket: %s\n", yytext); }
 	YY_BREAK
 case 77:
 YY_RULE_SETUP
-#line 134 "lexer.l"
+#line 135 ".\\lexer.l"
 { printf("Found bracket: %s\n", yytext); }
 	YY_BREAK
 case 78:
 YY_RULE_SETUP
-#line 135 "lexer.l"
+#line 136 ".\\lexer.l"
 {
                 if(nestingCount == 0) {
                     printf("Found bracket: %s\n", yytext);
@@ -1368,52 +1370,52 @@ YY_RULE_SETUP
 	YY_BREAK
 case 79:
 YY_RULE_SETUP
-#line 145 "lexer.l"
+#line 146 ".\\lexer.l"
 { printf("Found bracket: %s\n", yytext); }
 	YY_BREAK
 case 80:
 YY_RULE_SETUP
-#line 146 "lexer.l"
+#line 147 ".\\lexer.l"
 { printf("Found bracket: %s\n", yytext); }
 	YY_BREAK
 case 81:
 YY_RULE_SETUP
-#line 148 "lexer.l"
+#line 149 ".\\lexer.l"
 { printf("Found question symbol: %s\n", yytext); }
 	YY_BREAK
 case 82:
 YY_RULE_SETUP
-#line 150 "lexer.l"
+#line 151 ".\\lexer.l"
 { printf("Found special symbol: %s\n", yytext); }
 	YY_BREAK
 case 83:
 YY_RULE_SETUP
-#line 151 "lexer.l"
+#line 152 ".\\lexer.l"
 { printf("Found special symbol: %s\n", yytext); }
 	YY_BREAK
 case 84:
 YY_RULE_SETUP
-#line 152 "lexer.l"
+#line 153 ".\\lexer.l"
 { printf("Found special symbol: %s\n", yytext); }
 	YY_BREAK
 case 85:
 YY_RULE_SETUP
-#line 153 "lexer.l"
+#line 154 ".\\lexer.l"
 { printf("Found special symbol: %s\n", yytext); }
 	YY_BREAK
 case 86:
 YY_RULE_SETUP
-#line 154 "lexer.l"
+#line 155 ".\\lexer.l"
 { printf("Found special symbol: %s\n", yytext); }
 	YY_BREAK
 case 87:
 YY_RULE_SETUP
-#line 155 "lexer.l"
+#line 156 ".\\lexer.l"
 { printf("Found line feed: %s\n", yytext); }
 	YY_BREAK
 case 88:
 YY_RULE_SETUP
-#line 157 "lexer.l"
+#line 158 ".\\lexer.l"
 {
                 string[0] = '\0'; 
                 BEGIN(DOUBLE_QUOTE_STRING);
@@ -1421,7 +1423,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 89:
 YY_RULE_SETUP
-#line 162 "lexer.l"
+#line 163 ".\\lexer.l"
 {
                 string[0] = '\0'; 
                 BEGIN(SINGLE_QUOTE_STRING);    
@@ -1429,37 +1431,27 @@ YY_RULE_SETUP
 	YY_BREAK
 case 90:
 YY_RULE_SETUP
-#line 168 "lexer.l"
-{ printf("Found identifier: %s\n", yytext); }
+#line 171 ".\\lexer.l"
+{printf("Found constant: %s\n", yytext); }
 	YY_BREAK
 case 91:
 YY_RULE_SETUP
-#line 170 "lexer.l"
-{printf("Found method name: %s\n", yytext); }
+#line 173 ".\\lexer.l"
+{ printf("Found identifier: %s\n", yytext); }
 	YY_BREAK
 case 92:
 YY_RULE_SETUP
-#line 171 "lexer.l"
-{printf("Found class name: %s\n", yytext); }
+#line 174 ".\\lexer.l"
+{printf("Found var name: %s\n", yytext); }
 	YY_BREAK
 case 93:
 YY_RULE_SETUP
-#line 172 "lexer.l"
-{printf("Found var name: %s\n", yytext); }
+#line 175 ".\\lexer.l"
+{printf("Found class var name: %s\n", yytext); }
 	YY_BREAK
 case 94:
 YY_RULE_SETUP
-#line 173 "lexer.l"
-{printf("Found class var name: %s\n", yytext); }
-	YY_BREAK
-case 95:
-YY_RULE_SETUP
-#line 174 "lexer.l"
-{printf("Found constant: %s\n", yytext); }
-	YY_BREAK
-case 96:
-YY_RULE_SETUP
-#line 176 "lexer.l"
+#line 177 ".\\lexer.l"
 { 
                                 printf("Found string \"%s\"\n", string);
                                 printf("Found interpolation: +\n");
@@ -1467,99 +1459,99 @@ YY_RULE_SETUP
                                 BEGIN(INITIAL);
                             }
 	YY_BREAK
+case 95:
+YY_RULE_SETUP
+#line 184 ".\\lexer.l"
+{ strcat(string, yytext); }
+	YY_BREAK
+case 96:
+YY_RULE_SETUP
+#line 185 ".\\lexer.l"
+{ strcat(string, yytext); }
+	YY_BREAK
 case 97:
 YY_RULE_SETUP
-#line 183 "lexer.l"
+#line 186 ".\\lexer.l"
 { strcat(string, yytext); }
 	YY_BREAK
 case 98:
 YY_RULE_SETUP
-#line 184 "lexer.l"
-{ strcat(string, yytext); }
+#line 187 ".\\lexer.l"
+{ strcat(string, "\\'"); }
 	YY_BREAK
 case 99:
 YY_RULE_SETUP
-#line 185 "lexer.l"
-{ strcat(string, yytext); }
+#line 188 ".\\lexer.l"
+{ strcat(string, "\n"); }
 	YY_BREAK
 case 100:
 YY_RULE_SETUP
-#line 186 "lexer.l"
-{ strcat(string, "\\'"); }
+#line 189 ".\\lexer.l"
+{ strcat(string, "\a"); }
 	YY_BREAK
 case 101:
 YY_RULE_SETUP
-#line 187 "lexer.l"
-{ strcat(string, "\n"); }
+#line 190 ".\\lexer.l"
+{ strcat(string, "\b"); }
 	YY_BREAK
 case 102:
 YY_RULE_SETUP
-#line 188 "lexer.l"
-{ strcat(string, "\a"); }
+#line 191 ".\\lexer.l"
+{ strcat(string, "\t"); }
 	YY_BREAK
 case 103:
 YY_RULE_SETUP
-#line 189 "lexer.l"
-{ strcat(string, "\b"); }
+#line 192 ".\\lexer.l"
+{ strcat(string, "\v"); }
 	YY_BREAK
 case 104:
 YY_RULE_SETUP
-#line 190 "lexer.l"
-{ strcat(string, "\t"); }
+#line 193 ".\\lexer.l"
+{ strcat(string, "\f"); }
 	YY_BREAK
 case 105:
 YY_RULE_SETUP
-#line 191 "lexer.l"
-{ strcat(string, "\v"); }
+#line 194 ".\\lexer.l"
+{ strcat(string, "\r"); }
 	YY_BREAK
 case 106:
 YY_RULE_SETUP
-#line 192 "lexer.l"
-{ strcat(string, "\f"); }
+#line 195 ".\\lexer.l"
+{ strcat(string, "\e"); }
 	YY_BREAK
 case 107:
 YY_RULE_SETUP
-#line 193 "lexer.l"
-{ strcat(string, "\r"); }
+#line 196 ".\\lexer.l"
+{ strcat(string, " "); }
 	YY_BREAK
 case 108:
 YY_RULE_SETUP
-#line 194 "lexer.l"
-{ strcat(string, "\e"); }
+#line 197 ".\\lexer.l"
+{ strcat(string, "\\");}
 	YY_BREAK
 case 109:
 YY_RULE_SETUP
-#line 195 "lexer.l"
-{ strcat(string, " "); }
+#line 198 ".\\lexer.l"
+{ strcat(string, "\""); }
 	YY_BREAK
 case 110:
 YY_RULE_SETUP
-#line 196 "lexer.l"
-{ strcat(string, "\\");}
+#line 199 ".\\lexer.l"
+{ strcat(string, "#"); }
 	YY_BREAK
 case 111:
 YY_RULE_SETUP
-#line 197 "lexer.l"
-{ strcat(string, "\""); }
+#line 202 ".\\lexer.l"
+{ strcat(string, "\\\""); }
 	YY_BREAK
 case 112:
 YY_RULE_SETUP
-#line 198 "lexer.l"
-{ strcat(string, "#"); }
+#line 203 ".\\lexer.l"
+{ strcat(string, "'"); }
 	YY_BREAK
 case 113:
 YY_RULE_SETUP
-#line 201 "lexer.l"
-{ strcat(string, "\\\""); }
-	YY_BREAK
-case 114:
-YY_RULE_SETUP
-#line 202 "lexer.l"
-{ strcat(string, "'"); }
-	YY_BREAK
-case 115:
-YY_RULE_SETUP
-#line 206 "lexer.l"
+#line 207 ".\\lexer.l"
 { 
                                 sscanf(yytext + 1, "%o", &num);
                                 temp1[0] = (char) num;
@@ -1567,9 +1559,9 @@ YY_RULE_SETUP
                                 strcat(string, temp1);
                             }
 	YY_BREAK
-case 116:
+case 114:
 YY_RULE_SETUP
-#line 213 "lexer.l"
+#line 214 ".\\lexer.l"
 { 
                                 sscanf(yytext + 2, "%x", &num);
                                 temp1[0] = (char) num;
@@ -1577,46 +1569,46 @@ YY_RULE_SETUP
                                 strcat(string, temp1);
                             }
 	YY_BREAK
-case 117:
+case 115:
 YY_RULE_SETUP
-#line 220 "lexer.l"
+#line 221 ".\\lexer.l"
 { 
                                 printf("String literal: \"%s\" \n", string);
                                 BEGIN(INITIAL);
                         }
 	YY_BREAK
-case 118:
+case 116:
 YY_RULE_SETUP
-#line 225 "lexer.l"
+#line 226 ".\\lexer.l"
 { 
                             printf("String literal: \"%s\" \n", string);
                             BEGIN(INITIAL);
                         }
 	YY_BREAK
-case 119:
+case 117:
 YY_RULE_SETUP
-#line 231 "lexer.l"
+#line 232 ".\\lexer.l"
 { printf("Found single-line comment: %s\n", yytext + 1); }
 	YY_BREAK
-case 120:
+case 118:
 YY_RULE_SETUP
-#line 235 "lexer.l"
+#line 236 ".\\lexer.l"
 {
     BEGIN(ML_COMMENT);
     printf("Found multiline comment:\n");
 }
 	YY_BREAK
-case 121:
+case 119:
 YY_RULE_SETUP
-#line 241 "lexer.l"
+#line 242 ".\\lexer.l"
 {
     BEGIN(INITIAL);
     printf("%s", yytext);
 }
 	YY_BREAK
-case 122:
+case 120:
 YY_RULE_SETUP
-#line 248 "lexer.l"
+#line 249 ".\\lexer.l"
 { 
     
     char* cleanedText = removeUnderscores(yytext);
@@ -1625,74 +1617,74 @@ YY_RULE_SETUP
     free(cleanedText); 
 }
 	YY_BREAK
-case 123:
+case 121:
 YY_RULE_SETUP
-#line 255 "lexer.l"
+#line 256 ".\\lexer.l"
 { 
     char* cleanedText = removeUnderscores(yytext);
     int number = strtol(cleanedText, NULL, 16);
     printf("Found hexadecimal integer: %d\n", number); 
 }
 	YY_BREAK
-case 124:
+case 122:
 YY_RULE_SETUP
-#line 261 "lexer.l"
+#line 262 ".\\lexer.l"
 {
     char* cleanedText = removeUnderscores(yytext + 2);
     int number = strtol( cleanedText, NULL, 2);
     printf("Found binary integer: %d\n", yytext);
 }
 	YY_BREAK
-case 125:
+case 123:
 YY_RULE_SETUP
-#line 267 "lexer.l"
+#line 268 ".\\lexer.l"
 { 
     char* cleanedText = removeUnderscores(yytext);
     double number = atof(cleanedText);
     printf("Found floating-point number: %f\n", number); 
 }
 	YY_BREAK
-case 126:
+case 124:
 YY_RULE_SETUP
-#line 273 "lexer.l"
+#line 274 ".\\lexer.l"
 { 
     char* cleanedText = removeUnderscores(yytext);
     double number = atof(cleanedText);
     printf("Found floating-point number with exponent: %f\n", number); 
 }
 	YY_BREAK
-case 127:
+case 125:
 YY_RULE_SETUP
-#line 279 "lexer.l"
+#line 280 ".\\lexer.l"
 {
     char* cleanedText = removeUnderscores(yytext);
     double number = atof(cleanedText);
     printf("Found number with exponent: %f\n", number); 
 }
 	YY_BREAK
-case 128:
+case 126:
 YY_RULE_SETUP
-#line 285 "lexer.l"
+#line 286 ".\\lexer.l"
 {
     printf("Error: Underscore is repeated several times in a row: %s\n", yytext); 
 }
 	YY_BREAK
-case 129:
+case 127:
 YY_RULE_SETUP
-#line 289 "lexer.l"
+#line 290 ".\\lexer.l"
 {printf("Error: Dot at the start of a number: %s\n", yytext); }
 	YY_BREAK
-case 130:
+case 128:
 YY_RULE_SETUP
-#line 291 "lexer.l"
+#line 292 ".\\lexer.l"
 {printf("Error: Dot is repeated several times in a row: %s\n", yytext); }
 	YY_BREAK
-case 131:
+case 129:
 YY_RULE_SETUP
-#line 294 "lexer.l"
+#line 295 ".\\lexer.l"
 ECHO;
 	YY_BREAK
-#line 1696 "lex.yy.c"
+#line 1688 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(DOUBLE_QUOTE_STRING):
 case YY_STATE_EOF(SINGLE_QUOTE_STRING):
@@ -2555,7 +2547,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 294 "lexer.l"
+#line 295 ".\\lexer.l"
 
 
 int main(int argc, char** argv) {
