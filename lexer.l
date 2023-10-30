@@ -227,7 +227,7 @@ yield		{ printf("Found keyword: %s\n", yytext); }
 }
 
 
-<ML_COMMENT>.*=end(\s|\n) {
+<ML_COMMENT>.*=end\s {
     BEGIN(INITIAL);
     printf("%s", yytext);
 }
