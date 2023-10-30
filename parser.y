@@ -97,9 +97,6 @@
 %token OBJECT_VAR_NAME // Поле класса, видно только в рамках одного объекта класса
 %token CLASS_VAR_NAME // Для всех объектов класса
 %token CONSTANT_NAME
-
-%token ID
-
 %%
 
 expr: IDENTIFIER
@@ -183,6 +180,7 @@ stmt: expr NEW_LINE_SYMBOL
     | unless_stmt NEW_LINE_SYMBOL
     | ternary_op_stmt NEW_LINE_SYMBOL
     | stmt_list NEW_LINE_SYMBOL
+    | return_stmt NEW_LINE_SYMBOL
     | if_stmt SEMICOLON_SYMBOL
     | while_stmt SEMICOLON_SYMBOL
     | for_stmt SEMICOLON_SYMBOL
@@ -191,6 +189,9 @@ stmt: expr NEW_LINE_SYMBOL
     | unless_stmt SEMICOLON_SYMBOL
     | ternary_op_stmt SEMICOLON_SYMBOL
     | stmt_list SEMICOLON_SYMBOL
+    | return_stmt SEMICOLON_SYMBOL
+    | alias_stmt SEMICOLON_SYMBOL
+    | alias_stmt NEW_LINE_SYMBOL
 
 param_list_not_empty:
     | IDENTIFIER
@@ -275,6 +276,9 @@ until_stmt:
     | expr UNTIL_KEYWORD expr
     ;
 
+return_stmt: RETURN_KEYWORD expr
+    | RETURN_KEYWORD
+
 break_stmt:
     | BREAK_KEYWORD IF_KEYWORD expr
     | BREAK_KEYWORD expr IF_KEYWORD expr
@@ -300,4 +304,5 @@ when_list:
     | when_list expr_list THEN_KEYWORD stmt
     | when_list expr_list SEMICOLON_SYMBOL stmt
 
+alias_stmt: ALIAS_KEYWORD IDENTIFIER IDENTIFIER
 %%
