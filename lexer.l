@@ -35,10 +35,10 @@ NUM_WITH_UNDERSCORE_DECIMAL {DIGIT}*\.{DIGIT}+{UNDERSCORE}{DIGIT}*
     int nestingCount = 0;
 %}
 
-_[0-9_]+\.?[0-9_]*  { printf("Error: Underscore at the start of a number: %s\n", yytext); }
-[0-9_]+\.?[0-9_]*_  { printf("Error: Underscore at the end of a number: %s\n", yytext); }
-[0-9_]+_\._?[0-9_]+ { printf("Error: Underscore before point: %s\n", yytext); }
-{DIGIT}+(_{DIGIT}+)*\._[0-9_]+ { printf("Error: Underscore after point: %s\n", yytext); }
+_+[0-9_]+\.?[0-9_]*  { printf("Error: Underscore at the start of a number: %s\n", yytext); }
+[0-9_]+\.?[0-9_]*_+  { printf("Error: Underscore at the end of a number: %s\n", yytext); }
+[0-9_]+_\._?[0-9_]+ { printf("Error: Underscore right before point: %s\n", yytext); }
+{DIGIT}+(_{DIGIT}+)*\._[0-9_]+ { printf("Error: Underscore right after point: %s\n", yytext); }
 
 
 alias		{ printf("Found keyword: %s\n", yytext); }
