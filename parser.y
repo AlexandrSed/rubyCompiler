@@ -157,6 +157,9 @@ expr: IDENTIFIER
 	| expr DOUBLE_COLON_SYMBOL expr
     ;
 
+delimiter: NEW_LINE_SYMBOL
+    | SEMICOLON_SYMBOL
+
 expr_list: /* empty */
 	| expr_list_not_empty
     ;
@@ -168,32 +171,21 @@ expr_list_not_empty: expr
 stmt_list:
     | stmt
     | stmt_list stmt
-
+    ;
     
-stmt: expr NEW_LINE_SYMBOL
-    | expr SEMICOLON_SYMBOL
-    | if_stmt NEW_LINE_SYMBOL
-    | while_stmt NEW_LINE_SYMBOL
-    | for_stmt NEW_LINE_SYMBOL
-    | until_stmt NEW_LINE_SYMBOL
-    | case_stmt NEW_LINE_SYMBOL
-    | unless_stmt NEW_LINE_SYMBOL
-    | ternary_op_stmt NEW_LINE_SYMBOL
-    | stmt_list NEW_LINE_SYMBOL
-    | return_stmt NEW_LINE_SYMBOL
-    | if_stmt SEMICOLON_SYMBOL
-    | while_stmt SEMICOLON_SYMBOL
-    | for_stmt SEMICOLON_SYMBOL
-    | until_stmt SEMICOLON_SYMBOL
-    | case_stmt SEMICOLON_SYMBOL
-    | unless_stmt SEMICOLON_SYMBOL
-    | ternary_op_stmt SEMICOLON_SYMBOL
-    | stmt_list SEMICOLON_SYMBOL
-    | return_stmt SEMICOLON_SYMBOL
-    | alias_stmt SEMICOLON_SYMBOL
-    | alias_stmt NEW_LINE_SYMBOL
-    | begin_rescue_stmt SEMICOLON_SYMBOL
-    | begin_rescue_stmt NEW_LINE_SYMBOL
+stmt: expr delimiter
+    | if_stmt delimiter
+    | while_stmt delimiter
+    | for_stmt delimiter
+    | until_stmt delimiter
+    | case_stmt delimiter
+    | unless_stmt delimiter
+    | ternary_op_stmt delimiter
+    | stmt_list delimiter
+    | return_stmt delimiter
+    | alias_stmt delimiter
+    | begin_rescue_stmt delimiter
+    ;
 
 param_list_not_empty:
     | IDENTIFIER
@@ -205,15 +197,12 @@ param_list: /* empty */
     ;
 
 method_stmt:
-    | DEF_KEYWORD IDENTIFIER '(' param_list ')' NEW_LINE_SYMBOL stmt_list END_KEYWORD
-    | DEF_KEYWORD IDENTIFIER '(' param_list ')' SEMICOLON_SYMBOL stmt_list END_KEYWORD
-    | DEF_KEYWORD IDENTIFIER NEW_LINE_SYMBOL stmt_list END_KEYWORD
-    | DEF_KEYWORD IDENTIFIER SEMICOLON_SYMBOL stmt_list END_KEYWORD
+    | DEF_KEYWORD IDENTIFIER '(' param_list ')' delimiter stmt_list END_KEYWORD
+    | DEF_KEYWORD IDENTIFIER delimiter stmt_list END_KEYWORD
 
 method_list_not_empty:
     | method_stmt
-    | method_list NEW_LINE_SYMBOL method_stmt
-    | method_list SEMICOLON_SYMBOL method_stmt
+    | method_list delimiter method_stmt
     ;
 
 method_list: /* empty */
@@ -221,26 +210,22 @@ method_list: /* empty */
     ;
 
 class_var_name:
-    | CLASS_VAR_NAME NEW_LINE_SYMBOL
-    | CLASS_VAR_NAME SEMICOLON_SYMBOL
-    | CLASS_VAR_NAME '=' expr NEW_LINE_SYMBOL
-    | CLASS_VAR_NAME '=' expr SEMICOLON_SYMBOL
+    | CLASS_VAR_NAME delimiter
+    | CLASS_VAR_NAME '=' expr delimiter
 
 class_stmt:
-    | CLASS_KEYWORD CONSTANT_NAME NEW_LINE_SYMBOL method_list END_KEYWORD
-    | CLASS_KEYWORD CONSTANT_NAME SEMICOLON_SYMBOL method_list END_KEYWORD
-    | CLASS_KEYWORD CONSTANT_NAME NEW_LINE_SYMBOL class_var_name method_list END_KEYWORD
-    | CLASS_KEYWORD CONSTANT_NAME SEMICOLON_SYMBOL class_var_name method_list END_KEYWORD
+    | CLASS_KEYWORD CONSTANT_NAME delimiter method_list END_KEYWORD
+    | CLASS_KEYWORD CONSTANT_NAME delimiter class_var_name method_list END_KEYWORD
 
 if_stmt:
-    | IF_KEYWORD expr stmt END_KEYWORD
+    | IF_KEYWORD expr delimiter stmt END_KEYWORD
     | IF_KEYWORD expr THEN_KEYWORD stmt END_KEYWORD
-    | IF_KEYWORD expr stmt ELSE_KEYWORD stmt END_KEYWORD
+    | IF_KEYWORD expr delimiter stmt ELSE_KEYWORD stmt END_KEYWORD
     | IF_KEYWORD expr THEN_KEYWORD stmt ELSE_KEYWORD stmt END_KEYWORD
-    | IF_KEYWORD expr stmt elsif_list stmt END_KEYWORD
+    | IF_KEYWORD expr delimiter stmt elsif_list stmt END_KEYWORD
     | IF_KEYWORD expr THEN_KEYWORD stmt elsif_list stmt END_KEYWORD
-    | IF_KEYWORD expr stmt elsif_list NEW_LINE_SYMBOL ELSE_KEYWORD stmt END_KEYWORD
-    | IF_KEYWORD expr THEN_KEYWORD stmt elsif_list NEW_LINE_SYMBOL ELSE_KEYWORD stmt END_KEYWORD
+    | IF_KEYWORD expr delimiter stmt elsif_list ELSE_KEYWORD stmt END_KEYWORD
+    | IF_KEYWORD expr THEN_KEYWORD stmt elsif_list ELSE_KEYWORD stmt END_KEYWORD
     | expr IF_KEYWORD expr
     ;
 
@@ -252,10 +237,10 @@ unless_stmt:
     | expr UNLESS_KEYWORD expr
 
 elsif_list:
-    | ELSIF_KEYWORD expr stmt
-    | ELSE_KEYWORD expr THEN_KEYWORD stmt
-    | elsif_list ELSIF_KEYWORD expr stmt
-    | elsif_list ELSE_KEYWORD expr THEN_KEYWORD stmt
+    | ELSIF_KEYWORD expr delimiter stmt
+    | ELSIF_KEYWORD expr THEN_KEYWORD stmt
+    | elsif_list ELSIF_KEYWORD expr delimiter stmt
+    | elsif_list ELSIF_KEYWORD expr THEN_KEYWORD stmt
     ;
 
 ternary_op_stmt:
@@ -299,16 +284,13 @@ case_stmt:
 
 
 when_list:
-    | WHEN_KEYWORD expr_list NEW_LINE_SYMBOL stmt
+    | WHEN_KEYWORD expr_list delimiter stmt
     | WHEN_KEYWORD expr_list THEN_KEYWORD stmt
-    | WHEN_KEYWORD expr_list SEMICOLON_SYMBOL stmt
-    | when_list expr_list NEW_LINE_SYMBOL stmt
+    | when_list expr_list delimiter stmt
     | when_list expr_list THEN_KEYWORD stmt
-    | when_list expr_list SEMICOLON_SYMBOL stmt
 
 alias_stmt: ALIAS_KEYWORD IDENTIFIER IDENTIFIER
 
-begin_rescue_stmt: BEGIN_KEYWORD NEW_LINE_SYMBOL stmt_list RESCUE_KEYWORD NEW_LINE_SYMBOL stmt_list END_KEYWORD
-    | BEGIN_KEYWORD SEMICOLON_SYMBOL stmt_list RESCUE_KEYWORD SEMICOLON_SYMBOL stmt_list END_KEYWORD
-    | BEGIN_KEYWORD NEW_LINE_SYMBOL stmt_list RESCUE_KEYWORD NEW_LINE_SYMBOL stmt_list ENSURE_KEYWORD NEW_LINE_SYMBOL END_KEYWORD
+begin_rescue_stmt: BEGIN_KEYWORD delimiter stmt_list RESCUE_KEYWORD delimiter stmt_list END_KEYWORD
+    | BEGIN_KEYWORD delimiter stmt_list RESCUE_KEYWORD delimiter stmt_list ENSURE_KEYWORD delimiter END_KEYWORD
 %%
