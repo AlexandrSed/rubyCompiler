@@ -159,8 +159,8 @@ yield		{ printf("Found keyword: %s\n", yytext); }
 [A-Z][a-zA-Z0-9_]* {printf("Found constant: %s\n", yytext); }
 
 {IDENTIFIER}    { printf("Found identifier: %s\n", yytext); }
-\@[a-z_][a-zA-Z0-9_]* {printf("Found var name: %s\n", yytext); }
-\@\@[a-z_][a-zA-Z0-9_]* {printf("Found class var name: %s\n", yytext); }
+\@{IDENTIFIER} {printf("Found var name: %s\n", yytext); }
+\@\@{IDENTIFIER} {printf("Found class var name: %s\n", yytext); }
 
 <DOUBLE_QUOTE_STRING>"#{"   { 
                                 printf("Found string \"%s\"\n", string);
