@@ -6,19 +6,7 @@
     #include <stdlib.h>
     #include <string.h>
 
-    char* removeUnderscores(const char* input) {
-    char* result = malloc(strlen(input) + 1);
-    int resultIndex = 0;
-    
-    for (int i = 0; input[i]; i++) {
-        if (input[i] != '_') {
-            result[resultIndex++] = input[i];
-        }
-    }
-    
-    result[resultIndex] = '\0';
-    return result;
-}
+    char* removeUnderscores(const char* input);
 
 %}
 
@@ -315,5 +303,19 @@ int main(int argc, char** argv) {
     fclose(file);
 
     return 0;
+}
+
+ char* removeUnderscores(const char* input) {
+    char* result = malloc(strlen(input) + 1);
+    int resultIndex = 0;
+    
+    for (int i = 0; input[i]; i++) {
+        if (input[i] != '_') {
+            result[resultIndex++] = input[i];
+        }
+    }
+    
+    result[resultIndex] = '\0';
+    return result;
 }
 
