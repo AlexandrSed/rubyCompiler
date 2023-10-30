@@ -192,6 +192,8 @@ stmt: expr NEW_LINE_SYMBOL
     | return_stmt SEMICOLON_SYMBOL
     | alias_stmt SEMICOLON_SYMBOL
     | alias_stmt NEW_LINE_SYMBOL
+    | begin_rescue_stmt SEMICOLON_SYMBOL
+    | begin_rescue_stmt NEW_LINE_SYMBOL
 
 param_list_not_empty:
     | IDENTIFIER
@@ -305,4 +307,8 @@ when_list:
     | when_list expr_list SEMICOLON_SYMBOL stmt
 
 alias_stmt: ALIAS_KEYWORD IDENTIFIER IDENTIFIER
+
+begin_rescue_stmt: BEGIN_KEYWORD NEW_LINE_SYMBOL stmt_list RESCUE_KEYWORD NEW_LINE_SYMBOL stmt_list END_KEYWORD
+    | BEGIN_KEYWORD SEMICOLON_SYMBOL stmt_list RESCUE_KEYWORD SEMICOLON_SYMBOL stmt_list END_KEYWORD
+    | BEGIN_KEYWORD NEW_LINE_SYMBOL stmt_list RESCUE_KEYWORD NEW_LINE_SYMBOL stmt_list ENSURE_KEYWORD NEW_LINE_SYMBOL END_KEYWORD
 %%
