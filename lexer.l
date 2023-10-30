@@ -128,7 +128,7 @@ yield		{ printf("Found keyword: %s\n", yytext); }
                     nestingCount--;
                     BEGIN(DOUBLE_QUOTE_STRING);
                     string[0] = 0;
-                    printf("Found interpolation: +\n");
+                    printf("Found interpolation: ) + \n");
                 }
             }
 "["         { printf("Found bracket: %s\n", yytext); }
@@ -164,7 +164,7 @@ yield		{ printf("Found keyword: %s\n", yytext); }
 
 <DOUBLE_QUOTE_STRING>"#{"   { 
                                 printf("Found string \"%s\"\n", string);
-                                printf("Found interpolation: +\n");
+                                printf("Found interpolation: + ( \n");
                                 nestingCount++;
                                 BEGIN(INITIAL);
                             }
@@ -271,10 +271,17 @@ yield		{ printf("Found keyword: %s\n", yytext); }
     printf("Found number with exponent: %f\n", number); 
 }
 
-(0([xX]|[bB]))?{DIGIT}+(_+{DIGIT}+)*(\.{DIGIT}+(_+{DIGIT}+)*)?{EXPONENT}?  {
+{DIGIT}+(_+{DIGIT}+)*(\.{DIGIT}+(_+{DIGIT}+)*)?{EXPONENT}?  {
     printf("Error: Underscore is repeated several times in a row: %s\n", yytext); 
 }
 
+0[xX]{HEX_DIGIT}+(_+{HEX_DIGIT}+)*  {
+    printf("Error: Underscore is repeated several times in a row: %s\n", yytext); 
+}
+
+0[bB]{BIN_DIGIT}+(_+{BIN_DIGIT}+)*  {
+    printf("Error: Underscore is repeated several times in a row: %s\n", yytext); 
+}
 
 
 \.?{DIGIT}+(_{DIGIT}+)*(\.{DIGIT}+(_{DIGIT}+)*)?{EXPONENT}? {printf("Error: Dot at the start of a number: %s\n", yytext); }
