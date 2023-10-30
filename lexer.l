@@ -210,6 +210,7 @@ yield		{ printf("Found keyword: %s\n", yytext); }
                                 printf("String literal: \"%s\" \n", string);
                                 BEGIN(INITIAL);
                         }
+<DOUBLE_QUOTE_STRING>\\             { strcat(string, ""); }
 
 <SINGLE_QUOTE_STRING>\' { 
                             printf("String literal: \"%s\" \n", string);
