@@ -159,6 +159,8 @@ expr: IDENTIFIER
 
 delimiter: NEW_LINE_SYMBOL
     | SEMICOLON_SYMBOL
+    | delimiter NEW_LINE_SYMBOL
+    ;
 
 expr_list: /* empty */
 	| expr_list_not_empty
