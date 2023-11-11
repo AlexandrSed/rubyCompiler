@@ -155,6 +155,7 @@ expr: IDENTIFIER
     | DEFINED_KEYWORD linefeed_or_empty expr
 	| DOUBLE_COLON_SYMBOL linefeed_or_empty expr
 	| expr DOUBLE_COLON_SYMBOL linefeed_or_empty expr
+    | expr QUESTION_SYMBOL linefeed_or_empty '(' linefeed_or_empty expr linefeed_or_empty ')' linefeed_or_empty COLON_SYMBOL linefeed_or_empty '(' linefeed_or_empty expr  linefeed_or_empty ')'
     ;
 
 linefeed_or_empty: /*empty*/
@@ -187,7 +188,6 @@ stmt: expr delimiter
     | until_stmt delimiter
     | case_stmt delimiter
     | unless_stmt delimiter
-    | ternary_op_stmt delimiter
     | stmt_list delimiter
     | return_stmt delimiter
     | alias_stmt delimiter
@@ -249,9 +249,6 @@ elsif_list:
     | elsif_list ELSIF_KEYWORD expr delimiter stmt
     | elsif_list ELSIF_KEYWORD expr THEN_KEYWORD stmt
     ;
-
-ternary_op_stmt:
-    | expr QUESTION_SYMBOL '(' expr ')' COLON_SYMBOL '(' expr ')'
 
 while_stmt:
     | WHILE_KEYWORD expr DO_KEYWORD stmt END_KEYWORD
