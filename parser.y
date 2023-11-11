@@ -109,52 +109,57 @@ expr: IDENTIFIER
     | NIL_KEYWORD
     | INTEGER_NUMBER
     | FLOAT_NUMBER
-    | expr '=' expr
-    | expr '[' expr ']'
-    | expr '/' expr
-    | expr '%' expr
-    | expr '*' expr
-    | expr '+' expr
-    | expr '-' expr
-    | '-' expr %prec UMINUS
-    | IDENTIFIER '(' expr_list ')'
-    | expr '.' IDENTIFIER
-    | expr AND_KEYWORD expr
-    | expr OR_KEYWORD expr
-    | NOT_KEYWORD expr
-    | expr ARITHMETIC_POW_OP expr
-    | expr EQL_OP expr
-    | expr NOT_EQL_OP expr
-    | expr GREATER_OP expr
-    | expr LESS_OP expr
-    | expr GREATER_OR_EQL_OP expr
-    | expr LESS_OR_EQL_OP expr
-    | expr COMB_COMPRASION_OP expr
-    | expr CASE_EQL_OP expr
+    | expr linefeed_or_empty '=' linefeed_or_empty expr
+    | expr '[' linefeed_or_empty expr linefeed_or_empty ']'
+    | expr '/' linefeed_or_empty expr
+    | expr '%' linefeed_or_empty expr
+    | expr '*' linefeed_or_empty expr
+    | expr '+' linefeed_or_empty expr
+    | expr '-' linefeed_or_empty expr
+    | '-'  linefeed_or_empty expr %prec UMINUS
+    | IDENTIFIER '(' linefeed_or_empty expr_list linefeed_or_empty ')'
+    | expr linefeed_or_empty '.' linefeed_or_empty IDENTIFIER
+    | expr AND_KEYWORD linefeed_or_empty expr
+    | expr OR_KEYWORD linefeed_or_empty expr
+    | NOT_KEYWORD '(' linefeed_or_empty expr linefeed_or_empty ')'
+    | expr ARITHMETIC_POW_OP linefeed_or_empty expr
+    | expr EQL_OP linefeed_or_empty expr
+    | expr NOT_EQL_OP linefeed_or_empty expr
+    | expr GREATER_OP linefeed_or_empty expr
+    | expr LESS_OP linefeed_or_empty expr
+    | expr GREATER_OR_EQL_OP linefeed_or_empty expr
+    | expr LESS_OR_EQL_OP linefeed_or_empty expr
+    | expr COMB_COMPRASION_OP linefeed_or_empty expr
+    | expr CASE_EQL_OP linefeed_or_empty expr
     | expr '.' RECEIVER_EQL_OP expr
     | expr '.' OBJ_ID_EQL_OP expr
-	| expr ADD_ASSIGN_OP expr
-	| expr SUB_ASSIGN_OP expr
-	| expr MUL_ASSIGN_OP expr
-	| expr DIV_ASSIGN_OP expr
-	| expr MOD_ASSIGN_OP expr
-	| expr POW_ASSIGN_OP expr
-    | expr BIN_AND_OP expr
-	| expr BIN_OR_OP expr 
-	| expr BIN_XOR_OP expr
-	| expr BIN_ONES_COMPLEMENT_OP expr
-	| expr BIN_LEFT_SHIFT_OP expr
-	| expr BIN_RIGHT_SHIFT_OP expr
-	| expr LOGICAL_AND_OP expr
-	| expr LOGICAL_OR_OP expr
-	| LOGICAL_NOT_OP expr
-    | expr INCLUSIVE_RANGE_OP expr
-	| expr EXCLUSIVE_RANGE_OP expr
-    | '(' expr ')'
-    | '[' expr_list ']'
-    | DEFINED_KEYWORD expr
-	| DOUBLE_COLON_SYMBOL expr
-	| expr DOUBLE_COLON_SYMBOL expr
+	| expr ADD_ASSIGN_OP linefeed_or_empty expr
+	| expr SUB_ASSIGN_OP linefeed_or_empty expr
+	| expr MUL_ASSIGN_OP linefeed_or_empty expr
+	| expr DIV_ASSIGN_OP linefeed_or_empty expr
+	| expr MOD_ASSIGN_OP linefeed_or_empty expr
+	| expr POW_ASSIGN_OP linefeed_or_empty expr
+    | expr BIN_AND_OP linefeed_or_empty expr
+	| expr BIN_OR_OP linefeed_or_empty expr 
+	| expr BIN_XOR_OP linefeed_or_empty expr
+	| expr BIN_ONES_COMPLEMENT_OP linefeed_or_empty expr
+	| expr BIN_LEFT_SHIFT_OP linefeed_or_empty expr
+	| expr BIN_RIGHT_SHIFT_OP linefeed_or_empty expr
+	| expr LOGICAL_AND_OP linefeed_or_empty expr
+	| expr LOGICAL_OR_OP linefeed_or_empty expr
+	| LOGICAL_NOT_OP linefeed_or_empty expr
+    | expr INCLUSIVE_RANGE_OP linefeed_or_empty expr
+	| expr EXCLUSIVE_RANGE_OP linefeed_or_empty expr
+    | '(' linefeed_or_empty expr linefeed_or_empty ')'
+    | '[' linefeed_or_empty expr_list linefeed_or_empty ']'
+    | DEFINED_KEYWORD linefeed_or_empty expr
+	| DOUBLE_COLON_SYMBOL linefeed_or_empty expr
+	| expr DOUBLE_COLON_SYMBOL linefeed_or_empty expr
+    ;
+
+linefeed_or_empty: /*empty*/
+    | NEW_LINE_SYMBOL
+    | linefeed_or_empty NEW_LINE_SYMBOL
     ;
 
 delimiter: NEW_LINE_SYMBOL
