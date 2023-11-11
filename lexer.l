@@ -4,7 +4,7 @@
 %{
 	#include <stdio.h>
     #include <stdlib.h>
-    #include <string.h>
+    #include <string>
 
     char* removeUnderscores(const char* input);
 
@@ -30,8 +30,8 @@ NUM_WITH_UNDERSCORE_DECIMAL {DIGIT}*\.{DIGIT}+{UNDERSCORE}{DIGIT}*
 %{
     int num;
     int doubleQuote;
-    char temp1[100];
-    char string[1000];
+    std::string temp1;
+    std::string str;
     int nestingCount = 0;
 %}
 
@@ -127,7 +127,7 @@ yield		{ printf("Found keyword: %s\n", yytext); }
                 } else {
                     nestingCount--;
                     BEGIN(DOUBLE_QUOTE_STRING);
-                    string[0] = 0;
+                    str = "";
                     printf("Found interpolation: ) + \n");
                 }
             }
@@ -144,12 +144,12 @@ yield		{ printf("Found keyword: %s\n", yytext); }
 "\n"        { printf("Found line feed: %s\n", yytext); }
 
 \"          {
-                string[0] = '\0'; 
+                str = ""; 
                 BEGIN(DOUBLE_QUOTE_STRING);
             }
                 
 \'          {
-                string[0] = '\0'; 
+                str = ""; 
                 BEGIN(SINGLE_QUOTE_STRING);    
             }
 
@@ -163,56 +163,54 @@ yield		{ printf("Found keyword: %s\n", yytext); }
 \@\@{IDENTIFIER} {printf("Found class var name: %s\n", yytext); }
 
 <DOUBLE_QUOTE_STRING>"#{"   { 
-                                printf("Found string \"%s\"\n", string);
+                                printf("Found string \"%s\"\n", str.c_str());
                                 printf("Found interpolation: + ( \n");
                                 nestingCount++;
                                 BEGIN(INITIAL);
                             }
 
-<SINGLE_QUOTE_STRING>[^\\\']+ { strcat(string, yytext); }
-<DOUBLE_QUOTE_STRING>[^\\\"#]+ { strcat(string, yytext); }
-<DOUBLE_QUOTE_STRING>[#]           { strcat(string, yytext); }
-<DOUBLE_QUOTE_STRING>\\'            { strcat(string, "\\'"); }
-<DOUBLE_QUOTE_STRING>\\n             { strcat(string, "\n"); }
-<DOUBLE_QUOTE_STRING>\\a             { strcat(string, "\a"); }
-<DOUBLE_QUOTE_STRING>\\b             { strcat(string, "\b"); }
-<DOUBLE_QUOTE_STRING>\\t             { strcat(string, "\t"); }
-<DOUBLE_QUOTE_STRING>\\v             { strcat(string, "\v"); }
-<DOUBLE_QUOTE_STRING>\\f             { strcat(string, "\f"); }
-<DOUBLE_QUOTE_STRING>\\r             { strcat(string, "\r"); }
-<DOUBLE_QUOTE_STRING>\\e             { strcat(string, "\e"); }
-<DOUBLE_QUOTE_STRING>\\s             { strcat(string, " "); }
-<SINGLE_QUOTE_STRING,DOUBLE_QUOTE_STRING>\\\\ { strcat(string, "\\");}
-<DOUBLE_QUOTE_STRING>\\\"        { strcat(string, "\""); }
-<DOUBLE_QUOTE_STRING>\\#             { strcat(string, "#"); }
+<SINGLE_QUOTE_STRING>[^\\\']+ { str.append(yytext); }
+<DOUBLE_QUOTE_STRING>[^\\\"#]+ { str.append(yytext); }
+<DOUBLE_QUOTE_STRING>[#]           { str.append(yytext); }
+<DOUBLE_QUOTE_STRING>\\'            { str.append("\\'"); }
+<DOUBLE_QUOTE_STRING>\\n             { str.append("\n"); }
+<DOUBLE_QUOTE_STRING>\\a             { str.append("\a"); }
+<DOUBLE_QUOTE_STRING>\\b             { str.append("\b"); }
+<DOUBLE_QUOTE_STRING>\\t             { str.append("\t"); }
+<DOUBLE_QUOTE_STRING>\\v             { str.append("\v"); }
+<DOUBLE_QUOTE_STRING>\\f             { str.append("\f"); }
+<DOUBLE_QUOTE_STRING>\\r             { str.append("\r"); }
+<DOUBLE_QUOTE_STRING>\\e             { str.append("\e"); }
+<DOUBLE_QUOTE_STRING>\\s             { str.append(" "); }
+<SINGLE_QUOTE_STRING,DOUBLE_QUOTE_STRING>\\\\ { str.append("\\");}
+<DOUBLE_QUOTE_STRING>\\\"        { str.append("\""); }
+<DOUBLE_QUOTE_STRING>\\#             { str.append("#"); }
 
 
-<SINGLE_QUOTE_STRING>\\\"        { strcat(string, "\\\""); }
-<SINGLE_QUOTE_STRING>\\\'        { strcat(string, "'"); }
+<SINGLE_QUOTE_STRING>\\\"        { str.append("\\\""); }
+<SINGLE_QUOTE_STRING>\\\'        { str.append("'"); }
 
     
 
 <DOUBLE_QUOTE_STRING>\\{OCT_DIGIT}{1,3}  { 
                                 sscanf(yytext + 1, "%o", &num);
-                                temp1[0] = (char) num;
-                                temp1[1] = 0;
-                                strcat(string, temp1);
+                                temp1 = (char) num;
+                                str.append(temp1);
                             }
 
 <DOUBLE_QUOTE_STRING>\\x{HEX_DIGIT}{1,2} { 
                                 sscanf(yytext + 2, "%x", &num);
-                                temp1[0] = (char) num;
-                                temp1[1] = 0;
-                                strcat(string, temp1);
+                                temp1 = (char) num;
+                                str.append(temp1);
                             }
 
 <DOUBLE_QUOTE_STRING>\" { 
-                                printf("String literal: \"%s\" \n", string);
+                                printf("String literal: \"%s\" \n", str.c_str());
                                 BEGIN(INITIAL);
                         }
 
 <SINGLE_QUOTE_STRING>\' { 
-                            printf("String literal: \"%s\" \n", string);
+                            printf("String literal: \"%s\" \n", str.c_str());
                             BEGIN(INITIAL);
                         }
 
@@ -315,7 +313,7 @@ int main(int argc, char** argv) {
 }
 
  char* removeUnderscores(const char* input) {
-    char* result = malloc(strlen(input) + 1);
+    char* result = (char*)malloc(strlen(input) + 1);
     int resultIndex = 0;
     
     for (int i = 0; input[i]; i++) {
