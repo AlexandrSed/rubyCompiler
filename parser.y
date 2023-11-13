@@ -215,6 +215,8 @@ class_stmt:
 class_body_stmt: method_stmt delimiter
     | CLASS_VAR_NAME delimiter
     | CLASS_VAR_NAME '=' expr delimiter
+    | OBJECT_VAR_NAME delimiter
+    | OBJECT_VAR_NAME '=' expr delimiter
     | class_stmt delimiter
 
 class_body_not_empty: class_body_stmt
