@@ -295,6 +295,14 @@ when_list:
 
 alias_stmt: ALIAS_KEYWORD IDENTIFIER IDENTIFIER
 
+module_stmt: MODULE_KEYWORD CONSTANT_NAME delimiter module_stmt END_KEYWORD
+
+module_body: expr delimiter
+    | method_stmt delimiter
+    | alias_stmt delimiter
+    | class_stmt delimiter
+    | module_stmt delimiter
+
 begin_rescue_stmt: BEGIN_KEYWORD delimiter stmt_list RESCUE_KEYWORD delimiter stmt_list END_KEYWORD
     | BEGIN_KEYWORD delimiter stmt_list RESCUE_KEYWORD delimiter stmt_list ENSURE_KEYWORD delimiter END_KEYWORD
 %%
