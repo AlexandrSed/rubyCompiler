@@ -209,22 +209,21 @@ method_stmt:
     | DEF_KEYWORD IDENTIFIER '(' param_list ')' delimiter stmt_list END_KEYWORD
     | DEF_KEYWORD IDENTIFIER delimiter stmt_list END_KEYWORD
 
-method_list_not_empty:
-    | method_stmt
-    | method_list delimiter method_stmt
-    ;
+class_stmt:
+    | CLASS_KEYWORD CONSTANT_NAME delimiter class_body END_KEYWORD
 
-method_list: /* empty */
-    | method_stmt
-    ;
-
-class_var_name:
+class_body_stmt: method_stmt delimiter
     | CLASS_VAR_NAME delimiter
     | CLASS_VAR_NAME '=' expr delimiter
+    | class_stmt delimiter
 
-class_stmt:
-    | CLASS_KEYWORD CONSTANT_NAME delimiter method_list END_KEYWORD
-    | CLASS_KEYWORD CONSTANT_NAME delimiter class_var_name method_list END_KEYWORD
+class_body_not_empty: class_body_stmt
+    | class_body_not_empty class_body_stmt
+    ;
+
+class_body: /* empty */
+    | class_body_not_empty
+    ;
 
 if_stmt:
     | IF_KEYWORD expr delimiter stmt END_KEYWORD
