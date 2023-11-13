@@ -297,11 +297,17 @@ alias_stmt: ALIAS_KEYWORD IDENTIFIER IDENTIFIER
 
 module_stmt: MODULE_KEYWORD CONSTANT_NAME delimiter module_stmt END_KEYWORD
 
-module_body: expr delimiter
+module_body_stmt: expr delimiter
     | method_stmt delimiter
     | alias_stmt delimiter
     | class_stmt delimiter
     | module_stmt delimiter
+
+module_body_not_empty: module_body_stmt
+    | module_body_not_empty module_body_stmt
+
+module_body: /* empty */
+    | module_body_not_empty
 
 begin_rescue_stmt: BEGIN_KEYWORD delimiter stmt_list RESCUE_KEYWORD delimiter stmt_list END_KEYWORD
     | BEGIN_KEYWORD delimiter stmt_list RESCUE_KEYWORD delimiter stmt_list ENSURE_KEYWORD delimiter END_KEYWORD
