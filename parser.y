@@ -144,6 +144,18 @@ linefeed_or_empty: /*empty*/
     | linefeed_or_empty NEW_LINE_SYMBOL
     ;
 
+programm_element: class_stmt
+    | method_stmt
+    | stmt_list
+    ;
+
+programm_el_list_not_empty: programm_element
+    | programm_el_list_not_empty programm_element
+    ;
+
+programm:  programm_el_list_not_empty
+    ;
+
 delimiter: NEW_LINE_SYMBOL
     | SEMICOLON_SYMBOL
     | delimiter NEW_LINE_SYMBOL
