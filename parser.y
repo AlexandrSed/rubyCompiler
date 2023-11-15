@@ -78,6 +78,10 @@
 %token CONSTANT_NAME
 %%
 
+programm: /*empty*/
+    |programm_el_list_not_empty
+    ;
+
 expr: IDENTIFIER
     | OBJECT_VAR_NAME
     | CLASS_VAR_NAME
@@ -153,9 +157,6 @@ programm_el_list_not_empty: programm_element
     | programm_el_list_not_empty programm_element
     ;
 
-programm:  programm_el_list_not_empty
-    ;
-
 delimiter: NEW_LINE_SYMBOL
     | SEMICOLON_SYMBOL
     | delimiter NEW_LINE_SYMBOL
@@ -169,7 +170,7 @@ expr_list_not_empty: expr
     | expr_list_not_empty COMMA_SYMBOL expr
     ;
 
-stmt_list:
+stmt_list: /* empty */
     | stmt
     | stmt_list stmt
     ;
@@ -196,12 +197,12 @@ param_list: /* empty */
     | param_list_not_empty
     ;
 
-method_stmt:
-    | DEF_KEYWORD IDENTIFIER '(' param_list ')' delimiter stmt_list END_KEYWORD
+method_stmt: DEF_KEYWORD IDENTIFIER '(' param_list ')' delimiter stmt_list END_KEYWORD
     | DEF_KEYWORD IDENTIFIER delimiter stmt_list END_KEYWORD
+    ;
 
-class_stmt:
-    | CLASS_KEYWORD CONSTANT_NAME delimiter class_body END_KEYWORD
+class_stmt: CLASS_KEYWORD CONSTANT_NAME delimiter class_body END_KEYWORD
+    ;
 
 class_body_stmt: method_stmt delimiter
     | CLASS_VAR_NAME delimiter
@@ -218,8 +219,7 @@ class_body: /* empty */
     | class_body_not_empty
     ;
 
-if_stmt:
-    | IF_KEYWORD expr delimiter stmt END_KEYWORD
+if_stmt: IF_KEYWORD expr delimiter stmt END_KEYWORD
     | IF_KEYWORD expr THEN_KEYWORD stmt END_KEYWORD
     | IF_KEYWORD expr delimiter stmt ELSE_KEYWORD stmt END_KEYWORD
     | IF_KEYWORD expr THEN_KEYWORD stmt ELSE_KEYWORD stmt END_KEYWORD
@@ -229,78 +229,79 @@ if_stmt:
     | IF_KEYWORD expr THEN_KEYWORD stmt elsif_list ELSE_KEYWORD stmt END_KEYWORD
     ;
 
-unless_stmt:
-    | UNLESS_KEYWORD expr THEN_KEYWORD stmt END_KEYWORD
+unless_stmt: UNLESS_KEYWORD expr THEN_KEYWORD stmt END_KEYWORD
     | UNLESS_KEYWORD expr stmt END_KEYWORD
     | UNLESS_KEYWORD expr THEN_KEYWORD stmt ELSE_KEYWORD stmt END_KEYWORD
     | UNLESS_KEYWORD expr stmt ELSE_KEYWORD stmt END_KEYWORD
 
-elsif_list:
-    | ELSIF_KEYWORD expr delimiter stmt
+elsif_list: ELSIF_KEYWORD expr delimiter stmt
     | ELSIF_KEYWORD expr THEN_KEYWORD stmt
     | elsif_list ELSIF_KEYWORD expr delimiter stmt
     | elsif_list ELSIF_KEYWORD expr THEN_KEYWORD stmt
     ;
 
-while_stmt:
-    | WHILE_KEYWORD expr DO_KEYWORD stmt END_KEYWORD
+while_stmt: WHILE_KEYWORD expr DO_KEYWORD stmt END_KEYWORD
     | WHILE_KEYWORD expr stmt END_KEYWORD
     | WHILE_KEYWORD expr stmt redo_stmt END_KEYWORD
     ;
 
-for_stmt:
-    | FOR_KEYWORD expr IN_KEYWORD expr DO_KEYWORD stmt END_KEYWORD
+for_stmt: FOR_KEYWORD expr IN_KEYWORD expr DO_KEYWORD stmt END_KEYWORD
     | FOR_KEYWORD expr IN_KEYWORD expr stmt END_KEYWORD
     ;
 
-until_stmt:
-    | UNTIL_KEYWORD expr stmt END_KEYWORD
+until_stmt: UNTIL_KEYWORD expr stmt END_KEYWORD
     | UNTIL_KEYWORD expr DO_KEYWORD stmt END_KEYWORD
     | expr UNTIL_KEYWORD expr
     ;
 
 return_stmt: RETURN_KEYWORD expr
     | RETURN_KEYWORD
+    ;
 
-break_stmt:
-    | BREAK_KEYWORD IF_KEYWORD expr
+break_stmt: BREAK_KEYWORD IF_KEYWORD expr
     | BREAK_KEYWORD expr IF_KEYWORD expr
+    ;
 
-next_stmt:
-    | NEXT_KEYWORD IF_KEYWORD expr
+next_stmt: NEXT_KEYWORD IF_KEYWORD expr
     | NEXT_KEYWORD expr IF_KEYWORD expr
+    ;
 
-redo_stmt: 
-    | REDO_KEYWORD IF_KEYWORD expr
+redo_stmt:  REDO_KEYWORD IF_KEYWORD expr
     | REDO_KEYWORD expr IF_KEYWORD expr
+    ;
 
-case_stmt:
-    | CASE_KEYWORD expr when_list END_KEYWORD
+case_stmt: CASE_KEYWORD expr when_list END_KEYWORD
     | CASE_KEYWORD expr when_list ELSE_KEYWORD stmt END_KEYWORD
+    ;
 
-
-when_list:
-    | WHEN_KEYWORD expr_list delimiter stmt
+when_list: WHEN_KEYWORD expr_list delimiter stmt
     | WHEN_KEYWORD expr_list THEN_KEYWORD stmt
     | when_list expr_list delimiter stmt
     | when_list expr_list THEN_KEYWORD stmt
+    ;
 
 alias_stmt: ALIAS_KEYWORD IDENTIFIER IDENTIFIER
+    ;
 
-module_stmt: MODULE_KEYWORD CONSTANT_NAME delimiter module_stmt END_KEYWORD
+module_stmt: MODULE_KEYWORD CONSTANT_NAME delimiter module_body END_KEYWORD
+    ;
 
 module_body_stmt: expr delimiter
     | method_stmt delimiter
     | alias_stmt delimiter
     | class_stmt delimiter
     | module_stmt delimiter
+    ;
 
 module_body_not_empty: module_body_stmt
     | module_body_not_empty module_body_stmt
+    ;
 
 module_body: /* empty */
     | module_body_not_empty
+    ;
 
 begin_rescue_stmt: BEGIN_KEYWORD delimiter stmt_list RESCUE_KEYWORD delimiter stmt_list END_KEYWORD
     | BEGIN_KEYWORD delimiter stmt_list RESCUE_KEYWORD delimiter stmt_list ENSURE_KEYWORD delimiter END_KEYWORD
+    ;
 %%
