@@ -183,7 +183,6 @@ stmt: expr delimiter
     | until_stmt delimiter
     | case_stmt delimiter
     | unless_stmt delimiter
-    | stmt_list delimiter
     | return_stmt delimiter
     | alias_stmt delimiter
     | begin_rescue_stmt delimiter
