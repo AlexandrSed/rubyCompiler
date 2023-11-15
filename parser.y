@@ -151,6 +151,7 @@ linefeed_or_empty: /*empty*/
 programm_element: class_stmt
     | method_stmt
     | stmt_list
+    | module_stmt
     ;
 
 programm_el_list_not_empty: programm_element
