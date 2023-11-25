@@ -144,6 +144,7 @@ expr: IDENTIFIER
     ;
 
 linefeed_or_empty: /*empty*/
+    | NEW_LINE_SYMBOL
     | linefeed_or_empty NEW_LINE_SYMBOL
     ;
 
@@ -170,8 +171,7 @@ expr_list_not_empty: expr
     | expr_list_not_empty COMMA_SYMBOL expr
     ;
 
-stmt_list: /* empty */
-    | stmt
+stmt_list: stmt
     | stmt_list stmt
     ;
     
