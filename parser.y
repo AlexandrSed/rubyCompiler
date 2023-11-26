@@ -163,8 +163,6 @@ expr: IDENTIFIER
     | expr LESS_OR_EQL_OP linefeed expr
     | expr COMB_COMPRASION_OP linefeed expr
     | expr CASE_EQL_OP linefeed expr
-    | expr '.' RECEIVER_EQL_OP expr
-    | expr '.' OBJ_ID_EQL_OP expr
 	| expr ADD_ASSIGN_OP linefeed expr
 	| expr SUB_ASSIGN_OP linefeed expr
 	| expr MUL_ASSIGN_OP linefeed expr
