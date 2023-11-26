@@ -144,7 +144,6 @@ expr: IDENTIFIER
     ;
 
 linefeed_or_empty: /*empty*/
-    | NEW_LINE_SYMBOL
     | linefeed_or_empty NEW_LINE_SYMBOL
     ;
 
