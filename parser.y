@@ -184,7 +184,6 @@ expr: IDENTIFIER
 	| DOUBLE_COLON_SYMBOL linefeed expr
 	| expr DOUBLE_COLON_SYMBOL linefeed expr
     | expr QUESTION_SYMBOL linefeed expr linefeed COLON_SYMBOL linefeed  expr
-    | oneline_if
     | oneline_unless
     ;
 
@@ -268,9 +267,7 @@ if_stmt: IF_KEYWORD expr delimiter stmt END_KEYWORD
     | IF_KEYWORD expr THEN_KEYWORD stmt elsif_list stmt END_KEYWORD
     | IF_KEYWORD expr delimiter stmt elsif_list ELSE_KEYWORD stmt END_KEYWORD
     | IF_KEYWORD expr THEN_KEYWORD stmt elsif_list ELSE_KEYWORD stmt END_KEYWORD
-    ;
-
-oneline_if: expr IF_KEYWORD expr
+    | expr IF_KEYWORD expr
     | expr IF_KEYWORD linefeed expr
     ;
 
