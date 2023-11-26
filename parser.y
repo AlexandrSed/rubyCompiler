@@ -232,8 +232,7 @@ stmt: expr delimiter
     | begin_rescue_stmt delimiter
     ;
 
-param_list_not_empty:
-    | IDENTIFIER
+param_list_not_empty: IDENTIFIER
     | param_list_not_empty COMMA_SYMBOL IDENTIFIER
     ;
 
