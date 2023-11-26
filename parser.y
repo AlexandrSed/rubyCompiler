@@ -201,7 +201,6 @@ programm_el_list_not_empty: programm_element
 
 delimiter: linefeed
     | SEMICOLON_SYMBOL
-    | SEMICOLON_SYMBOL linefeed
     ;
 
 expr_list: /* empty */
