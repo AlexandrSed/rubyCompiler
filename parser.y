@@ -234,11 +234,11 @@ stmt: expr delimiter
 
 param_list_not_empty:
     | IDENTIFIER
-    | param_list COMMA_SYMBOL IDENTIFIER
+    | param_list_not_empty COMMA_SYMBOL IDENTIFIER
     ;
 
 param_list: /* empty */
-    | param_list_not_empty
+    | param_list_not_empty 
     ;
 
 method_stmt: DEF_KEYWORD IDENTIFIER '(' param_list ')' delimiter stmt_list END_KEYWORD
