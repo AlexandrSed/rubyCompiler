@@ -140,7 +140,6 @@ expr: IDENTIFIER
 	| expr DOUBLE_COLON_SYMBOL expr
     | expr QUESTION_SYMBOL expr COLON_SYMBOL  expr
     | expr IF_KEYWORD expr
-    | expr UNLESS_KEYWORD expr
     | expr '=' linefeed expr
     | expr '[' linefeed expr linefeed ']'
     | expr '/' linefeed expr
@@ -187,7 +186,7 @@ expr: IDENTIFIER
 	| expr DOUBLE_COLON_SYMBOL linefeed expr
     | expr QUESTION_SYMBOL linefeed expr linefeed COLON_SYMBOL linefeed  expr
     | expr IF_KEYWORD linefeed expr
-    | expr UNLESS_KEYWORD linefeed expr
+    | oneline_unless
     ;
 
 linefeed: NEW_LINE_SYMBOL
@@ -276,6 +275,10 @@ unless_stmt: UNLESS_KEYWORD expr THEN_KEYWORD stmt END_KEYWORD
     | UNLESS_KEYWORD expr stmt END_KEYWORD
     | UNLESS_KEYWORD expr THEN_KEYWORD stmt ELSE_KEYWORD stmt END_KEYWORD
     | UNLESS_KEYWORD expr stmt ELSE_KEYWORD stmt END_KEYWORD
+
+oneline_unless: expr UNLESS_KEYWORD expr
+    | expr UNLESS_KEYWORD linefeed expr
+    ;
 
 elsif_list: ELSIF_KEYWORD expr delimiter stmt
     | ELSIF_KEYWORD expr THEN_KEYWORD stmt
