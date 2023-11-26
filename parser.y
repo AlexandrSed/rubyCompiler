@@ -196,7 +196,6 @@ linefeed: NEW_LINE_SYMBOL
 
 programm_element: class_stmt
     | method_stmt
-    | stmt_list
     | module_stmt
     ;
 
