@@ -184,7 +184,6 @@ expr: IDENTIFIER
 	| DOUBLE_COLON_SYMBOL linefeed expr
 	| expr DOUBLE_COLON_SYMBOL linefeed expr
     | expr QUESTION_SYMBOL linefeed expr linefeed COLON_SYMBOL linefeed  expr
-    | oneline_unless
     ;
 
 linefeed: NEW_LINE_SYMBOL
@@ -275,8 +274,7 @@ unless_stmt: UNLESS_KEYWORD expr THEN_KEYWORD stmt END_KEYWORD
     | UNLESS_KEYWORD expr stmt END_KEYWORD
     | UNLESS_KEYWORD expr THEN_KEYWORD stmt ELSE_KEYWORD stmt END_KEYWORD
     | UNLESS_KEYWORD expr stmt ELSE_KEYWORD stmt END_KEYWORD
-
-oneline_unless: expr UNLESS_KEYWORD expr
+    | expr UNLESS_KEYWORD expr
     | expr UNLESS_KEYWORD linefeed expr
     ;
 
