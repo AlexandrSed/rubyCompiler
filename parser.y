@@ -141,7 +141,7 @@ expr: IDENTIFIER
     | expr QUESTION_SYMBOL expr COLON_SYMBOL  expr
     | expr IF_KEYWORD expr
     | expr UNLESS_KEYWORD expr
-    | expr linefeed '=' linefeed expr
+    | expr '=' linefeed expr
     | expr '[' linefeed expr linefeed ']'
     | expr '/' linefeed expr
     | expr '%' linefeed expr
@@ -150,7 +150,7 @@ expr: IDENTIFIER
     | expr '-' linefeed expr
     | '-'  linefeed expr %prec UMINUS
     | IDENTIFIER '(' linefeed expr_list linefeed ')'
-    | expr linefeed '.' linefeed IDENTIFIER
+    | expr '.' linefeed IDENTIFIER
     | expr AND_KEYWORD linefeed expr
     | expr OR_KEYWORD linefeed expr
     | NOT_KEYWORD '(' linefeed expr linefeed ')'
