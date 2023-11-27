@@ -97,6 +97,7 @@ expr: IDENTIFIER
     | '-' expr %prec UMINUS // 2
     | IDENTIFIER '(' expr_list ')'
     | expr '.' IDENTIFIER
+    | expr '.' IDENTIFIER QUESTION_SYMBOL
     | expr AND_KEYWORD expr
     | expr OR_KEYWORD expr
     | NOT_KEYWORD '(' expr ')'
@@ -132,55 +133,57 @@ expr: IDENTIFIER
 	| DOUBLE_COLON_SYMBOL expr // 4
 	| expr DOUBLE_COLON_SYMBOL expr // 4
     | expr QUESTION_SYMBOL expr COLON_SYMBOL  expr 
-    | expr '=' linefeed expr
-    | expr '[' linefeed expr linefeed ']'
-    | expr '/' linefeed expr
-    | expr '%' linefeed expr
-    | expr '*' linefeed expr
-    | expr '+' linefeed expr
-    | expr '-' linefeed expr // 3
-    | '-' linefeed expr %prec UMINUS // 3
-    | IDENTIFIER '(' linefeed expr_list linefeed ')'
-    | expr '.' linefeed IDENTIFIER
-    | expr AND_KEYWORD linefeed expr
-    | expr OR_KEYWORD linefeed expr
-    | NOT_KEYWORD '(' linefeed expr linefeed ')'
-    | expr ARITHMETIC_POW_OP linefeed expr
-    | expr EQL_OP linefeed expr
-    | expr NOT_EQL_OP linefeed expr
-    | expr GREATER_OP linefeed expr
-    | expr LESS_OP linefeed expr
-    | expr GREATER_OR_EQL_OP linefeed expr
-    | expr LESS_OR_EQL_OP linefeed expr
-    | expr COMB_COMPRASION_OP linefeed expr
-    | expr CASE_EQL_OP linefeed expr
-	| expr ADD_ASSIGN_OP linefeed expr
-	| expr SUB_ASSIGN_OP linefeed expr
-	| expr MUL_ASSIGN_OP linefeed expr
-	| expr DIV_ASSIGN_OP linefeed expr
-	| expr MOD_ASSIGN_OP linefeed expr
-	| expr POW_ASSIGN_OP linefeed expr
-    | expr BIN_AND_OP linefeed expr
-	| expr BIN_OR_OP linefeed expr 
-	| expr BIN_XOR_OP linefeed expr
-	| expr BIN_ONES_COMPLEMENT_OP linefeed expr
-	| expr BIN_LEFT_SHIFT_OP linefeed expr
-	| expr BIN_RIGHT_SHIFT_OP linefeed expr
-	| expr LOGICAL_AND_OP linefeed expr
-	| expr LOGICAL_OR_OP linefeed expr
-	| LOGICAL_NOT_OP linefeed expr
-    | expr INCLUSIVE_RANGE_OP linefeed expr
-	| expr EXCLUSIVE_RANGE_OP linefeed expr
-    | '(' linefeed expr linefeed ')'
-    | '[' linefeed expr_list linefeed ']'
-    | DEFINED_KEYWORD linefeed expr
-	| DOUBLE_COLON_SYMBOL linefeed expr // 1
-	| expr DOUBLE_COLON_SYMBOL linefeed expr // 1
-    | expr QUESTION_SYMBOL linefeed expr linefeed COLON_SYMBOL linefeed  expr
+    | expr '=' linefeed_expr
+    | expr '[' linefeed_expr NEW_LINE_SYMBOL ']'
+    | expr '/' linefeed_expr
+    | expr '%' linefeed_expr
+    | expr '*' linefeed_expr
+    | expr '+' linefeed_expr
+    | expr '-' linefeed_expr // 3
+    | '-' linefeed_expr %prec UMINUS // 3
+    | IDENTIFIER '(' NEW_LINE_SYMBOL expr_list NEW_LINE_SYMBOL ')'
+    | expr '.' NEW_LINE_SYMBOL IDENTIFIER
+    | expr '.' NEW_LINE_SYMBOL IDENTIFIER QUESTION_SYMBOL
+    | expr '.' NEW_LINE_SYMBOL IDENTIFIER LOGICAL_NOT_OP
+    | expr '.' NEW_LINE_SYMBOL IDENTIFIER '='
+    | expr AND_KEYWORD linefeed_expr
+    | expr OR_KEYWORD linefeed_expr
+    | NOT_KEYWORD '(' NEW_LINE_SYMBOL expr NEW_LINE_SYMBOL ')'
+    | expr ARITHMETIC_POW_OP linefeed_expr
+    | expr EQL_OP linefeed_expr
+    | expr NOT_EQL_OP linefeed_expr
+    | expr GREATER_OP linefeed_expr
+    | expr LESS_OP linefeed_expr
+    | expr GREATER_OR_EQL_OP linefeed_expr
+    | expr LESS_OR_EQL_OP linefeed_expr
+    | expr COMB_COMPRASION_OP linefeed_expr
+    | expr CASE_EQL_OP linefeed_expr
+	| expr ADD_ASSIGN_OP linefeed_expr
+	| expr SUB_ASSIGN_OP linefeed_expr
+	| expr MUL_ASSIGN_OP linefeed_expr
+	| expr DIV_ASSIGN_OP linefeed_expr
+	| expr MOD_ASSIGN_OP linefeed_expr
+	| expr POW_ASSIGN_OP linefeed_expr
+    | expr BIN_AND_OP linefeed_expr
+	| expr BIN_OR_OP linefeed_expr 
+	| expr BIN_XOR_OP linefeed_expr
+	| expr BIN_ONES_COMPLEMENT_OP linefeed_expr
+	| expr BIN_LEFT_SHIFT_OP linefeed_expr
+	| expr BIN_RIGHT_SHIFT_OP linefeed_expr
+	| expr LOGICAL_AND_OP linefeed_expr
+	| expr LOGICAL_OR_OP linefeed_expr
+	| LOGICAL_NOT_OP linefeed_expr
+    | expr INCLUSIVE_RANGE_OP linefeed_expr
+	| expr EXCLUSIVE_RANGE_OP linefeed_expr
+    | '(' NEW_LINE_SYMBOL expr NEW_LINE_SYMBOL ')'
+    | '[' NEW_LINE_SYMBOL expr_list NEW_LINE_SYMBOL ']'
+    | DEFINED_KEYWORD linefeed_expr
+	| DOUBLE_COLON_SYMBOL linefeed_expr // 1
+	| expr DOUBLE_COLON_SYMBOL linefeed_expr // 1
+    | expr QUESTION_SYMBOL linefeed_expr NEW_LINE_SYMBOL COLON_SYMBOL linefeed_expr
     ;
 
-linefeed: NEW_LINE_SYMBOL //
-    | linefeed NEW_LINE_SYMBOL //
+linefeed_expr: NEW_LINE_SYMBOL expr
     ;
 
 programm_element: class_stmt
@@ -192,9 +195,9 @@ programm_el_list_not_empty: programm_element
     | programm_el_list_not_empty programm_element
     ;
 
-delimiter: linefeed
+delimiter: NEW_LINE_SYMBOL
     | SEMICOLON_SYMBOL
-    | SEMICOLON_SYMBOL linefeed
+    | SEMICOLON_SYMBOL NEW_LINE_SYMBOL
     ;
 
 expr_list: /* empty */ // 5 сюда хочет свернуть все подряд
@@ -230,7 +233,13 @@ param_list: /* empty */
     ;
 
 method_stmt: DEF_KEYWORD IDENTIFIER '(' param_list ')' delimiter stmt_list END_KEYWORD
+    | DEF_KEYWORD IDENTIFIER QUESTION_SYMBOL '(' param_list ')' delimiter stmt_list END_KEYWORD
     | DEF_KEYWORD IDENTIFIER delimiter stmt_list END_KEYWORD
+    | DEF_KEYWORD IDENTIFIER QUESTION_SYMBOL delimiter stmt_list END_KEYWORD
+    | DEF_KEYWORD IDENTIFIER LOGICAL_NOT_OP '(' param_list ')' delimiter stmt_list END_KEYWORD
+    | DEF_KEYWORD IDENTIFIER LOGICAL_NOT_OP delimiter stmt_list END_KEYWORD
+    | DEF_KEYWORD IDENTIFIER '=' '(' param_list ')' delimiter stmt_list END_KEYWORD
+    | DEF_KEYWORD IDENTIFIER '=' delimiter stmt_list END_KEYWORD
     ;
 
 class_stmt: CLASS_KEYWORD CONSTANT_NAME delimiter class_body END_KEYWORD
@@ -260,7 +269,7 @@ if_stmt: IF_KEYWORD expr delimiter stmt END_KEYWORD
     | IF_KEYWORD expr delimiter stmt elsif_list ELSE_KEYWORD stmt END_KEYWORD
     | IF_KEYWORD expr THEN_KEYWORD stmt elsif_list ELSE_KEYWORD stmt END_KEYWORD
     | expr IF_KEYWORD expr
-    | expr IF_KEYWORD linefeed expr
+    | expr IF_KEYWORD NEW_LINE_SYMBOL expr
     ;
 
 unless_stmt: UNLESS_KEYWORD expr THEN_KEYWORD stmt END_KEYWORD
@@ -268,7 +277,7 @@ unless_stmt: UNLESS_KEYWORD expr THEN_KEYWORD stmt END_KEYWORD
     | UNLESS_KEYWORD expr THEN_KEYWORD stmt ELSE_KEYWORD stmt END_KEYWORD
     | UNLESS_KEYWORD expr stmt ELSE_KEYWORD stmt END_KEYWORD
     | expr UNLESS_KEYWORD expr
-    | expr UNLESS_KEYWORD linefeed expr
+    | expr UNLESS_KEYWORD NEW_LINE_SYMBOL expr
     ;
 
 elsif_list: ELSIF_KEYWORD expr delimiter stmt
