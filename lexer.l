@@ -141,7 +141,7 @@ yield		{ printf("Found keyword: %s\n", yytext); }
 ":"         { printf("Found special symbol: %s\n", yytext); }
 "::"        { printf("Found special symbol: %s\n", yytext); }
 ";"         { printf("Found special symbol: %s\n", yytext); }
-"\n"        { printf("Found line feed: %s\n", yytext); }
+\n+        { printf("Found line feed: %s\n", yytext); }
 
 \"          {
                 str = ""; 

@@ -59,11 +59,6 @@
 %left '.' '[' ']'
 %left DOUBLE_COLON_SYMBOL
 
-%token RECEIVER_EQL_OP
-%token OBJ_ID_EQL_OP
-
-
-
 %token COMMA_SYMBOL
 %token SEMICOLON_SYMBOL
 %token NEW_LINE_SYMBOL
@@ -98,8 +93,8 @@ expr: IDENTIFIER
     | expr '%' expr
     | expr '*' expr
     | expr '+' expr
-    | expr '-' expr
-    | '-'  expr %prec UMINUS
+    | expr '-' expr // 2
+    | '-' expr %prec UMINUS // 2
     | IDENTIFIER '(' expr_list ')'
     | expr '.' IDENTIFIER
     | expr AND_KEYWORD expr
@@ -114,8 +109,6 @@ expr: IDENTIFIER
     | expr LESS_OR_EQL_OP expr
     | expr COMB_COMPRASION_OP expr
     | expr CASE_EQL_OP expr
-    | expr '.' RECEIVER_EQL_OP expr
-    | expr '.' OBJ_ID_EQL_OP expr
 	| expr ADD_ASSIGN_OP expr
 	| expr SUB_ASSIGN_OP expr
 	| expr MUL_ASSIGN_OP expr
@@ -136,17 +129,17 @@ expr: IDENTIFIER
     | '(' expr ')'
     | '[' expr_list ']'
     | DEFINED_KEYWORD expr
-	| DOUBLE_COLON_SYMBOL expr
-	| expr DOUBLE_COLON_SYMBOL expr
-    | expr QUESTION_SYMBOL expr COLON_SYMBOL  expr
+	| DOUBLE_COLON_SYMBOL expr // 4
+	| expr DOUBLE_COLON_SYMBOL expr // 4
+    | expr QUESTION_SYMBOL expr COLON_SYMBOL  expr 
     | expr '=' linefeed expr
     | expr '[' linefeed expr linefeed ']'
     | expr '/' linefeed expr
     | expr '%' linefeed expr
     | expr '*' linefeed expr
     | expr '+' linefeed expr
-    | expr '-' linefeed expr
-    | '-'  linefeed expr %prec UMINUS
+    | expr '-' linefeed expr // 3
+    | '-' linefeed expr %prec UMINUS // 3
     | IDENTIFIER '(' linefeed expr_list linefeed ')'
     | expr '.' linefeed IDENTIFIER
     | expr AND_KEYWORD linefeed expr
@@ -181,13 +174,13 @@ expr: IDENTIFIER
     | '(' linefeed expr linefeed ')'
     | '[' linefeed expr_list linefeed ']'
     | DEFINED_KEYWORD linefeed expr
-	| DOUBLE_COLON_SYMBOL linefeed expr
-	| expr DOUBLE_COLON_SYMBOL linefeed expr
+	| DOUBLE_COLON_SYMBOL linefeed expr // 1
+	| expr DOUBLE_COLON_SYMBOL linefeed expr // 1
     | expr QUESTION_SYMBOL linefeed expr linefeed COLON_SYMBOL linefeed  expr
     ;
 
-linefeed: NEW_LINE_SYMBOL
-    | linefeed NEW_LINE_SYMBOL
+linefeed: NEW_LINE_SYMBOL //
+    | linefeed NEW_LINE_SYMBOL //
     ;
 
 programm_element: class_stmt
@@ -201,13 +194,14 @@ programm_el_list_not_empty: programm_element
 
 delimiter: linefeed
     | SEMICOLON_SYMBOL
+    | SEMICOLON_SYMBOL linefeed
     ;
 
-expr_list: /* empty */
+expr_list: /* empty */ // 5 сюда хочет свернуть все подряд
 	| expr_list_not_empty
     ;
 
-expr_list_not_empty: expr
+expr_list_not_empty: expr // 6
     | expr_list_not_empty COMMA_SYMBOL expr
     ;
 
