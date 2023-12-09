@@ -130,8 +130,8 @@ expr: IDENTIFIER
     | '(' expr ')'
     | '[' expr_list ']'
     | DEFINED_KEYWORD expr
-	| DOUBLE_COLON_SYMBOL expr // 4
-	| expr DOUBLE_COLON_SYMBOL expr // 4
+	| DOUBLE_COLON_SYMBOL expr 
+	| expr DOUBLE_COLON_SYMBOL expr 
     | expr QUESTION_SYMBOL expr COLON_SYMBOL  expr 
     | expr '=' linefeed_expr
     | expr '[' linefeed_expr NEW_LINE_SYMBOL ']'
@@ -139,8 +139,8 @@ expr: IDENTIFIER
     | expr '%' linefeed_expr
     | expr '*' linefeed_expr
     | expr '+' linefeed_expr
-    | expr '-' linefeed_expr // 3
-    | '-' linefeed_expr %prec UMINUS // 3
+    | expr '-' linefeed_expr 
+    | '-' linefeed_expr %prec UMINUS 
     | IDENTIFIER '(' NEW_LINE_SYMBOL expr_list NEW_LINE_SYMBOL ')'
     | expr '.' NEW_LINE_SYMBOL IDENTIFIER
     | expr '.' NEW_LINE_SYMBOL IDENTIFIER QUESTION_SYMBOL
@@ -200,11 +200,11 @@ delimiter: NEW_LINE_SYMBOL
     | SEMICOLON_SYMBOL NEW_LINE_SYMBOL
     ;
 
-expr_list: /* empty */ // 5 сюда хочет свернуть все подряд
+expr_list: /* empty */
 	| expr_list_not_empty
     ;
 
-expr_list_not_empty: expr // 6
+expr_list_not_empty: expr
     | expr_list_not_empty COMMA_SYMBOL expr
     ;
 
@@ -273,9 +273,9 @@ if_stmt: IF_KEYWORD expr delimiter stmt END_KEYWORD
     ;
 
 unless_stmt: UNLESS_KEYWORD expr THEN_KEYWORD stmt END_KEYWORD
-    | UNLESS_KEYWORD expr stmt END_KEYWORD
+    | UNLESS_KEYWORD expr delimiter stmt END_KEYWORD
     | UNLESS_KEYWORD expr THEN_KEYWORD stmt ELSE_KEYWORD stmt END_KEYWORD
-    | UNLESS_KEYWORD expr stmt ELSE_KEYWORD stmt END_KEYWORD
+    | UNLESS_KEYWORD expr delimiter stmt ELSE_KEYWORD stmt END_KEYWORD
     | expr UNLESS_KEYWORD expr
     | expr UNLESS_KEYWORD NEW_LINE_SYMBOL expr
     ;
@@ -287,15 +287,15 @@ elsif_list: ELSIF_KEYWORD expr delimiter stmt
     ;
 
 while_stmt: WHILE_KEYWORD expr DO_KEYWORD stmt END_KEYWORD
-    | WHILE_KEYWORD expr stmt END_KEYWORD
-    | WHILE_KEYWORD expr stmt redo_stmt END_KEYWORD
+    | WHILE_KEYWORD expr delimiter stmt END_KEYWORD
+    | WHILE_KEYWORD expr delimiter stmt redo_stmt END_KEYWORD
     ;
 
 for_stmt: FOR_KEYWORD expr IN_KEYWORD expr DO_KEYWORD stmt END_KEYWORD
-    | FOR_KEYWORD expr IN_KEYWORD expr stmt END_KEYWORD
+    | FOR_KEYWORD expr IN_KEYWORD expr delimiter stmt END_KEYWORD
     ;
 
-until_stmt: UNTIL_KEYWORD expr stmt END_KEYWORD
+until_stmt: UNTIL_KEYWORD expr delimiter stmt END_KEYWORD
     | UNTIL_KEYWORD expr DO_KEYWORD stmt END_KEYWORD
     | expr UNTIL_KEYWORD expr
     ;
@@ -320,10 +320,10 @@ case_stmt: CASE_KEYWORD expr when_list END_KEYWORD
     | CASE_KEYWORD expr when_list ELSE_KEYWORD stmt END_KEYWORD
     ;
 
-when_list: WHEN_KEYWORD expr_list delimiter stmt
-    | WHEN_KEYWORD expr_list THEN_KEYWORD stmt
-    | when_list expr_list delimiter stmt
-    | when_list expr_list THEN_KEYWORD stmt
+when_list: WHEN_KEYWORD expr_list_not_empty delimiter stmt
+    | WHEN_KEYWORD expr_list_not_empty THEN_KEYWORD stmt
+    | when_list expr_list_not_empty delimiter stmt
+    | when_list expr_list_not_empty THEN_KEYWORD stmt
     ;
 
 alias_stmt: ALIAS_KEYWORD IDENTIFIER IDENTIFIER
