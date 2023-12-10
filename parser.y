@@ -186,6 +186,7 @@ expr: IDENTIFIER
     ;
 
 linefeed_expr: NEW_LINE_SYMBOL expr
+    | NEW_LINE_SYMBOL linefeed_expr
     ;
 
 programm_element: class_stmt
@@ -199,7 +200,7 @@ programm_el_list_not_empty: programm_element
 
 delimiter: NEW_LINE_SYMBOL
     | SEMICOLON_SYMBOL
-    | SEMICOLON_SYMBOL NEW_LINE_SYMBOL
+    | delimiter NEW_LINE_SYMBOL
     ;
 
 expr_list: /* empty */
