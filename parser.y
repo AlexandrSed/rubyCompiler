@@ -58,10 +58,10 @@
 %nonassoc '{' '}'
 %left '.' '[' ']'
 %left DOUBLE_COLON_SYMBOL
+%nonassoc NEW_LINE_SYMBOL
 
 %token COMMA_SYMBOL
 %token SEMICOLON_SYMBOL
-%token NEW_LINE_SYMBOL
 
 %token STRING
 %token INTEGER_NUMBER
@@ -98,6 +98,8 @@ expr: IDENTIFIER
     | IDENTIFIER '(' expr_list ')'
     | expr '.' IDENTIFIER
     | expr '.' IDENTIFIER QUESTION_SYMBOL
+    | expr '.' IDENTIFIER LOGICAL_NOT_OP
+    | expr '.' IDENTIFIER '='
     | expr AND_KEYWORD expr
     | expr OR_KEYWORD expr
     | NOT_KEYWORD '(' expr ')'
@@ -302,14 +304,6 @@ until_stmt: UNTIL_KEYWORD expr delimiter stmt END_KEYWORD
 
 return_stmt: RETURN_KEYWORD expr
     | RETURN_KEYWORD
-    ;
-
-break_stmt: BREAK_KEYWORD IF_KEYWORD expr
-    | BREAK_KEYWORD expr IF_KEYWORD expr
-    ;
-
-next_stmt: NEXT_KEYWORD IF_KEYWORD expr
-    | NEXT_KEYWORD expr IF_KEYWORD expr
     ;
 
 redo_stmt:  REDO_KEYWORD IF_KEYWORD expr
