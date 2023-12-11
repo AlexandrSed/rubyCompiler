@@ -20,7 +20,7 @@ class Notebook
   def add_note(note)
     @notes << note # one line comment # . + @notes
   end 
-  
+
   refref?
   fewefw!
   efwefwe=
@@ -35,7 +35,7 @@ class Notebook
   \word
   end
   def
-  =end
+  =end 
 
   # Comment test
   def view_notes
