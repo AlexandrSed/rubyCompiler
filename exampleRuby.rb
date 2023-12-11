@@ -20,6 +20,10 @@ class Notebook
   def add_note(note)
     @notes << note # one line comment # . + @notes
   end 
+  
+  refref?
+  fewefw!
+  efwefwe=
 
   # Multiline comment test
   =begin
@@ -144,3 +148,6 @@ puts 2e12
 puts 0x11__10
 puts 0b10__10
 puts "Ya stroka strok\0a pupupu"
+refref?
+fewefw!
+efwefwe=

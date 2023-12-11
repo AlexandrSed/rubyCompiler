@@ -158,6 +158,9 @@ yield		{ printf("Found keyword: %s\n", yytext); }
 
 [A-Z][a-zA-Z0-9_]* {printf("Found constant: %s\n", yytext); }
 
+{IDENTIFIER}\?  { printf("Found method with question: %s\n", yytext); }
+{IDENTIFIER}\!  { printf("Found method with !: %s\n", yytext); }
+{IDENTIFIER}\=  { printf("Found method with =: %s\n", yytext); }
 {IDENTIFIER}    { printf("Found identifier: %s\n", yytext); }
 \@{IDENTIFIER} {printf("Found var name: %s\n", yytext); }
 \@\@{IDENTIFIER} {printf("Found class var name: %s\n", yytext); }
@@ -208,7 +211,7 @@ yield		{ printf("Found keyword: %s\n", yytext); }
                                 printf("String literal: \"%s\" \n", str.c_str());
                                 BEGIN(INITIAL);
                         }
-<DOUBLE_QUOTE_STRING>\\             { strcat(string, ""); }
+<DOUBLE_QUOTE_STRING>\\             { str.append(""); }
 
 <SINGLE_QUOTE_STRING>\' { 
                             printf("String literal: \"%s\" \n", str.c_str());
