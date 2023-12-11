@@ -37,6 +37,10 @@
 %token WHILE_KEYWORD
 %token YIELD_KEYWORD
 
+%token METHOD_MARK_QUESTION
+%token METHOD_MARK_EXCLAMATION
+%token METHOD_MARK_EQUAL
+
 %left OR_KEYWORD AND_KEYWORD
 %left NOT_KEYWORD
 %left DEFINED_KEYWORD
@@ -97,9 +101,9 @@ expr: IDENTIFIER
     | '-' expr %prec UMINUS // 2
     | IDENTIFIER '(' expr_list ')'
     | expr '.' IDENTIFIER
-    | expr '.' IDENTIFIER QUESTION_SYMBOL
-    | expr '.' IDENTIFIER LOGICAL_NOT_OP
-    | expr '.' IDENTIFIER '='
+    | expr '.' METHOD_MARK_QUESTION
+    | expr '.' METHOD_MARK_EXCLAMATION
+    | expr '.' METHOD_MARK_EQUAL
     | expr AND_KEYWORD expr
     | expr OR_KEYWORD expr
     | NOT_KEYWORD '(' expr ')'
@@ -145,9 +149,9 @@ expr: IDENTIFIER
     | '-' linefeed_expr %prec UMINUS 
     | IDENTIFIER '(' NEW_LINE_SYMBOL expr_list NEW_LINE_SYMBOL ')'
     | expr '.' NEW_LINE_SYMBOL IDENTIFIER
-    | expr '.' NEW_LINE_SYMBOL IDENTIFIER QUESTION_SYMBOL
-    | expr '.' NEW_LINE_SYMBOL IDENTIFIER LOGICAL_NOT_OP
-    | expr '.' NEW_LINE_SYMBOL IDENTIFIER '='
+    | expr '.' NEW_LINE_SYMBOL METHOD_MARK_QUESTION
+    | expr '.' NEW_LINE_SYMBOL METHOD_MARK_EXCLAMATION
+    | expr '.' NEW_LINE_SYMBOL METHOD_MARK_EQUAL
     | expr AND_KEYWORD linefeed_expr
     | expr OR_KEYWORD linefeed_expr
     | NOT_KEYWORD '(' NEW_LINE_SYMBOL expr NEW_LINE_SYMBOL ')'
@@ -236,13 +240,13 @@ param_list: /* empty */
     ;
 
 method_stmt: DEF_KEYWORD IDENTIFIER '(' param_list ')' delimiter stmt_list END_KEYWORD
-    | DEF_KEYWORD IDENTIFIER QUESTION_SYMBOL '(' param_list ')' delimiter stmt_list END_KEYWORD
+    | DEF_KEYWORD METHOD_MARK_QUESTION '(' param_list ')' delimiter stmt_list END_KEYWORD
     | DEF_KEYWORD IDENTIFIER delimiter stmt_list END_KEYWORD
-    | DEF_KEYWORD IDENTIFIER QUESTION_SYMBOL delimiter stmt_list END_KEYWORD
-    | DEF_KEYWORD IDENTIFIER LOGICAL_NOT_OP '(' param_list ')' delimiter stmt_list END_KEYWORD
-    | DEF_KEYWORD IDENTIFIER LOGICAL_NOT_OP delimiter stmt_list END_KEYWORD
-    | DEF_KEYWORD IDENTIFIER '=' '(' param_list ')' delimiter stmt_list END_KEYWORD
-    | DEF_KEYWORD IDENTIFIER '=' delimiter stmt_list END_KEYWORD
+    | DEF_KEYWORD METHOD_MARK_QUESTION delimiter stmt_list END_KEYWORD
+    | DEF_KEYWORD METHOD_MARK_EXCLAMATION '(' param_list ')' delimiter stmt_list END_KEYWORD
+    | DEF_KEYWORD METHOD_MARK_EXCLAMATION delimiter stmt_list END_KEYWORD
+    | DEF_KEYWORD METHOD_MARK_EQUAL '(' param_list ')' delimiter stmt_list END_KEYWORD
+    | DEF_KEYWORD METHOD_MARK_EQUAL delimiter stmt_list END_KEYWORD
     ;
 
 class_stmt: CLASS_KEYWORD CONSTANT_NAME delimiter class_body END_KEYWORD
