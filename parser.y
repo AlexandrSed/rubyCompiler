@@ -101,6 +101,7 @@ expr: IDENTIFIER
     | expr '-' linefeed_or_empty expr 
     | '-' linefeed_or_empty expr %prec UMINUS 
     | IDENTIFIER '(' linefeed_or_empty expr_list linefeed_or_empty ')'
+    | IDENTIFIER '(' linefeed_or_empty ')'
     | expr '.' linefeed_or_empty IDENTIFIER
     | expr '.' linefeed_or_empty METHOD_MARK_QUESTION
     | expr '.' linefeed_or_empty METHOD_MARK_EXCLAMATION
@@ -136,6 +137,7 @@ expr: IDENTIFIER
 	| expr EXCLUSIVE_RANGE_OP linefeed_or_empty expr
     | '(' linefeed_or_empty expr linefeed_or_empty ')'
     | '[' linefeed_or_empty expr_list linefeed_or_empty ']'
+    | '[' linefeed_or_empty ']'
     | DEFINED_KEYWORD linefeed_or_empty expr
 	| DOUBLE_COLON_SYMBOL linefeed_or_empty expr // 1
 	| expr DOUBLE_COLON_SYMBOL linefeed_or_empty expr // 1
@@ -164,12 +166,8 @@ delimiter: NEW_LINE_SYMBOL
     | delimiter NEW_LINE_SYMBOL
     ;
 
-expr_list: /* empty */
-	| expr_list_not_empty
-    ;
-
-expr_list_not_empty: expr
-    | expr_list_not_empty COMMA_SYMBOL expr
+expr_list: expr
+    | expr_list COMMA_SYMBOL expr
     ;
 
 stmt_list: stmt
@@ -276,10 +274,10 @@ case_stmt: CASE_KEYWORD expr when_list END_KEYWORD
     | CASE_KEYWORD expr when_list ELSE_KEYWORD stmt END_KEYWORD
     ;
 
-when_list: WHEN_KEYWORD expr_list_not_empty delimiter stmt
-    | WHEN_KEYWORD expr_list_not_empty THEN_KEYWORD stmt
-    | when_list expr_list_not_empty delimiter stmt
-    | when_list expr_list_not_empty THEN_KEYWORD stmt
+when_list: WHEN_KEYWORD expr_list delimiter stmt
+    | WHEN_KEYWORD expr_list THEN_KEYWORD stmt
+    | when_list expr_list delimiter stmt
+    | when_list expr_list THEN_KEYWORD stmt
     ;
 
 alias_stmt: ALIAS_KEYWORD IDENTIFIER IDENTIFIER
