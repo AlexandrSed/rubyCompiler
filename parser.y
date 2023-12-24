@@ -22,7 +22,6 @@
 %token NEXT_KEYWORD
 %token NIL_KEYWORD
 %token REDO_KEYWORD
-%token RESCUE_KEYWORD
 %token RETRY_KEYWORD
 %token RETURN_KEYWORD
 %token SELF_KEYWORD
@@ -183,7 +182,6 @@ stmt: expr delimiter
     | unless_stmt delimiter
     | return_stmt delimiter
     | alias_stmt delimiter
-    | begin_rescue_stmt delimiter
     ;
 
 param_list_not_empty: IDENTIFIER linefeed_or_empty
@@ -281,9 +279,5 @@ when_list: WHEN_KEYWORD expr_list delimiter stmt
     ;
 
 alias_stmt: ALIAS_KEYWORD IDENTIFIER IDENTIFIER
-    ;
-
-begin_rescue_stmt: BEGIN_KEYWORD delimiter stmt_list RESCUE_KEYWORD delimiter stmt_list END_KEYWORD
-    | BEGIN_KEYWORD delimiter stmt_list RESCUE_KEYWORD delimiter stmt_list ENSURE_KEYWORD delimiter END_KEYWORD
     ;
 %%
