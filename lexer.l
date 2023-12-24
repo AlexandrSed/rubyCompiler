@@ -69,6 +69,7 @@ retry		{ printf("Found keyword: %s\n", yytext); }
 return		{ printf("Found keyword: %s\n", yytext); }
 self		{ printf("Found keyword: %s\n", yytext); }
 super		{ printf("Found keyword: %s\n", yytext); }
+superclass  { printf("Found keyword: %s\n", yytext); }
 then		{ printf("Found keyword: %s\n", yytext); }
 true		{ printf("Found keyword: %s\n", yytext); }
 undef		{ printf("Found keyword: %s\n", yytext); }
