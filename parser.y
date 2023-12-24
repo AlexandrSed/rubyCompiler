@@ -101,6 +101,10 @@ expr: IDENTIFIER
     | IDENTIFIER '(' linefeed_or_empty expr_list linefeed_or_empty ')'
     | IDENTIFIER '(' linefeed_or_empty ')'
     | expr '.' linefeed_or_empty IDENTIFIER
+    | SELF_KEYWORD '.' linefeed_or_empty IDENTIFIER
+    | SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_QUESTION
+    | SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_EXCLAMATION
+    | SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_EQUAL
     | expr '.' linefeed_or_empty METHOD_MARK_QUESTION
     | expr '.' linefeed_or_empty METHOD_MARK_EXCLAMATION
     | expr '.' linefeed_or_empty METHOD_MARK_EQUAL
