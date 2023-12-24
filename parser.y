@@ -267,14 +267,14 @@ return_stmt: RETURN_KEYWORD expr
     | RETURN_KEYWORD
     ;
 
-case_stmt: CASE_KEYWORD expr when_list END_KEYWORD
-    | CASE_KEYWORD expr when_list ELSE_KEYWORD stmt END_KEYWORD
+case_stmt: CASE_KEYWORD linefeed_or_empty expr delimeter_or_empty when_list END_KEYWORD
+    | CASE_KEYWORD linefeed_or_empty expr delimeter_or_empty when_list ELSE_KEYWORD delimeter_or_empty stmt END_KEYWORD
     ;
 
-when_list: WHEN_KEYWORD expr_list delimiter stmt
-    | WHEN_KEYWORD expr_list THEN_KEYWORD stmt
-    | when_list expr_list delimiter stmt
-    | when_list expr_list THEN_KEYWORD stmt
+when_list: WHEN_KEYWORD linefeed_or_empty expr_list delimiter stmt
+    | WHEN_KEYWORD linefeed_or_empty expr_list THEN_KEYWORD stmt
+    | when_list WHEN_KEYWORD linefeed_or_empty expr_list delimiter stmt
+    | when_list WHEN_KEYWORD linefeed_or_empty expr_list delimeter_or_empty THEN_KEYWORD stmt
     ;
 
 alias_stmt: ALIAS_KEYWORD IDENTIFIER IDENTIFIER
