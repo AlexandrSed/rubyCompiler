@@ -100,6 +100,9 @@ expr: IDENTIFIER
     | '-' linefeed_or_empty expr %prec UMINUS 
     | IDENTIFIER '(' linefeed_or_empty expr_list linefeed_or_empty ')'
     | IDENTIFIER '(' linefeed_or_empty ')'
+    | SUPER_KEYWORD
+    | SUPER_KEYWORD '(' linefeed_or_empty expr_list linefeed_or_empty ')'
+    | SUPER_KEYWORD '(' linefeed_or_empty ')'
     | expr '.' linefeed_or_empty IDENTIFIER
     | SELF_KEYWORD '.' linefeed_or_empty IDENTIFIER
     | SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_QUESTION
