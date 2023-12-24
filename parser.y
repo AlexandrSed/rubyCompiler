@@ -188,20 +188,20 @@ stmt: expr delimiter
     ;
 
 param_list_not_empty: IDENTIFIER
-    | param_list_not_empty COMMA_SYMBOL IDENTIFIER
+    | param_list_not_empty linefeed_or_empty COMMA_SYMBOL linefeed_or_empty IDENTIFIER
     ;
 
 param_list: /* empty */
     | param_list_not_empty 
     ;
 
-method_stmt: DEF_KEYWORD IDENTIFIER '(' param_list ')' delimiter stmt_list END_KEYWORD
-    | DEF_KEYWORD METHOD_MARK_QUESTION '(' param_list ')' delimiter stmt_list END_KEYWORD
+method_stmt: DEF_KEYWORD IDENTIFIER '(' linefeed_or_empty param_list linefeed_or_empty ')' delimiter stmt_list END_KEYWORD
+    | DEF_KEYWORD METHOD_MARK_QUESTION '(' linefeed_or_empty param_list linefeed_or_empty ')' delimiter stmt_list END_KEYWORD
     | DEF_KEYWORD IDENTIFIER delimiter stmt_list END_KEYWORD
     | DEF_KEYWORD METHOD_MARK_QUESTION delimiter stmt_list END_KEYWORD
-    | DEF_KEYWORD METHOD_MARK_EXCLAMATION '(' param_list ')' delimiter stmt_list END_KEYWORD
+    | DEF_KEYWORD METHOD_MARK_EXCLAMATION '(' linefeed_or_empty param_list linefeed_or_empty ')' delimiter stmt_list END_KEYWORD
     | DEF_KEYWORD METHOD_MARK_EXCLAMATION delimiter stmt_list END_KEYWORD
-    | DEF_KEYWORD METHOD_MARK_EQUAL '(' param_list ')' delimiter stmt_list END_KEYWORD
+    | DEF_KEYWORD METHOD_MARK_EQUAL '(' linefeed_or_empty param_list linefeed_or_empty ')' delimiter stmt_list END_KEYWORD
     | DEF_KEYWORD METHOD_MARK_EQUAL delimiter stmt_list END_KEYWORD
     ;
 
