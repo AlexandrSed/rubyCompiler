@@ -199,18 +199,18 @@ param_list: /* empty */
     | param_list_not_empty
     ;
 
-method_stmt: DEF_KEYWORD IDENTIFIER '(' linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD
-    | DEF_KEYWORD METHOD_MARK_QUESTION '(' linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD
-    | DEF_KEYWORD IDENTIFIER delimiter stmt_list END_KEYWORD
-    | DEF_KEYWORD METHOD_MARK_QUESTION delimiter stmt_list END_KEYWORD
-    | DEF_KEYWORD METHOD_MARK_EXCLAMATION '(' linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD
-    | DEF_KEYWORD METHOD_MARK_EXCLAMATION delimiter stmt_list END_KEYWORD
-    | DEF_KEYWORD METHOD_MARK_EQUAL '(' linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD
-    | DEF_KEYWORD METHOD_MARK_EQUAL delimiter stmt_list END_KEYWORD
+method_stmt: DEF_KEYWORD linefeed_or_empty IDENTIFIER '(' linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD
+    | DEF_KEYWORD linefeed_or_empty METHOD_MARK_QUESTION '(' linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD
+    | DEF_KEYWORD linefeed_or_empty IDENTIFIER delimiter stmt_list END_KEYWORD
+    | DEF_KEYWORD linefeed_or_empty METHOD_MARK_QUESTION delimiter stmt_list END_KEYWORD
+    | DEF_KEYWORD linefeed_or_empty METHOD_MARK_EXCLAMATION '(' linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD
+    | DEF_KEYWORD linefeed_or_empty METHOD_MARK_EXCLAMATION delimiter stmt_list END_KEYWORD
+    | DEF_KEYWORD linefeed_or_empty METHOD_MARK_EQUAL '(' linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD
+    | DEF_KEYWORD linefeed_or_empty METHOD_MARK_EQUAL delimiter stmt_list END_KEYWORD
     ;
 
-class_stmt: CLASS_KEYWORD CONSTANT_NAME delimiter class_body END_KEYWORD
-    | CLASS_KEYWORD CONSTANT_NAME '<' CONSTANT_NAME delimiter class_body END_KEYWORD
+class_stmt: CLASS_KEYWORD linefeed_or_empty CONSTANT_NAME delimiter class_body END_KEYWORD
+    | CLASS_KEYWORD linefeed_or_empty CONSTANT_NAME '<' CONSTANT_NAME delimiter class_body END_KEYWORD
     ;
 
 class_body_stmt: method_stmt delimiter
@@ -228,24 +228,22 @@ class_body: /* empty */
     | class_body_not_empty
     ;
 
-if_stmt: IF_KEYWORD expr delimiter stmt END_KEYWORD
-    | IF_KEYWORD expr THEN_KEYWORD stmt END_KEYWORD
-    | IF_KEYWORD expr delimiter stmt ELSE_KEYWORD stmt END_KEYWORD
-    | IF_KEYWORD expr THEN_KEYWORD stmt ELSE_KEYWORD stmt END_KEYWORD
-    | IF_KEYWORD expr delimiter stmt elsif_list stmt END_KEYWORD
-    | IF_KEYWORD expr THEN_KEYWORD stmt elsif_list stmt END_KEYWORD
-    | IF_KEYWORD expr delimiter stmt elsif_list ELSE_KEYWORD stmt END_KEYWORD
-    | IF_KEYWORD expr THEN_KEYWORD stmt elsif_list ELSE_KEYWORD stmt END_KEYWORD
-    | expr IF_KEYWORD expr
-    | expr IF_KEYWORD NEW_LINE_SYMBOL expr
+if_stmt: IF_KEYWORD linefeed_or_empty expr delimiter stmt END_KEYWORD
+    | IF_KEYWORD linefeed_or_empty expr THEN_KEYWORD stmt END_KEYWORD
+    | IF_KEYWORD linefeed_or_empty expr delimiter stmt ELSE_KEYWORD stmt END_KEYWORD
+    | IF_KEYWORD linefeed_or_empty expr THEN_KEYWORD stmt ELSE_KEYWORD stmt END_KEYWORD
+    | IF_KEYWORD linefeed_or_empty expr delimiter stmt elsif_list stmt END_KEYWORD
+    | IF_KEYWORD linefeed_or_empty expr THEN_KEYWORD stmt elsif_list stmt END_KEYWORD
+    | IF_KEYWORD linefeed_or_empty expr delimiter stmt elsif_list ELSE_KEYWORD stmt END_KEYWORD
+    | IF_KEYWORD linefeed_or_empty expr THEN_KEYWORD stmt elsif_list ELSE_KEYWORD stmt END_KEYWORD
+    | expr IF_KEYWORD linefeed_or_empty expr
     ;
 
-unless_stmt: UNLESS_KEYWORD expr THEN_KEYWORD stmt END_KEYWORD
-    | UNLESS_KEYWORD expr delimiter stmt END_KEYWORD
-    | UNLESS_KEYWORD expr THEN_KEYWORD stmt ELSE_KEYWORD stmt END_KEYWORD
-    | UNLESS_KEYWORD expr delimiter stmt ELSE_KEYWORD stmt END_KEYWORD
-    | expr UNLESS_KEYWORD expr
-    | expr UNLESS_KEYWORD NEW_LINE_SYMBOL expr
+unless_stmt: UNLESS_KEYWORD linefeed_or_empty expr THEN_KEYWORD stmt END_KEYWORD
+    | UNLESS_KEYWORD linefeed_or_empty expr delimiter stmt END_KEYWORD
+    | UNLESS_KEYWORD linefeed_or_empty expr THEN_KEYWORD stmt ELSE_KEYWORD stmt END_KEYWORD
+    | UNLESS_KEYWORD linefeed_or_empty expr delimiter stmt ELSE_KEYWORD stmt END_KEYWORD
+    | expr UNLESS_KEYWORD linefeed_or_empty expr
     ;
 
 elsif_list: ELSIF_KEYWORD expr delimiter stmt
