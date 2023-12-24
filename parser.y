@@ -26,6 +26,7 @@
 %token RETURN_KEYWORD
 %token SELF_KEYWORD
 %token SUPER_KEYWORD
+%token SUPERCLASS_KEYWORD
 %token THEN_KEYWORD
 %token TRUE_KEYWORD
 %token UNDEF_KEYWORD
@@ -97,7 +98,8 @@ expr: IDENTIFIER
     | expr '*' linefeed_or_empty expr
     | expr '+' linefeed_or_empty expr
     | expr '-' linefeed_or_empty expr 
-    | '-' linefeed_or_empty expr %prec UMINUS 
+    | '-' linefeed_or_empty expr %prec UMINUS
+    | expr '.' linefeed_or_empty SUPERCLASS_KEYWORD
     | IDENTIFIER '(' linefeed_or_empty expr_list linefeed_or_empty ')'
     | IDENTIFIER '(' linefeed_or_empty ')'
     | SUPER_KEYWORD
