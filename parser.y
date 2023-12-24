@@ -21,7 +21,6 @@
 %token IN_KEYWORD
 %token NEXT_KEYWORD
 %token NIL_KEYWORD
-%token REDO_KEYWORD
 %token RETRY_KEYWORD
 %token RETURN_KEYWORD
 %token SELF_KEYWORD
@@ -230,37 +229,36 @@ class_body: /* empty */
     | class_body_not_empty
     ;
 
-if_delimeter_or_empty: /* empty */
+delimeter_or_empty: /* empty */
     | delimiter
     ;
 
 if_stmt: IF_KEYWORD linefeed_or_empty expr delimiter stmt END_KEYWORD
-    | IF_KEYWORD linefeed_or_empty expr if_delimeter_or_empty THEN_KEYWORD stmt END_KEYWORD
+    | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt END_KEYWORD
     | IF_KEYWORD linefeed_or_empty expr delimiter stmt ELSE_KEYWORD stmt END_KEYWORD
-    | IF_KEYWORD linefeed_or_empty expr if_delimeter_or_empty THEN_KEYWORD stmt ELSE_KEYWORD stmt END_KEYWORD
+    | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt ELSE_KEYWORD stmt END_KEYWORD
     | IF_KEYWORD linefeed_or_empty expr delimiter stmt elsif_list stmt END_KEYWORD
-    | IF_KEYWORD linefeed_or_empty expr if_delimeter_or_empty THEN_KEYWORD stmt elsif_list stmt END_KEYWORD
+    | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt elsif_list stmt END_KEYWORD
     | IF_KEYWORD linefeed_or_empty expr delimiter stmt elsif_list ELSE_KEYWORD stmt END_KEYWORD
-    | IF_KEYWORD linefeed_or_empty expr if_delimeter_or_empty THEN_KEYWORD stmt elsif_list ELSE_KEYWORD stmt END_KEYWORD
+    | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt elsif_list ELSE_KEYWORD stmt END_KEYWORD
     | expr IF_KEYWORD linefeed_or_empty expr
     ;
 
-unless_stmt: UNLESS_KEYWORD linefeed_or_empty expr THEN_KEYWORD stmt END_KEYWORD
+unless_stmt: UNLESS_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt END_KEYWORD
     | UNLESS_KEYWORD linefeed_or_empty expr delimiter stmt END_KEYWORD
-    | UNLESS_KEYWORD linefeed_or_empty expr THEN_KEYWORD stmt ELSE_KEYWORD stmt END_KEYWORD
+    | UNLESS_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt ELSE_KEYWORD stmt END_KEYWORD
     | UNLESS_KEYWORD linefeed_or_empty expr delimiter stmt ELSE_KEYWORD stmt END_KEYWORD
     | expr UNLESS_KEYWORD linefeed_or_empty expr
     ;
 
 elsif_list: ELSIF_KEYWORD expr delimiter stmt
-    | ELSIF_KEYWORD expr THEN_KEYWORD stmt
+    | ELSIF_KEYWORD expr delimeter_or_empty THEN_KEYWORD stmt
     | elsif_list ELSIF_KEYWORD expr delimiter stmt
-    | elsif_list ELSIF_KEYWORD expr THEN_KEYWORD stmt
+    | elsif_list ELSIF_KEYWORD expr delimeter_or_empty THEN_KEYWORD stmt
     ;
 
 while_stmt: WHILE_KEYWORD expr DO_KEYWORD stmt END_KEYWORD
     | WHILE_KEYWORD expr delimiter stmt END_KEYWORD
-    | WHILE_KEYWORD expr delimiter stmt redo_stmt END_KEYWORD
     ;
 
 for_stmt: FOR_KEYWORD expr IN_KEYWORD expr DO_KEYWORD stmt END_KEYWORD
@@ -274,10 +272,6 @@ until_stmt: UNTIL_KEYWORD expr delimiter stmt END_KEYWORD
 
 return_stmt: RETURN_KEYWORD expr
     | RETURN_KEYWORD
-    ;
-
-redo_stmt:  REDO_KEYWORD IF_KEYWORD expr
-    | REDO_KEYWORD expr IF_KEYWORD expr
     ;
 
 case_stmt: CASE_KEYWORD expr when_list END_KEYWORD
