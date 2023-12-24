@@ -19,7 +19,6 @@
 %token FALSE_KEYWORD
 %token FOR_KEYWORD
 %token IN_KEYWORD
-%token MODULE_KEYWORD
 %token NEXT_KEYWORD
 %token NIL_KEYWORD
 %token REDO_KEYWORD
@@ -154,7 +153,6 @@ linefeed: NEW_LINE_SYMBOL
 
 programm_element: class_stmt
     | method_stmt
-    | module_stmt
     | stmt
     ;
 
@@ -283,24 +281,6 @@ when_list: WHEN_KEYWORD expr_list delimiter stmt
     ;
 
 alias_stmt: ALIAS_KEYWORD IDENTIFIER IDENTIFIER
-    ;
-
-module_stmt: MODULE_KEYWORD CONSTANT_NAME delimiter module_body END_KEYWORD
-    ;
-
-module_body_stmt: expr delimiter
-    | method_stmt delimiter
-    | alias_stmt delimiter
-    | class_stmt delimiter
-    | module_stmt delimiter
-    ;
-
-module_body_not_empty: module_body_stmt
-    | module_body_not_empty module_body_stmt
-    ;
-
-module_body: /* empty */
-    | module_body_not_empty
     ;
 
 begin_rescue_stmt: BEGIN_KEYWORD delimiter stmt_list RESCUE_KEYWORD delimiter stmt_list END_KEYWORD
