@@ -155,6 +155,7 @@ linefeed: NEW_LINE_SYMBOL
 programm_element: class_stmt
     | method_stmt
     | module_stmt
+    | stmt
     ;
 
 programm_el_list_not_empty: programm_element
