@@ -30,7 +30,6 @@
 %token TRUE_KEYWORD
 %token UNDEF_KEYWORD
 %token UNLESS_KEYWORD
-%token UNTIL_KEYWORD
 %token WHEN_KEYWORD
 %token WHILE_KEYWORD
 %token YIELD_KEYWORD
@@ -185,7 +184,6 @@ stmt: expr delimiter
     | if_stmt delimiter
     | while_stmt delimiter
     | for_stmt delimiter
-    | until_stmt delimiter
     | case_stmt delimiter
     | unless_stmt delimiter
     | return_stmt delimiter
@@ -251,23 +249,18 @@ unless_stmt: UNLESS_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWO
     | expr UNLESS_KEYWORD linefeed_or_empty expr
     ;
 
-elsif_list: ELSIF_KEYWORD expr delimiter stmt
-    | ELSIF_KEYWORD expr delimeter_or_empty THEN_KEYWORD stmt
-    | elsif_list ELSIF_KEYWORD expr delimiter stmt
-    | elsif_list ELSIF_KEYWORD expr delimeter_or_empty THEN_KEYWORD stmt
+elsif_list: ELSIF_KEYWORD linefeed_or_empty expr delimiter stmt
+    | ELSIF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt
+    | elsif_list ELSIF_KEYWORD linefeed_or_empty expr delimiter stmt
+    | elsif_list ELSIF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt
     ;
 
-while_stmt: WHILE_KEYWORD expr DO_KEYWORD stmt END_KEYWORD
-    | WHILE_KEYWORD expr delimiter stmt END_KEYWORD
+while_stmt: WHILE_KEYWORD linefeed_or_empty expr DO_KEYWORD delimeter_or_empty stmt END_KEYWORD
+    | WHILE_KEYWORD linefeed_or_empty expr delimiter stmt END_KEYWORD
     ;
 
-for_stmt: FOR_KEYWORD expr IN_KEYWORD expr DO_KEYWORD stmt END_KEYWORD
-    | FOR_KEYWORD expr IN_KEYWORD expr delimiter stmt END_KEYWORD
-    ;
-
-until_stmt: UNTIL_KEYWORD expr delimiter stmt END_KEYWORD
-    | UNTIL_KEYWORD expr DO_KEYWORD stmt END_KEYWORD
-    | expr UNTIL_KEYWORD expr
+for_stmt: FOR_KEYWORD linefeed_or_empty expr IN_KEYWORD linefeed_or_empty expr DO_KEYWORD delimeter_or_empty stmt END_KEYWORD
+    | FOR_KEYWORD linefeed_or_empty expr IN_KEYWORD linefeed_or_empty expr delimiter stmt END_KEYWORD
     ;
 
 return_stmt: RETURN_KEYWORD expr
