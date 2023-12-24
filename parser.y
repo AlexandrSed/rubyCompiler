@@ -203,6 +203,7 @@ method_stmt: DEF_KEYWORD IDENTIFIER '(' linefeed_or_empty param_list ')' delimit
     ;
 
 class_stmt: CLASS_KEYWORD CONSTANT_NAME delimiter class_body END_KEYWORD
+    | CLASS_KEYWORD CONSTANT_NAME '<' CONSTANT_NAME delimiter class_body END_KEYWORD
     ;
 
 class_body_stmt: method_stmt delimiter
