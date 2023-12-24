@@ -161,9 +161,10 @@ programm_el_list_not_empty: programm_element
     | programm_el_list_not_empty programm_element
     ;
 
-delimiter: linefeed
+delimiter: NEW_LINE_SYMBOL
     | SEMICOLON_SYMBOL
-    | linefeed SEMICOLON_SYMBOL
+    | delimiter SEMICOLON_SYMBOL
+    | delimiter NEW_LINE_SYMBOL
     ;
 
 expr_list: expr
