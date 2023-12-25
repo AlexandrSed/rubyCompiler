@@ -235,8 +235,8 @@ if_stmt: IF_KEYWORD linefeed_or_empty expr delimiter stmt END_KEYWORD
     | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt END_KEYWORD
     | IF_KEYWORD linefeed_or_empty expr delimiter stmt ELSE_KEYWORD stmt END_KEYWORD
     | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt ELSE_KEYWORD stmt END_KEYWORD
-    | IF_KEYWORD linefeed_or_empty expr delimiter stmt elsif_list stmt END_KEYWORD
-    | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt elsif_list stmt END_KEYWORD
+    | IF_KEYWORD linefeed_or_empty expr delimiter stmt elsif_list END_KEYWORD
+    | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt elsif_list END_KEYWORD
     | IF_KEYWORD linefeed_or_empty expr delimiter stmt elsif_list ELSE_KEYWORD stmt END_KEYWORD
     | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt elsif_list ELSE_KEYWORD stmt END_KEYWORD
     | expr IF_KEYWORD linefeed_or_empty expr
