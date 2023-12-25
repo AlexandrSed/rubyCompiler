@@ -157,8 +157,8 @@ linefeed: NEW_LINE_SYMBOL
     | linefeed NEW_LINE_SYMBOL
     ;
 
-programm_element: class_stmt
-    | method_stmt
+programm_element: class_stmt delimiter
+    | method_stmt delimiter
     | stmt
     ;
 
