@@ -231,36 +231,36 @@ delimeter_or_empty: /* empty */
     | delimiter
     ;
 
-if_stmt: IF_KEYWORD linefeed_or_empty expr delimiter stmt END_KEYWORD
-    | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt END_KEYWORD
-    | IF_KEYWORD linefeed_or_empty expr delimiter stmt ELSE_KEYWORD stmt END_KEYWORD
-    | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt ELSE_KEYWORD stmt END_KEYWORD
-    | IF_KEYWORD linefeed_or_empty expr delimiter stmt elsif_list END_KEYWORD
-    | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt elsif_list END_KEYWORD
-    | IF_KEYWORD linefeed_or_empty expr delimiter stmt elsif_list ELSE_KEYWORD stmt END_KEYWORD
-    | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt elsif_list ELSE_KEYWORD stmt END_KEYWORD
+if_stmt: IF_KEYWORD linefeed_or_empty expr delimiter stmt_list END_KEYWORD
+    | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list END_KEYWORD
+    | IF_KEYWORD linefeed_or_empty expr delimiter stmt_list ELSE_KEYWORD stmt_list END_KEYWORD
+    | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list ELSE_KEYWORD stmt_list END_KEYWORD
+    | IF_KEYWORD linefeed_or_empty expr delimiter stmt_list elsif_list END_KEYWORD
+    | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list elsif_list END_KEYWORD
+    | IF_KEYWORD linefeed_or_empty expr delimiter stmt_list elsif_list ELSE_KEYWORD stmt_list END_KEYWORD
+    | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list elsif_list ELSE_KEYWORD stmt_list END_KEYWORD
     | expr IF_KEYWORD linefeed_or_empty expr
     ;
 
-unless_stmt: UNLESS_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt END_KEYWORD
-    | UNLESS_KEYWORD linefeed_or_empty expr delimiter stmt END_KEYWORD
-    | UNLESS_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt ELSE_KEYWORD stmt END_KEYWORD
-    | UNLESS_KEYWORD linefeed_or_empty expr delimiter stmt ELSE_KEYWORD stmt END_KEYWORD
+unless_stmt: UNLESS_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list END_KEYWORD
+    | UNLESS_KEYWORD linefeed_or_empty expr delimiter stmt_list END_KEYWORD
+    | UNLESS_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list ELSE_KEYWORD stmt_list END_KEYWORD
+    | UNLESS_KEYWORD linefeed_or_empty expr delimiter stmt_list ELSE_KEYWORD stmt_list END_KEYWORD
     | expr UNLESS_KEYWORD linefeed_or_empty expr
     ;
 
-elsif_list: ELSIF_KEYWORD linefeed_or_empty expr delimiter stmt
-    | ELSIF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt
-    | elsif_list ELSIF_KEYWORD linefeed_or_empty expr delimiter stmt
-    | elsif_list ELSIF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt
+elsif_list: ELSIF_KEYWORD linefeed_or_empty expr delimiter stmt_list
+    | ELSIF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list
+    | elsif_list ELSIF_KEYWORD linefeed_or_empty expr delimiter stmt_list
+    | elsif_list ELSIF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list
     ;
 
-while_stmt: WHILE_KEYWORD linefeed_or_empty expr DO_KEYWORD delimeter_or_empty stmt END_KEYWORD
-    | WHILE_KEYWORD linefeed_or_empty expr delimiter stmt END_KEYWORD
+while_stmt: WHILE_KEYWORD linefeed_or_empty expr DO_KEYWORD delimeter_or_empty stmt_list END_KEYWORD
+    | WHILE_KEYWORD linefeed_or_empty expr delimiter stmt_list END_KEYWORD
     ;
 
-for_stmt: FOR_KEYWORD linefeed_or_empty expr IN_KEYWORD linefeed_or_empty expr DO_KEYWORD delimeter_or_empty stmt END_KEYWORD
-    | FOR_KEYWORD linefeed_or_empty expr IN_KEYWORD linefeed_or_empty expr delimiter stmt END_KEYWORD
+for_stmt: FOR_KEYWORD linefeed_or_empty expr IN_KEYWORD linefeed_or_empty expr DO_KEYWORD delimeter_or_empty stmt_list END_KEYWORD
+    | FOR_KEYWORD linefeed_or_empty expr IN_KEYWORD linefeed_or_empty expr delimiter stmt_list END_KEYWORD
     ;
 
 return_stmt: RETURN_KEYWORD expr
@@ -268,13 +268,13 @@ return_stmt: RETURN_KEYWORD expr
     ;
 
 case_stmt: CASE_KEYWORD linefeed_or_empty expr delimeter_or_empty when_list END_KEYWORD
-    | CASE_KEYWORD linefeed_or_empty expr delimeter_or_empty when_list ELSE_KEYWORD delimeter_or_empty stmt END_KEYWORD
+    | CASE_KEYWORD linefeed_or_empty expr delimeter_or_empty when_list ELSE_KEYWORD delimeter_or_empty stmt_list END_KEYWORD
     ;
 
-when_list: WHEN_KEYWORD linefeed_or_empty expr_list delimiter stmt
-    | WHEN_KEYWORD linefeed_or_empty expr_list THEN_KEYWORD stmt
-    | when_list WHEN_KEYWORD linefeed_or_empty expr_list delimiter stmt
-    | when_list WHEN_KEYWORD linefeed_or_empty expr_list delimeter_or_empty THEN_KEYWORD stmt
+when_list: WHEN_KEYWORD linefeed_or_empty expr_list delimiter stmt_list
+    | WHEN_KEYWORD linefeed_or_empty expr_list THEN_KEYWORD stmt_list
+    | when_list WHEN_KEYWORD linefeed_or_empty expr_list delimiter stmt_list
+    | when_list WHEN_KEYWORD linefeed_or_empty expr_list delimeter_or_empty THEN_KEYWORD stmt_list
     ;
 
 alias_stmt: ALIAS_KEYWORD IDENTIFIER IDENTIFIER
