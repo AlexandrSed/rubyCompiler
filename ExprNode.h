@@ -74,8 +74,23 @@ public:
     ExprType type;
     int value;
     float value;
-    string idName;
+    string value;
+    bool value;
+    string varName;
     int idNode;
     ExprNode* left;
+    ExprNode* center;
     ExprNode* right;
+    std::vector<ExprNode*>* params;
+    enum dataType {
+        intType,
+        floatType
+    };
+    class var {
+        string name;
+        int id;
+        dataType dType;
+    }
+
+    vector<var> vars;
 };
