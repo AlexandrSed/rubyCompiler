@@ -3,7 +3,7 @@ enum ExprType {
     objectVarName,
     classVarName,
     constantName,
-    string,
+    stringType,
     trueKeyword,
     falseKeyword,
     nilKeyword,
