@@ -92,7 +92,7 @@ public:
     static ExprNode* createExprFromInt(int val);
     static ExprNode* createExprFromFloat(float val);
     static ExprNode* createExprFromBinOp(ExprType typeOp, ExprNode* left, ExprNode* right);
-    static ExprNode* createExprFromFuncCall(ExprType* type, std::vector<ExprNode*>* params, string& id);
+    static ExprNode* createExprFromFuncCall(std::vector<ExprNode*>* params, string& id);
     static ExprNode* createExprFromUnary(ExprType typeOp, ExprNode* operand);
     static ExprNode* createExprFromTernary(ExprNode* left, ExprNode* center, ExprNode* right);
     static ExprNode* createExprFromArray(std::vector<ExprNode*>* list);

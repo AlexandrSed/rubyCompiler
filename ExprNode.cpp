@@ -58,9 +58,9 @@ public:
         result->idNode = ++ExprNode::max_id;
 	    return result;
     }
-    static ExprNode* ExprNode::createExprFromFuncCall(ExprType* type, std::vector<ExprNode*>* params, string& id) {
+    static ExprNode* ExprNode::createExprFromFuncCall(std::vector<ExprNode*>* params, string& id) {
         ExprNode* result = new ExprNode;
-        result->type = type;
+        result->type = ExprType.function;
         result->params = params;
         result->varName = id;
         result->idNode = ++ExprNode::max_id;

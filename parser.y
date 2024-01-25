@@ -1,5 +1,6 @@
 %{
     #include <string>
+    #include <vector>
 	#include <stdio.h>
 	#include <malloc.h>
     #include "ExprNode.h"
@@ -102,8 +103,8 @@ expr: IDENTIFIER    {$$=ExprNode::createExprFromVarName(ExprType.id, $1);}
     | expr '-' linefeed_or_empty expr   {$$=ExprNode::createExprFromBinOp(ExprType.subtraction, $1, $4);}
     | '-' linefeed_or_empty expr %prec UMINUS {$$=ExprNode::createExprFromUnary(ExprType.unaryMinus, $3);}
     | expr '.' linefeed_or_empty SUPERCLASS_KEYWORD {$$=ExprNode::createExprFromUnary(ExprType.superclass, $1);}
-    | IDENTIFIER '(' linefeed_or_empty expr_list linefeed_or_empty ')'
-    | IDENTIFIER '(' linefeed_or_empty ')'
+    | IDENTIFIER '(' linefeed_or_empty expr_list linefeed_or_empty ')'  {$$=ExprNode::createExprFromFuncCall($4, $1);}
+    | IDENTIFIER '(' linefeed_or_empty ')'  {$$=ExprNode::createExprFromFuncCall(std::vector<ExprNode*>* empty, $1);}
     | SUPER_KEYWORD
     | SUPER_KEYWORD '(' linefeed_or_empty expr_list linefeed_or_empty ')'
     | SUPER_KEYWORD '(' linefeed_or_empty ')'
@@ -145,8 +146,8 @@ expr: IDENTIFIER    {$$=ExprNode::createExprFromVarName(ExprType.id, $1);}
     | expr INCLUSIVE_RANGE_OP linefeed_or_empty expr    {$$=ExprNode::createExprFromBinOp(ExprType.inclusiveRange, $1, $4);}
 	| expr EXCLUSIVE_RANGE_OP linefeed_or_empty expr    {$$=ExprNode::createExprFromBinOp(ExprType.ExclusiveRange, $1, $4);}
     | '(' linefeed_or_empty expr linefeed_or_empty ')'  {$$=ExprNode::createExprFromUnary(ExprType.brackets, $3);}
-    | '[' linefeed_or_empty expr_list linefeed_or_empty ']'
-    | '[' linefeed_or_empty ']'
+    | '[' linefeed_or_empty expr_list linefeed_or_empty ']' {$$=ExprNode::createExprFromArray($3);}
+    | '[' linefeed_or_empty ']' {$$=ExprNode::createExprFromArray(std::vector<ExprNode*>* empty);}
     | DEFINED_KEYWORD linefeed_or_empty expr    {$$=ExprNode::createExprFromUnary(ExprType.defined, $3);}
 	| DOUBLE_COLON_SYMBOL linefeed_or_empty expr    {$$=ExprNode::createExprFromUnary(ExprType.doubleColon, $3);}
 	| expr DOUBLE_COLON_SYMBOL linefeed_or_empty expr {$$=ExprNode::createExprFromBinOp(ExprType.doubleColonWithLeftOperand, $1, $4);}
