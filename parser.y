@@ -100,8 +100,8 @@ expr: IDENTIFIER    {$$=ExprNode::createExprFromVarName(ExprType.id, $1);}
     | expr '*' linefeed_or_empty expr   {$$=ExprNode::createExprFromBinOp(ExprType.multiplication, $1, $2);}
     | expr '+' linefeed_or_empty expr   {$$=ExprNode::createExprFromBinOp(ExprType.sum, $1, $2);}
     | expr '-' linefeed_or_empty expr   {$$=ExprNode::createExprFromBinOp(ExprType.subtraction, $1, $2);}
-    | '-' linefeed_or_empty expr %prec UMINUS
-    | expr '.' linefeed_or_empty SUPERCLASS_KEYWORD
+    | '-' linefeed_or_empty expr %prec UMINUS {$$=ExprNode::createExprFromUnary(ExprType.unaryMinus, $1);}
+    | expr '.' linefeed_or_empty SUPERCLASS_KEYWORD {$$=ExprNode::createExprFromUnary(ExprType.superclass, $1);}
     | IDENTIFIER '(' linefeed_or_empty expr_list linefeed_or_empty ')'
     | IDENTIFIER '(' linefeed_or_empty ')'
     | SUPER_KEYWORD
@@ -117,7 +117,7 @@ expr: IDENTIFIER    {$$=ExprNode::createExprFromVarName(ExprType.id, $1);}
     | expr '.' linefeed_or_empty METHOD_MARK_EQUAL
     | expr AND_KEYWORD linefeed_or_empty expr   {$$=ExprNode::createExprFromBinOp(ExprType.and, $1, $2);}
     | expr OR_KEYWORD linefeed_or_empty expr    {$$=ExprNode::createExprFromBinOp(ExprType.or, $1, $2);}
-    | NOT_KEYWORD '(' linefeed_or_empty expr linefeed_or_empty ')'
+    | NOT_KEYWORD '(' linefeed_or_empty expr linefeed_or_empty ')'  {$$=ExprNode::createExprFromUnary(ExprType.not, $1);}
     | expr ARITHMETIC_POW_OP linefeed_or_empty expr {$$=ExprNode::createExprFromBinOp(ExprType.pow, $1, $2);}
     | expr EQL_OP linefeed_or_empty expr    {$$=ExprNode::createExprFromBinOp(ExprType.equal, $1, $2);}
     | expr NOT_EQL_OP linefeed_or_empty expr    {$$=ExprNode::createExprFromBinOp(ExprType.notEqual, $1, $2);}
@@ -141,16 +141,16 @@ expr: IDENTIFIER    {$$=ExprNode::createExprFromVarName(ExprType.id, $1);}
 	| expr BIN_RIGHT_SHIFT_OP linefeed_or_empty expr    {$$=ExprNode::createExprFromBinOp(ExprType.binRightShift, $1, $2);}
 	| expr LOGICAL_AND_OP linefeed_or_empty expr    {$$=ExprNode::createExprFromBinOp(ExprType.logicalAnd, $1, $2);}
 	| expr LOGICAL_OR_OP linefeed_or_empty expr {$$=ExprNode::createExprFromBinOp(ExprType.logicalOr, $1, $2);}
-	| LOGICAL_NOT_OP linefeed_or_empty expr
+	| LOGICAL_NOT_OP linefeed_or_empty expr {$$=ExprNode::createExprFromUnary(ExprType.logicalNot, $1);}
     | expr INCLUSIVE_RANGE_OP linefeed_or_empty expr    {$$=ExprNode::createExprFromBinOp(ExprType.inclusiveRange, $1, $2);}
 	| expr EXCLUSIVE_RANGE_OP linefeed_or_empty expr    {$$=ExprNode::createExprFromBinOp(ExprType.ExclusiveRange, $1, $2);}
-    | '(' linefeed_or_empty expr linefeed_or_empty ')'
+    | '(' linefeed_or_empty expr linefeed_or_empty ')'  {$$=ExprNode::createExprFromUnary(ExprType.brackets, $1);}
     | '[' linefeed_or_empty expr_list linefeed_or_empty ']'
     | '[' linefeed_or_empty ']'
-    | DEFINED_KEYWORD linefeed_or_empty expr
-	| DOUBLE_COLON_SYMBOL linefeed_or_empty expr // 1
+    | DEFINED_KEYWORD linefeed_or_empty expr    {$$=ExprNode::createExprFromUnary(ExprType.defined, $1);}
+	| DOUBLE_COLON_SYMBOL linefeed_or_empty expr    {$$=ExprNode::createExprFromUnary(ExprType.doubleColon, $1);}
 	| expr DOUBLE_COLON_SYMBOL linefeed_or_empty expr {$$=ExprNode::createExprFromBinOp(ExprType.doubleColonWithLeftOperand, $1, $2);}
-    | expr QUESTION_SYMBOL linefeed_or_empty expr linefeed_or_empty COLON_SYMBOL linefeed_or_empty expr
+    | expr QUESTION_SYMBOL linefeed_or_empty expr linefeed_or_empty COLON_SYMBOL linefeed_or_empty expr {$$=ExprNode::createExprFromTernary($1, $2, $3);}
     ;
 
 linefeed_or_empty: /*empty*/
