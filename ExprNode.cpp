@@ -31,7 +31,13 @@ public:
 	    return result;
     }
     static ExprNode* ExprNode::createExprFromNil();
-    static ExprNode* ExprNode::createExprFromInt(int val);
+    static ExprNode* ExprNode::createExprFromInt(int val){
+        ExprNode* result = new ExprNode;
+        result->type = ExprType.intNumber;
+        result->intValue = val;
+        result->idNode = ++ExprNode::max_id;
+	    return result;
+    }
     static ExprNode* ExprNode::createExprFromFloat(float val);
     static ExprNode* ExprNode::createExprFromBinOp(ExprType typeOp, ExprNode* left, ExprNode* right);
     static ExprNode* ExprNode::createExprFromFuncCall(std::vector<ExprNode*>* params, string& id);
