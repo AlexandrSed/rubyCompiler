@@ -83,7 +83,7 @@ public:
     ExprNode* right;
     std::vector<ExprNode*>* params;
 
-    static ExprNode* createExprFromVarName(string& id);
+    static ExprNode* createExprFromVarName(ExprType* type, string& id);
     static ExprNode* createExprFromString(string& str);
     static ExprNode* createExprFromTrue();
     static ExprNode* createExprFromFalse();
