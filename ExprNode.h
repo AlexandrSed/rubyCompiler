@@ -62,7 +62,7 @@ enum ExprType {
     exclusiveRange,
     brackets,
     array,
-    squareBrackets,
+    emptyArray,
     defined,
     doubleColon,
     doubleColonWithLeftOperand,
@@ -95,7 +95,7 @@ public:
     static ExprNode* createExprFromFuncCall(std::vector<ExprNode*>* params, string& id);
     static ExprNode* createExprFromUnary(ExprType typeOp, ExprNode* operand);
     static ExprNode* createExprFromTernary(ExprNode* left, ExprNode* center, ExprNode* right);
-    static ExprNode* createExprFromArray(std::vector<ExprNode*>* list);
+    static ExprNode* createExprFromArray(ExprType* type, std::vector<ExprNode*>* list);
     static ExprNode* createExprFromSuper(ExprType* type, std::vector<ExprNode*>* params);
     static int maxId;
 };

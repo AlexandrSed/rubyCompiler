@@ -82,9 +82,9 @@ public:
         result->idNode = ++ExprNode::max_id;
 	    return result;
     }
-    static ExprNode* ExprNode::createExprFromArray(std::vector<ExprNode*>* list) {
+    static ExprNode* ExprNode::createExprFromArray(ExprType* type, std::vector<ExprNode*>* list) {
         ExprNode* result = new ExprNode;
-        result->type = ExprType.array;
+        result->type = type;
         result->arr=list;
         result->idNode = ++ExprNode::max_id;
 	    return result;
