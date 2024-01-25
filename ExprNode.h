@@ -82,14 +82,10 @@ public:
     ExprNode* center;
     ExprNode* right;
     std::vector<ExprNode*>* params;
-    enum dataType {
-        intType,
-        floatType
-    };
+    
     class var {
         string name;
         int id;
-        dataType dType;
     }
 
     vector<var> vars;
