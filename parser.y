@@ -94,7 +94,7 @@ expr: IDENTIFIER    {$$=ExprNode::createExprFromVarName(ExprType.id, $1);}
     | INTEGER_NUMBER    {$$=ExprNode::createExprFromInt($1);}
     | FLOAT_NUMBER  {$$=ExprNode::createExprFromFloat($1);}
     | expr '=' linefeed_or_empty expr   {$$=ExprNode::createExprFromBinOp(ExprType.assign, $1, $4);}
-    | expr '[' linefeed_or_empty expr linefeed_or_empty ']' {$$=ExprNode::createExprFromBinOp(ExprType.array, $1, $4);}
+    | expr '[' linefeed_or_empty expr linefeed_or_empty ']' {$$=ExprNode::createExprFromBinOp(ExprType.arrayElement, $1, $4);}
     | expr '/' linefeed_or_empty expr   {$$=ExprNode::createExprFromBinOp(ExprType.division, $1, $4);}
     | expr '%' linefeed_or_empty expr   {$$=ExprNode::createExprFromBinOp(ExprType.remainderOfDivision, $1, $4);}
     | expr '*' linefeed_or_empty expr   {$$=ExprNode::createExprFromBinOp(ExprType.multiplication, $1, $4);}

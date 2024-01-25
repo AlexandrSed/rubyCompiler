@@ -10,7 +10,7 @@ enum ExprType {
     intNumber,
     floatNumber,
     assign,
-    array,
+    arrayElement,
     division,
     remainderOfDivision,
     multiplication,
@@ -61,8 +61,8 @@ enum ExprType {
     inclusiveRange,
     exclusiveRange,
     brackets,
+    array,
     squareBrackets,
-    emptySquareBrackets,
     defined,
     doubleColon,
     doubleColonWithLeftOperand,
@@ -82,6 +82,7 @@ public:
     ExprNode* center;
     ExprNode* right;
     std::vector<ExprNode*>* params;
+    std::vector<ExprNode*>* list;
 
     static ExprNode* createExprFromVarName(ExprType* type, string& id);
     static ExprNode* createExprFromString(string& str);
@@ -94,5 +95,6 @@ public:
     static ExprNode* createExprFromFuncCall(ExprType* type, std::vector<ExprNode*>* params, string& id);
     static ExprNode* createExprFromUnary(ExprType typeOp, ExprNode* operand);
     static ExprNode* createExprFromTernary(ExprNode* left, ExprNode* center, ExprNode* right);
+    static ExprNode* createExprFromArray(std::vector<ExprNode*>* list);
     static int maxId;
 };
