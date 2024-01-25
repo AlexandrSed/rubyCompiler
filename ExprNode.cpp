@@ -9,36 +9,41 @@ public:
         result->idNode = ++ExprNode::max_id;
 	    return result;
     }
-    static ExprNode* ExprNode::createExprFromString(string& str){
+    static ExprNode* ExprNode::createExprFromString(string& str) {
         ExprNode* result = new ExprNode;
         result->type = ExprType.stringType;
         result->strValue = str;
         result->idNode = ++ExprNode::max_id;
 	    return result;
     }
-    static ExprNode* ExprNode::createExprFromTrue(){
+    static ExprNode* ExprNode::createExprFromTrue() {
         ExprNode* result = new ExprNode;
         result->type = ExprType.trueKeyword;
         result->boolValue = true;
         result->idNode = ++ExprNode::max_id;
 	    return result;
     }
-    static ExprNode* ExprNode::createExprFromFalse(){
+    static ExprNode* ExprNode::createExprFromFalse() {
         ExprNode* result = new ExprNode;
         result->type = ExprType.falseKeyword;
         result->boolValue = false;
         result->idNode = ++ExprNode::max_id;
 	    return result;
     }
-    static ExprNode* ExprNode::createExprFromNil();
-    static ExprNode* ExprNode::createExprFromInt(int val){
+    static ExprNode* ExprNode::createExprFromNil() {
+        ExprNode* result = new ExprNode;
+        result->type = ExprType.nilKeyword;
+        result->idNode = ++ExprNode::max_id;
+	    return result;
+    }
+    static ExprNode* ExprNode::createExprFromInt(int val) {
         ExprNode* result = new ExprNode;
         result->type = ExprType.intNumber;
         result->intValue = val;
         result->idNode = ++ExprNode::max_id;
 	    return result;
     }
-    static ExprNode* ExprNode::createExprFromFloat(float val){
+    static ExprNode* ExprNode::createExprFromFloat(float val) {
         ExprNode* result = new ExprNode;
         result->type = ExprType.floatNumber;
         result->floatValue = val;
