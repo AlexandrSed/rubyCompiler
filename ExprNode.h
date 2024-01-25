@@ -41,7 +41,7 @@ enum ExprType {
     less,
     greaterOrEqual,
     lessOrEqual,
-    combComprassion,
+    combComparison,
     caseEqual,
     addAssign,
     subAssign,
