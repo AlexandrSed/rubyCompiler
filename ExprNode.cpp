@@ -9,6 +9,7 @@ public:
         result->idNode = ++ExprNode::max_id;
 	    return result;
     }
+
     static ExprNode* ExprNode::createExprFromString(string& str) {
         ExprNode* result = new ExprNode;
         result->type = ExprType.stringType;
@@ -16,6 +17,7 @@ public:
         result->idNode = ++ExprNode::max_id;
 	    return result;
     }
+
     static ExprNode* ExprNode::createExprFromTrue() {
         ExprNode* result = new ExprNode;
         result->type = ExprType.trueKeyword;
@@ -23,6 +25,7 @@ public:
         result->idNode = ++ExprNode::max_id;
 	    return result;
     }
+
     static ExprNode* ExprNode::createExprFromFalse() {
         ExprNode* result = new ExprNode;
         result->type = ExprType.falseKeyword;
@@ -30,12 +33,14 @@ public:
         result->idNode = ++ExprNode::max_id;
 	    return result;
     }
+
     static ExprNode* ExprNode::createExprFromNil() {
         ExprNode* result = new ExprNode;
         result->type = ExprType.nilKeyword;
         result->idNode = ++ExprNode::max_id;
 	    return result;
     }
+
     static ExprNode* ExprNode::createExprFromInt(int val) {
         ExprNode* result = new ExprNode;
         result->type = ExprType.intNumber;
@@ -43,6 +48,7 @@ public:
         result->idNode = ++ExprNode::max_id;
 	    return result;
     }
+
     static ExprNode* ExprNode::createExprFromFloat(float val) {
         ExprNode* result = new ExprNode;
         result->type = ExprType.floatNumber;
@@ -50,6 +56,7 @@ public:
         result->idNode = ++ExprNode::max_id;
 	    return result;
     }
+
     static ExprNode* ExprNode::createExprFromBinOp(ExprType typeOp, ExprNode* left, ExprNode* right) {
         ExprNode* result = new ExprNode;
         result->type = typeOp;
@@ -58,6 +65,7 @@ public:
         result->idNode = ++ExprNode::max_id;
 	    return result;
     }
+
     static ExprNode* ExprNode::createExprFromFuncCall(ExprType* type, std::vector<ExprNode*>* params, string& id) {
         ExprNode* result = new ExprNode;
         result->type = type;
@@ -66,6 +74,7 @@ public:
         result->idNode = ++ExprNode::max_id;
 	    return result;
     }
+
     static ExprNode* ExprNode::createExprFromUnary(ExprType typeOp, ExprNode* operand) {
         ExprNode* result = new ExprNode;
         result->type = typeOp;
@@ -73,6 +82,7 @@ public:
         result->idNode = ++ExprNode::max_id;
 	    return result;
     }
+
     static ExprNode* ExprNode::createExprFromTernary(ExprNode* left, ExprNode* center, ExprNode* right) {
         ExprNode* result = new ExprNode;
         result->type = ExprType.ternaryOperator;
@@ -82,6 +92,7 @@ public:
         result->idNode = ++ExprNode::max_id;
 	    return result;
     }
+
     static ExprNode* ExprNode::createExprFromArray(ExprType* type, std::vector<ExprNode*>* list) {
         ExprNode* result = new ExprNode;
         result->type = type;
@@ -89,6 +100,7 @@ public:
         result->idNode = ++ExprNode::max_id;
 	    return result;
     }
+
     static ExprNode* ExprNode::createExprFromSuper(ExprType* type, std::vector<ExprNode*>* params) {
         ExprNode* result = new ExprNode;
         result->type = type;
@@ -96,4 +108,15 @@ public:
         result->idNode = ++ExprNode::max_id;
 	    return result;
     }
+
+    static ExprNode* createExprFromMethod(ExprType* type, std::vector<ExprNode*>* params, string& id, ExprNode* left) {
+        ExprNode* result = new ExprNode;
+        result->type = type;
+        result->params = params;
+        result->left = left;
+        result->varName = id;
+        result->idNode = ++ExprNode::max_id;
+	    return result;
+    }
+
 };

@@ -24,13 +24,21 @@ enum ExprType {
     superWithoutParams,
     superWithoutParamsAndBrackets,
     callOfMethod,
+    callOfMethodWithoutParams,
     callOfMethodMarkQuestion,
+    callOfMethodMarkQuestionWithoutParams,
     callOfMethodMarkExclamation,
+    callOfMethodMarkExclamationWithoutParams,
     callOfMethodEqual,
+    callOfMethodEqualWithoutParams,
     self,
+    selfWithoutParams,
     selfMarkQuestion,
+    selfMarkQuestionWithoutParams,
     selfMarkExclamation,
+    selfMarkExclamationWithoutParams,
     selfEqual,
+    selfEqualWithoutParams,
     and,
     or,
     not,
@@ -97,5 +105,6 @@ public:
     static ExprNode* createExprFromTernary(ExprNode* left, ExprNode* center, ExprNode* right);
     static ExprNode* createExprFromArray(ExprType* type, std::vector<ExprNode*>* list);
     static ExprNode* createExprFromSuper(ExprType* type, std::vector<ExprNode*>* params);
+    static ExprNode* createExprFromMethod(ExprType* type, std::vector<ExprNode*>* params, string& id, ExprNode* left);
     static int maxId;
 };
