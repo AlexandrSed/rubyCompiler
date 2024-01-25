@@ -72,10 +72,10 @@ enum ExprType {
 class ExprNode {
 public:
     ExprType type;
-    int value;
-    float value;
-    string value;
-    bool value;
+    int intValue;
+    float floatValue;
+    string strValue;
+    bool boolValue;
     string varName;
     int idNode;
     ExprNode* left;
