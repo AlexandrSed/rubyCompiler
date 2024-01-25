@@ -38,9 +38,9 @@
 %token WHEN_KEYWORD
 %token WHILE_KEYWORD
 
-%token METHOD_MARK_QUESTION
-%token METHOD_MARK_EXCLAMATION
-%token METHOD_MARK_EQUAL
+%token <Str> METHOD_MARK_QUESTION
+%token <Str> METHOD_MARK_EXCLAMATION
+%token <Str> METHOD_MARK_EQUAL
 
 %left OR_KEYWORD AND_KEYWORD
 %left NOT_KEYWORD
@@ -111,8 +111,8 @@ expr: IDENTIFIER    {$$=ExprNode::createExprFromVarName(ExprType.id, $1);}
     | SUPER_KEYWORD {$$=ExprNode::createExprFromSuper(ExprType.superWithoutParamsAndBrackets, std::vector<ExprNode*>* empty);}
     | SUPER_KEYWORD '(' linefeed_or_empty expr_list linefeed_or_empty ')'   {$$=ExprNode::createExprFromSuper(ExprType.super, $4);}
     | SUPER_KEYWORD '(' linefeed_or_empty ')'   {$$=ExprNode::createExprFromSuper(ExprType.superWithoutParams, std::vector<ExprNode*>* empty);}
-    | expr '.' linefeed_or_empty IDENTIFIER
-    | expr '.' linefeed_or_empty IDENTIFIER '(' linefeed_or_empty expr_list linefeed_or_empty ')'
+    | expr '.' linefeed_or_empty IDENTIFIER {$$=createExprFromMethod(ExprType.callOfMethodWithoutParams, std::vector<ExprNode*>* empty, $4, $1)}
+    | expr '.' linefeed_or_empty IDENTIFIER '(' linefeed_or_empty expr_list linefeed_or_empty ')'   {$$=createExprFromMethod(ExprType.callOfMethod, $7, $4, $1)}
     | SELF_KEYWORD '.' linefeed_or_empty IDENTIFIER
     | SELF_KEYWORD '.' linefeed_or_empty IDENTIFIER '(' linefeed_or_empty expr_list linefeed_or_empty ')'
     | SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_QUESTION
@@ -121,12 +121,12 @@ expr: IDENTIFIER    {$$=ExprNode::createExprFromVarName(ExprType.id, $1);}
     | SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_EXCLAMATION '(' linefeed_or_empty expr_list linefeed_or_empty ')'
     | SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_EQUAL
     | SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_EQUAL '(' linefeed_or_empty expr_list linefeed_or_empty ')'
-    | expr '.' linefeed_or_empty METHOD_MARK_QUESTION
-    | expr '.' linefeed_or_empty METHOD_MARK_QUESTION '(' linefeed_or_empty expr_list linefeed_or_empty ')'
-    | expr '.' linefeed_or_empty METHOD_MARK_EXCLAMATION
-    | expr '.' linefeed_or_empty METHOD_MARK_EXCLAMATION '(' linefeed_or_empty expr_list linefeed_or_empty ')'
-    | expr '.' linefeed_or_empty METHOD_MARK_EQUAL
-    | expr '.' linefeed_or_empty METHOD_MARK_EQUAL '(' linefeed_or_empty expr_list linefeed_or_empty ')'
+    | expr '.' linefeed_or_empty METHOD_MARK_QUESTION   {$$=createExprFromMethod(ExprType.callOfMethodMarkQuestionWithoutParams, std::vector<ExprNode*>* empty, $4, $1)}
+    | expr '.' linefeed_or_empty METHOD_MARK_QUESTION '(' linefeed_or_empty expr_list linefeed_or_empty ')' {$$=createExprFromMethod(ExprType.callOfMethodMarkQuestion, $7, $4, $1)}
+    | expr '.' linefeed_or_empty METHOD_MARK_EXCLAMATION    {$$=createExprFromMethod(ExprType.callOfMethodMarkExclamationWithoutParams, std::vector<ExprNode*>* empty, $4, $1)}
+    | expr '.' linefeed_or_empty METHOD_MARK_EXCLAMATION '(' linefeed_or_empty expr_list linefeed_or_empty ')'  {$$=createExprFromMethod(ExprType.callOfMethodMarkExclamation, $7, $4, $1)}
+    | expr '.' linefeed_or_empty METHOD_MARK_EQUAL  {$$=createExprFromMethod(ExprType.callOfMethodEqualWithoutParams, std::vector<ExprNode*>* empty, $4, $1)}
+    | expr '.' linefeed_or_empty METHOD_MARK_EQUAL '(' linefeed_or_empty expr_list linefeed_or_empty ')'    {$$=createExprFromMethod(ExprType.callOfMethodEqual, $7, $4, $1)}
     | expr AND_KEYWORD linefeed_or_empty expr   {$$=ExprNode::createExprFromBinOp(ExprType.and, $1, $4);}
     | expr OR_KEYWORD linefeed_or_empty expr    {$$=ExprNode::createExprFromBinOp(ExprType.or, $1, $4);}
     | NOT_KEYWORD '(' linefeed_or_empty expr linefeed_or_empty ')'  {$$=ExprNode::createExprFromUnary(ExprType.not, $4);}

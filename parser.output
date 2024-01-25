@@ -61,7 +61,7 @@ Grammar
    50     | expr LESS_OP linefeed_or_empty expr
    51     | expr GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr CASE_EQL_OP linefeed_or_empty expr
    55     | expr ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr SUB_ASSIGN_OP linefeed_or_empty expr
@@ -236,9 +236,9 @@ Terminals, with rules where they appear
     UNLESS_KEYWORD (278) 138 139 140 141 142
     WHEN_KEYWORD (279) 155 156 157 158
     WHILE_KEYWORD (280) 147 148
-    METHOD_MARK_QUESTION (281) 31 32 37 38 109 111
-    METHOD_MARK_EXCLAMATION (282) 33 34 39 40 112 113
-    METHOD_MARK_EQUAL (283) 35 36 41 42 114 115
+    METHOD_MARK_QUESTION <Str> (281) 31 32 37 38 109 111
+    METHOD_MARK_EXCLAMATION <Str> (282) 33 34 39 40 112 113
+    METHOD_MARK_EQUAL <Str> (283) 35 36 41 42 114 115
     OR_KEYWORD (284) 44
     AND_KEYWORD (285) 43
     NOT_KEYWORD (286) 45
@@ -256,7 +256,7 @@ Terminals, with rules where they appear
     LOGICAL_AND_OP (298) 67
     EQL_OP (299) 47
     NOT_EQL_OP (300) 48
-    COMB_COMPRASION_OP (301) 53
+    COMB_COMPARISON_OP (301) 53
     CASE_EQL_OP (302) 54
     GREATER_OP (303) 49
     LESS_OP (304) 50
@@ -275,13 +275,13 @@ Terminals, with rules where they appear
     NEW_LINE_SYMBOL (317) 81 82 88 91
     COMMA_SYMBOL (318) 93 105
     SEMICOLON_SYMBOL (319) 89 90
-    STRING (320) 7
-    INTEGER_NUMBER (321) 11
-    FLOAT_NUMBER (322) 12
-    IDENTIFIER (323) 3 22 23 27 28 29 30 104 105 108 110 159
-    OBJECT_VAR_NAME (324) 4 121 122
-    CLASS_VAR_NAME (325) 5 119 120
-    CONSTANT_NAME (326) 6 116 117
+    STRING <Str> (320) 7
+    INTEGER_NUMBER <Int> (321) 11
+    FLOAT_NUMBER <Float> (322) 12
+    IDENTIFIER <Str> (323) 3 22 23 27 28 29 30 104 105 108 110 159
+    OBJECT_VAR_NAME <Str> (324) 4 121 122
+    CLASS_VAR_NAME <Str> (325) 5 119 120
+    CONSTANT_NAME <Str> (326) 6 116 117
 
 
 Nonterminals, with rules where they appear
@@ -291,7 +291,7 @@ Nonterminals, with rules where they appear
     programm (87)
         on left: 1 2
         on right: 0
-    expr (88)
+    expr <expr_union> (88)
         on left: 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78
         on right: 13 14 15 16 17 18 19 20 21 27 28 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 75 76 77 78 92 93 96 120 122 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143 144 145 146 147 148 149 150 151 153 154
     linefeed_or_empty (89)
@@ -309,7 +309,7 @@ Nonterminals, with rules where they appear
     delimiter (93)
         on left: 88 89 90 91
         on right: 83 84 90 91 96 97 98 99 100 101 102 103 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 128 129 131 133 135 139 141 143 145 148 150 155 157
-    expr_list (94)
+    expr_list <expr_list_union> (94)
         on left: 92 93
         on right: 22 25 28 30 32 34 36 38 40 42 73 93 155 156 157 158
     stmt_list (95)
@@ -777,7 +777,7 @@ State 30
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -819,7 +819,7 @@ State 30
     LOGICAL_AND_OP          shift, and go to state 80
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
@@ -1193,7 +1193,7 @@ State 52
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -1231,7 +1231,7 @@ State 52
     LOGICAL_AND_OP          shift, and go to state 80
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
@@ -1734,7 +1734,7 @@ State 82
 
 State 83
 
-   53 expr: expr COMB_COMPRASION_OP . linefeed_or_empty expr
+   53 expr: expr COMB_COMPARISON_OP . linefeed_or_empty expr
 
     NEW_LINE_SYMBOL  shift, and go to state 44
 
@@ -2167,7 +2167,7 @@ State 118
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -2206,7 +2206,7 @@ State 118
     LOGICAL_AND_OP          shift, and go to state 80
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
@@ -2330,7 +2330,7 @@ State 125
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -2366,7 +2366,7 @@ State 125
     LOGICAL_AND_OP          shift, and go to state 80
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
@@ -2418,7 +2418,7 @@ State 126
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -2463,7 +2463,7 @@ State 126
     LOGICAL_AND_OP          shift, and go to state 80
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
@@ -2520,7 +2520,7 @@ State 127
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -2560,7 +2560,7 @@ State 127
     LOGICAL_AND_OP          shift, and go to state 80
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
@@ -2657,7 +2657,7 @@ State 130
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -2698,7 +2698,7 @@ State 130
     LOGICAL_AND_OP          shift, and go to state 80
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
@@ -2755,7 +2755,7 @@ State 131
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -2795,7 +2795,7 @@ State 131
     LOGICAL_AND_OP          shift, and go to state 80
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
@@ -2877,7 +2877,7 @@ State 133
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -2934,7 +2934,7 @@ State 134
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -2992,7 +2992,7 @@ State 135
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -3030,7 +3030,7 @@ State 135
     LOGICAL_AND_OP          shift, and go to state 80
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
@@ -3093,7 +3093,7 @@ State 137
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -3131,7 +3131,7 @@ State 137
     LOGICAL_AND_OP          shift, and go to state 80
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
@@ -3197,7 +3197,7 @@ State 139
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -3740,7 +3740,7 @@ State 158
 
 State 159
 
-   53 expr: expr COMB_COMPRASION_OP linefeed_or_empty . expr
+   53 expr: expr COMB_COMPARISON_OP linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -4880,7 +4880,7 @@ State 207
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -4917,7 +4917,7 @@ State 207
     LOGICAL_AND_OP          shift, and go to state 80
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
@@ -5035,7 +5035,7 @@ State 213
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -5073,7 +5073,7 @@ State 213
     LOGICAL_AND_OP          shift, and go to state 80
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
@@ -5125,7 +5125,7 @@ State 214
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -5163,7 +5163,7 @@ State 214
     LOGICAL_AND_OP          shift, and go to state 80
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
@@ -5216,7 +5216,7 @@ State 215
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -5251,7 +5251,7 @@ State 215
     LOGICAL_AND_OP          shift, and go to state 80
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
@@ -5304,7 +5304,7 @@ State 216
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -5339,7 +5339,7 @@ State 216
     LOGICAL_AND_OP          shift, and go to state 80
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
@@ -5392,7 +5392,7 @@ State 217
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -5427,7 +5427,7 @@ State 217
     LOGICAL_AND_OP          shift, and go to state 80
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
@@ -5479,7 +5479,7 @@ State 218
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    55     | expr ADD_ASSIGN_OP linefeed_or_empty expr .
@@ -5515,7 +5515,7 @@ State 218
     LOGICAL_AND_OP          shift, and go to state 80
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
@@ -5567,7 +5567,7 @@ State 219
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -5603,7 +5603,7 @@ State 219
     LOGICAL_AND_OP          shift, and go to state 80
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
@@ -5655,7 +5655,7 @@ State 220
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -5691,7 +5691,7 @@ State 220
     LOGICAL_AND_OP          shift, and go to state 80
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
@@ -5743,7 +5743,7 @@ State 221
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -5779,7 +5779,7 @@ State 221
     LOGICAL_AND_OP          shift, and go to state 80
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
@@ -5831,7 +5831,7 @@ State 222
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -5867,7 +5867,7 @@ State 222
     LOGICAL_AND_OP          shift, and go to state 80
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
@@ -5919,7 +5919,7 @@ State 223
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -5955,7 +5955,7 @@ State 223
     LOGICAL_AND_OP          shift, and go to state 80
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
@@ -6007,7 +6007,7 @@ State 224
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -6045,7 +6045,7 @@ State 224
     LOGICAL_AND_OP          shift, and go to state 80
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
@@ -6101,7 +6101,7 @@ State 225
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -6127,7 +6127,7 @@ State 225
     LOGICAL_AND_OP          shift, and go to state 80
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
@@ -6179,7 +6179,7 @@ State 226
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -6205,7 +6205,7 @@ State 226
     LOGICAL_AND_OP          shift, and go to state 80
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
@@ -6257,7 +6257,7 @@ State 227
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -6282,7 +6282,7 @@ State 227
     LOGICAL_AND_OP          shift, and go to state 80
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
@@ -6334,7 +6334,7 @@ State 228
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -6358,7 +6358,7 @@ State 228
 
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
@@ -6411,7 +6411,7 @@ State 229
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -6483,7 +6483,7 @@ State 230
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -6554,8 +6554,8 @@ State 231
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
-   53     | expr COMB_COMPRASION_OP linefeed_or_empty expr .
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
+   53     | expr COMB_COMPARISON_OP linefeed_or_empty expr .
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -6626,7 +6626,7 @@ State 232
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    54     | expr CASE_EQL_OP linefeed_or_empty expr .
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
@@ -6699,7 +6699,7 @@ State 233
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -6767,7 +6767,7 @@ State 234
    50     | expr LESS_OP linefeed_or_empty expr .
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -6835,7 +6835,7 @@ State 235
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    51     | expr GREATER_OR_EQL_OP linefeed_or_empty expr .
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -6903,7 +6903,7 @@ State 236
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
    52     | expr LESS_OR_EQL_OP linefeed_or_empty expr .
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -6970,7 +6970,7 @@ State 237
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -7036,7 +7036,7 @@ State 238
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -7102,7 +7102,7 @@ State 239
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -7167,7 +7167,7 @@ State 240
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -7230,7 +7230,7 @@ State 241
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -7294,7 +7294,7 @@ State 242
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -7355,7 +7355,7 @@ State 243
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -7416,7 +7416,7 @@ State 244
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -7474,7 +7474,7 @@ State 245
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -7532,7 +7532,7 @@ State 246
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -7589,7 +7589,7 @@ State 247
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -7648,7 +7648,7 @@ State 248
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -7751,7 +7751,7 @@ State 254
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -7788,7 +7788,7 @@ State 254
     LOGICAL_AND_OP          shift, and go to state 80
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
@@ -7844,7 +7844,7 @@ State 255
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -8595,7 +8595,7 @@ State 288
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -8633,7 +8633,7 @@ State 288
     LOGICAL_AND_OP          shift, and go to state 80
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
@@ -9157,7 +9157,7 @@ State 325
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -9197,7 +9197,7 @@ State 325
     LOGICAL_AND_OP          shift, and go to state 80
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
@@ -9755,7 +9755,7 @@ State 348
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -9793,7 +9793,7 @@ State 348
     LOGICAL_AND_OP          shift, and go to state 80
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
@@ -9847,7 +9847,7 @@ State 349
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -9885,7 +9885,7 @@ State 349
     LOGICAL_AND_OP          shift, and go to state 80
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
@@ -10878,7 +10878,7 @@ State 392
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -10917,7 +10917,7 @@ State 392
     LOGICAL_AND_OP          shift, and go to state 80
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
@@ -11306,7 +11306,7 @@ State 406
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -11334,7 +11334,7 @@ State 406
     LOGICAL_AND_OP          shift, and go to state 80
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
@@ -11820,7 +11820,7 @@ State 424
    50     | expr . LESS_OP linefeed_or_empty expr
    51     | expr . GREATER_OR_EQL_OP linefeed_or_empty expr
    52     | expr . LESS_OR_EQL_OP linefeed_or_empty expr
-   53     | expr . COMB_COMPRASION_OP linefeed_or_empty expr
+   53     | expr . COMB_COMPARISON_OP linefeed_or_empty expr
    54     | expr . CASE_EQL_OP linefeed_or_empty expr
    55     | expr . ADD_ASSIGN_OP linefeed_or_empty expr
    56     | expr . SUB_ASSIGN_OP linefeed_or_empty expr
@@ -11859,7 +11859,7 @@ State 424
     LOGICAL_AND_OP          shift, and go to state 80
     EQL_OP                  shift, and go to state 81
     NOT_EQL_OP              shift, and go to state 82
-    COMB_COMPRASION_OP      shift, and go to state 83
+    COMB_COMPARISON_OP      shift, and go to state 83
     CASE_EQL_OP             shift, and go to state 84
     GREATER_OP              shift, and go to state 85
     LESS_OP                 shift, and go to state 86
