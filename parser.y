@@ -105,9 +105,9 @@ expr: IDENTIFIER    {$$=ExprNode::createExprFromVarName(ExprType.id, $1);}
     | expr '.' linefeed_or_empty SUPERCLASS_KEYWORD {$$=ExprNode::createExprFromUnary(ExprType.superclass, $1);}
     | IDENTIFIER '(' linefeed_or_empty expr_list linefeed_or_empty ')'  {$$=ExprNode::createExprFromFuncCall(ExprType.function, $4, $1);}
     | IDENTIFIER '(' linefeed_or_empty ')'  {$$=ExprNode::createExprFromFuncCall(ExprType.funcWithoutParams, std::vector<ExprNode*>* empty, $1);}
-    | SUPER_KEYWORD
-    | SUPER_KEYWORD '(' linefeed_or_empty expr_list linefeed_or_empty ')'
-    | SUPER_KEYWORD '(' linefeed_or_empty ')'
+    | SUPER_KEYWORD {$$=ExprNode::createExprFromSuper(ExprType.superWithoutParamsAndBrackets, std::vector<ExprNode*>* empty);}
+    | SUPER_KEYWORD '(' linefeed_or_empty expr_list linefeed_or_empty ')'   {$$=ExprNode::createExprFromSuper(ExprType.super, $4);}
+    | SUPER_KEYWORD '(' linefeed_or_empty ')'   {$$=ExprNode::createExprFromSuper(ExprType.superWithoutParams, std::vector<ExprNode*>* empty);}
     | expr '.' linefeed_or_empty IDENTIFIER
     | SELF_KEYWORD '.' linefeed_or_empty IDENTIFIER
     | SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_QUESTION
