@@ -112,13 +112,21 @@ expr: IDENTIFIER    {$$=ExprNode::createExprFromVarName(ExprType.id, $1);}
     | SUPER_KEYWORD '(' linefeed_or_empty expr_list linefeed_or_empty ')'   {$$=ExprNode::createExprFromSuper(ExprType.super, $4);}
     | SUPER_KEYWORD '(' linefeed_or_empty ')'   {$$=ExprNode::createExprFromSuper(ExprType.superWithoutParams, std::vector<ExprNode*>* empty);}
     | expr '.' linefeed_or_empty IDENTIFIER
+    | expr '.' linefeed_or_empty IDENTIFIER '(' linefeed_or_empty expr_list linefeed_or_empty ')'
     | SELF_KEYWORD '.' linefeed_or_empty IDENTIFIER
+    | SELF_KEYWORD '.' linefeed_or_empty IDENTIFIER '(' linefeed_or_empty expr_list linefeed_or_empty ')'
     | SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_QUESTION
+    | SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_QUESTION '(' linefeed_or_empty expr_list linefeed_or_empty ')'
     | SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_EXCLAMATION
+    | SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_EXCLAMATION '(' linefeed_or_empty expr_list linefeed_or_empty ')'
     | SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_EQUAL
+    | SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_EQUAL '(' linefeed_or_empty expr_list linefeed_or_empty ')'
     | expr '.' linefeed_or_empty METHOD_MARK_QUESTION
+    | expr '.' linefeed_or_empty METHOD_MARK_QUESTION '(' linefeed_or_empty expr_list linefeed_or_empty ')'
     | expr '.' linefeed_or_empty METHOD_MARK_EXCLAMATION
+    | expr '.' linefeed_or_empty METHOD_MARK_EXCLAMATION '(' linefeed_or_empty expr_list linefeed_or_empty ')'
     | expr '.' linefeed_or_empty METHOD_MARK_EQUAL
+    | expr '.' linefeed_or_empty METHOD_MARK_EQUAL '(' linefeed_or_empty expr_list linefeed_or_empty ')'
     | expr AND_KEYWORD linefeed_or_empty expr   {$$=ExprNode::createExprFromBinOp(ExprType.and, $1, $4);}
     | expr OR_KEYWORD linefeed_or_empty expr    {$$=ExprNode::createExprFromBinOp(ExprType.or, $1, $4);}
     | NOT_KEYWORD '(' linefeed_or_empty expr linefeed_or_empty ')'  {$$=ExprNode::createExprFromUnary(ExprType.not, $4);}
