@@ -106,5 +106,6 @@ public:
     static ExprNode* createExprFromArray(ExprType* type, std::vector<ExprNode*>* list);
     static ExprNode* createExprFromSuper(ExprType* type, std::vector<ExprNode*>* params);
     static ExprNode* createExprFromMethod(ExprType* type, std::vector<ExprNode*>* params, string& id, ExprNode* left);
+    static ExprNode* createExprFromSelf(ExprType* type, std::vector<ExprNode*>* params, string& id);
     static int maxId;
 };

@@ -109,11 +109,20 @@ public:
 	    return result;
     }
 
-    static ExprNode* createExprFromMethod(ExprType* type, std::vector<ExprNode*>* params, string& id, ExprNode* left) {
+    static ExprNode* ExprNode::createExprFromMethod(ExprType* type, std::vector<ExprNode*>* params, string& id, ExprNode* left) {
         ExprNode* result = new ExprNode;
         result->type = type;
         result->params = params;
         result->left = left;
+        result->varName = id;
+        result->idNode = ++ExprNode::max_id;
+	    return result;
+    }
+
+    static ExprNode* ExprNode::createExprFromSelf(ExprType* type, std::vector<ExprNode*>* params, string& id) {
+        ExprNode* result = new ExprNode;
+        result->type = type;
+        result->params = params;
         result->varName = id;
         result->idNode = ++ExprNode::max_id;
 	    return result;
