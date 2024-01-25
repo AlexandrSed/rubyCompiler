@@ -82,11 +82,16 @@ public:
     ExprNode* center;
     ExprNode* right;
     std::vector<ExprNode*>* params;
-    
-    class var {
-        string name;
-        int id;
-    }
 
-    vector<var> vars;
+    static ExprNode* createExprFromVarName(string& id);
+    static ExprNode* createExprFromString(string& str);
+    static ExprNode* createExprFromTrue();
+    static ExprNode* createExprFromFalse();
+    static ExprNode* createExprFromNil();
+    static ExprNode* createExprFromInt(int val);
+    static ExprNode* createExprFromFloat(float val);
+    static ExprNode* createExprFromBinOp(ExprType typeOp, ExprNode* left, ExprNode* right);
+    static ExprNode* createExprFromFuncCall(std::vector<ExprNode*>* params, string& id);
+    static ExprNode* createExprFromUnary(ExprType typeOp, ExprNode* operand);
+    static ExprNode* createExprFromTernary(ExprNode* left, ExprNode* center, ExprNode* right);
 };
