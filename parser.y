@@ -103,8 +103,8 @@ expr: IDENTIFIER    {$$=ExprNode::createExprFromVarName(ExprType.id, $1);}
     | expr '-' linefeed_or_empty expr   {$$=ExprNode::createExprFromBinOp(ExprType.subtraction, $1, $4);}
     | '-' linefeed_or_empty expr %prec UMINUS {$$=ExprNode::createExprFromUnary(ExprType.unaryMinus, $3);}
     | expr '.' linefeed_or_empty SUPERCLASS_KEYWORD {$$=ExprNode::createExprFromUnary(ExprType.superclass, $1);}
-    | IDENTIFIER '(' linefeed_or_empty expr_list linefeed_or_empty ')'  {$$=ExprNode::createExprFromFuncCall($4, $1);}
-    | IDENTIFIER '(' linefeed_or_empty ')'  {$$=ExprNode::createExprFromFuncCall(std::vector<ExprNode*>* empty, $1);}
+    | IDENTIFIER '(' linefeed_or_empty expr_list linefeed_or_empty ')'  {$$=ExprNode::createExprFromFuncCall(ExprType.function, $4, $1);}
+    | IDENTIFIER '(' linefeed_or_empty ')'  {$$=ExprNode::createExprFromFuncCall(ExprType.funcWithoutParams, std::vector<ExprNode*>* empty, $1);}
     | SUPER_KEYWORD
     | SUPER_KEYWORD '(' linefeed_or_empty expr_list linefeed_or_empty ')'
     | SUPER_KEYWORD '(' linefeed_or_empty ')'
