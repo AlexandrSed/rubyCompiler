@@ -50,8 +50,36 @@ public:
         result->idNode = ++ExprNode::max_id;
 	    return result;
     }
-    static ExprNode* ExprNode::createExprFromBinOp(ExprType typeOp, ExprNode* left, ExprNode* right);
-    static ExprNode* ExprNode::createExprFromFuncCall(std::vector<ExprNode*>* params, string& id);
-    static ExprNode* ExprNode::createExprFromUnary(ExprType typeOp, ExprNode* operand);
-    static ExprNode* ExprNode::createExprFromTernary(ExprNode* left, ExprNode* center, ExprNode* right);
+    static ExprNode* ExprNode::createExprFromBinOp(ExprType typeOp, ExprNode* left, ExprNode* right) {
+        ExprNode* result = new ExprNode;
+        result->type = typeOp;
+        result->left = left;
+        result->right = right;
+        result->idNode = ++ExprNode::max_id;
+	    return result;
+    }
+    static ExprNode* ExprNode::createExprFromFuncCall(ExprType* type, std::vector<ExprNode*>* params, string& id) {
+        ExprNode* result = new ExprNode;
+        result->type = type;
+        result->params = params;
+        result->varName = id;
+        result->idNode = ++ExprNode::max_id;
+	    return result;
+    }
+    static ExprNode* ExprNode::createExprFromUnary(ExprType typeOp, ExprNode* operand) {
+        ExprNode* result = new ExprNode;
+        result->type = typeOp;
+        result->left = operand;
+        result->idNode = ++ExprNode::max_id;
+	    return result;
+    }
+    static ExprNode* ExprNode::createExprFromTernary(ExprNode* left, ExprNode* center, ExprNode* right) {
+        ExprNode* result = new ExprNode;
+        result->type = ExprType.ternaryOperator;
+        result->left = left;
+        result->center = center;
+        result->right = right;
+        result->idNode = ++ExprNode::max_id;
+	    return result;
+    }
 };
