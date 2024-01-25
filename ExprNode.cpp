@@ -16,7 +16,13 @@ public:
         result->idNode = ++ExprNode::max_id;
 	    return result;
     }
-    static ExprNode* ExprNode::createExprFromTrue();
+    static ExprNode* ExprNode::createExprFromTrue(){
+        ExprNode* result = new ExprNode;
+        result->type = ExprType.trueKeyword;
+        result->boolValue = true;
+        result->idNode = ++ExprNode::max_id;
+	    return result;
+    }
     static ExprNode* ExprNode::createExprFromFalse();
     static ExprNode* ExprNode::createExprFromNil();
     static ExprNode* ExprNode::createExprFromInt(int val);
