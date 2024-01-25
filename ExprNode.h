@@ -94,4 +94,5 @@ public:
     static ExprNode* createExprFromFuncCall(std::vector<ExprNode*>* params, string& id);
     static ExprNode* createExprFromUnary(ExprType typeOp, ExprNode* operand);
     static ExprNode* createExprFromTernary(ExprNode* left, ExprNode* center, ExprNode* right);
+    static int maxId;
 };
