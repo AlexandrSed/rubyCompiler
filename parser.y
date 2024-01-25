@@ -7,6 +7,9 @@
 %}
 
 %union {
+    int Int;
+    float Float;
+    string Str;
 	expr_node* expr_union;
 	std::vector<expr_node*>* expr_list_union;
 }
@@ -66,14 +69,14 @@
 %token COMMA_SYMBOL
 %token SEMICOLON_SYMBOL
 
-%token STRING
-%token INTEGER_NUMBER
-%token FLOAT_NUMBER
+%token <Str> STRING
+%token <Int> INTEGER_NUMBER
+%token <Float> FLOAT_NUMBER
 
-%token IDENTIFIER
-%token OBJECT_VAR_NAME // Поле класса, видно только в рамках одного объекта класса
-%token CLASS_VAR_NAME // Для всех объектов класса
-%token CONSTANT_NAME
+%token <Str> IDENTIFIER
+%token <Str> OBJECT_VAR_NAME // Поле класса, видно только в рамках одного объекта класса
+%token <Str> CLASS_VAR_NAME // Для всех объектов класса
+%token <Str> CONSTANT_NAME
 
 %type<expr_union> expr
 %type<expr_list_union> expr_list
