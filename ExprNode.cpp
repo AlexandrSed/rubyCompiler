@@ -134,3 +134,8 @@ std::vector<ExprNode*>* createExprList(ExprNode* expr) {
     std::vector<ExprNode*> result = {expr};
     return &result;
 }
+
+std::vector<ExprNode*>* addExprToList(std::vector<ExprNode*>* exprList, ExprNode* expr) {
+    exprList->push_back(expr);
+    return exprList;
+}

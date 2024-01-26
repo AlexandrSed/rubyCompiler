@@ -114,3 +114,5 @@ public:
 };
 
 std::vector<ExprNode*>* createExprList(ExprNode* expr);
+
+std::vector<ExprNode*>* addExprToList(std::vector<ExprNode*>* exprList, ExprNode* expr);
