@@ -1,6 +1,7 @@
 #include "IfStmtNode.h"
 
 class IfStmtNode {
+public:
     static IfStmtNode* IfStmtNode::createIfStmt(ExprNode* condition, std::vector<StmtNode*>* trueBranch) {
         IfStmtNode* result = new IfStmtNode;
         result->condition = condition;

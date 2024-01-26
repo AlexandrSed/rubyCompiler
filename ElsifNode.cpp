@@ -1,6 +1,7 @@
 #include "ElsifNode.h"
 
 class ElsifNode {
+public:
     static ElsifNode* ElsifNode::createElsifStmt(ExprNode* condition, std::vector<StmtNode*>* action) {
         ElsifNode* result = new ElsifNode;
         result->condition = condition;
