@@ -3,6 +3,7 @@
     #include <vector>
 	#include <stdio.h>
 	#include <malloc.h>
+    #include "ElsifNode.h"
     #include "ExprNode.h"
     #include "IfStmtNode.h"
 %}
@@ -13,7 +14,9 @@
     string Str;
 	ExprNode* expr_union;
 	IfStmtNode* if_union;
+    ElsifNode* elsif_union;
 	std::vector<ExprNode*>* expr_list_union;
+    std::vector<ElsifNode*>* elsif_list_union;
 }
 
 %token ALIAS_KEYWORD
@@ -82,6 +85,8 @@
 
 %type<expr_union> expr
 %type<if_union> if_stmt
+%type<elsif_union> elsif_stmt
+%type<elsif_list_union> elsif_list
 %type<expr_list_union> expr_list
 
 %%
@@ -272,8 +277,8 @@ elsif_list: elsif_stmt
     | elsif_list elsif_stmt
     ;
 
-elsif_stmt: ELSIF_KEYWORD linefeed_or_empty expr delimiter stmt_list
-    | ELSIF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list
+elsif_stmt: ELSIF_KEYWORD linefeed_or_empty expr delimiter stmt_list    {$$=ElsifNode::createElsifStmt($3, $5);}
+    | ELSIF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list    {$$=ElsifNode::createElsifStmt($3, $6);}
     ;
 
 while_stmt: WHILE_KEYWORD linefeed_or_empty expr DO_KEYWORD delimeter_or_empty stmt_list END_KEYWORD
