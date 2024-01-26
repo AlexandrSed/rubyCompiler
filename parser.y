@@ -6,6 +6,7 @@
     #include "ElsifNode.h"
     #include "ExprNode.h"
     #include "IfStmtNode.h"
+    #include "UnlessStmtNode.h"
 %}
 
 %union {
@@ -14,6 +15,7 @@
     string Str;
 	ExprNode* expr_union;
 	IfStmtNode* if_union;
+    UnlessStmtNode* unless_union;
     ElsifNode* elsif_union;
 	std::vector<ExprNode*>* expr_list_union;
     std::vector<ElsifNode*>* elsif_list_union;
@@ -85,6 +87,7 @@
 
 %type<expr_union> expr
 %type<if_union> if_stmt
+%type<unless_union> unless_stmt
 %type<elsif_union> elsif_stmt
 %type<elsif_list_union> elsif_list
 %type<expr_list_union> expr_list
@@ -266,11 +269,11 @@ if_stmt: IF_KEYWORD linefeed_or_empty expr delimiter stmt_list END_KEYWORD  {$$=
     | expr IF_KEYWORD linefeed_or_empty expr    {$$=IfStmtNode::createSingleLineIfStmt($1, $4);}
     ;
 
-unless_stmt: UNLESS_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list END_KEYWORD
-    | UNLESS_KEYWORD linefeed_or_empty expr delimiter stmt_list END_KEYWORD
-    | UNLESS_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list ELSE_KEYWORD stmt_list END_KEYWORD
-    | UNLESS_KEYWORD linefeed_or_empty expr delimiter stmt_list ELSE_KEYWORD stmt_list END_KEYWORD
-    | expr UNLESS_KEYWORD linefeed_or_empty expr
+unless_stmt: UNLESS_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list END_KEYWORD    {$$=UnlessStmtNode::createUnlessStmt($3, $6);}
+    | UNLESS_KEYWORD linefeed_or_empty expr delimiter stmt_list END_KEYWORD {$$=UnlessStmtNode::createUnlessStmt($3, $5);}
+    | UNLESS_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list ELSE_KEYWORD stmt_list END_KEYWORD    {$$=UnlessStmtNode::createUnlessStmtwithElse($3, $6, $8);}
+    | UNLESS_KEYWORD linefeed_or_empty expr delimiter stmt_list ELSE_KEYWORD stmt_list END_KEYWORD  {$$=UnlessStmtNode::createUnlessStmtwithElse($3, $5, $7);}
+    | expr UNLESS_KEYWORD linefeed_or_empty expr    {$$=UnlessStmtNode::createSingleLineUnlessStmt($1, $4);}
     ;
 
 elsif_list: elsif_stmt  {$$=createElsifList($1);}
