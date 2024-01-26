@@ -258,7 +258,7 @@ if_stmt: IF_KEYWORD linefeed_or_empty expr delimiter stmt_list END_KEYWORD  {$$=
     | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list elsif_list END_KEYWORD    {$$=IfStmtNode::createIfStmtWithElsif($3, $6, $7);}
     | IF_KEYWORD linefeed_or_empty expr delimiter stmt_list elsif_list ELSE_KEYWORD stmt_list END_KEYWORD   {$$=IfStmtNode::createIfStmtWithElseAndElsif($3, $5, $6, $8);}
     | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list elsif_list ELSE_KEYWORD stmt_list END_KEYWORD {$$=IfStmtNode::createIfStmtWithElseAndElsif($3, $6, $7, $9);}
-    | expr IF_KEYWORD linefeed_or_empty expr
+    | expr IF_KEYWORD linefeed_or_empty expr    {$$=IfStmtNode::createSingleLineIfStmt($1, $4);}
     ;
 
 unless_stmt: UNLESS_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list END_KEYWORD
