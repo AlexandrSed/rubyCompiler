@@ -6,7 +6,7 @@ public:
         ExprNode* result = new ExprNode;
         result->type = type;
         result->varName = id;
-        result->idNode = ++ExprNode::max_id;
+        result->idNode = ++ExprNode::maxId;
 	    return result;
     }
 
@@ -14,7 +14,7 @@ public:
         ExprNode* result = new ExprNode;
         result->type = ExprType.stringType;
         result->strValue = str;
-        result->idNode = ++ExprNode::max_id;
+        result->idNode = ++ExprNode::maxId;
 	    return result;
     }
 
@@ -22,7 +22,7 @@ public:
         ExprNode* result = new ExprNode;
         result->type = ExprType.trueKeyword;
         result->boolValue = true;
-        result->idNode = ++ExprNode::max_id;
+        result->idNode = ++ExprNode::maxId;
 	    return result;
     }
 
@@ -30,14 +30,14 @@ public:
         ExprNode* result = new ExprNode;
         result->type = ExprType.falseKeyword;
         result->boolValue = false;
-        result->idNode = ++ExprNode::max_id;
+        result->idNode = ++ExprNode::maxId;
 	    return result;
     }
 
     static ExprNode* ExprNode::createExprFromNil() {
         ExprNode* result = new ExprNode;
         result->type = ExprType.nilKeyword;
-        result->idNode = ++ExprNode::max_id;
+        result->idNode = ++ExprNode::maxId;
 	    return result;
     }
 
@@ -45,7 +45,7 @@ public:
         ExprNode* result = new ExprNode;
         result->type = ExprType.intNumber;
         result->intValue = val;
-        result->idNode = ++ExprNode::max_id;
+        result->idNode = ++ExprNode::maxId;
 	    return result;
     }
 
@@ -53,7 +53,7 @@ public:
         ExprNode* result = new ExprNode;
         result->type = ExprType.floatNumber;
         result->floatValue = val;
-        result->idNode = ++ExprNode::max_id;
+        result->idNode = ++ExprNode::maxId;
 	    return result;
     }
 
@@ -62,7 +62,7 @@ public:
         result->type = typeOp;
         result->left = left;
         result->right = right;
-        result->idNode = ++ExprNode::max_id;
+        result->idNode = ++ExprNode::maxId;
 	    return result;
     }
 
@@ -71,7 +71,7 @@ public:
         result->type = type;
         result->params = params;
         result->varName = id;
-        result->idNode = ++ExprNode::max_id;
+        result->idNode = ++ExprNode::maxId;
 	    return result;
     }
 
@@ -79,7 +79,7 @@ public:
         ExprNode* result = new ExprNode;
         result->type = typeOp;
         result->left = operand;
-        result->idNode = ++ExprNode::max_id;
+        result->idNode = ++ExprNode::maxId;
 	    return result;
     }
 
@@ -89,7 +89,7 @@ public:
         result->left = left;
         result->center = center;
         result->right = right;
-        result->idNode = ++ExprNode::max_id;
+        result->idNode = ++ExprNode::maxId;
 	    return result;
     }
 
@@ -97,7 +97,7 @@ public:
         ExprNode* result = new ExprNode;
         result->type = type;
         result->arr=list;
-        result->idNode = ++ExprNode::max_id;
+        result->idNode = ++ExprNode::maxId;
 	    return result;
     }
 
@@ -105,7 +105,7 @@ public:
         ExprNode* result = new ExprNode;
         result->type = type;
         result->params = params;
-        result->idNode = ++ExprNode::max_id;
+        result->idNode = ++ExprNode::maxId;
 	    return result;
     }
 
@@ -115,7 +115,7 @@ public:
         result->params = params;
         result->left = left;
         result->varName = id;
-        result->idNode = ++ExprNode::max_id;
+        result->idNode = ++ExprNode::maxId;
 	    return result;
     }
 
@@ -124,7 +124,7 @@ public:
         result->type = type;
         result->params = params;
         result->varName = id;
-        result->idNode = ++ExprNode::max_id;
+        result->idNode = ++ExprNode::maxId;
 	    return result;
     }
 
