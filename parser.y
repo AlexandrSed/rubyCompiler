@@ -188,8 +188,8 @@ delimiter: NEW_LINE_SYMBOL
     | delimiter NEW_LINE_SYMBOL
     ;
 
-expr_list: expr
-    | expr_list COMMA_SYMBOL expr
+expr_list: expr {$$=createExprList($1);}
+    | expr_list COMMA_SYMBOL expr {$$=addExprToList($1, $3);}
     ;
 
 stmt_list: stmt
