@@ -2,7 +2,7 @@
 
 class ExprNode {
 public:
-    static ExprNode* ExprNode::createExprFromVarName(ExprType* type, string& id) {
+    static ExprNode* ExprNode::createExprFromVarName(ExprType* type, std::string& id) {
         ExprNode* result = new ExprNode;
         result->type = type;
         result->varName = id;
@@ -10,7 +10,7 @@ public:
 	    return result;
     }
 
-    static ExprNode* ExprNode::createExprFromString(string& str) {
+    static ExprNode* ExprNode::createExprFromString(std::string& str) {
         ExprNode* result = new ExprNode;
         result->type = ExprType.stringType;
         result->strValue = str;
@@ -66,7 +66,7 @@ public:
 	    return result;
     }
 
-    static ExprNode* ExprNode::createExprFromFuncCall(ExprType* type, std::vector<ExprNode*>* params, string& id) {
+    static ExprNode* ExprNode::createExprFromFuncCall(ExprType* type, std::vector<ExprNode*>* params, std::string& id) {
         ExprNode* result = new ExprNode;
         result->type = type;
         result->params = params;
@@ -109,7 +109,7 @@ public:
 	    return result;
     }
 
-    static ExprNode* ExprNode::createExprFromMethod(ExprType* type, std::vector<ExprNode*>* params, string& id, ExprNode* left) {
+    static ExprNode* ExprNode::createExprFromMethod(ExprType* type, std::vector<ExprNode*>* params, std::string& id, ExprNode* left) {
         ExprNode* result = new ExprNode;
         result->type = type;
         result->params = params;
@@ -119,7 +119,7 @@ public:
 	    return result;
     }
 
-    static ExprNode* ExprNode::createExprFromSelf(ExprType* type, std::vector<ExprNode*>* params, string& id) {
+    static ExprNode* ExprNode::createExprFromSelf(ExprType* type, std::vector<ExprNode*>* params, std::string& id) {
         ExprNode* result = new ExprNode;
         result->type = type;
         result->params = params;
@@ -129,3 +129,8 @@ public:
     }
 
 };
+
+std::vector<ExprNode*>* createExprList(ExprNode* expr) {
+    std::vector<ExprNode*> result = {expr};
+    return &result;
+}
