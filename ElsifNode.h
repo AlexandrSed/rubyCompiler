@@ -5,6 +5,7 @@ class ElsifNode {
 public:
     ExprNode* condition;
     std::vector<StmtNode*>* action;
+    int idNode;
 
     static ElsifNode* createElsifStmt(ExprNode* condition, std::vector<StmtNode*>* action);
     static int maxId;
