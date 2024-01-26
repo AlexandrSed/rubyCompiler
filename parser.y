@@ -273,8 +273,8 @@ unless_stmt: UNLESS_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWO
     | expr UNLESS_KEYWORD linefeed_or_empty expr
     ;
 
-elsif_list: elsif_stmt
-    | elsif_list elsif_stmt
+elsif_list: elsif_stmt  {$$=createElsifList($1);}
+    | elsif_list elsif_stmt {$$=addElsifToList($1, $2);}
     ;
 
 elsif_stmt: ELSIF_KEYWORD linefeed_or_empty expr delimiter stmt_list    {$$=ElsifNode::createElsifStmt($3, $5);}

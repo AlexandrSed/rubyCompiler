@@ -9,3 +9,13 @@ class ElsifNode {
 	    return result;
     }
 };
+
+std::vector<ElsifNode*>* createElsifList(ElsifNode* elsif) {
+    std::vector<ElsifNode*> result = {elsif};
+    return &result;
+}
+
+std::vector<ElsifNode*>* addElsifToList(std::vector<ElsifNode*>* elsifList, ElsifNode* elsif) {
+    elsifList->push_back(elsif);
+    return elsifList;
+}
