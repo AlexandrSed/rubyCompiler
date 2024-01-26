@@ -4,14 +4,16 @@
 	#include <stdio.h>
 	#include <malloc.h>
     #include "ExprNode.h"
+    #include "IfStmtNode.h"
 %}
 
 %union {
     int Int;
     float Float;
     string Str;
-	expr_node* expr_union;
-	std::vector<expr_node*>* expr_list_union;
+	ExprNode* expr_union;
+	IfStmtNode* if_union;
+	std::vector<ExprNode*>* expr_list_union;
 }
 
 %token ALIAS_KEYWORD
@@ -79,6 +81,7 @@
 %token <Str> CONSTANT_NAME
 
 %type<expr_union> expr
+%type<if_union> if_stmt
 %type<expr_list_union> expr_list
 
 %%
@@ -247,14 +250,14 @@ delimeter_or_empty: /* empty */
     | delimiter
     ;
 
-if_stmt: IF_KEYWORD linefeed_or_empty expr delimiter stmt_list END_KEYWORD
-    | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list END_KEYWORD
-    | IF_KEYWORD linefeed_or_empty expr delimiter stmt_list ELSE_KEYWORD stmt_list END_KEYWORD
-    | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list ELSE_KEYWORD stmt_list END_KEYWORD
-    | IF_KEYWORD linefeed_or_empty expr delimiter stmt_list elsif_list END_KEYWORD
-    | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list elsif_list END_KEYWORD
-    | IF_KEYWORD linefeed_or_empty expr delimiter stmt_list elsif_list ELSE_KEYWORD stmt_list END_KEYWORD
-    | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list elsif_list ELSE_KEYWORD stmt_list END_KEYWORD
+if_stmt: IF_KEYWORD linefeed_or_empty expr delimiter stmt_list END_KEYWORD  {$$=IfStmtNode::createIfStmt($3, $5);}
+    | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list END_KEYWORD   {$$=IfStmtNode::createIfStmt($3, $6);}
+    | IF_KEYWORD linefeed_or_empty expr delimiter stmt_list ELSE_KEYWORD stmt_list END_KEYWORD  {$$=IfStmtNode::createIfStmtWithElse($3, $5, $7);}
+    | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list ELSE_KEYWORD stmt_list END_KEYWORD    {$$=IfStmtNode::createIfStmtWithElse($3, $6, $8);}
+    | IF_KEYWORD linefeed_or_empty expr delimiter stmt_list elsif_list END_KEYWORD  {$$=IfStmtNode::createIfStmtWithElsif($3, $5, $6);}
+    | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list elsif_list END_KEYWORD    {$$=IfStmtNode::createIfStmtWithElsif($3, $6, $7);}
+    | IF_KEYWORD linefeed_or_empty expr delimiter stmt_list elsif_list ELSE_KEYWORD stmt_list END_KEYWORD   {$$=IfStmtNode::createIfStmtWithElseAndElsif($3, $5, $6, $8);}
+    | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list elsif_list ELSE_KEYWORD stmt_list END_KEYWORD {$$=IfStmtNode::createIfStmtWithElseAndElsif($3, $6, $7, $9);}
     | expr IF_KEYWORD linefeed_or_empty expr
     ;
 
