@@ -265,10 +265,12 @@ unless_stmt: UNLESS_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWO
     | expr UNLESS_KEYWORD linefeed_or_empty expr
     ;
 
-elsif_list: ELSIF_KEYWORD linefeed_or_empty expr delimiter stmt_list
+elsif_list: elsif_stmt
+    | elsif_list elsif_stmt
+    ;
+
+elsif_stmt: ELSIF_KEYWORD linefeed_or_empty expr delimiter stmt_list
     | ELSIF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list
-    | elsif_list ELSIF_KEYWORD linefeed_or_empty expr delimiter stmt_list
-    | elsif_list ELSIF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list
     ;
 
 while_stmt: WHILE_KEYWORD linefeed_or_empty expr DO_KEYWORD delimeter_or_empty stmt_list END_KEYWORD
