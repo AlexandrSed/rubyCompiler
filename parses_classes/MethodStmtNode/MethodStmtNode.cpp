@@ -22,3 +22,13 @@ public:
         return result;
     }
 };
+
+std::vector<std::string>* createParamList(std::string parametr) {
+    std::vector<std::string> result = {parametr};
+    return &result;
+}
+
+std::vector<std::string>* addParametrToList(std::vector<std::string>* paramList, std::string parametr) {
+    paramList->push_back(parametr);
+    return paramList;
+}

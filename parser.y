@@ -34,6 +34,7 @@
     AliasStmtNode* alias_union;
     ReturnStmtNode* return_union;
     MethodStmtNode* method_union;
+    std::vector<std::string>* param_list_union;
 }
 
 %token ALIAS_KEYWORD
@@ -114,6 +115,7 @@
 %type<alias_union> alias_stmt
 %type<return_union> return_stmt
 %type<method_union> method_stmt
+%type<param_list_union> param_list_not_empty param_list
 
 %%
 
@@ -240,12 +242,12 @@ stmt: expr delimiter
     | alias_stmt delimiter
     ;
 
-param_list_not_empty: IDENTIFIER linefeed_or_empty
-    | param_list_not_empty COMMA_SYMBOL linefeed_or_empty IDENTIFIER linefeed_or_empty
+param_list_not_empty: IDENTIFIER linefeed_or_empty  {$$=createParamList($1);}
+    | param_list_not_empty COMMA_SYMBOL linefeed_or_empty IDENTIFIER linefeed_or_empty  {$$=addParametrToList($1, $4);}
     ;
 
-param_list: /* empty */
-    | param_list_not_empty
+param_list: /* empty */ {$$=null;}
+    | param_list_not_empty  {$$=$1;}
     ;
 
 method_stmt: DEF_KEYWORD linefeed_or_empty IDENTIFIER '(' linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD  {$$=MethodStmtNode::createMethodStmt(MethodType.simple, $3, $6, $9);}
