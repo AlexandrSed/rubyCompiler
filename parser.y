@@ -11,6 +11,7 @@
     #include "ForStmtNode.h"
     #include "WhenStmtNode.h"
     #include "CaseStmtNode.h"
+    #include "AliasStmtNode.h"
 %}
 
 %union {
@@ -28,6 +29,7 @@
     WhenStmtNode* when_union;
     std::vector<WhenStmtNode*>* when_list_union;
     CaseStmtNode* case_union;
+    AliasStmtNode* alias_union;
 }
 
 %token ALIAS_KEYWORD
@@ -104,7 +106,8 @@
 %type<for_union> for_stmt
 %type<when_union> when_stmt
 %type<when_list_union> when_list
-type<case_union> case_stmt
+%type<case_union> case_stmt
+%type<alias_union> alias_stmt
 
 %%
 
@@ -322,6 +325,6 @@ when_stmt:WHEN_KEYWORD linefeed_or_empty expr_list delimiter stmt_list  {$$=When
     | WHEN_KEYWORD linefeed_or_empty expr_list delimeter_or_empty THEN_KEYWORD stmt_list    {$$=WhenStmtNode::createWhenStmt($3, $6);}
     ;
 
-alias_stmt: ALIAS_KEYWORD IDENTIFIER IDENTIFIER
+alias_stmt: ALIAS_KEYWORD IDENTIFIER IDENTIFIER {$$=AliasStmtNode::createAliasStmt($2, $3);}
     ;
 %%
