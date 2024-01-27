@@ -13,6 +13,7 @@
     #include "parser_classes/CaseStmt/CaseStmtNode.h"
     #include "parser_classes/AliasStmt/AliasStmtNode.h"
     #include "parser_classes/ReturnStmt/ReturnStmtNode.h"
+    #include "parser_classes/MethodStmtNode/MethodStmtNode.h"
 %}
 
 %union {
@@ -32,7 +33,7 @@
     CaseStmtNode* case_union;
     AliasStmtNode* alias_union;
     ReturnStmtNode* return_union;
-    
+    MethodStmtNode* method_union;
 }
 
 %token ALIAS_KEYWORD
@@ -112,6 +113,7 @@
 %type<case_union> case_stmt
 %type<alias_union> alias_stmt
 %type<return_union> return_stmt
+%type<method_union> method_stmt
 
 %%
 
@@ -246,14 +248,14 @@ param_list: /* empty */
     | param_list_not_empty
     ;
 
-method_stmt: DEF_KEYWORD linefeed_or_empty IDENTIFIER '(' linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD
-    | DEF_KEYWORD linefeed_or_empty METHOD_MARK_QUESTION '(' linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD
-    | DEF_KEYWORD linefeed_or_empty IDENTIFIER delimiter stmt_list END_KEYWORD
-    | DEF_KEYWORD linefeed_or_empty METHOD_MARK_QUESTION delimiter stmt_list END_KEYWORD
-    | DEF_KEYWORD linefeed_or_empty METHOD_MARK_EXCLAMATION '(' linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD
-    | DEF_KEYWORD linefeed_or_empty METHOD_MARK_EXCLAMATION delimiter stmt_list END_KEYWORD
-    | DEF_KEYWORD linefeed_or_empty METHOD_MARK_EQUAL '(' linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD
-    | DEF_KEYWORD linefeed_or_empty METHOD_MARK_EQUAL delimiter stmt_list END_KEYWORD
+method_stmt: DEF_KEYWORD linefeed_or_empty IDENTIFIER '(' linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD  {$$=MethodStmtNode::createMethodStmt(MethodType.simple, $3, $6, $9);}
+    | DEF_KEYWORD linefeed_or_empty METHOD_MARK_QUESTION '(' linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD   {$$=MethodStmtNode::createMethodStmt(MethodType.markQuestion, $3, $6, $9);}
+    | DEF_KEYWORD linefeed_or_empty IDENTIFIER delimiter stmt_list END_KEYWORD  {$$=MethodStmtNode::createMethodStmtWithoutParams(MethodType.simple, $3, $5);}
+    | DEF_KEYWORD linefeed_or_empty METHOD_MARK_QUESTION delimiter stmt_list END_KEYWORD    {$$=MethodStmtNode::createMethodStmtWithoutParams(MethodType.markQuestion, $3, $5);}
+    | DEF_KEYWORD linefeed_or_empty METHOD_MARK_EXCLAMATION '(' linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD    {$$=MethodStmtNode::createMethodStmt(MethodType.markExclamation, $3, $6, $9);}
+    | DEF_KEYWORD linefeed_or_empty METHOD_MARK_EXCLAMATION delimiter stmt_list END_KEYWORD {$$=MethodStmtNode::createMethodStmtWithoutParams(MethodType.markExclamation, $3, $5);}
+    | DEF_KEYWORD linefeed_or_empty METHOD_MARK_EQUAL '(' linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD  {$$=MethodStmtNode::createMethodStmt(MethodType.markEqual, $3, $6, $9);}
+    | DEF_KEYWORD linefeed_or_empty METHOD_MARK_EQUAL delimiter stmt_list END_KEYWORD   {$$=MethodStmtNode::createMethodStmtWithoutParams(MethodType.markEqual, $3, $5);}
     ;
 
 class_stmt: CLASS_KEYWORD linefeed_or_empty CONSTANT_NAME delimiter class_body END_KEYWORD
