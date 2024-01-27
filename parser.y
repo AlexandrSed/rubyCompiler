@@ -15,6 +15,7 @@
     #include "parser_classes/ReturnStmt/ReturnStmtNode.h"
     #include "parser_classes/MethodStmtNode/MethodStmtNode.h"
     #include "parser_classes/StmtNode/StmtNode.h"
+    #include "parser_classes/ClassBodyStmt/ClassBodyStmtNode.h"
 %}
 
 %union {
@@ -38,6 +39,7 @@
     std::vector<StmtNode*>* stmt_list_union;
     MethodStmtNode* method_union;
     std::vector<std::string>* param_list_union;
+    ClassBodyStmtNode* class_body_stmt_union;
 }
 
 %token ALIAS_KEYWORD
@@ -121,6 +123,7 @@
 %type<stmt_list_union> stmt_list
 %type<method_union> method_stmt
 %type<param_list_union> param_list_not_empty param_list
+%type<class_body_stmt_union> class_body_stmt
 
 %%
 
@@ -269,11 +272,11 @@ class_stmt: CLASS_KEYWORD linefeed_or_empty CONSTANT_NAME delimiter class_body E
     | CLASS_KEYWORD linefeed_or_empty CONSTANT_NAME '<' CONSTANT_NAME delimiter class_body END_KEYWORD
     ;
 
-class_body_stmt: method_stmt delimiter
-    | CLASS_VAR_NAME delimiter
-    | CLASS_VAR_NAME '=' expr delimiter
-    | OBJECT_VAR_NAME delimiter
-    | OBJECT_VAR_NAME '=' expr delimiter
+class_body_stmt: method_stmt delimiter  {$$=ClassBodyStmtNode::createClassBodyStmtMethod($1);}
+    | CLASS_VAR_NAME delimiter  {$$=ClassBodyStmtNode::createClassBodyStmtClassVarName($1, null);}
+    | CLASS_VAR_NAME '=' expr delimiter {$$=ClassBodyStmtNode::createClassBodyStmtClassVarName($1, $3);}
+    | OBJECT_VAR_NAME delimiter {$$=ClassBodyStmtNode::createClassBodyStmtobjectVarName($1, null);}
+    | OBJECT_VAR_NAME '=' expr delimiter    {$$=ClassBodyStmtNode::createClassBodyStmtobjectVarName($1, $3);}
     ;
 
 class_body_not_empty: class_body_stmt
