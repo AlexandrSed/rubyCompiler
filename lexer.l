@@ -5,6 +5,8 @@
 	#include <stdio.h>
     #include <stdlib.h>
     #include <string>
+    #include "parser.tab.h"
+    extern int yyparse(void);
 
     char* removeUnderscores(const char* input);
 
@@ -310,7 +312,7 @@ int main(int argc, char** argv) {
 
     yyin = file;
 
-    while (yylex() != 0);
+    yyparse();
 
     fclose(file);
 
