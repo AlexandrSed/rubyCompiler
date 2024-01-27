@@ -133,11 +133,11 @@
 %type<class_body_union> class_body_not_empty class_body
 %type<class_stmt_union> class_stmt
 %type<programm_el_union> programm_element
-%type<programm_el_list_union> programm_el_list_not_empty
+%type<programm_el_list_union> programm_el_list_not_empty programm
 %%
 
-programm: /*empty*/
-    |programm_el_list_not_empty
+programm: /*empty*/ {$$=null;}
+    |programm_el_list_not_empty {$$=$1;}
     ;
 
 expr: IDENTIFIER    {$$=ExprNode::createExprFromVarName(ExprType.id, $1);}
