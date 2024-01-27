@@ -6,7 +6,7 @@ public:
         UnlessStmtNode* result = new UnlessStmtNode;
         result->condition = condition;
         result->trueBranch = trueBranch;
-        result->idNode = ++ElsifNode::maxId;
+        result->idNode = ++UnlessStmtNode::maxId;
 	    return result;
     }
 
@@ -17,7 +17,7 @@ public:
         result->condition = condition;
         result->trueBranch = trueBranch;
         result->falseBranch = falseBranch;
-        result->idNode = ++ElsifNode::maxId;
+        result->idNode = ++UnlessStmtNode::maxId;
 	    return result;
     }
 
@@ -25,7 +25,7 @@ public:
         UnlessStmtNode* result = new UnlessStmtNode;
         result->condition = condition;
         result->action = action;
-        result->idNode = ++ElsifNode::maxId;
+        result->idNode = ++UnlessStmtNode::maxId;
 	    return result;
     }
 };
