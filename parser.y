@@ -12,6 +12,7 @@
     #include "parser_classes/WhenStmt/WhenStmtNode.h"
     #include "parser_classes/CaseStmt/CaseStmtNode.h"
     #include "parser_classes/AliasStmt/AliasStmtNode.h"
+    #include "parser_classes/ReturnStmt/ReturnStmtNode.h"
 %}
 
 %union {
@@ -30,6 +31,8 @@
     std::vector<WhenStmtNode*>* when_list_union;
     CaseStmtNode* case_union;
     AliasStmtNode* alias_union;
+    ReturnStmtNode* return_union;
+    
 }
 
 %token ALIAS_KEYWORD
@@ -108,6 +111,7 @@
 %type<when_list_union> when_list
 %type<case_union> case_stmt
 %type<alias_union> alias_stmt
+%type<return_union> return_stmt
 
 %%
 
@@ -309,8 +313,8 @@ for_stmt: FOR_KEYWORD linefeed_or_empty expr IN_KEYWORD linefeed_or_empty expr D
     | FOR_KEYWORD linefeed_or_empty expr IN_KEYWORD linefeed_or_empty expr delimiter stmt_list END_KEYWORD  {$$=ForStmtNode::createForStmtNode($3, $6, $8);}
     ;
 
-return_stmt: RETURN_KEYWORD expr
-    | RETURN_KEYWORD
+return_stmt: RETURN_KEYWORD expr {$$=ReturnStmtNode::createReturnStmt($2);}
+    | RETURN_KEYWORD {$$=ReturnStmtNode::createSingleReturnStmt();}
     ;
 
 case_stmt: CASE_KEYWORD linefeed_or_empty expr delimeter_or_empty when_list END_KEYWORD {$$=CaseStmtNode::createCaseStmt($3, $5);}
