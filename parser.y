@@ -15,6 +15,7 @@
     #include "parser_classes/ReturnStmt/ReturnStmtNode.h"
     #include "parser_classes/MethodStmtNode/MethodStmtNode.h"
     #include "parser_classes/StmtNode/StmtNode.h"
+    #include "parser_classes/ProgramElementNode/ProgramElementNode.h"
 %}
 
 %union {
@@ -38,6 +39,8 @@
     std::vector<StmtNode*>* stmt_list_union;
     MethodStmtNode* method_union;
     std::vector<std::string>* param_list_union;
+    ProgramElementNode* programm_el_union;
+    std::vector<ProgramElementNode*>* programm_el_list_union;
 }
 
 %token ALIAS_KEYWORD
@@ -121,7 +124,8 @@
 %type<stmt_list_union> stmt_list
 %type<method_union> method_stmt
 %type<param_list_union> param_list_not_empty param_list
-
+%type<programm_el_union> programm_element
+%type<programm_el_list_union> programm_el_list_not_empty
 %%
 
 programm: /*empty*/
@@ -214,13 +218,13 @@ linefeed: NEW_LINE_SYMBOL
     | linefeed NEW_LINE_SYMBOL
     ;
 
-programm_element: class_stmt delimiter
-    | method_stmt delimiter
-    | stmt
+programm_element: class_stmt delimiter {$$=createClassProgramElementNode($1);}
+    | method_stmt delimiter {$$=createMethodProgramElementNode($1);}
+    | stmt delimiter {$$=createStmtProgramElementNode($1);}
     ;
 
-programm_el_list_not_empty: programm_element
-    | programm_el_list_not_empty programm_element
+programm_el_list_not_empty: programm_element {$$=createProgramElementList($1);}
+    | programm_el_list_not_empty programm_element {$$=addProgramElementToList($1, $2);}
     ;
 
 delimiter: NEW_LINE_SYMBOL
