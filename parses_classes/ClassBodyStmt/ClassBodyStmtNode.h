@@ -15,3 +15,7 @@ public:
     static ClassBodyStmtNode* createClassBodyStmtobjectVarName(std::string objectVarName, ExprNode* value);
     static int maxId;
 };
+
+std::vector<ClassBodyStmtNode*>* createClassBody(ClassBodyStmtNode* classEl);
+
+std::vector<ClassBodyStmtNode*>* addStmtToClassBody(std::vector<ClassBodyStmtNode*>* classBody, ClassBodyStmtNode* classEl);

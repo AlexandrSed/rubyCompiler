@@ -26,3 +26,13 @@ public:
         return result;
     }
 };
+
+std::vector<ClassBodyStmtNode*>* createClassBody(ClassBodyStmtNode* classEl) {
+    std::vector<ClassBodyStmtNode*> result = {classEl};
+    return &result;
+}
+
+std::vector<ClassBodyStmtNode*>* addStmtToClassBody(std::vector<ClassBodyStmtNode*>* classBody, ClassBodyStmtNode* classEl) {
+    classBody->push_back(classEl);
+    return classBody;
+}

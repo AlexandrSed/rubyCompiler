@@ -40,6 +40,7 @@
     MethodStmtNode* method_union;
     std::vector<std::string>* param_list_union;
     ClassBodyStmtNode* class_body_stmt_union;
+    std::vector<ClassBodyStmtNode*>* class_body_union;
 }
 
 %token ALIAS_KEYWORD
@@ -124,6 +125,7 @@
 %type<method_union> method_stmt
 %type<param_list_union> param_list_not_empty param_list
 %type<class_body_stmt_union> class_body_stmt
+%type<class_body_union> class_body_not_empty class_body
 
 %%
 
@@ -279,12 +281,12 @@ class_body_stmt: method_stmt delimiter  {$$=ClassBodyStmtNode::createClassBodySt
     | OBJECT_VAR_NAME '=' expr delimiter    {$$=ClassBodyStmtNode::createClassBodyStmtobjectVarName($1, $3);}
     ;
 
-class_body_not_empty: class_body_stmt
-    | class_body_not_empty class_body_stmt
+class_body_not_empty: class_body_stmt   {$$=createClassBody($1);}
+    | class_body_not_empty class_body_stmt  {$$=addStmtToClassBody($1, $2);}
     ;
 
-class_body: /* empty */
-    | class_body_not_empty
+class_body: /* empty */ {$$=null;}
+    | class_body_not_empty  {$$=$1;}
     ;
 
 delimeter_or_empty: /* empty */
