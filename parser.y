@@ -3,15 +3,15 @@
     #include <vector>
 	#include <stdio.h>
 	#include <malloc.h>
-    #include "ElsifNode.h"
-    #include "ExprNode.h"
-    #include "IfStmtNode.h"
-    #include "UnlessStmtNode.h"
-    #include "WhileStmtNode.h"
-    #include "ForStmtNode.h"
-    #include "WhenStmtNode.h"
-    #include "CaseStmtNode.h"
-    #include "AliasStmtNode.h"
+    #include "parser_classes/ElsifNode/ElsifNode.h"
+    #include "parser_classes/ExprNode/ExprNode.h"
+    #include "parser_classes/IfStmt/IfStmtNode.h"
+    #include "parser_classes/UnlessStmt/UnlessStmtNode.h"
+    #include "parser_classes/WhileStmt/WhileStmtNode.h"
+    #include "parser_classes/ForStmt/ForStmtNode.h"
+    #include "parser_classes/WhenStmt/WhenStmtNode.h"
+    #include "parser_classes/CaseStmt/CaseStmtNode.h"
+    #include "parser_classes/AliasStmt/AliasStmtNode.h"
 %}
 
 %union {
