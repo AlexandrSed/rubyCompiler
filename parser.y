@@ -16,6 +16,7 @@
     #include "parser_classes/MethodStmtNode/MethodStmtNode.h"
     #include "parser_classes/StmtNode/StmtNode.h"
     #include "parser_classes/ClassBodyStmt/ClassBodyStmtNode.h"
+    #include "parser_classes/ClassStmt/ClassStmtNode.h"
 %}
 
 %union {
@@ -41,6 +42,7 @@
     std::vector<std::string>* param_list_union;
     ClassBodyStmtNode* class_body_stmt_union;
     std::vector<ClassBodyStmtNode*>* class_body_union;
+    ClassStmtNode* class_stmt_union;
 }
 
 %token ALIAS_KEYWORD
@@ -126,6 +128,7 @@
 %type<param_list_union> param_list_not_empty param_list
 %type<class_body_stmt_union> class_body_stmt
 %type<class_body_union> class_body_not_empty class_body
+%type<class_stmt_union> class_stmt
 
 %%
 
@@ -270,8 +273,8 @@ method_stmt: DEF_KEYWORD linefeed_or_empty IDENTIFIER '(' linefeed_or_empty para
     | DEF_KEYWORD linefeed_or_empty METHOD_MARK_EQUAL delimiter stmt_list END_KEYWORD   {$$=MethodStmtNode::createMethodStmtWithoutParams(MethodType.markEqual, $3, $5);}
     ;
 
-class_stmt: CLASS_KEYWORD linefeed_or_empty CONSTANT_NAME delimiter class_body END_KEYWORD
-    | CLASS_KEYWORD linefeed_or_empty CONSTANT_NAME '<' CONSTANT_NAME delimiter class_body END_KEYWORD
+class_stmt: CLASS_KEYWORD linefeed_or_empty CONSTANT_NAME delimiter class_body END_KEYWORD  {$$=ClassStmtNode::createClassStmt($3, $5);}
+    | CLASS_KEYWORD linefeed_or_empty CONSTANT_NAME '<' CONSTANT_NAME delimiter class_body END_KEYWORD {$$=ClassStmtNode::createClassStmtWithParent($3, $5, $7);}
     ;
 
 class_body_stmt: method_stmt delimiter  {$$=ClassBodyStmtNode::createClassBodyStmtMethod($1);}
