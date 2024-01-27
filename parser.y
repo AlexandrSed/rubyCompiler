@@ -18,6 +18,8 @@
     #include "parser_classes/ClassBodyStmt/ClassBodyStmtNode.h"
     #include "parser_classes/ClassStmt/ClassStmtNode.h"
     #include "parser_classes/ProgramElementNode/ProgramElementNode.h"
+
+    extern int yylex(void);
 %}
 
 %union {
