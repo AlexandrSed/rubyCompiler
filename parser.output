@@ -4,6 +4,16 @@ Terminals unused in grammar
     '}'
 
 
+State 106 conflicts: 2 shift/reduce
+State 111 conflicts: 2 shift/reduce
+State 112 conflicts: 2 shift/reduce
+State 113 conflicts: 2 shift/reduce
+State 114 conflicts: 2 shift/reduce
+State 115 conflicts: 2 shift/reduce
+State 116 conflicts: 2 shift/reduce
+State 117 conflicts: 2 shift/reduce
+
+
 Grammar
 
     0 $accept: programm $end
@@ -96,7 +106,7 @@ Grammar
 
    83 programm_element: class_stmt delimiter
    84                 | method_stmt delimiter
-   85                 | stmt
+   85                 | stmt delimiter
 
    86 programm_el_list_not_empty: programm_element
    87                           | programm_el_list_not_empty programm_element
@@ -188,10 +198,11 @@ Grammar
   153 case_stmt: CASE_KEYWORD linefeed_or_empty expr delimeter_or_empty when_list END_KEYWORD
   154          | CASE_KEYWORD linefeed_or_empty expr delimeter_or_empty when_list ELSE_KEYWORD delimeter_or_empty stmt_list END_KEYWORD
 
-  155 when_list: WHEN_KEYWORD linefeed_or_empty expr_list delimiter stmt_list
-  156          | WHEN_KEYWORD linefeed_or_empty expr_list THEN_KEYWORD stmt_list
-  157          | when_list WHEN_KEYWORD linefeed_or_empty expr_list delimiter stmt_list
-  158          | when_list WHEN_KEYWORD linefeed_or_empty expr_list delimeter_or_empty THEN_KEYWORD stmt_list
+  155 when_list: when_stmt
+  156          | when_list when_stmt
+
+  157 when_stmt: WHEN_KEYWORD linefeed_or_empty expr_list delimiter stmt_list
+  158          | WHEN_KEYWORD linefeed_or_empty expr_list delimeter_or_empty THEN_KEYWORD stmt_list
 
   159 alias_stmt: ALIAS_KEYWORD IDENTIFIER IDENTIFIER
 
@@ -232,10 +243,10 @@ Terminals, with rules where they appear
     SELF_KEYWORD (273) 29 30 31 32 33 34 35 36
     SUPER_KEYWORD (274) 24 25 26
     SUPERCLASS_KEYWORD (275) 21
-    THEN_KEYWORD (276) 130 132 134 136 138 140 146 156 158
+    THEN_KEYWORD (276) 130 132 134 136 138 140 146 158
     TRUE_KEYWORD (277) 8
     UNLESS_KEYWORD (278) 138 139 140 141 142
-    WHEN_KEYWORD (279) 155 156 157 158
+    WHEN_KEYWORD (279) 157 158
     WHILE_KEYWORD (280) 147 148
     METHOD_MARK_QUESTION <Str> (281) 31 32 37 38 109 111
     METHOD_MARK_EXCLAMATION <Str> (282) 33 34 39 40 112 113
@@ -289,7 +300,7 @@ Nonterminals, with rules where they appear
 
     $accept (86)
         on left: 0
-    programm (87)
+    programm <programm_el_list_union> (87)
         on left: 1 2
         on right: 0
     expr <expr_union> (88)
@@ -297,80 +308,83 @@ Nonterminals, with rules where they appear
         on right: 13 14 15 16 17 18 19 20 21 27 28 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 75 76 77 78 92 93 96 120 122 129 130 131 132 133 134 135 136 137 138 139 140 141 142 145 146 147 148 149 150 151 153 154
     linefeed_or_empty (89)
         on left: 79 80
-        on right: 13 14 15 16 17 18 19 20 21 22 23 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 104 105 108 109 110 111 112 113 114 115 116 117 129 130 131 132 133 134 135 136 137 138 139 140 141 142 145 146 147 148 149 150 153 154 155 156 157 158
+        on right: 13 14 15 16 17 18 19 20 21 22 23 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 104 105 108 109 110 111 112 113 114 115 116 117 129 130 131 132 133 134 135 136 137 138 139 140 141 142 145 146 147 148 149 150 153 154 157 158
     linefeed (90)
         on left: 81 82
         on right: 80 82
-    programm_element (91)
+    programm_element <programm_el_union> (91)
         on left: 83 84 85
         on right: 86 87
-    programm_el_list_not_empty (92)
+    programm_el_list_not_empty <programm_el_list_union> (92)
         on left: 86 87
         on right: 2 87
     delimiter (93)
         on left: 88 89 90 91
-        on right: 83 84 90 91 96 97 98 99 100 101 102 103 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 128 129 131 133 135 139 141 145 148 150 155 157
+        on right: 83 84 85 90 91 96 97 98 99 100 101 102 103 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 128 129 131 133 135 139 141 145 148 150 157
     expr_list <expr_list_union> (94)
         on left: 92 93
-        on right: 22 25 28 30 32 34 36 38 40 42 73 93 155 156 157 158
-    stmt_list (95)
+        on right: 22 25 28 30 32 34 36 38 40 42 73 93 157 158
+    stmt_list <stmt_list_union> (95)
         on left: 94 95
-        on right: 95 108 109 110 111 112 113 114 115 129 130 131 132 133 134 135 136 138 139 140 141 145 146 147 148 149 150 154 155 156 157 158
-    stmt (96)
+        on right: 95 108 109 110 111 112 113 114 115 129 130 131 132 133 134 135 136 138 139 140 141 145 146 147 148 149 150 154 157 158
+    stmt <stmt_union> (96)
         on left: 96 97 98 99 100 101 102 103
         on right: 85 94 95
-    param_list_not_empty (97)
+    param_list_not_empty <param_list_union> (97)
         on left: 104 105
         on right: 105 107
-    param_list (98)
+    param_list <param_list_union> (98)
         on left: 106 107
         on right: 108 109 112 114
-    method_stmt (99)
+    method_stmt <method_union> (99)
         on left: 108 109 110 111 112 113 114 115
         on right: 84 118
-    class_stmt (100)
+    class_stmt <class_stmt_union> (100)
         on left: 116 117
         on right: 83
-    class_body_stmt (101)
+    class_body_stmt <class_body_stmt_union> (101)
         on left: 118 119 120 121 122
         on right: 123 124
-    class_body_not_empty (102)
+    class_body_not_empty <class_body_union> (102)
         on left: 123 124
         on right: 124 126
-    class_body (103)
+    class_body <class_body_union> (103)
         on left: 125 126
         on right: 116 117
     delimeter_or_empty (104)
         on left: 127 128
         on right: 130 132 134 136 138 140 146 147 149 153 154 158
-    if_stmt (105)
+    if_stmt <if_union> (105)
         on left: 129 130 131 132 133 134 135 136 137
         on right: 97
-    unless_stmt (106)
+    unless_stmt <unless_union> (106)
         on left: 138 139 140 141 142
         on right: 101
-    elsif_list (107)
+    elsif_list <elsif_list_union> (107)
         on left: 143 144
         on right: 133 134 135 136 144
-    elsif_stmt (108)
+    elsif_stmt <elsif_union> (108)
         on left: 145 146
         on right: 143 144
-    while_stmt (109)
+    while_stmt <while_union> (109)
         on left: 147 148
         on right: 98
-    for_stmt (110)
+    for_stmt <for_union> (110)
         on left: 149 150
         on right: 99
-    return_stmt (111)
+    return_stmt <return_union> (111)
         on left: 151 152
         on right: 102
-    case_stmt (112)
+    case_stmt <case_union> (112)
         on left: 153 154
         on right: 100
-    when_list (113)
-        on left: 155 156 157 158
-        on right: 153 154 157 158
-    alias_stmt (114)
+    when_list <when_list_union> (113)
+        on left: 155 156
+        on right: 153 154 156
+    when_stmt <when_union> (114)
+        on left: 157 158
+        on right: 155 156
+    alias_stmt <alias_union> (115)
         on left: 159
         on right: 103
 
@@ -909,9 +923,12 @@ State 32
 
 State 33
 
-   85 programm_element: stmt .
+   85 programm_element: stmt . delimiter
 
-    $default  reduce using rule 85 (programm_element)
+    NEW_LINE_SYMBOL   shift, and go to state 104
+    SEMICOLON_SYMBOL  shift, and go to state 105
+
+    delimiter  go to state 108
 
 
 State 34
@@ -921,7 +938,7 @@ State 34
     NEW_LINE_SYMBOL   shift, and go to state 104
     SEMICOLON_SYMBOL  shift, and go to state 105
 
-    delimiter  go to state 108
+    delimiter  go to state 109
 
 
 State 35
@@ -931,7 +948,7 @@ State 35
     NEW_LINE_SYMBOL   shift, and go to state 104
     SEMICOLON_SYMBOL  shift, and go to state 105
 
-    delimiter  go to state 109
+    delimiter  go to state 110
 
 
 State 36
@@ -941,7 +958,7 @@ State 36
     NEW_LINE_SYMBOL   shift, and go to state 104
     SEMICOLON_SYMBOL  shift, and go to state 105
 
-    delimiter  go to state 110
+    delimiter  go to state 111
 
 
 State 37
@@ -951,7 +968,7 @@ State 37
     NEW_LINE_SYMBOL   shift, and go to state 104
     SEMICOLON_SYMBOL  shift, and go to state 105
 
-    delimiter  go to state 111
+    delimiter  go to state 112
 
 
 State 38
@@ -961,7 +978,7 @@ State 38
     NEW_LINE_SYMBOL   shift, and go to state 104
     SEMICOLON_SYMBOL  shift, and go to state 105
 
-    delimiter  go to state 112
+    delimiter  go to state 113
 
 
 State 39
@@ -971,7 +988,7 @@ State 39
     NEW_LINE_SYMBOL   shift, and go to state 104
     SEMICOLON_SYMBOL  shift, and go to state 105
 
-    delimiter  go to state 113
+    delimiter  go to state 114
 
 
 State 40
@@ -981,7 +998,7 @@ State 40
     NEW_LINE_SYMBOL   shift, and go to state 104
     SEMICOLON_SYMBOL  shift, and go to state 105
 
-    delimiter  go to state 114
+    delimiter  go to state 115
 
 
 State 41
@@ -991,7 +1008,7 @@ State 41
     NEW_LINE_SYMBOL   shift, and go to state 104
     SEMICOLON_SYMBOL  shift, and go to state 105
 
-    delimiter  go to state 115
+    delimiter  go to state 116
 
 
 State 42
@@ -1001,14 +1018,14 @@ State 42
     NEW_LINE_SYMBOL   shift, and go to state 104
     SEMICOLON_SYMBOL  shift, and go to state 105
 
-    delimiter  go to state 116
+    delimiter  go to state 117
 
 
 State 43
 
   159 alias_stmt: ALIAS_KEYWORD IDENTIFIER . IDENTIFIER
 
-    IDENTIFIER  shift, and go to state 117
+    IDENTIFIER  shift, and go to state 118
 
 
 State 44
@@ -1043,7 +1060,7 @@ State 45
     CLASS_VAR_NAME       shift, and go to state 27
     CONSTANT_NAME        shift, and go to state 28
 
-    expr  go to state 118
+    expr  go to state 119
 
 
 State 46
@@ -1051,7 +1068,7 @@ State 46
    80 linefeed_or_empty: linefeed .
    82 linefeed: linefeed . NEW_LINE_SYMBOL
 
-    NEW_LINE_SYMBOL  shift, and go to state 119
+    NEW_LINE_SYMBOL  shift, and go to state 120
 
     $default  reduce using rule 80 (linefeed_or_empty)
 
@@ -1061,7 +1078,7 @@ State 47
   116 class_stmt: CLASS_KEYWORD linefeed_or_empty . CONSTANT_NAME delimiter class_body END_KEYWORD
   117           | CLASS_KEYWORD linefeed_or_empty . CONSTANT_NAME '<' CONSTANT_NAME delimiter class_body END_KEYWORD
 
-    CONSTANT_NAME  shift, and go to state 120
+    CONSTANT_NAME  shift, and go to state 121
 
 
 State 48
@@ -1075,10 +1092,10 @@ State 48
   114            | DEF_KEYWORD linefeed_or_empty . METHOD_MARK_EQUAL '(' linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD
   115            | DEF_KEYWORD linefeed_or_empty . METHOD_MARK_EQUAL delimiter stmt_list END_KEYWORD
 
-    METHOD_MARK_QUESTION     shift, and go to state 121
-    METHOD_MARK_EXCLAMATION  shift, and go to state 122
-    METHOD_MARK_EQUAL        shift, and go to state 123
-    IDENTIFIER               shift, and go to state 124
+    METHOD_MARK_QUESTION     shift, and go to state 122
+    METHOD_MARK_EXCLAMATION  shift, and go to state 123
+    METHOD_MARK_EQUAL        shift, and go to state 124
+    IDENTIFIER               shift, and go to state 125
 
 
 State 49
@@ -1105,7 +1122,7 @@ State 49
     CLASS_VAR_NAME       shift, and go to state 27
     CONSTANT_NAME        shift, and go to state 28
 
-    expr  go to state 125
+    expr  go to state 126
 
 
 State 50
@@ -1139,7 +1156,7 @@ State 50
     CLASS_VAR_NAME       shift, and go to state 27
     CONSTANT_NAME        shift, and go to state 28
 
-    expr  go to state 126
+    expr  go to state 127
 
 
 State 51
@@ -1167,7 +1184,7 @@ State 51
     CLASS_VAR_NAME       shift, and go to state 27
     CONSTANT_NAME        shift, and go to state 28
 
-    expr  go to state 127
+    expr  go to state 128
 
 
 State 52
@@ -1275,7 +1292,7 @@ State 53
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 128
+    linefeed_or_empty  go to state 129
     linefeed           go to state 46
 
 
@@ -1288,7 +1305,7 @@ State 54
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 129
+    linefeed_or_empty  go to state 130
     linefeed           go to state 46
 
 
@@ -1319,7 +1336,7 @@ State 55
     CLASS_VAR_NAME       shift, and go to state 27
     CONSTANT_NAME        shift, and go to state 28
 
-    expr  go to state 130
+    expr  go to state 131
 
 
 State 56
@@ -1347,7 +1364,7 @@ State 56
     CLASS_VAR_NAME       shift, and go to state 27
     CONSTANT_NAME        shift, and go to state 28
 
-    expr  go to state 131
+    expr  go to state 132
 
 
 State 57
@@ -1358,7 +1375,7 @@ State 57
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 132
+    linefeed_or_empty  go to state 133
     linefeed           go to state 46
 
 
@@ -1386,7 +1403,7 @@ State 58
     CLASS_VAR_NAME       shift, and go to state 27
     CONSTANT_NAME        shift, and go to state 28
 
-    expr  go to state 133
+    expr  go to state 134
 
 
 State 59
@@ -1413,7 +1430,7 @@ State 59
     CLASS_VAR_NAME       shift, and go to state 27
     CONSTANT_NAME        shift, and go to state 28
 
-    expr  go to state 134
+    expr  go to state 135
 
 
 State 60
@@ -1440,7 +1457,7 @@ State 60
     CLASS_VAR_NAME       shift, and go to state 27
     CONSTANT_NAME        shift, and go to state 28
 
-    expr  go to state 135
+    expr  go to state 136
 
 
 State 61
@@ -1459,7 +1476,7 @@ State 61
     LOGICAL_NOT_OP       shift, and go to state 18
     '('                  shift, and go to state 19
     '['                  shift, and go to state 20
-    ']'                  shift, and go to state 136
+    ']'                  shift, and go to state 137
     DOUBLE_COLON_SYMBOL  shift, and go to state 21
     STRING               shift, and go to state 22
     INTEGER_NUMBER       shift, and go to state 23
@@ -1469,8 +1486,8 @@ State 61
     CLASS_VAR_NAME       shift, and go to state 27
     CONSTANT_NAME        shift, and go to state 28
 
-    expr       go to state 137
-    expr_list  go to state 138
+    expr       go to state 138
+    expr_list  go to state 139
 
 
 State 62
@@ -1497,7 +1514,7 @@ State 62
     CLASS_VAR_NAME       shift, and go to state 27
     CONSTANT_NAME        shift, and go to state 28
 
-    expr  go to state 139
+    expr  go to state 140
 
 
 State 63
@@ -1509,7 +1526,7 @@ State 63
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 140
+    linefeed_or_empty  go to state 141
     linefeed           go to state 46
 
 
@@ -1528,7 +1545,7 @@ State 65
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 141
+    linefeed_or_empty  go to state 142
     linefeed           go to state 46
 
 
@@ -1540,7 +1557,7 @@ State 66
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 142
+    linefeed_or_empty  go to state 143
     linefeed           go to state 46
 
 
@@ -1552,7 +1569,7 @@ State 67
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 143
+    linefeed_or_empty  go to state 144
     linefeed           go to state 46
 
 
@@ -1564,7 +1581,7 @@ State 68
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 144
+    linefeed_or_empty  go to state 145
     linefeed           go to state 46
 
 
@@ -1576,7 +1593,7 @@ State 69
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 145
+    linefeed_or_empty  go to state 146
     linefeed           go to state 46
 
 
@@ -1588,7 +1605,7 @@ State 70
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 146
+    linefeed_or_empty  go to state 147
     linefeed           go to state 46
 
 
@@ -1600,7 +1617,7 @@ State 71
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 147
+    linefeed_or_empty  go to state 148
     linefeed           go to state 46
 
 
@@ -1612,7 +1629,7 @@ State 72
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 148
+    linefeed_or_empty  go to state 149
     linefeed           go to state 46
 
 
@@ -1624,7 +1641,7 @@ State 73
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 149
+    linefeed_or_empty  go to state 150
     linefeed           go to state 46
 
 
@@ -1636,7 +1653,7 @@ State 74
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 150
+    linefeed_or_empty  go to state 151
     linefeed           go to state 46
 
 
@@ -1648,7 +1665,7 @@ State 75
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 151
+    linefeed_or_empty  go to state 152
     linefeed           go to state 46
 
 
@@ -1660,7 +1677,7 @@ State 76
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 152
+    linefeed_or_empty  go to state 153
     linefeed           go to state 46
 
 
@@ -1672,7 +1689,7 @@ State 77
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 153
+    linefeed_or_empty  go to state 154
     linefeed           go to state 46
 
 
@@ -1684,7 +1701,7 @@ State 78
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 154
+    linefeed_or_empty  go to state 155
     linefeed           go to state 46
 
 
@@ -1696,7 +1713,7 @@ State 79
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 155
+    linefeed_or_empty  go to state 156
     linefeed           go to state 46
 
 
@@ -1708,7 +1725,7 @@ State 80
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 156
+    linefeed_or_empty  go to state 157
     linefeed           go to state 46
 
 
@@ -1720,7 +1737,7 @@ State 81
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 157
+    linefeed_or_empty  go to state 158
     linefeed           go to state 46
 
 
@@ -1732,7 +1749,7 @@ State 82
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 158
+    linefeed_or_empty  go to state 159
     linefeed           go to state 46
 
 
@@ -1744,7 +1761,7 @@ State 83
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 159
+    linefeed_or_empty  go to state 160
     linefeed           go to state 46
 
 
@@ -1756,7 +1773,7 @@ State 84
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 160
+    linefeed_or_empty  go to state 161
     linefeed           go to state 46
 
 
@@ -1768,7 +1785,7 @@ State 85
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 161
+    linefeed_or_empty  go to state 162
     linefeed           go to state 46
 
 
@@ -1780,7 +1797,7 @@ State 86
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 162
+    linefeed_or_empty  go to state 163
     linefeed           go to state 46
 
 
@@ -1792,7 +1809,7 @@ State 87
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 163
+    linefeed_or_empty  go to state 164
     linefeed           go to state 46
 
 
@@ -1804,7 +1821,7 @@ State 88
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 164
+    linefeed_or_empty  go to state 165
     linefeed           go to state 46
 
 
@@ -1816,7 +1833,7 @@ State 89
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 165
+    linefeed_or_empty  go to state 166
     linefeed           go to state 46
 
 
@@ -1828,7 +1845,7 @@ State 90
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 166
+    linefeed_or_empty  go to state 167
     linefeed           go to state 46
 
 
@@ -1840,7 +1857,7 @@ State 91
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 167
+    linefeed_or_empty  go to state 168
     linefeed           go to state 46
 
 
@@ -1852,7 +1869,7 @@ State 92
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 168
+    linefeed_or_empty  go to state 169
     linefeed           go to state 46
 
 
@@ -1864,7 +1881,7 @@ State 93
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 169
+    linefeed_or_empty  go to state 170
     linefeed           go to state 46
 
 
@@ -1876,7 +1893,7 @@ State 94
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 170
+    linefeed_or_empty  go to state 171
     linefeed           go to state 46
 
 
@@ -1888,7 +1905,7 @@ State 95
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 171
+    linefeed_or_empty  go to state 172
     linefeed           go to state 46
 
 
@@ -1900,7 +1917,7 @@ State 96
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 172
+    linefeed_or_empty  go to state 173
     linefeed           go to state 46
 
 
@@ -1912,7 +1929,7 @@ State 97
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 173
+    linefeed_or_empty  go to state 174
     linefeed           go to state 46
 
 
@@ -1924,7 +1941,7 @@ State 98
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 174
+    linefeed_or_empty  go to state 175
     linefeed           go to state 46
 
 
@@ -1936,7 +1953,7 @@ State 99
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 175
+    linefeed_or_empty  go to state 176
     linefeed           go to state 46
 
 
@@ -1948,7 +1965,7 @@ State 100
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 176
+    linefeed_or_empty  go to state 177
     linefeed           go to state 46
 
 
@@ -1968,7 +1985,7 @@ State 101
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 177
+    linefeed_or_empty  go to state 178
     linefeed           go to state 46
 
 
@@ -1980,7 +1997,7 @@ State 102
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 178
+    linefeed_or_empty  go to state 179
     linefeed           go to state 46
 
 
@@ -1992,7 +2009,7 @@ State 103
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 179
+    linefeed_or_empty  go to state 180
     linefeed           go to state 46
 
 
@@ -2016,10 +2033,12 @@ State 106
    91          | delimiter . NEW_LINE_SYMBOL
    96 stmt: expr delimiter .
 
-    NEW_LINE_SYMBOL   shift, and go to state 180
-    SEMICOLON_SYMBOL  shift, and go to state 181
+    NEW_LINE_SYMBOL   shift, and go to state 181
+    SEMICOLON_SYMBOL  shift, and go to state 182
 
-    $default  reduce using rule 96 (stmt)
+    NEW_LINE_SYMBOL   [reduce using rule 96 (stmt)]
+    SEMICOLON_SYMBOL  [reduce using rule 96 (stmt)]
+    $default          reduce using rule 96 (stmt)
 
 
 State 107
@@ -2031,120 +2050,146 @@ State 107
 
 State 108
 
+   85 programm_element: stmt delimiter .
+   90 delimiter: delimiter . SEMICOLON_SYMBOL
+   91          | delimiter . NEW_LINE_SYMBOL
+
+    NEW_LINE_SYMBOL   shift, and go to state 181
+    SEMICOLON_SYMBOL  shift, and go to state 182
+
+    $default  reduce using rule 85 (programm_element)
+
+
+State 109
+
    84 programm_element: method_stmt delimiter .
    90 delimiter: delimiter . SEMICOLON_SYMBOL
    91          | delimiter . NEW_LINE_SYMBOL
 
-    NEW_LINE_SYMBOL   shift, and go to state 180
-    SEMICOLON_SYMBOL  shift, and go to state 181
+    NEW_LINE_SYMBOL   shift, and go to state 181
+    SEMICOLON_SYMBOL  shift, and go to state 182
 
     $default  reduce using rule 84 (programm_element)
 
 
-State 109
+State 110
 
    83 programm_element: class_stmt delimiter .
    90 delimiter: delimiter . SEMICOLON_SYMBOL
    91          | delimiter . NEW_LINE_SYMBOL
 
-    NEW_LINE_SYMBOL   shift, and go to state 180
-    SEMICOLON_SYMBOL  shift, and go to state 181
+    NEW_LINE_SYMBOL   shift, and go to state 181
+    SEMICOLON_SYMBOL  shift, and go to state 182
 
     $default  reduce using rule 83 (programm_element)
-
-
-State 110
-
-   90 delimiter: delimiter . SEMICOLON_SYMBOL
-   91          | delimiter . NEW_LINE_SYMBOL
-   97 stmt: if_stmt delimiter .
-
-    NEW_LINE_SYMBOL   shift, and go to state 180
-    SEMICOLON_SYMBOL  shift, and go to state 181
-
-    $default  reduce using rule 97 (stmt)
 
 
 State 111
 
    90 delimiter: delimiter . SEMICOLON_SYMBOL
    91          | delimiter . NEW_LINE_SYMBOL
-  101 stmt: unless_stmt delimiter .
+   97 stmt: if_stmt delimiter .
 
-    NEW_LINE_SYMBOL   shift, and go to state 180
-    SEMICOLON_SYMBOL  shift, and go to state 181
+    NEW_LINE_SYMBOL   shift, and go to state 181
+    SEMICOLON_SYMBOL  shift, and go to state 182
 
-    $default  reduce using rule 101 (stmt)
+    NEW_LINE_SYMBOL   [reduce using rule 97 (stmt)]
+    SEMICOLON_SYMBOL  [reduce using rule 97 (stmt)]
+    $default          reduce using rule 97 (stmt)
 
 
 State 112
 
    90 delimiter: delimiter . SEMICOLON_SYMBOL
    91          | delimiter . NEW_LINE_SYMBOL
-   98 stmt: while_stmt delimiter .
+  101 stmt: unless_stmt delimiter .
 
-    NEW_LINE_SYMBOL   shift, and go to state 180
-    SEMICOLON_SYMBOL  shift, and go to state 181
+    NEW_LINE_SYMBOL   shift, and go to state 181
+    SEMICOLON_SYMBOL  shift, and go to state 182
 
-    $default  reduce using rule 98 (stmt)
+    NEW_LINE_SYMBOL   [reduce using rule 101 (stmt)]
+    SEMICOLON_SYMBOL  [reduce using rule 101 (stmt)]
+    $default          reduce using rule 101 (stmt)
 
 
 State 113
 
    90 delimiter: delimiter . SEMICOLON_SYMBOL
    91          | delimiter . NEW_LINE_SYMBOL
-   99 stmt: for_stmt delimiter .
+   98 stmt: while_stmt delimiter .
 
-    NEW_LINE_SYMBOL   shift, and go to state 180
-    SEMICOLON_SYMBOL  shift, and go to state 181
+    NEW_LINE_SYMBOL   shift, and go to state 181
+    SEMICOLON_SYMBOL  shift, and go to state 182
 
-    $default  reduce using rule 99 (stmt)
+    NEW_LINE_SYMBOL   [reduce using rule 98 (stmt)]
+    SEMICOLON_SYMBOL  [reduce using rule 98 (stmt)]
+    $default          reduce using rule 98 (stmt)
 
 
 State 114
 
    90 delimiter: delimiter . SEMICOLON_SYMBOL
    91          | delimiter . NEW_LINE_SYMBOL
-  102 stmt: return_stmt delimiter .
+   99 stmt: for_stmt delimiter .
 
-    NEW_LINE_SYMBOL   shift, and go to state 180
-    SEMICOLON_SYMBOL  shift, and go to state 181
+    NEW_LINE_SYMBOL   shift, and go to state 181
+    SEMICOLON_SYMBOL  shift, and go to state 182
 
-    $default  reduce using rule 102 (stmt)
+    NEW_LINE_SYMBOL   [reduce using rule 99 (stmt)]
+    SEMICOLON_SYMBOL  [reduce using rule 99 (stmt)]
+    $default          reduce using rule 99 (stmt)
 
 
 State 115
 
    90 delimiter: delimiter . SEMICOLON_SYMBOL
    91          | delimiter . NEW_LINE_SYMBOL
-  100 stmt: case_stmt delimiter .
+  102 stmt: return_stmt delimiter .
 
-    NEW_LINE_SYMBOL   shift, and go to state 180
-    SEMICOLON_SYMBOL  shift, and go to state 181
+    NEW_LINE_SYMBOL   shift, and go to state 181
+    SEMICOLON_SYMBOL  shift, and go to state 182
 
-    $default  reduce using rule 100 (stmt)
+    NEW_LINE_SYMBOL   [reduce using rule 102 (stmt)]
+    SEMICOLON_SYMBOL  [reduce using rule 102 (stmt)]
+    $default          reduce using rule 102 (stmt)
 
 
 State 116
 
    90 delimiter: delimiter . SEMICOLON_SYMBOL
    91          | delimiter . NEW_LINE_SYMBOL
-  103 stmt: alias_stmt delimiter .
+  100 stmt: case_stmt delimiter .
 
-    NEW_LINE_SYMBOL   shift, and go to state 180
-    SEMICOLON_SYMBOL  shift, and go to state 181
+    NEW_LINE_SYMBOL   shift, and go to state 181
+    SEMICOLON_SYMBOL  shift, and go to state 182
 
-    $default  reduce using rule 103 (stmt)
+    NEW_LINE_SYMBOL   [reduce using rule 100 (stmt)]
+    SEMICOLON_SYMBOL  [reduce using rule 100 (stmt)]
+    $default          reduce using rule 100 (stmt)
 
 
 State 117
+
+   90 delimiter: delimiter . SEMICOLON_SYMBOL
+   91          | delimiter . NEW_LINE_SYMBOL
+  103 stmt: alias_stmt delimiter .
+
+    NEW_LINE_SYMBOL   shift, and go to state 181
+    SEMICOLON_SYMBOL  shift, and go to state 182
+
+    NEW_LINE_SYMBOL   [reduce using rule 103 (stmt)]
+    SEMICOLON_SYMBOL  [reduce using rule 103 (stmt)]
+    $default          reduce using rule 103 (stmt)
+
+
+State 118
 
   159 alias_stmt: ALIAS_KEYWORD IDENTIFIER IDENTIFIER .
 
     $default  reduce using rule 159 (alias_stmt)
 
 
-State 118
+State 119
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -2236,78 +2281,78 @@ State 118
 
     $default  reduce using rule 127 (delimeter_or_empty)
 
-    delimiter           go to state 182
-    delimeter_or_empty  go to state 183
+    delimiter           go to state 183
+    delimeter_or_empty  go to state 184
 
 
-State 119
+State 120
 
    82 linefeed: linefeed NEW_LINE_SYMBOL .
 
     $default  reduce using rule 82 (linefeed)
 
 
-State 120
+State 121
 
   116 class_stmt: CLASS_KEYWORD linefeed_or_empty CONSTANT_NAME . delimiter class_body END_KEYWORD
   117           | CLASS_KEYWORD linefeed_or_empty CONSTANT_NAME . '<' CONSTANT_NAME delimiter class_body END_KEYWORD
 
     NEW_LINE_SYMBOL   shift, and go to state 104
     SEMICOLON_SYMBOL  shift, and go to state 105
-    '<'               shift, and go to state 184
+    '<'               shift, and go to state 185
 
-    delimiter  go to state 185
-
-
-State 121
-
-  109 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_QUESTION . '(' linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD
-  111            | DEF_KEYWORD linefeed_or_empty METHOD_MARK_QUESTION . delimiter stmt_list END_KEYWORD
-
-    '('               shift, and go to state 186
-    NEW_LINE_SYMBOL   shift, and go to state 104
-    SEMICOLON_SYMBOL  shift, and go to state 105
-
-    delimiter  go to state 187
+    delimiter  go to state 186
 
 
 State 122
 
-  112 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_EXCLAMATION . '(' linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD
-  113            | DEF_KEYWORD linefeed_or_empty METHOD_MARK_EXCLAMATION . delimiter stmt_list END_KEYWORD
+  109 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_QUESTION . '(' linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD
+  111            | DEF_KEYWORD linefeed_or_empty METHOD_MARK_QUESTION . delimiter stmt_list END_KEYWORD
 
-    '('               shift, and go to state 188
+    '('               shift, and go to state 187
     NEW_LINE_SYMBOL   shift, and go to state 104
     SEMICOLON_SYMBOL  shift, and go to state 105
 
-    delimiter  go to state 189
+    delimiter  go to state 188
 
 
 State 123
 
-  114 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_EQUAL . '(' linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD
-  115            | DEF_KEYWORD linefeed_or_empty METHOD_MARK_EQUAL . delimiter stmt_list END_KEYWORD
+  112 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_EXCLAMATION . '(' linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD
+  113            | DEF_KEYWORD linefeed_or_empty METHOD_MARK_EXCLAMATION . delimiter stmt_list END_KEYWORD
 
-    '('               shift, and go to state 190
+    '('               shift, and go to state 189
     NEW_LINE_SYMBOL   shift, and go to state 104
     SEMICOLON_SYMBOL  shift, and go to state 105
 
-    delimiter  go to state 191
+    delimiter  go to state 190
 
 
 State 124
 
-  108 method_stmt: DEF_KEYWORD linefeed_or_empty IDENTIFIER . '(' linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD
-  110            | DEF_KEYWORD linefeed_or_empty IDENTIFIER . delimiter stmt_list END_KEYWORD
+  114 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_EQUAL . '(' linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD
+  115            | DEF_KEYWORD linefeed_or_empty METHOD_MARK_EQUAL . delimiter stmt_list END_KEYWORD
 
-    '('               shift, and go to state 192
+    '('               shift, and go to state 191
     NEW_LINE_SYMBOL   shift, and go to state 104
     SEMICOLON_SYMBOL  shift, and go to state 105
 
-    delimiter  go to state 193
+    delimiter  go to state 192
 
 
 State 125
+
+  108 method_stmt: DEF_KEYWORD linefeed_or_empty IDENTIFIER . '(' linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD
+  110            | DEF_KEYWORD linefeed_or_empty IDENTIFIER . delimiter stmt_list END_KEYWORD
+
+    '('               shift, and go to state 193
+    NEW_LINE_SYMBOL   shift, and go to state 104
+    SEMICOLON_SYMBOL  shift, and go to state 105
+
+    delimiter  go to state 194
+
+
+State 126
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -2395,7 +2440,7 @@ State 125
     $default  reduce using rule 75 (expr)
 
 
-State 126
+State 127
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -2493,11 +2538,11 @@ State 126
 
     $default  reduce using rule 127 (delimeter_or_empty)
 
-    delimiter           go to state 194
-    delimeter_or_empty  go to state 195
+    delimiter           go to state 195
+    delimeter_or_empty  go to state 196
 
 
-State 127
+State 128
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -2547,7 +2592,7 @@ State 127
   149 for_stmt: FOR_KEYWORD linefeed_or_empty expr . IN_KEYWORD linefeed_or_empty expr DO_KEYWORD delimeter_or_empty stmt_list END_KEYWORD
   150         | FOR_KEYWORD linefeed_or_empty expr . IN_KEYWORD linefeed_or_empty expr delimiter stmt_list END_KEYWORD
 
-    IN_KEYWORD              shift, and go to state 196
+    IN_KEYWORD              shift, and go to state 197
     OR_KEYWORD              shift, and go to state 67
     AND_KEYWORD             shift, and go to state 68
     '='                     shift, and go to state 69
@@ -2587,7 +2632,7 @@ State 127
     DOUBLE_COLON_SYMBOL     shift, and go to state 103
 
 
-State 128
+State 129
 
    29 expr: SELF_KEYWORD '.' linefeed_or_empty . IDENTIFIER
    30     | SELF_KEYWORD '.' linefeed_or_empty . IDENTIFIER '(' linefeed_or_empty expr_list linefeed_or_empty ')'
@@ -2598,13 +2643,13 @@ State 128
    35     | SELF_KEYWORD '.' linefeed_or_empty . METHOD_MARK_EQUAL
    36     | SELF_KEYWORD '.' linefeed_or_empty . METHOD_MARK_EQUAL '(' linefeed_or_empty expr_list linefeed_or_empty ')'
 
-    METHOD_MARK_QUESTION     shift, and go to state 197
-    METHOD_MARK_EXCLAMATION  shift, and go to state 198
-    METHOD_MARK_EQUAL        shift, and go to state 199
-    IDENTIFIER               shift, and go to state 200
+    METHOD_MARK_QUESTION     shift, and go to state 198
+    METHOD_MARK_EXCLAMATION  shift, and go to state 199
+    METHOD_MARK_EQUAL        shift, and go to state 200
+    IDENTIFIER               shift, and go to state 201
 
 
-State 129
+State 130
 
    25 expr: SUPER_KEYWORD '(' linefeed_or_empty . expr_list linefeed_or_empty ')'
    26     | SUPER_KEYWORD '(' linefeed_or_empty . ')'
@@ -2619,7 +2664,7 @@ State 129
     '-'                  shift, and go to state 17
     LOGICAL_NOT_OP       shift, and go to state 18
     '('                  shift, and go to state 19
-    ')'                  shift, and go to state 201
+    ')'                  shift, and go to state 202
     '['                  shift, and go to state 20
     DOUBLE_COLON_SYMBOL  shift, and go to state 21
     STRING               shift, and go to state 22
@@ -2630,11 +2675,11 @@ State 129
     CLASS_VAR_NAME       shift, and go to state 27
     CONSTANT_NAME        shift, and go to state 28
 
-    expr       go to state 137
-    expr_list  go to state 202
+    expr       go to state 138
+    expr_list  go to state 203
 
 
-State 130
+State 131
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -2728,11 +2773,11 @@ State 130
 
     $default  reduce using rule 127 (delimeter_or_empty)
 
-    delimiter           go to state 203
-    delimeter_or_empty  go to state 204
+    delimiter           go to state 204
+    delimeter_or_empty  go to state 205
 
 
-State 131
+State 132
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -2782,7 +2827,7 @@ State 131
   147 while_stmt: WHILE_KEYWORD linefeed_or_empty expr . DO_KEYWORD delimeter_or_empty stmt_list END_KEYWORD
   148           | WHILE_KEYWORD linefeed_or_empty expr . delimiter stmt_list END_KEYWORD
 
-    DO_KEYWORD              shift, and go to state 205
+    DO_KEYWORD              shift, and go to state 206
     OR_KEYWORD              shift, and go to state 67
     AND_KEYWORD             shift, and go to state 68
     '='                     shift, and go to state 69
@@ -2823,10 +2868,10 @@ State 131
     NEW_LINE_SYMBOL         shift, and go to state 104
     SEMICOLON_SYMBOL        shift, and go to state 105
 
-    delimiter  go to state 206
+    delimiter  go to state 207
 
 
-State 132
+State 133
 
    45 expr: NOT_KEYWORD '(' linefeed_or_empty . expr linefeed_or_empty ')'
 
@@ -2850,10 +2895,10 @@ State 132
     CLASS_VAR_NAME       shift, and go to state 27
     CONSTANT_NAME        shift, and go to state 28
 
-    expr  go to state 207
+    expr  go to state 208
 
 
-State 133
+State 134
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -2911,7 +2956,7 @@ State 133
     $default  reduce using rule 20 (expr)
 
 
-State 134
+State 135
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -2969,7 +3014,7 @@ State 134
     $default  reduce using rule 69 (expr)
 
 
-State 135
+State 136
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -3059,18 +3104,18 @@ State 135
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 208
+    linefeed_or_empty  go to state 209
     linefeed           go to state 46
 
 
-State 136
+State 137
 
    74 expr: '[' linefeed_or_empty ']' .
 
     $default  reduce using rule 74 (expr)
 
 
-State 137
+State 138
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -3160,21 +3205,21 @@ State 137
     $default  reduce using rule 92 (expr_list)
 
 
-State 138
+State 139
 
    73 expr: '[' linefeed_or_empty expr_list . linefeed_or_empty ']'
    93 expr_list: expr_list . COMMA_SYMBOL expr
 
     NEW_LINE_SYMBOL  shift, and go to state 44
-    COMMA_SYMBOL     shift, and go to state 209
+    COMMA_SYMBOL     shift, and go to state 210
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 210
+    linefeed_or_empty  go to state 211
     linefeed           go to state 46
 
 
-State 139
+State 140
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -3226,7 +3271,7 @@ State 139
     $default  reduce using rule 76 (expr)
 
 
-State 140
+State 141
 
    22 expr: IDENTIFIER '(' linefeed_or_empty . expr_list linefeed_or_empty ')'
    23     | IDENTIFIER '(' linefeed_or_empty . ')'
@@ -3241,7 +3286,7 @@ State 140
     '-'                  shift, and go to state 17
     LOGICAL_NOT_OP       shift, and go to state 18
     '('                  shift, and go to state 19
-    ')'                  shift, and go to state 211
+    ')'                  shift, and go to state 212
     '['                  shift, and go to state 20
     DOUBLE_COLON_SYMBOL  shift, and go to state 21
     STRING               shift, and go to state 22
@@ -3252,40 +3297,13 @@ State 140
     CLASS_VAR_NAME       shift, and go to state 27
     CONSTANT_NAME        shift, and go to state 28
 
-    expr       go to state 137
-    expr_list  go to state 212
-
-
-State 141
-
-  137 if_stmt: expr IF_KEYWORD linefeed_or_empty . expr
-
-    DEFINED_KEYWORD      shift, and go to state 5
-    FALSE_KEYWORD        shift, and go to state 7
-    NIL_KEYWORD          shift, and go to state 9
-    SELF_KEYWORD         shift, and go to state 11
-    SUPER_KEYWORD        shift, and go to state 12
-    TRUE_KEYWORD         shift, and go to state 13
-    NOT_KEYWORD          shift, and go to state 16
-    '-'                  shift, and go to state 17
-    LOGICAL_NOT_OP       shift, and go to state 18
-    '('                  shift, and go to state 19
-    '['                  shift, and go to state 20
-    DOUBLE_COLON_SYMBOL  shift, and go to state 21
-    STRING               shift, and go to state 22
-    INTEGER_NUMBER       shift, and go to state 23
-    FLOAT_NUMBER         shift, and go to state 24
-    IDENTIFIER           shift, and go to state 25
-    OBJECT_VAR_NAME      shift, and go to state 26
-    CLASS_VAR_NAME       shift, and go to state 27
-    CONSTANT_NAME        shift, and go to state 28
-
-    expr  go to state 213
+    expr       go to state 138
+    expr_list  go to state 213
 
 
 State 142
 
-  142 unless_stmt: expr UNLESS_KEYWORD linefeed_or_empty . expr
+  137 if_stmt: expr IF_KEYWORD linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -3312,7 +3330,7 @@ State 142
 
 State 143
 
-   44 expr: expr OR_KEYWORD linefeed_or_empty . expr
+  142 unless_stmt: expr UNLESS_KEYWORD linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -3339,7 +3357,7 @@ State 143
 
 State 144
 
-   43 expr: expr AND_KEYWORD linefeed_or_empty . expr
+   44 expr: expr OR_KEYWORD linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -3366,7 +3384,7 @@ State 144
 
 State 145
 
-   13 expr: expr '=' linefeed_or_empty . expr
+   43 expr: expr AND_KEYWORD linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -3393,7 +3411,7 @@ State 145
 
 State 146
 
-   55 expr: expr ADD_ASSIGN_OP linefeed_or_empty . expr
+   13 expr: expr '=' linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -3420,7 +3438,7 @@ State 146
 
 State 147
 
-   56 expr: expr SUB_ASSIGN_OP linefeed_or_empty . expr
+   55 expr: expr ADD_ASSIGN_OP linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -3447,7 +3465,7 @@ State 147
 
 State 148
 
-   57 expr: expr MUL_ASSIGN_OP linefeed_or_empty . expr
+   56 expr: expr SUB_ASSIGN_OP linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -3474,7 +3492,7 @@ State 148
 
 State 149
 
-   58 expr: expr DIV_ASSIGN_OP linefeed_or_empty . expr
+   57 expr: expr MUL_ASSIGN_OP linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -3501,7 +3519,7 @@ State 149
 
 State 150
 
-   59 expr: expr MOD_ASSIGN_OP linefeed_or_empty . expr
+   58 expr: expr DIV_ASSIGN_OP linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -3528,7 +3546,7 @@ State 150
 
 State 151
 
-   60 expr: expr POW_ASSIGN_OP linefeed_or_empty . expr
+   59 expr: expr MOD_ASSIGN_OP linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -3555,7 +3573,7 @@ State 151
 
 State 152
 
-   78 expr: expr QUESTION_SYMBOL linefeed_or_empty . expr linefeed_or_empty COLON_SYMBOL linefeed_or_empty expr
+   60 expr: expr POW_ASSIGN_OP linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -3582,7 +3600,7 @@ State 152
 
 State 153
 
-   71 expr: expr EXCLUSIVE_RANGE_OP linefeed_or_empty . expr
+   78 expr: expr QUESTION_SYMBOL linefeed_or_empty . expr linefeed_or_empty COLON_SYMBOL linefeed_or_empty expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -3609,7 +3627,7 @@ State 153
 
 State 154
 
-   70 expr: expr INCLUSIVE_RANGE_OP linefeed_or_empty . expr
+   71 expr: expr EXCLUSIVE_RANGE_OP linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -3636,7 +3654,7 @@ State 154
 
 State 155
 
-   68 expr: expr LOGICAL_OR_OP linefeed_or_empty . expr
+   70 expr: expr INCLUSIVE_RANGE_OP linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -3663,7 +3681,7 @@ State 155
 
 State 156
 
-   67 expr: expr LOGICAL_AND_OP linefeed_or_empty . expr
+   68 expr: expr LOGICAL_OR_OP linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -3690,7 +3708,7 @@ State 156
 
 State 157
 
-   47 expr: expr EQL_OP linefeed_or_empty . expr
+   67 expr: expr LOGICAL_AND_OP linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -3717,7 +3735,7 @@ State 157
 
 State 158
 
-   48 expr: expr NOT_EQL_OP linefeed_or_empty . expr
+   47 expr: expr EQL_OP linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -3744,7 +3762,7 @@ State 158
 
 State 159
 
-   53 expr: expr COMB_COMPARISON_OP linefeed_or_empty . expr
+   48 expr: expr NOT_EQL_OP linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -3771,7 +3789,7 @@ State 159
 
 State 160
 
-   54 expr: expr CASE_EQL_OP linefeed_or_empty . expr
+   53 expr: expr COMB_COMPARISON_OP linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -3798,7 +3816,7 @@ State 160
 
 State 161
 
-   49 expr: expr GREATER_OP linefeed_or_empty . expr
+   54 expr: expr CASE_EQL_OP linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -3825,7 +3843,7 @@ State 161
 
 State 162
 
-   50 expr: expr LESS_OP linefeed_or_empty . expr
+   49 expr: expr GREATER_OP linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -3852,7 +3870,7 @@ State 162
 
 State 163
 
-   51 expr: expr GREATER_OR_EQL_OP linefeed_or_empty . expr
+   50 expr: expr LESS_OP linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -3879,7 +3897,7 @@ State 163
 
 State 164
 
-   52 expr: expr LESS_OR_EQL_OP linefeed_or_empty . expr
+   51 expr: expr GREATER_OR_EQL_OP linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -3906,7 +3924,7 @@ State 164
 
 State 165
 
-   62 expr: expr BIN_OR_OP linefeed_or_empty . expr
+   52 expr: expr LESS_OR_EQL_OP linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -3933,7 +3951,7 @@ State 165
 
 State 166
 
-   63 expr: expr BIN_XOR_OP linefeed_or_empty . expr
+   62 expr: expr BIN_OR_OP linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -3960,7 +3978,7 @@ State 166
 
 State 167
 
-   61 expr: expr BIN_AND_OP linefeed_or_empty . expr
+   63 expr: expr BIN_XOR_OP linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -3987,7 +4005,7 @@ State 167
 
 State 168
 
-   65 expr: expr BIN_LEFT_SHIFT_OP linefeed_or_empty . expr
+   61 expr: expr BIN_AND_OP linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -4014,7 +4032,7 @@ State 168
 
 State 169
 
-   66 expr: expr BIN_RIGHT_SHIFT_OP linefeed_or_empty . expr
+   65 expr: expr BIN_LEFT_SHIFT_OP linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -4041,7 +4059,7 @@ State 169
 
 State 170
 
-   18 expr: expr '+' linefeed_or_empty . expr
+   66 expr: expr BIN_RIGHT_SHIFT_OP linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -4068,7 +4086,7 @@ State 170
 
 State 171
 
-   19 expr: expr '-' linefeed_or_empty . expr
+   18 expr: expr '+' linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -4095,7 +4113,7 @@ State 171
 
 State 172
 
-   17 expr: expr '*' linefeed_or_empty . expr
+   19 expr: expr '-' linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -4122,7 +4140,7 @@ State 172
 
 State 173
 
-   15 expr: expr '/' linefeed_or_empty . expr
+   17 expr: expr '*' linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -4149,7 +4167,7 @@ State 173
 
 State 174
 
-   16 expr: expr '%' linefeed_or_empty . expr
+   15 expr: expr '/' linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -4176,7 +4194,7 @@ State 174
 
 State 175
 
-   64 expr: expr BIN_ONES_COMPLEMENT_OP linefeed_or_empty . expr
+   16 expr: expr '%' linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -4203,7 +4221,7 @@ State 175
 
 State 176
 
-   46 expr: expr ARITHMETIC_POW_OP linefeed_or_empty . expr
+   64 expr: expr BIN_ONES_COMPLEMENT_OP linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -4230,26 +4248,7 @@ State 176
 
 State 177
 
-   21 expr: expr '.' linefeed_or_empty . SUPERCLASS_KEYWORD
-   27     | expr '.' linefeed_or_empty . IDENTIFIER
-   28     | expr '.' linefeed_or_empty . IDENTIFIER '(' linefeed_or_empty expr_list linefeed_or_empty ')'
-   37     | expr '.' linefeed_or_empty . METHOD_MARK_QUESTION
-   38     | expr '.' linefeed_or_empty . METHOD_MARK_QUESTION '(' linefeed_or_empty expr_list linefeed_or_empty ')'
-   39     | expr '.' linefeed_or_empty . METHOD_MARK_EXCLAMATION
-   40     | expr '.' linefeed_or_empty . METHOD_MARK_EXCLAMATION '(' linefeed_or_empty expr_list linefeed_or_empty ')'
-   41     | expr '.' linefeed_or_empty . METHOD_MARK_EQUAL
-   42     | expr '.' linefeed_or_empty . METHOD_MARK_EQUAL '(' linefeed_or_empty expr_list linefeed_or_empty ')'
-
-    SUPERCLASS_KEYWORD       shift, and go to state 249
-    METHOD_MARK_QUESTION     shift, and go to state 250
-    METHOD_MARK_EXCLAMATION  shift, and go to state 251
-    METHOD_MARK_EQUAL        shift, and go to state 252
-    IDENTIFIER               shift, and go to state 253
-
-
-State 178
-
-   14 expr: expr '[' linefeed_or_empty . expr linefeed_or_empty ']'
+   46 expr: expr ARITHMETIC_POW_OP linefeed_or_empty . expr
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -4271,12 +4270,31 @@ State 178
     CLASS_VAR_NAME       shift, and go to state 27
     CONSTANT_NAME        shift, and go to state 28
 
-    expr  go to state 254
+    expr  go to state 249
+
+
+State 178
+
+   21 expr: expr '.' linefeed_or_empty . SUPERCLASS_KEYWORD
+   27     | expr '.' linefeed_or_empty . IDENTIFIER
+   28     | expr '.' linefeed_or_empty . IDENTIFIER '(' linefeed_or_empty expr_list linefeed_or_empty ')'
+   37     | expr '.' linefeed_or_empty . METHOD_MARK_QUESTION
+   38     | expr '.' linefeed_or_empty . METHOD_MARK_QUESTION '(' linefeed_or_empty expr_list linefeed_or_empty ')'
+   39     | expr '.' linefeed_or_empty . METHOD_MARK_EXCLAMATION
+   40     | expr '.' linefeed_or_empty . METHOD_MARK_EXCLAMATION '(' linefeed_or_empty expr_list linefeed_or_empty ')'
+   41     | expr '.' linefeed_or_empty . METHOD_MARK_EQUAL
+   42     | expr '.' linefeed_or_empty . METHOD_MARK_EQUAL '(' linefeed_or_empty expr_list linefeed_or_empty ')'
+
+    SUPERCLASS_KEYWORD       shift, and go to state 250
+    METHOD_MARK_QUESTION     shift, and go to state 251
+    METHOD_MARK_EXCLAMATION  shift, and go to state 252
+    METHOD_MARK_EQUAL        shift, and go to state 253
+    IDENTIFIER               shift, and go to state 254
 
 
 State 179
 
-   77 expr: expr DOUBLE_COLON_SYMBOL linefeed_or_empty . expr
+   14 expr: expr '[' linefeed_or_empty . expr linefeed_or_empty ']'
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -4303,68 +4321,96 @@ State 179
 
 State 180
 
+   77 expr: expr DOUBLE_COLON_SYMBOL linefeed_or_empty . expr
+
+    DEFINED_KEYWORD      shift, and go to state 5
+    FALSE_KEYWORD        shift, and go to state 7
+    NIL_KEYWORD          shift, and go to state 9
+    SELF_KEYWORD         shift, and go to state 11
+    SUPER_KEYWORD        shift, and go to state 12
+    TRUE_KEYWORD         shift, and go to state 13
+    NOT_KEYWORD          shift, and go to state 16
+    '-'                  shift, and go to state 17
+    LOGICAL_NOT_OP       shift, and go to state 18
+    '('                  shift, and go to state 19
+    '['                  shift, and go to state 20
+    DOUBLE_COLON_SYMBOL  shift, and go to state 21
+    STRING               shift, and go to state 22
+    INTEGER_NUMBER       shift, and go to state 23
+    FLOAT_NUMBER         shift, and go to state 24
+    IDENTIFIER           shift, and go to state 25
+    OBJECT_VAR_NAME      shift, and go to state 26
+    CLASS_VAR_NAME       shift, and go to state 27
+    CONSTANT_NAME        shift, and go to state 28
+
+    expr  go to state 256
+
+
+State 181
+
    91 delimiter: delimiter NEW_LINE_SYMBOL .
 
     $default  reduce using rule 91 (delimiter)
 
 
-State 181
+State 182
 
    90 delimiter: delimiter SEMICOLON_SYMBOL .
 
     $default  reduce using rule 90 (delimiter)
 
 
-State 182
+State 183
 
    90 delimiter: delimiter . SEMICOLON_SYMBOL
    91          | delimiter . NEW_LINE_SYMBOL
   128 delimeter_or_empty: delimiter .
 
-    NEW_LINE_SYMBOL   shift, and go to state 180
-    SEMICOLON_SYMBOL  shift, and go to state 181
+    NEW_LINE_SYMBOL   shift, and go to state 181
+    SEMICOLON_SYMBOL  shift, and go to state 182
 
     $default  reduce using rule 128 (delimeter_or_empty)
 
 
-State 183
+State 184
 
   153 case_stmt: CASE_KEYWORD linefeed_or_empty expr delimeter_or_empty . when_list END_KEYWORD
   154          | CASE_KEYWORD linefeed_or_empty expr delimeter_or_empty . when_list ELSE_KEYWORD delimeter_or_empty stmt_list END_KEYWORD
 
-    WHEN_KEYWORD  shift, and go to state 256
+    WHEN_KEYWORD  shift, and go to state 257
 
-    when_list  go to state 257
-
-
-State 184
-
-  117 class_stmt: CLASS_KEYWORD linefeed_or_empty CONSTANT_NAME '<' . CONSTANT_NAME delimiter class_body END_KEYWORD
-
-    CONSTANT_NAME  shift, and go to state 258
+    when_list  go to state 258
+    when_stmt  go to state 259
 
 
 State 185
+
+  117 class_stmt: CLASS_KEYWORD linefeed_or_empty CONSTANT_NAME '<' . CONSTANT_NAME delimiter class_body END_KEYWORD
+
+    CONSTANT_NAME  shift, and go to state 260
+
+
+State 186
 
    90 delimiter: delimiter . SEMICOLON_SYMBOL
    91          | delimiter . NEW_LINE_SYMBOL
   116 class_stmt: CLASS_KEYWORD linefeed_or_empty CONSTANT_NAME delimiter . class_body END_KEYWORD
 
     DEF_KEYWORD       shift, and go to state 4
-    NEW_LINE_SYMBOL   shift, and go to state 180
-    SEMICOLON_SYMBOL  shift, and go to state 181
-    OBJECT_VAR_NAME   shift, and go to state 259
-    CLASS_VAR_NAME    shift, and go to state 260
+    NEW_LINE_SYMBOL   shift, and go to state 181
+    SEMICOLON_SYMBOL  shift, and go to state 182
+    OBJECT_VAR_NAME   shift, and go to state 261
+    CLASS_VAR_NAME    shift, and go to state 262
 
     $default  reduce using rule 125 (class_body)
 
-    method_stmt           go to state 261
-    class_body_stmt       go to state 262
-    class_body_not_empty  go to state 263
-    class_body            go to state 264
+    method_stmt           go to state 263
+    class_body_stmt       go to state 264
+    class_body_not_empty  go to state 265
+    class_body            go to state 266
 
 
-State 186
+State 187
 
   109 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_QUESTION '(' . linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD
 
@@ -4372,11 +4418,11 @@ State 186
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 265
+    linefeed_or_empty  go to state 267
     linefeed           go to state 46
 
 
-State 187
+State 188
 
    90 delimiter: delimiter . SEMICOLON_SYMBOL
    91          | delimiter . NEW_LINE_SYMBOL
@@ -4401,8 +4447,8 @@ State 187
     '('                  shift, and go to state 19
     '['                  shift, and go to state 20
     DOUBLE_COLON_SYMBOL  shift, and go to state 21
-    NEW_LINE_SYMBOL      shift, and go to state 180
-    SEMICOLON_SYMBOL     shift, and go to state 181
+    NEW_LINE_SYMBOL      shift, and go to state 181
+    SEMICOLON_SYMBOL     shift, and go to state 182
     STRING               shift, and go to state 22
     INTEGER_NUMBER       shift, and go to state 23
     FLOAT_NUMBER         shift, and go to state 24
@@ -4412,8 +4458,8 @@ State 187
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt_list    go to state 266
-    stmt         go to state 267
+    stmt_list    go to state 268
+    stmt         go to state 269
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -4423,7 +4469,7 @@ State 187
     alias_stmt   go to state 42
 
 
-State 188
+State 189
 
   112 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_EXCLAMATION '(' . linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD
 
@@ -4431,11 +4477,11 @@ State 188
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 268
+    linefeed_or_empty  go to state 270
     linefeed           go to state 46
 
 
-State 189
+State 190
 
    90 delimiter: delimiter . SEMICOLON_SYMBOL
    91          | delimiter . NEW_LINE_SYMBOL
@@ -4460,8 +4506,8 @@ State 189
     '('                  shift, and go to state 19
     '['                  shift, and go to state 20
     DOUBLE_COLON_SYMBOL  shift, and go to state 21
-    NEW_LINE_SYMBOL      shift, and go to state 180
-    SEMICOLON_SYMBOL     shift, and go to state 181
+    NEW_LINE_SYMBOL      shift, and go to state 181
+    SEMICOLON_SYMBOL     shift, and go to state 182
     STRING               shift, and go to state 22
     INTEGER_NUMBER       shift, and go to state 23
     FLOAT_NUMBER         shift, and go to state 24
@@ -4471,8 +4517,8 @@ State 189
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt_list    go to state 269
-    stmt         go to state 267
+    stmt_list    go to state 271
+    stmt         go to state 269
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -4482,7 +4528,7 @@ State 189
     alias_stmt   go to state 42
 
 
-State 190
+State 191
 
   114 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_EQUAL '(' . linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD
 
@@ -4490,11 +4536,11 @@ State 190
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 270
+    linefeed_or_empty  go to state 272
     linefeed           go to state 46
 
 
-State 191
+State 192
 
    90 delimiter: delimiter . SEMICOLON_SYMBOL
    91          | delimiter . NEW_LINE_SYMBOL
@@ -4519,8 +4565,8 @@ State 191
     '('                  shift, and go to state 19
     '['                  shift, and go to state 20
     DOUBLE_COLON_SYMBOL  shift, and go to state 21
-    NEW_LINE_SYMBOL      shift, and go to state 180
-    SEMICOLON_SYMBOL     shift, and go to state 181
+    NEW_LINE_SYMBOL      shift, and go to state 181
+    SEMICOLON_SYMBOL     shift, and go to state 182
     STRING               shift, and go to state 22
     INTEGER_NUMBER       shift, and go to state 23
     FLOAT_NUMBER         shift, and go to state 24
@@ -4530,8 +4576,8 @@ State 191
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt_list    go to state 271
-    stmt         go to state 267
+    stmt_list    go to state 273
+    stmt         go to state 269
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -4541,7 +4587,7 @@ State 191
     alias_stmt   go to state 42
 
 
-State 192
+State 193
 
   108 method_stmt: DEF_KEYWORD linefeed_or_empty IDENTIFIER '(' . linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD
 
@@ -4549,11 +4595,11 @@ State 192
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 272
+    linefeed_or_empty  go to state 274
     linefeed           go to state 46
 
 
-State 193
+State 194
 
    90 delimiter: delimiter . SEMICOLON_SYMBOL
    91          | delimiter . NEW_LINE_SYMBOL
@@ -4578,8 +4624,8 @@ State 193
     '('                  shift, and go to state 19
     '['                  shift, and go to state 20
     DOUBLE_COLON_SYMBOL  shift, and go to state 21
-    NEW_LINE_SYMBOL      shift, and go to state 180
-    SEMICOLON_SYMBOL     shift, and go to state 181
+    NEW_LINE_SYMBOL      shift, and go to state 181
+    SEMICOLON_SYMBOL     shift, and go to state 182
     STRING               shift, and go to state 22
     INTEGER_NUMBER       shift, and go to state 23
     FLOAT_NUMBER         shift, and go to state 24
@@ -4589,8 +4635,8 @@ State 193
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt_list    go to state 273
-    stmt         go to state 267
+    stmt_list    go to state 275
+    stmt         go to state 269
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -4600,7 +4646,7 @@ State 193
     alias_stmt   go to state 42
 
 
-State 194
+State 195
 
    90 delimiter: delimiter . SEMICOLON_SYMBOL
    91          | delimiter . NEW_LINE_SYMBOL
@@ -4629,8 +4675,8 @@ State 194
     '('                  shift, and go to state 19
     '['                  shift, and go to state 20
     DOUBLE_COLON_SYMBOL  shift, and go to state 21
-    NEW_LINE_SYMBOL      shift, and go to state 180
-    SEMICOLON_SYMBOL     shift, and go to state 181
+    NEW_LINE_SYMBOL      shift, and go to state 181
+    SEMICOLON_SYMBOL     shift, and go to state 182
     STRING               shift, and go to state 22
     INTEGER_NUMBER       shift, and go to state 23
     FLOAT_NUMBER         shift, and go to state 24
@@ -4642,8 +4688,8 @@ State 194
     $default  reduce using rule 128 (delimeter_or_empty)
 
     expr         go to state 30
-    stmt_list    go to state 274
-    stmt         go to state 267
+    stmt_list    go to state 276
+    stmt         go to state 269
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -4653,17 +4699,17 @@ State 194
     alias_stmt   go to state 42
 
 
-State 195
+State 196
 
   130 if_stmt: IF_KEYWORD linefeed_or_empty expr delimeter_or_empty . THEN_KEYWORD stmt_list END_KEYWORD
   132        | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty . THEN_KEYWORD stmt_list ELSE_KEYWORD stmt_list END_KEYWORD
   134        | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty . THEN_KEYWORD stmt_list elsif_list END_KEYWORD
   136        | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty . THEN_KEYWORD stmt_list elsif_list ELSE_KEYWORD stmt_list END_KEYWORD
 
-    THEN_KEYWORD  shift, and go to state 275
+    THEN_KEYWORD  shift, and go to state 277
 
 
-State 196
+State 197
 
   149 for_stmt: FOR_KEYWORD linefeed_or_empty expr IN_KEYWORD . linefeed_or_empty expr DO_KEYWORD delimeter_or_empty stmt_list END_KEYWORD
   150         | FOR_KEYWORD linefeed_or_empty expr IN_KEYWORD . linefeed_or_empty expr delimiter stmt_list END_KEYWORD
@@ -4672,72 +4718,72 @@ State 196
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 276
+    linefeed_or_empty  go to state 278
     linefeed           go to state 46
-
-
-State 197
-
-   31 expr: SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_QUESTION .
-   32     | SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_QUESTION . '(' linefeed_or_empty expr_list linefeed_or_empty ')'
-
-    '('  shift, and go to state 277
-
-    $default  reduce using rule 31 (expr)
 
 
 State 198
 
-   33 expr: SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_EXCLAMATION .
-   34     | SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_EXCLAMATION . '(' linefeed_or_empty expr_list linefeed_or_empty ')'
+   31 expr: SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_QUESTION .
+   32     | SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_QUESTION . '(' linefeed_or_empty expr_list linefeed_or_empty ')'
 
-    '('  shift, and go to state 278
+    '('  shift, and go to state 279
 
-    $default  reduce using rule 33 (expr)
+    $default  reduce using rule 31 (expr)
 
 
 State 199
 
-   35 expr: SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_EQUAL .
-   36     | SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_EQUAL . '(' linefeed_or_empty expr_list linefeed_or_empty ')'
+   33 expr: SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_EXCLAMATION .
+   34     | SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_EXCLAMATION . '(' linefeed_or_empty expr_list linefeed_or_empty ')'
 
-    '('  shift, and go to state 279
+    '('  shift, and go to state 280
 
-    $default  reduce using rule 35 (expr)
+    $default  reduce using rule 33 (expr)
 
 
 State 200
 
+   35 expr: SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_EQUAL .
+   36     | SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_EQUAL . '(' linefeed_or_empty expr_list linefeed_or_empty ')'
+
+    '('  shift, and go to state 281
+
+    $default  reduce using rule 35 (expr)
+
+
+State 201
+
    29 expr: SELF_KEYWORD '.' linefeed_or_empty IDENTIFIER .
    30     | SELF_KEYWORD '.' linefeed_or_empty IDENTIFIER . '(' linefeed_or_empty expr_list linefeed_or_empty ')'
 
-    '('  shift, and go to state 280
+    '('  shift, and go to state 282
 
     $default  reduce using rule 29 (expr)
 
 
-State 201
+State 202
 
    26 expr: SUPER_KEYWORD '(' linefeed_or_empty ')' .
 
     $default  reduce using rule 26 (expr)
 
 
-State 202
+State 203
 
    25 expr: SUPER_KEYWORD '(' linefeed_or_empty expr_list . linefeed_or_empty ')'
    93 expr_list: expr_list . COMMA_SYMBOL expr
 
     NEW_LINE_SYMBOL  shift, and go to state 44
-    COMMA_SYMBOL     shift, and go to state 209
+    COMMA_SYMBOL     shift, and go to state 210
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 281
+    linefeed_or_empty  go to state 283
     linefeed           go to state 46
 
 
-State 203
+State 204
 
    90 delimiter: delimiter . SEMICOLON_SYMBOL
    91          | delimiter . NEW_LINE_SYMBOL
@@ -4764,8 +4810,8 @@ State 203
     '('                  shift, and go to state 19
     '['                  shift, and go to state 20
     DOUBLE_COLON_SYMBOL  shift, and go to state 21
-    NEW_LINE_SYMBOL      shift, and go to state 180
-    SEMICOLON_SYMBOL     shift, and go to state 181
+    NEW_LINE_SYMBOL      shift, and go to state 181
+    SEMICOLON_SYMBOL     shift, and go to state 182
     STRING               shift, and go to state 22
     INTEGER_NUMBER       shift, and go to state 23
     FLOAT_NUMBER         shift, and go to state 24
@@ -4777,8 +4823,8 @@ State 203
     $default  reduce using rule 128 (delimeter_or_empty)
 
     expr         go to state 30
-    stmt_list    go to state 282
-    stmt         go to state 267
+    stmt_list    go to state 284
+    stmt         go to state 269
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -4788,15 +4834,15 @@ State 203
     alias_stmt   go to state 42
 
 
-State 204
+State 205
 
   138 unless_stmt: UNLESS_KEYWORD linefeed_or_empty expr delimeter_or_empty . THEN_KEYWORD stmt_list END_KEYWORD
   140            | UNLESS_KEYWORD linefeed_or_empty expr delimeter_or_empty . THEN_KEYWORD stmt_list ELSE_KEYWORD stmt_list END_KEYWORD
 
-    THEN_KEYWORD  shift, and go to state 283
+    THEN_KEYWORD  shift, and go to state 285
 
 
-State 205
+State 206
 
   147 while_stmt: WHILE_KEYWORD linefeed_or_empty expr DO_KEYWORD . delimeter_or_empty stmt_list END_KEYWORD
 
@@ -4805,11 +4851,11 @@ State 205
 
     $default  reduce using rule 127 (delimeter_or_empty)
 
-    delimiter           go to state 182
-    delimeter_or_empty  go to state 284
+    delimiter           go to state 183
+    delimeter_or_empty  go to state 286
 
 
-State 206
+State 207
 
    90 delimiter: delimiter . SEMICOLON_SYMBOL
    91          | delimiter . NEW_LINE_SYMBOL
@@ -4834,8 +4880,8 @@ State 206
     '('                  shift, and go to state 19
     '['                  shift, and go to state 20
     DOUBLE_COLON_SYMBOL  shift, and go to state 21
-    NEW_LINE_SYMBOL      shift, and go to state 180
-    SEMICOLON_SYMBOL     shift, and go to state 181
+    NEW_LINE_SYMBOL      shift, and go to state 181
+    SEMICOLON_SYMBOL     shift, and go to state 182
     STRING               shift, and go to state 22
     INTEGER_NUMBER       shift, and go to state 23
     FLOAT_NUMBER         shift, and go to state 24
@@ -4845,8 +4891,8 @@ State 206
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt_list    go to state 285
-    stmt         go to state 267
+    stmt_list    go to state 287
+    stmt         go to state 269
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -4856,7 +4902,7 @@ State 206
     alias_stmt   go to state 42
 
 
-State 207
+State 208
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -4946,18 +4992,18 @@ State 207
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 286
+    linefeed_or_empty  go to state 288
     linefeed           go to state 46
 
 
-State 208
+State 209
 
    72 expr: '(' linefeed_or_empty expr linefeed_or_empty . ')'
 
-    ')'  shift, and go to state 287
+    ')'  shift, and go to state 289
 
 
-State 209
+State 210
 
    93 expr_list: expr_list COMMA_SYMBOL . expr
 
@@ -4981,38 +5027,38 @@ State 209
     CLASS_VAR_NAME       shift, and go to state 27
     CONSTANT_NAME        shift, and go to state 28
 
-    expr  go to state 288
-
-
-State 210
-
-   73 expr: '[' linefeed_or_empty expr_list linefeed_or_empty . ']'
-
-    ']'  shift, and go to state 289
+    expr  go to state 290
 
 
 State 211
+
+   73 expr: '[' linefeed_or_empty expr_list linefeed_or_empty . ']'
+
+    ']'  shift, and go to state 291
+
+
+State 212
 
    23 expr: IDENTIFIER '(' linefeed_or_empty ')' .
 
     $default  reduce using rule 23 (expr)
 
 
-State 212
+State 213
 
    22 expr: IDENTIFIER '(' linefeed_or_empty expr_list . linefeed_or_empty ')'
    93 expr_list: expr_list . COMMA_SYMBOL expr
 
     NEW_LINE_SYMBOL  shift, and go to state 44
-    COMMA_SYMBOL     shift, and go to state 209
+    COMMA_SYMBOL     shift, and go to state 210
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 290
+    linefeed_or_empty  go to state 292
     linefeed           go to state 46
 
 
-State 213
+State 214
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -5102,7 +5148,7 @@ State 213
     $default  reduce using rule 137 (if_stmt)
 
 
-State 214
+State 215
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -5192,7 +5238,7 @@ State 214
     $default  reduce using rule 142 (unless_stmt)
 
 
-State 215
+State 216
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -5280,7 +5326,7 @@ State 215
     $default  reduce using rule 44 (expr)
 
 
-State 216
+State 217
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -5368,7 +5414,7 @@ State 216
     $default  reduce using rule 43 (expr)
 
 
-State 217
+State 218
 
    13 expr: expr . '=' linefeed_or_empty expr
    13     | expr '=' linefeed_or_empty expr .
@@ -5456,7 +5502,7 @@ State 217
     $default  reduce using rule 13 (expr)
 
 
-State 218
+State 219
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -5544,7 +5590,7 @@ State 218
     $default  reduce using rule 55 (expr)
 
 
-State 219
+State 220
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -5632,7 +5678,7 @@ State 219
     $default  reduce using rule 56 (expr)
 
 
-State 220
+State 221
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -5720,7 +5766,7 @@ State 220
     $default  reduce using rule 57 (expr)
 
 
-State 221
+State 222
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -5808,7 +5854,7 @@ State 221
     $default  reduce using rule 58 (expr)
 
 
-State 222
+State 223
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -5896,7 +5942,7 @@ State 222
     $default  reduce using rule 59 (expr)
 
 
-State 223
+State 224
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -5984,7 +6030,7 @@ State 223
     $default  reduce using rule 60 (expr)
 
 
-State 224
+State 225
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -6074,11 +6120,11 @@ State 224
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 291
+    linefeed_or_empty  go to state 293
     linefeed           go to state 46
 
 
-State 225
+State 226
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -6156,7 +6202,7 @@ State 225
     $default  reduce using rule 71 (expr)
 
 
-State 226
+State 227
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -6234,7 +6280,7 @@ State 226
     $default  reduce using rule 70 (expr)
 
 
-State 227
+State 228
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -6311,7 +6357,7 @@ State 227
     $default  reduce using rule 68 (expr)
 
 
-State 228
+State 229
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -6387,7 +6433,7 @@ State 228
     $default  reduce using rule 67 (expr)
 
 
-State 229
+State 230
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -6459,7 +6505,7 @@ State 229
     $default  reduce using rule 47 (expr)
 
 
-State 230
+State 231
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -6531,7 +6577,7 @@ State 230
     $default  reduce using rule 48 (expr)
 
 
-State 231
+State 232
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -6603,7 +6649,7 @@ State 231
     $default  reduce using rule 53 (expr)
 
 
-State 232
+State 233
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -6675,7 +6721,7 @@ State 232
     $default  reduce using rule 54 (expr)
 
 
-State 233
+State 234
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -6743,7 +6789,7 @@ State 233
     $default  reduce using rule 49 (expr)
 
 
-State 234
+State 235
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -6811,7 +6857,7 @@ State 234
     $default  reduce using rule 50 (expr)
 
 
-State 235
+State 236
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -6879,7 +6925,7 @@ State 235
     $default  reduce using rule 51 (expr)
 
 
-State 236
+State 237
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -6947,7 +6993,7 @@ State 236
     $default  reduce using rule 52 (expr)
 
 
-State 237
+State 238
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -7013,7 +7059,7 @@ State 237
     $default  reduce using rule 62 (expr)
 
 
-State 238
+State 239
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -7079,7 +7125,7 @@ State 238
     $default  reduce using rule 63 (expr)
 
 
-State 239
+State 240
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -7144,7 +7190,7 @@ State 239
     $default  reduce using rule 61 (expr)
 
 
-State 240
+State 241
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -7207,7 +7253,7 @@ State 240
     $default  reduce using rule 65 (expr)
 
 
-State 241
+State 242
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -7270,7 +7316,7 @@ State 241
     $default  reduce using rule 66 (expr)
 
 
-State 242
+State 243
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -7331,7 +7377,7 @@ State 242
     $default  reduce using rule 18 (expr)
 
 
-State 243
+State 244
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -7392,7 +7438,7 @@ State 243
     $default  reduce using rule 19 (expr)
 
 
-State 244
+State 245
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -7450,7 +7496,7 @@ State 244
     $default  reduce using rule 17 (expr)
 
 
-State 245
+State 246
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -7508,7 +7554,7 @@ State 245
     $default  reduce using rule 15 (expr)
 
 
-State 246
+State 247
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -7566,7 +7612,7 @@ State 246
     $default  reduce using rule 16 (expr)
 
 
-State 247
+State 248
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -7624,7 +7670,7 @@ State 247
     $default  reduce using rule 64 (expr)
 
 
-State 248
+State 249
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -7680,54 +7726,54 @@ State 248
     $default  reduce using rule 46 (expr)
 
 
-State 249
+State 250
 
    21 expr: expr '.' linefeed_or_empty SUPERCLASS_KEYWORD .
 
     $default  reduce using rule 21 (expr)
 
 
-State 250
+State 251
 
    37 expr: expr '.' linefeed_or_empty METHOD_MARK_QUESTION .
    38     | expr '.' linefeed_or_empty METHOD_MARK_QUESTION . '(' linefeed_or_empty expr_list linefeed_or_empty ')'
 
-    '('  shift, and go to state 292
+    '('  shift, and go to state 294
 
     $default  reduce using rule 37 (expr)
 
 
-State 251
+State 252
 
    39 expr: expr '.' linefeed_or_empty METHOD_MARK_EXCLAMATION .
    40     | expr '.' linefeed_or_empty METHOD_MARK_EXCLAMATION . '(' linefeed_or_empty expr_list linefeed_or_empty ')'
 
-    '('  shift, and go to state 293
+    '('  shift, and go to state 295
 
     $default  reduce using rule 39 (expr)
 
 
-State 252
+State 253
 
    41 expr: expr '.' linefeed_or_empty METHOD_MARK_EQUAL .
    42     | expr '.' linefeed_or_empty METHOD_MARK_EQUAL . '(' linefeed_or_empty expr_list linefeed_or_empty ')'
 
-    '('  shift, and go to state 294
+    '('  shift, and go to state 296
 
     $default  reduce using rule 41 (expr)
 
 
-State 253
+State 254
 
    27 expr: expr '.' linefeed_or_empty IDENTIFIER .
    28     | expr '.' linefeed_or_empty IDENTIFIER . '(' linefeed_or_empty expr_list linefeed_or_empty ')'
 
-    '('  shift, and go to state 295
+    '('  shift, and go to state 297
 
     $default  reduce using rule 27 (expr)
 
 
-State 254
+State 255
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -7817,11 +7863,11 @@ State 254
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 296
+    linefeed_or_empty  go to state 298
     linefeed           go to state 46
 
 
-State 255
+State 256
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -7873,57 +7919,53 @@ State 255
     $default  reduce using rule 77 (expr)
 
 
-State 256
+State 257
 
-  155 when_list: WHEN_KEYWORD . linefeed_or_empty expr_list delimiter stmt_list
-  156          | WHEN_KEYWORD . linefeed_or_empty expr_list THEN_KEYWORD stmt_list
+  157 when_stmt: WHEN_KEYWORD . linefeed_or_empty expr_list delimiter stmt_list
+  158          | WHEN_KEYWORD . linefeed_or_empty expr_list delimeter_or_empty THEN_KEYWORD stmt_list
 
     NEW_LINE_SYMBOL  shift, and go to state 44
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 297
+    linefeed_or_empty  go to state 299
     linefeed           go to state 46
 
 
-State 257
+State 258
 
   153 case_stmt: CASE_KEYWORD linefeed_or_empty expr delimeter_or_empty when_list . END_KEYWORD
   154          | CASE_KEYWORD linefeed_or_empty expr delimeter_or_empty when_list . ELSE_KEYWORD delimeter_or_empty stmt_list END_KEYWORD
-  157 when_list: when_list . WHEN_KEYWORD linefeed_or_empty expr_list delimiter stmt_list
-  158          | when_list . WHEN_KEYWORD linefeed_or_empty expr_list delimeter_or_empty THEN_KEYWORD stmt_list
+  156 when_list: when_list . when_stmt
 
-    ELSE_KEYWORD  shift, and go to state 298
-    END_KEYWORD   shift, and go to state 299
-    WHEN_KEYWORD  shift, and go to state 300
+    ELSE_KEYWORD  shift, and go to state 300
+    END_KEYWORD   shift, and go to state 301
+    WHEN_KEYWORD  shift, and go to state 257
+
+    when_stmt  go to state 302
 
 
-State 258
+State 259
+
+  155 when_list: when_stmt .
+
+    $default  reduce using rule 155 (when_list)
+
+
+State 260
 
   117 class_stmt: CLASS_KEYWORD linefeed_or_empty CONSTANT_NAME '<' CONSTANT_NAME . delimiter class_body END_KEYWORD
 
     NEW_LINE_SYMBOL   shift, and go to state 104
     SEMICOLON_SYMBOL  shift, and go to state 105
 
-    delimiter  go to state 301
-
-
-State 259
-
-  121 class_body_stmt: OBJECT_VAR_NAME . delimiter
-  122                | OBJECT_VAR_NAME . '=' expr delimiter
-
-    '='               shift, and go to state 302
-    NEW_LINE_SYMBOL   shift, and go to state 104
-    SEMICOLON_SYMBOL  shift, and go to state 105
-
     delimiter  go to state 303
 
 
-State 260
+State 261
 
-  119 class_body_stmt: CLASS_VAR_NAME . delimiter
-  120                | CLASS_VAR_NAME . '=' expr delimiter
+  121 class_body_stmt: OBJECT_VAR_NAME . delimiter
+  122                | OBJECT_VAR_NAME . '=' expr delimiter
 
     '='               shift, and go to state 304
     NEW_LINE_SYMBOL   shift, and go to state 104
@@ -7932,58 +7974,70 @@ State 260
     delimiter  go to state 305
 
 
-State 261
+State 262
+
+  119 class_body_stmt: CLASS_VAR_NAME . delimiter
+  120                | CLASS_VAR_NAME . '=' expr delimiter
+
+    '='               shift, and go to state 306
+    NEW_LINE_SYMBOL   shift, and go to state 104
+    SEMICOLON_SYMBOL  shift, and go to state 105
+
+    delimiter  go to state 307
+
+
+State 263
 
   118 class_body_stmt: method_stmt . delimiter
 
     NEW_LINE_SYMBOL   shift, and go to state 104
     SEMICOLON_SYMBOL  shift, and go to state 105
 
-    delimiter  go to state 306
+    delimiter  go to state 308
 
 
-State 262
+State 264
 
   123 class_body_not_empty: class_body_stmt .
 
     $default  reduce using rule 123 (class_body_not_empty)
 
 
-State 263
+State 265
 
   124 class_body_not_empty: class_body_not_empty . class_body_stmt
   126 class_body: class_body_not_empty .
 
     DEF_KEYWORD      shift, and go to state 4
-    OBJECT_VAR_NAME  shift, and go to state 259
-    CLASS_VAR_NAME   shift, and go to state 260
+    OBJECT_VAR_NAME  shift, and go to state 261
+    CLASS_VAR_NAME   shift, and go to state 262
 
     $default  reduce using rule 126 (class_body)
 
-    method_stmt      go to state 261
-    class_body_stmt  go to state 307
-
-
-State 264
-
-  116 class_stmt: CLASS_KEYWORD linefeed_or_empty CONSTANT_NAME delimiter class_body . END_KEYWORD
-
-    END_KEYWORD  shift, and go to state 308
-
-
-State 265
-
-  109 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_QUESTION '(' linefeed_or_empty . param_list ')' delimiter stmt_list END_KEYWORD
-
-    IDENTIFIER  shift, and go to state 309
-
-    $default  reduce using rule 106 (param_list)
-
-    param_list_not_empty  go to state 310
-    param_list            go to state 311
+    method_stmt      go to state 263
+    class_body_stmt  go to state 309
 
 
 State 266
+
+  116 class_stmt: CLASS_KEYWORD linefeed_or_empty CONSTANT_NAME delimiter class_body . END_KEYWORD
+
+    END_KEYWORD  shift, and go to state 310
+
+
+State 267
+
+  109 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_QUESTION '(' linefeed_or_empty . param_list ')' delimiter stmt_list END_KEYWORD
+
+    IDENTIFIER  shift, and go to state 311
+
+    $default  reduce using rule 106 (param_list)
+
+    param_list_not_empty  go to state 312
+    param_list            go to state 313
+
+
+State 268
 
    95 stmt_list: stmt_list . stmt
   111 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_QUESTION delimiter stmt_list . END_KEYWORD
@@ -7992,7 +8046,7 @@ State 266
     CASE_KEYWORD         shift, and go to state 2
     DEFINED_KEYWORD      shift, and go to state 5
     IF_KEYWORD           shift, and go to state 6
-    END_KEYWORD          shift, and go to state 312
+    END_KEYWORD          shift, and go to state 314
     FALSE_KEYWORD        shift, and go to state 7
     FOR_KEYWORD          shift, and go to state 8
     NIL_KEYWORD          shift, and go to state 9
@@ -8017,7 +8071,7 @@ State 266
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt         go to state 313
+    stmt         go to state 315
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -8027,85 +8081,29 @@ State 266
     alias_stmt   go to state 42
 
 
-State 267
+State 269
 
    94 stmt_list: stmt .
 
     $default  reduce using rule 94 (stmt_list)
 
 
-State 268
+State 270
 
   112 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_EXCLAMATION '(' linefeed_or_empty . param_list ')' delimiter stmt_list END_KEYWORD
 
-    IDENTIFIER  shift, and go to state 309
+    IDENTIFIER  shift, and go to state 311
 
     $default  reduce using rule 106 (param_list)
 
-    param_list_not_empty  go to state 310
-    param_list            go to state 314
-
-
-State 269
-
-   95 stmt_list: stmt_list . stmt
-  113 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_EXCLAMATION delimiter stmt_list . END_KEYWORD
-
-    ALIAS_KEYWORD        shift, and go to state 1
-    CASE_KEYWORD         shift, and go to state 2
-    DEFINED_KEYWORD      shift, and go to state 5
-    IF_KEYWORD           shift, and go to state 6
-    END_KEYWORD          shift, and go to state 315
-    FALSE_KEYWORD        shift, and go to state 7
-    FOR_KEYWORD          shift, and go to state 8
-    NIL_KEYWORD          shift, and go to state 9
-    RETURN_KEYWORD       shift, and go to state 10
-    SELF_KEYWORD         shift, and go to state 11
-    SUPER_KEYWORD        shift, and go to state 12
-    TRUE_KEYWORD         shift, and go to state 13
-    UNLESS_KEYWORD       shift, and go to state 14
-    WHILE_KEYWORD        shift, and go to state 15
-    NOT_KEYWORD          shift, and go to state 16
-    '-'                  shift, and go to state 17
-    LOGICAL_NOT_OP       shift, and go to state 18
-    '('                  shift, and go to state 19
-    '['                  shift, and go to state 20
-    DOUBLE_COLON_SYMBOL  shift, and go to state 21
-    STRING               shift, and go to state 22
-    INTEGER_NUMBER       shift, and go to state 23
-    FLOAT_NUMBER         shift, and go to state 24
-    IDENTIFIER           shift, and go to state 25
-    OBJECT_VAR_NAME      shift, and go to state 26
-    CLASS_VAR_NAME       shift, and go to state 27
-    CONSTANT_NAME        shift, and go to state 28
-
-    expr         go to state 30
-    stmt         go to state 313
-    if_stmt      go to state 36
-    unless_stmt  go to state 37
-    while_stmt   go to state 38
-    for_stmt     go to state 39
-    return_stmt  go to state 40
-    case_stmt    go to state 41
-    alias_stmt   go to state 42
-
-
-State 270
-
-  114 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_EQUAL '(' linefeed_or_empty . param_list ')' delimiter stmt_list END_KEYWORD
-
-    IDENTIFIER  shift, and go to state 309
-
-    $default  reduce using rule 106 (param_list)
-
-    param_list_not_empty  go to state 310
+    param_list_not_empty  go to state 312
     param_list            go to state 316
 
 
 State 271
 
    95 stmt_list: stmt_list . stmt
-  115 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_EQUAL delimiter stmt_list . END_KEYWORD
+  113 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_EXCLAMATION delimiter stmt_list . END_KEYWORD
 
     ALIAS_KEYWORD        shift, and go to state 1
     CASE_KEYWORD         shift, and go to state 2
@@ -8136,7 +8134,7 @@ State 271
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt         go to state 313
+    stmt         go to state 315
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -8148,20 +8146,20 @@ State 271
 
 State 272
 
-  108 method_stmt: DEF_KEYWORD linefeed_or_empty IDENTIFIER '(' linefeed_or_empty . param_list ')' delimiter stmt_list END_KEYWORD
+  114 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_EQUAL '(' linefeed_or_empty . param_list ')' delimiter stmt_list END_KEYWORD
 
-    IDENTIFIER  shift, and go to state 309
+    IDENTIFIER  shift, and go to state 311
 
     $default  reduce using rule 106 (param_list)
 
-    param_list_not_empty  go to state 310
+    param_list_not_empty  go to state 312
     param_list            go to state 318
 
 
 State 273
 
    95 stmt_list: stmt_list . stmt
-  110 method_stmt: DEF_KEYWORD linefeed_or_empty IDENTIFIER delimiter stmt_list . END_KEYWORD
+  115 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_EQUAL delimiter stmt_list . END_KEYWORD
 
     ALIAS_KEYWORD        shift, and go to state 1
     CASE_KEYWORD         shift, and go to state 2
@@ -8192,7 +8190,7 @@ State 273
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt         go to state 313
+    stmt         go to state 315
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -8204,19 +8202,26 @@ State 273
 
 State 274
 
+  108 method_stmt: DEF_KEYWORD linefeed_or_empty IDENTIFIER '(' linefeed_or_empty . param_list ')' delimiter stmt_list END_KEYWORD
+
+    IDENTIFIER  shift, and go to state 311
+
+    $default  reduce using rule 106 (param_list)
+
+    param_list_not_empty  go to state 312
+    param_list            go to state 320
+
+
+State 275
+
    95 stmt_list: stmt_list . stmt
-  129 if_stmt: IF_KEYWORD linefeed_or_empty expr delimiter stmt_list . END_KEYWORD
-  131        | IF_KEYWORD linefeed_or_empty expr delimiter stmt_list . ELSE_KEYWORD stmt_list END_KEYWORD
-  133        | IF_KEYWORD linefeed_or_empty expr delimiter stmt_list . elsif_list END_KEYWORD
-  135        | IF_KEYWORD linefeed_or_empty expr delimiter stmt_list . elsif_list ELSE_KEYWORD stmt_list END_KEYWORD
+  110 method_stmt: DEF_KEYWORD linefeed_or_empty IDENTIFIER delimiter stmt_list . END_KEYWORD
 
     ALIAS_KEYWORD        shift, and go to state 1
     CASE_KEYWORD         shift, and go to state 2
     DEFINED_KEYWORD      shift, and go to state 5
     IF_KEYWORD           shift, and go to state 6
-    ELSE_KEYWORD         shift, and go to state 320
-    ELSIF_KEYWORD        shift, and go to state 321
-    END_KEYWORD          shift, and go to state 322
+    END_KEYWORD          shift, and go to state 321
     FALSE_KEYWORD        shift, and go to state 7
     FOR_KEYWORD          shift, and go to state 8
     NIL_KEYWORD          shift, and go to state 9
@@ -8241,11 +8246,9 @@ State 274
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt         go to state 313
+    stmt         go to state 315
     if_stmt      go to state 36
     unless_stmt  go to state 37
-    elsif_list   go to state 323
-    elsif_stmt   go to state 324
     while_stmt   go to state 38
     for_stmt     go to state 39
     return_stmt  go to state 40
@@ -8253,7 +8256,58 @@ State 274
     alias_stmt   go to state 42
 
 
-State 275
+State 276
+
+   95 stmt_list: stmt_list . stmt
+  129 if_stmt: IF_KEYWORD linefeed_or_empty expr delimiter stmt_list . END_KEYWORD
+  131        | IF_KEYWORD linefeed_or_empty expr delimiter stmt_list . ELSE_KEYWORD stmt_list END_KEYWORD
+  133        | IF_KEYWORD linefeed_or_empty expr delimiter stmt_list . elsif_list END_KEYWORD
+  135        | IF_KEYWORD linefeed_or_empty expr delimiter stmt_list . elsif_list ELSE_KEYWORD stmt_list END_KEYWORD
+
+    ALIAS_KEYWORD        shift, and go to state 1
+    CASE_KEYWORD         shift, and go to state 2
+    DEFINED_KEYWORD      shift, and go to state 5
+    IF_KEYWORD           shift, and go to state 6
+    ELSE_KEYWORD         shift, and go to state 322
+    ELSIF_KEYWORD        shift, and go to state 323
+    END_KEYWORD          shift, and go to state 324
+    FALSE_KEYWORD        shift, and go to state 7
+    FOR_KEYWORD          shift, and go to state 8
+    NIL_KEYWORD          shift, and go to state 9
+    RETURN_KEYWORD       shift, and go to state 10
+    SELF_KEYWORD         shift, and go to state 11
+    SUPER_KEYWORD        shift, and go to state 12
+    TRUE_KEYWORD         shift, and go to state 13
+    UNLESS_KEYWORD       shift, and go to state 14
+    WHILE_KEYWORD        shift, and go to state 15
+    NOT_KEYWORD          shift, and go to state 16
+    '-'                  shift, and go to state 17
+    LOGICAL_NOT_OP       shift, and go to state 18
+    '('                  shift, and go to state 19
+    '['                  shift, and go to state 20
+    DOUBLE_COLON_SYMBOL  shift, and go to state 21
+    STRING               shift, and go to state 22
+    INTEGER_NUMBER       shift, and go to state 23
+    FLOAT_NUMBER         shift, and go to state 24
+    IDENTIFIER           shift, and go to state 25
+    OBJECT_VAR_NAME      shift, and go to state 26
+    CLASS_VAR_NAME       shift, and go to state 27
+    CONSTANT_NAME        shift, and go to state 28
+
+    expr         go to state 30
+    stmt         go to state 315
+    if_stmt      go to state 36
+    unless_stmt  go to state 37
+    elsif_list   go to state 325
+    elsif_stmt   go to state 326
+    while_stmt   go to state 38
+    for_stmt     go to state 39
+    return_stmt  go to state 40
+    case_stmt    go to state 41
+    alias_stmt   go to state 42
+
+
+State 277
 
   130 if_stmt: IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD . stmt_list END_KEYWORD
   132        | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD . stmt_list ELSE_KEYWORD stmt_list END_KEYWORD
@@ -8288,8 +8342,8 @@ State 275
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt_list    go to state 325
-    stmt         go to state 267
+    stmt_list    go to state 327
+    stmt         go to state 269
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -8299,7 +8353,7 @@ State 275
     alias_stmt   go to state 42
 
 
-State 276
+State 278
 
   149 for_stmt: FOR_KEYWORD linefeed_or_empty expr IN_KEYWORD linefeed_or_empty . expr DO_KEYWORD delimeter_or_empty stmt_list END_KEYWORD
   150         | FOR_KEYWORD linefeed_or_empty expr IN_KEYWORD linefeed_or_empty . expr delimiter stmt_list END_KEYWORD
@@ -8324,36 +8378,12 @@ State 276
     CLASS_VAR_NAME       shift, and go to state 27
     CONSTANT_NAME        shift, and go to state 28
 
-    expr  go to state 326
-
-
-State 277
-
-   32 expr: SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_QUESTION '(' . linefeed_or_empty expr_list linefeed_or_empty ')'
-
-    NEW_LINE_SYMBOL  shift, and go to state 44
-
-    $default  reduce using rule 79 (linefeed_or_empty)
-
-    linefeed_or_empty  go to state 327
-    linefeed           go to state 46
-
-
-State 278
-
-   34 expr: SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_EXCLAMATION '(' . linefeed_or_empty expr_list linefeed_or_empty ')'
-
-    NEW_LINE_SYMBOL  shift, and go to state 44
-
-    $default  reduce using rule 79 (linefeed_or_empty)
-
-    linefeed_or_empty  go to state 328
-    linefeed           go to state 46
+    expr  go to state 328
 
 
 State 279
 
-   36 expr: SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_EQUAL '(' . linefeed_or_empty expr_list linefeed_or_empty ')'
+   32 expr: SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_QUESTION '(' . linefeed_or_empty expr_list linefeed_or_empty ')'
 
     NEW_LINE_SYMBOL  shift, and go to state 44
 
@@ -8365,7 +8395,7 @@ State 279
 
 State 280
 
-   30 expr: SELF_KEYWORD '.' linefeed_or_empty IDENTIFIER '(' . linefeed_or_empty expr_list linefeed_or_empty ')'
+   34 expr: SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_EXCLAMATION '(' . linefeed_or_empty expr_list linefeed_or_empty ')'
 
     NEW_LINE_SYMBOL  shift, and go to state 44
 
@@ -8377,12 +8407,36 @@ State 280
 
 State 281
 
-   25 expr: SUPER_KEYWORD '(' linefeed_or_empty expr_list linefeed_or_empty . ')'
+   36 expr: SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_EQUAL '(' . linefeed_or_empty expr_list linefeed_or_empty ')'
 
-    ')'  shift, and go to state 331
+    NEW_LINE_SYMBOL  shift, and go to state 44
+
+    $default  reduce using rule 79 (linefeed_or_empty)
+
+    linefeed_or_empty  go to state 331
+    linefeed           go to state 46
 
 
 State 282
+
+   30 expr: SELF_KEYWORD '.' linefeed_or_empty IDENTIFIER '(' . linefeed_or_empty expr_list linefeed_or_empty ')'
+
+    NEW_LINE_SYMBOL  shift, and go to state 44
+
+    $default  reduce using rule 79 (linefeed_or_empty)
+
+    linefeed_or_empty  go to state 332
+    linefeed           go to state 46
+
+
+State 283
+
+   25 expr: SUPER_KEYWORD '(' linefeed_or_empty expr_list linefeed_or_empty . ')'
+
+    ')'  shift, and go to state 333
+
+
+State 284
 
    95 stmt_list: stmt_list . stmt
   139 unless_stmt: UNLESS_KEYWORD linefeed_or_empty expr delimiter stmt_list . END_KEYWORD
@@ -8392,8 +8446,8 @@ State 282
     CASE_KEYWORD         shift, and go to state 2
     DEFINED_KEYWORD      shift, and go to state 5
     IF_KEYWORD           shift, and go to state 6
-    ELSE_KEYWORD         shift, and go to state 332
-    END_KEYWORD          shift, and go to state 333
+    ELSE_KEYWORD         shift, and go to state 334
+    END_KEYWORD          shift, and go to state 335
     FALSE_KEYWORD        shift, and go to state 7
     FOR_KEYWORD          shift, and go to state 8
     NIL_KEYWORD          shift, and go to state 9
@@ -8418,7 +8472,7 @@ State 282
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt         go to state 313
+    stmt         go to state 315
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -8428,7 +8482,7 @@ State 282
     alias_stmt   go to state 42
 
 
-State 283
+State 285
 
   138 unless_stmt: UNLESS_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD . stmt_list END_KEYWORD
   140            | UNLESS_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD . stmt_list ELSE_KEYWORD stmt_list END_KEYWORD
@@ -8461,8 +8515,8 @@ State 283
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt_list    go to state 334
-    stmt         go to state 267
+    stmt_list    go to state 336
+    stmt         go to state 269
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -8472,7 +8526,7 @@ State 283
     alias_stmt   go to state 42
 
 
-State 284
+State 286
 
   147 while_stmt: WHILE_KEYWORD linefeed_or_empty expr DO_KEYWORD delimeter_or_empty . stmt_list END_KEYWORD
 
@@ -8504,8 +8558,8 @@ State 284
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt_list    go to state 335
-    stmt         go to state 267
+    stmt_list    go to state 337
+    stmt         go to state 269
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -8515,7 +8569,7 @@ State 284
     alias_stmt   go to state 42
 
 
-State 285
+State 287
 
    95 stmt_list: stmt_list . stmt
   148 while_stmt: WHILE_KEYWORD linefeed_or_empty expr delimiter stmt_list . END_KEYWORD
@@ -8524,7 +8578,7 @@ State 285
     CASE_KEYWORD         shift, and go to state 2
     DEFINED_KEYWORD      shift, and go to state 5
     IF_KEYWORD           shift, and go to state 6
-    END_KEYWORD          shift, and go to state 336
+    END_KEYWORD          shift, and go to state 338
     FALSE_KEYWORD        shift, and go to state 7
     FOR_KEYWORD          shift, and go to state 8
     NIL_KEYWORD          shift, and go to state 9
@@ -8549,7 +8603,7 @@ State 285
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt         go to state 313
+    stmt         go to state 315
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -8559,21 +8613,21 @@ State 285
     alias_stmt   go to state 42
 
 
-State 286
+State 288
 
    45 expr: NOT_KEYWORD '(' linefeed_or_empty expr linefeed_or_empty . ')'
 
-    ')'  shift, and go to state 337
+    ')'  shift, and go to state 339
 
 
-State 287
+State 289
 
    72 expr: '(' linefeed_or_empty expr linefeed_or_empty ')' .
 
     $default  reduce using rule 72 (expr)
 
 
-State 288
+State 290
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -8663,54 +8717,30 @@ State 288
     $default  reduce using rule 93 (expr_list)
 
 
-State 289
+State 291
 
    73 expr: '[' linefeed_or_empty expr_list linefeed_or_empty ']' .
 
     $default  reduce using rule 73 (expr)
 
 
-State 290
+State 292
 
    22 expr: IDENTIFIER '(' linefeed_or_empty expr_list linefeed_or_empty . ')'
 
-    ')'  shift, and go to state 338
-
-
-State 291
-
-   78 expr: expr QUESTION_SYMBOL linefeed_or_empty expr linefeed_or_empty . COLON_SYMBOL linefeed_or_empty expr
-
-    COLON_SYMBOL  shift, and go to state 339
-
-
-State 292
-
-   38 expr: expr '.' linefeed_or_empty METHOD_MARK_QUESTION '(' . linefeed_or_empty expr_list linefeed_or_empty ')'
-
-    NEW_LINE_SYMBOL  shift, and go to state 44
-
-    $default  reduce using rule 79 (linefeed_or_empty)
-
-    linefeed_or_empty  go to state 340
-    linefeed           go to state 46
+    ')'  shift, and go to state 340
 
 
 State 293
 
-   40 expr: expr '.' linefeed_or_empty METHOD_MARK_EXCLAMATION '(' . linefeed_or_empty expr_list linefeed_or_empty ')'
+   78 expr: expr QUESTION_SYMBOL linefeed_or_empty expr linefeed_or_empty . COLON_SYMBOL linefeed_or_empty expr
 
-    NEW_LINE_SYMBOL  shift, and go to state 44
-
-    $default  reduce using rule 79 (linefeed_or_empty)
-
-    linefeed_or_empty  go to state 341
-    linefeed           go to state 46
+    COLON_SYMBOL  shift, and go to state 341
 
 
 State 294
 
-   42 expr: expr '.' linefeed_or_empty METHOD_MARK_EQUAL '(' . linefeed_or_empty expr_list linefeed_or_empty ')'
+   38 expr: expr '.' linefeed_or_empty METHOD_MARK_QUESTION '(' . linefeed_or_empty expr_list linefeed_or_empty ')'
 
     NEW_LINE_SYMBOL  shift, and go to state 44
 
@@ -8722,7 +8752,7 @@ State 294
 
 State 295
 
-   28 expr: expr '.' linefeed_or_empty IDENTIFIER '(' . linefeed_or_empty expr_list linefeed_or_empty ')'
+   40 expr: expr '.' linefeed_or_empty METHOD_MARK_EXCLAMATION '(' . linefeed_or_empty expr_list linefeed_or_empty ')'
 
     NEW_LINE_SYMBOL  shift, and go to state 44
 
@@ -8734,15 +8764,39 @@ State 295
 
 State 296
 
-   14 expr: expr '[' linefeed_or_empty expr linefeed_or_empty . ']'
+   42 expr: expr '.' linefeed_or_empty METHOD_MARK_EQUAL '(' . linefeed_or_empty expr_list linefeed_or_empty ')'
 
-    ']'  shift, and go to state 344
+    NEW_LINE_SYMBOL  shift, and go to state 44
+
+    $default  reduce using rule 79 (linefeed_or_empty)
+
+    linefeed_or_empty  go to state 344
+    linefeed           go to state 46
 
 
 State 297
 
-  155 when_list: WHEN_KEYWORD linefeed_or_empty . expr_list delimiter stmt_list
-  156          | WHEN_KEYWORD linefeed_or_empty . expr_list THEN_KEYWORD stmt_list
+   28 expr: expr '.' linefeed_or_empty IDENTIFIER '(' . linefeed_or_empty expr_list linefeed_or_empty ')'
+
+    NEW_LINE_SYMBOL  shift, and go to state 44
+
+    $default  reduce using rule 79 (linefeed_or_empty)
+
+    linefeed_or_empty  go to state 345
+    linefeed           go to state 46
+
+
+State 298
+
+   14 expr: expr '[' linefeed_or_empty expr linefeed_or_empty . ']'
+
+    ']'  shift, and go to state 346
+
+
+State 299
+
+  157 when_stmt: WHEN_KEYWORD linefeed_or_empty . expr_list delimiter stmt_list
+  158          | WHEN_KEYWORD linefeed_or_empty . expr_list delimeter_or_empty THEN_KEYWORD stmt_list
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -8764,11 +8818,11 @@ State 297
     CLASS_VAR_NAME       shift, and go to state 27
     CONSTANT_NAME        shift, and go to state 28
 
-    expr       go to state 137
-    expr_list  go to state 345
+    expr       go to state 138
+    expr_list  go to state 347
 
 
-State 298
+State 300
 
   154 case_stmt: CASE_KEYWORD linefeed_or_empty expr delimeter_or_empty when_list ELSE_KEYWORD . delimeter_or_empty stmt_list END_KEYWORD
 
@@ -8777,92 +8831,47 @@ State 298
 
     $default  reduce using rule 127 (delimeter_or_empty)
 
-    delimiter           go to state 182
-    delimeter_or_empty  go to state 346
+    delimiter           go to state 183
+    delimeter_or_empty  go to state 348
 
 
-State 299
+State 301
 
   153 case_stmt: CASE_KEYWORD linefeed_or_empty expr delimeter_or_empty when_list END_KEYWORD .
 
     $default  reduce using rule 153 (case_stmt)
 
 
-State 300
-
-  157 when_list: when_list WHEN_KEYWORD . linefeed_or_empty expr_list delimiter stmt_list
-  158          | when_list WHEN_KEYWORD . linefeed_or_empty expr_list delimeter_or_empty THEN_KEYWORD stmt_list
-
-    NEW_LINE_SYMBOL  shift, and go to state 44
-
-    $default  reduce using rule 79 (linefeed_or_empty)
-
-    linefeed_or_empty  go to state 347
-    linefeed           go to state 46
-
-
-State 301
-
-   90 delimiter: delimiter . SEMICOLON_SYMBOL
-   91          | delimiter . NEW_LINE_SYMBOL
-  117 class_stmt: CLASS_KEYWORD linefeed_or_empty CONSTANT_NAME '<' CONSTANT_NAME delimiter . class_body END_KEYWORD
-
-    DEF_KEYWORD       shift, and go to state 4
-    NEW_LINE_SYMBOL   shift, and go to state 180
-    SEMICOLON_SYMBOL  shift, and go to state 181
-    OBJECT_VAR_NAME   shift, and go to state 259
-    CLASS_VAR_NAME    shift, and go to state 260
-
-    $default  reduce using rule 125 (class_body)
-
-    method_stmt           go to state 261
-    class_body_stmt       go to state 262
-    class_body_not_empty  go to state 263
-    class_body            go to state 348
-
-
 State 302
 
-  122 class_body_stmt: OBJECT_VAR_NAME '=' . expr delimiter
+  156 when_list: when_list when_stmt .
 
-    DEFINED_KEYWORD      shift, and go to state 5
-    FALSE_KEYWORD        shift, and go to state 7
-    NIL_KEYWORD          shift, and go to state 9
-    SELF_KEYWORD         shift, and go to state 11
-    SUPER_KEYWORD        shift, and go to state 12
-    TRUE_KEYWORD         shift, and go to state 13
-    NOT_KEYWORD          shift, and go to state 16
-    '-'                  shift, and go to state 17
-    LOGICAL_NOT_OP       shift, and go to state 18
-    '('                  shift, and go to state 19
-    '['                  shift, and go to state 20
-    DOUBLE_COLON_SYMBOL  shift, and go to state 21
-    STRING               shift, and go to state 22
-    INTEGER_NUMBER       shift, and go to state 23
-    FLOAT_NUMBER         shift, and go to state 24
-    IDENTIFIER           shift, and go to state 25
-    OBJECT_VAR_NAME      shift, and go to state 26
-    CLASS_VAR_NAME       shift, and go to state 27
-    CONSTANT_NAME        shift, and go to state 28
-
-    expr  go to state 349
+    $default  reduce using rule 156 (when_list)
 
 
 State 303
 
    90 delimiter: delimiter . SEMICOLON_SYMBOL
    91          | delimiter . NEW_LINE_SYMBOL
-  121 class_body_stmt: OBJECT_VAR_NAME delimiter .
+  117 class_stmt: CLASS_KEYWORD linefeed_or_empty CONSTANT_NAME '<' CONSTANT_NAME delimiter . class_body END_KEYWORD
 
-    NEW_LINE_SYMBOL   shift, and go to state 180
-    SEMICOLON_SYMBOL  shift, and go to state 181
+    DEF_KEYWORD       shift, and go to state 4
+    NEW_LINE_SYMBOL   shift, and go to state 181
+    SEMICOLON_SYMBOL  shift, and go to state 182
+    OBJECT_VAR_NAME   shift, and go to state 261
+    CLASS_VAR_NAME    shift, and go to state 262
 
-    $default  reduce using rule 121 (class_body_stmt)
+    $default  reduce using rule 125 (class_body)
+
+    method_stmt           go to state 263
+    class_body_stmt       go to state 264
+    class_body_not_empty  go to state 265
+    class_body            go to state 349
 
 
 State 304
 
-  120 class_body_stmt: CLASS_VAR_NAME '=' . expr delimiter
+  122 class_body_stmt: OBJECT_VAR_NAME '=' . expr delimiter
 
     DEFINED_KEYWORD      shift, and go to state 5
     FALSE_KEYWORD        shift, and go to state 7
@@ -8891,41 +8900,80 @@ State 305
 
    90 delimiter: delimiter . SEMICOLON_SYMBOL
    91          | delimiter . NEW_LINE_SYMBOL
+  121 class_body_stmt: OBJECT_VAR_NAME delimiter .
+
+    NEW_LINE_SYMBOL   shift, and go to state 181
+    SEMICOLON_SYMBOL  shift, and go to state 182
+
+    $default  reduce using rule 121 (class_body_stmt)
+
+
+State 306
+
+  120 class_body_stmt: CLASS_VAR_NAME '=' . expr delimiter
+
+    DEFINED_KEYWORD      shift, and go to state 5
+    FALSE_KEYWORD        shift, and go to state 7
+    NIL_KEYWORD          shift, and go to state 9
+    SELF_KEYWORD         shift, and go to state 11
+    SUPER_KEYWORD        shift, and go to state 12
+    TRUE_KEYWORD         shift, and go to state 13
+    NOT_KEYWORD          shift, and go to state 16
+    '-'                  shift, and go to state 17
+    LOGICAL_NOT_OP       shift, and go to state 18
+    '('                  shift, and go to state 19
+    '['                  shift, and go to state 20
+    DOUBLE_COLON_SYMBOL  shift, and go to state 21
+    STRING               shift, and go to state 22
+    INTEGER_NUMBER       shift, and go to state 23
+    FLOAT_NUMBER         shift, and go to state 24
+    IDENTIFIER           shift, and go to state 25
+    OBJECT_VAR_NAME      shift, and go to state 26
+    CLASS_VAR_NAME       shift, and go to state 27
+    CONSTANT_NAME        shift, and go to state 28
+
+    expr  go to state 351
+
+
+State 307
+
+   90 delimiter: delimiter . SEMICOLON_SYMBOL
+   91          | delimiter . NEW_LINE_SYMBOL
   119 class_body_stmt: CLASS_VAR_NAME delimiter .
 
-    NEW_LINE_SYMBOL   shift, and go to state 180
-    SEMICOLON_SYMBOL  shift, and go to state 181
+    NEW_LINE_SYMBOL   shift, and go to state 181
+    SEMICOLON_SYMBOL  shift, and go to state 182
 
     $default  reduce using rule 119 (class_body_stmt)
 
 
-State 306
+State 308
 
    90 delimiter: delimiter . SEMICOLON_SYMBOL
    91          | delimiter . NEW_LINE_SYMBOL
   118 class_body_stmt: method_stmt delimiter .
 
-    NEW_LINE_SYMBOL   shift, and go to state 180
-    SEMICOLON_SYMBOL  shift, and go to state 181
+    NEW_LINE_SYMBOL   shift, and go to state 181
+    SEMICOLON_SYMBOL  shift, and go to state 182
 
     $default  reduce using rule 118 (class_body_stmt)
 
 
-State 307
+State 309
 
   124 class_body_not_empty: class_body_not_empty class_body_stmt .
 
     $default  reduce using rule 124 (class_body_not_empty)
 
 
-State 308
+State 310
 
   116 class_stmt: CLASS_KEYWORD linefeed_or_empty CONSTANT_NAME delimiter class_body END_KEYWORD .
 
     $default  reduce using rule 116 (class_stmt)
 
 
-State 309
+State 311
 
   104 param_list_not_empty: IDENTIFIER . linefeed_or_empty
 
@@ -8933,84 +8981,84 @@ State 309
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 351
+    linefeed_or_empty  go to state 352
     linefeed           go to state 46
 
 
-State 310
+State 312
 
   105 param_list_not_empty: param_list_not_empty . COMMA_SYMBOL linefeed_or_empty IDENTIFIER linefeed_or_empty
   107 param_list: param_list_not_empty .
 
-    COMMA_SYMBOL  shift, and go to state 352
+    COMMA_SYMBOL  shift, and go to state 353
 
     $default  reduce using rule 107 (param_list)
 
 
-State 311
+State 313
 
   109 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_QUESTION '(' linefeed_or_empty param_list . ')' delimiter stmt_list END_KEYWORD
 
-    ')'  shift, and go to state 353
+    ')'  shift, and go to state 354
 
 
-State 312
+State 314
 
   111 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_QUESTION delimiter stmt_list END_KEYWORD .
 
     $default  reduce using rule 111 (method_stmt)
 
 
-State 313
+State 315
 
    95 stmt_list: stmt_list stmt .
 
     $default  reduce using rule 95 (stmt_list)
 
 
-State 314
-
-  112 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_EXCLAMATION '(' linefeed_or_empty param_list . ')' delimiter stmt_list END_KEYWORD
-
-    ')'  shift, and go to state 354
-
-
-State 315
-
-  113 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_EXCLAMATION delimiter stmt_list END_KEYWORD .
-
-    $default  reduce using rule 113 (method_stmt)
-
-
 State 316
 
-  114 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_EQUAL '(' linefeed_or_empty param_list . ')' delimiter stmt_list END_KEYWORD
+  112 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_EXCLAMATION '(' linefeed_or_empty param_list . ')' delimiter stmt_list END_KEYWORD
 
     ')'  shift, and go to state 355
 
 
 State 317
 
-  115 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_EQUAL delimiter stmt_list END_KEYWORD .
+  113 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_EXCLAMATION delimiter stmt_list END_KEYWORD .
 
-    $default  reduce using rule 115 (method_stmt)
+    $default  reduce using rule 113 (method_stmt)
 
 
 State 318
 
-  108 method_stmt: DEF_KEYWORD linefeed_or_empty IDENTIFIER '(' linefeed_or_empty param_list . ')' delimiter stmt_list END_KEYWORD
+  114 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_EQUAL '(' linefeed_or_empty param_list . ')' delimiter stmt_list END_KEYWORD
 
     ')'  shift, and go to state 356
 
 
 State 319
 
+  115 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_EQUAL delimiter stmt_list END_KEYWORD .
+
+    $default  reduce using rule 115 (method_stmt)
+
+
+State 320
+
+  108 method_stmt: DEF_KEYWORD linefeed_or_empty IDENTIFIER '(' linefeed_or_empty param_list . ')' delimiter stmt_list END_KEYWORD
+
+    ')'  shift, and go to state 357
+
+
+State 321
+
   110 method_stmt: DEF_KEYWORD linefeed_or_empty IDENTIFIER delimiter stmt_list END_KEYWORD .
 
     $default  reduce using rule 110 (method_stmt)
 
 
-State 320
+State 322
 
   131 if_stmt: IF_KEYWORD linefeed_or_empty expr delimiter stmt_list ELSE_KEYWORD . stmt_list END_KEYWORD
 
@@ -9042,8 +9090,8 @@ State 320
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt_list    go to state 357
-    stmt         go to state 267
+    stmt_list    go to state 358
+    stmt         go to state 269
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -9053,7 +9101,7 @@ State 320
     alias_stmt   go to state 42
 
 
-State 321
+State 323
 
   145 elsif_stmt: ELSIF_KEYWORD . linefeed_or_empty expr delimiter stmt_list
   146           | ELSIF_KEYWORD . linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list
@@ -9062,38 +9110,38 @@ State 321
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 358
+    linefeed_or_empty  go to state 359
     linefeed           go to state 46
 
 
-State 322
+State 324
 
   129 if_stmt: IF_KEYWORD linefeed_or_empty expr delimiter stmt_list END_KEYWORD .
 
     $default  reduce using rule 129 (if_stmt)
 
 
-State 323
+State 325
 
   133 if_stmt: IF_KEYWORD linefeed_or_empty expr delimiter stmt_list elsif_list . END_KEYWORD
   135        | IF_KEYWORD linefeed_or_empty expr delimiter stmt_list elsif_list . ELSE_KEYWORD stmt_list END_KEYWORD
   144 elsif_list: elsif_list . elsif_stmt
 
-    ELSE_KEYWORD   shift, and go to state 359
-    ELSIF_KEYWORD  shift, and go to state 321
-    END_KEYWORD    shift, and go to state 360
+    ELSE_KEYWORD   shift, and go to state 360
+    ELSIF_KEYWORD  shift, and go to state 323
+    END_KEYWORD    shift, and go to state 361
 
-    elsif_stmt  go to state 361
+    elsif_stmt  go to state 362
 
 
-State 324
+State 326
 
   143 elsif_list: elsif_stmt .
 
     $default  reduce using rule 143 (elsif_list)
 
 
-State 325
+State 327
 
    95 stmt_list: stmt_list . stmt
   130 if_stmt: IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list . END_KEYWORD
@@ -9105,9 +9153,9 @@ State 325
     CASE_KEYWORD         shift, and go to state 2
     DEFINED_KEYWORD      shift, and go to state 5
     IF_KEYWORD           shift, and go to state 6
-    ELSE_KEYWORD         shift, and go to state 362
-    ELSIF_KEYWORD        shift, and go to state 321
-    END_KEYWORD          shift, and go to state 363
+    ELSE_KEYWORD         shift, and go to state 363
+    ELSIF_KEYWORD        shift, and go to state 323
+    END_KEYWORD          shift, and go to state 364
     FALSE_KEYWORD        shift, and go to state 7
     FOR_KEYWORD          shift, and go to state 8
     NIL_KEYWORD          shift, and go to state 9
@@ -9132,11 +9180,11 @@ State 325
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt         go to state 313
+    stmt         go to state 315
     if_stmt      go to state 36
     unless_stmt  go to state 37
-    elsif_list   go to state 364
-    elsif_stmt   go to state 324
+    elsif_list   go to state 365
+    elsif_stmt   go to state 326
     while_stmt   go to state 38
     for_stmt     go to state 39
     return_stmt  go to state 40
@@ -9144,7 +9192,7 @@ State 325
     alias_stmt   go to state 42
 
 
-State 326
+State 328
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -9194,7 +9242,7 @@ State 326
   149 for_stmt: FOR_KEYWORD linefeed_or_empty expr IN_KEYWORD linefeed_or_empty expr . DO_KEYWORD delimeter_or_empty stmt_list END_KEYWORD
   150         | FOR_KEYWORD linefeed_or_empty expr IN_KEYWORD linefeed_or_empty expr . delimiter stmt_list END_KEYWORD
 
-    DO_KEYWORD              shift, and go to state 365
+    DO_KEYWORD              shift, and go to state 366
     OR_KEYWORD              shift, and go to state 67
     AND_KEYWORD             shift, and go to state 68
     '='                     shift, and go to state 69
@@ -9235,10 +9283,10 @@ State 326
     NEW_LINE_SYMBOL         shift, and go to state 104
     SEMICOLON_SYMBOL        shift, and go to state 105
 
-    delimiter  go to state 366
+    delimiter  go to state 367
 
 
-State 327
+State 329
 
    32 expr: SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_QUESTION '(' linefeed_or_empty . expr_list linefeed_or_empty ')'
 
@@ -9262,11 +9310,11 @@ State 327
     CLASS_VAR_NAME       shift, and go to state 27
     CONSTANT_NAME        shift, and go to state 28
 
-    expr       go to state 137
-    expr_list  go to state 367
+    expr       go to state 138
+    expr_list  go to state 368
 
 
-State 328
+State 330
 
    34 expr: SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_EXCLAMATION '(' linefeed_or_empty . expr_list linefeed_or_empty ')'
 
@@ -9290,11 +9338,11 @@ State 328
     CLASS_VAR_NAME       shift, and go to state 27
     CONSTANT_NAME        shift, and go to state 28
 
-    expr       go to state 137
-    expr_list  go to state 368
+    expr       go to state 138
+    expr_list  go to state 369
 
 
-State 329
+State 331
 
    36 expr: SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_EQUAL '(' linefeed_or_empty . expr_list linefeed_or_empty ')'
 
@@ -9318,11 +9366,11 @@ State 329
     CLASS_VAR_NAME       shift, and go to state 27
     CONSTANT_NAME        shift, and go to state 28
 
-    expr       go to state 137
-    expr_list  go to state 369
+    expr       go to state 138
+    expr_list  go to state 370
 
 
-State 330
+State 332
 
    30 expr: SELF_KEYWORD '.' linefeed_or_empty IDENTIFIER '(' linefeed_or_empty . expr_list linefeed_or_empty ')'
 
@@ -9346,18 +9394,18 @@ State 330
     CLASS_VAR_NAME       shift, and go to state 27
     CONSTANT_NAME        shift, and go to state 28
 
-    expr       go to state 137
-    expr_list  go to state 370
+    expr       go to state 138
+    expr_list  go to state 371
 
 
-State 331
+State 333
 
    25 expr: SUPER_KEYWORD '(' linefeed_or_empty expr_list linefeed_or_empty ')' .
 
     $default  reduce using rule 25 (expr)
 
 
-State 332
+State 334
 
   141 unless_stmt: UNLESS_KEYWORD linefeed_or_empty expr delimiter stmt_list ELSE_KEYWORD . stmt_list END_KEYWORD
 
@@ -9389,61 +9437,8 @@ State 332
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt_list    go to state 371
-    stmt         go to state 267
-    if_stmt      go to state 36
-    unless_stmt  go to state 37
-    while_stmt   go to state 38
-    for_stmt     go to state 39
-    return_stmt  go to state 40
-    case_stmt    go to state 41
-    alias_stmt   go to state 42
-
-
-State 333
-
-  139 unless_stmt: UNLESS_KEYWORD linefeed_or_empty expr delimiter stmt_list END_KEYWORD .
-
-    $default  reduce using rule 139 (unless_stmt)
-
-
-State 334
-
-   95 stmt_list: stmt_list . stmt
-  138 unless_stmt: UNLESS_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list . END_KEYWORD
-  140            | UNLESS_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list . ELSE_KEYWORD stmt_list END_KEYWORD
-
-    ALIAS_KEYWORD        shift, and go to state 1
-    CASE_KEYWORD         shift, and go to state 2
-    DEFINED_KEYWORD      shift, and go to state 5
-    IF_KEYWORD           shift, and go to state 6
-    ELSE_KEYWORD         shift, and go to state 372
-    END_KEYWORD          shift, and go to state 373
-    FALSE_KEYWORD        shift, and go to state 7
-    FOR_KEYWORD          shift, and go to state 8
-    NIL_KEYWORD          shift, and go to state 9
-    RETURN_KEYWORD       shift, and go to state 10
-    SELF_KEYWORD         shift, and go to state 11
-    SUPER_KEYWORD        shift, and go to state 12
-    TRUE_KEYWORD         shift, and go to state 13
-    UNLESS_KEYWORD       shift, and go to state 14
-    WHILE_KEYWORD        shift, and go to state 15
-    NOT_KEYWORD          shift, and go to state 16
-    '-'                  shift, and go to state 17
-    LOGICAL_NOT_OP       shift, and go to state 18
-    '('                  shift, and go to state 19
-    '['                  shift, and go to state 20
-    DOUBLE_COLON_SYMBOL  shift, and go to state 21
-    STRING               shift, and go to state 22
-    INTEGER_NUMBER       shift, and go to state 23
-    FLOAT_NUMBER         shift, and go to state 24
-    IDENTIFIER           shift, and go to state 25
-    OBJECT_VAR_NAME      shift, and go to state 26
-    CLASS_VAR_NAME       shift, and go to state 27
-    CONSTANT_NAME        shift, and go to state 28
-
-    expr         go to state 30
-    stmt         go to state 313
+    stmt_list    go to state 372
+    stmt         go to state 269
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -9455,13 +9450,22 @@ State 334
 
 State 335
 
+  139 unless_stmt: UNLESS_KEYWORD linefeed_or_empty expr delimiter stmt_list END_KEYWORD .
+
+    $default  reduce using rule 139 (unless_stmt)
+
+
+State 336
+
    95 stmt_list: stmt_list . stmt
-  147 while_stmt: WHILE_KEYWORD linefeed_or_empty expr DO_KEYWORD delimeter_or_empty stmt_list . END_KEYWORD
+  138 unless_stmt: UNLESS_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list . END_KEYWORD
+  140            | UNLESS_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list . ELSE_KEYWORD stmt_list END_KEYWORD
 
     ALIAS_KEYWORD        shift, and go to state 1
     CASE_KEYWORD         shift, and go to state 2
     DEFINED_KEYWORD      shift, and go to state 5
     IF_KEYWORD           shift, and go to state 6
+    ELSE_KEYWORD         shift, and go to state 373
     END_KEYWORD          shift, and go to state 374
     FALSE_KEYWORD        shift, and go to state 7
     FOR_KEYWORD          shift, and go to state 8
@@ -9487,7 +9491,7 @@ State 335
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt         go to state 313
+    stmt         go to state 315
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -9497,28 +9501,72 @@ State 335
     alias_stmt   go to state 42
 
 
-State 336
+State 337
+
+   95 stmt_list: stmt_list . stmt
+  147 while_stmt: WHILE_KEYWORD linefeed_or_empty expr DO_KEYWORD delimeter_or_empty stmt_list . END_KEYWORD
+
+    ALIAS_KEYWORD        shift, and go to state 1
+    CASE_KEYWORD         shift, and go to state 2
+    DEFINED_KEYWORD      shift, and go to state 5
+    IF_KEYWORD           shift, and go to state 6
+    END_KEYWORD          shift, and go to state 375
+    FALSE_KEYWORD        shift, and go to state 7
+    FOR_KEYWORD          shift, and go to state 8
+    NIL_KEYWORD          shift, and go to state 9
+    RETURN_KEYWORD       shift, and go to state 10
+    SELF_KEYWORD         shift, and go to state 11
+    SUPER_KEYWORD        shift, and go to state 12
+    TRUE_KEYWORD         shift, and go to state 13
+    UNLESS_KEYWORD       shift, and go to state 14
+    WHILE_KEYWORD        shift, and go to state 15
+    NOT_KEYWORD          shift, and go to state 16
+    '-'                  shift, and go to state 17
+    LOGICAL_NOT_OP       shift, and go to state 18
+    '('                  shift, and go to state 19
+    '['                  shift, and go to state 20
+    DOUBLE_COLON_SYMBOL  shift, and go to state 21
+    STRING               shift, and go to state 22
+    INTEGER_NUMBER       shift, and go to state 23
+    FLOAT_NUMBER         shift, and go to state 24
+    IDENTIFIER           shift, and go to state 25
+    OBJECT_VAR_NAME      shift, and go to state 26
+    CLASS_VAR_NAME       shift, and go to state 27
+    CONSTANT_NAME        shift, and go to state 28
+
+    expr         go to state 30
+    stmt         go to state 315
+    if_stmt      go to state 36
+    unless_stmt  go to state 37
+    while_stmt   go to state 38
+    for_stmt     go to state 39
+    return_stmt  go to state 40
+    case_stmt    go to state 41
+    alias_stmt   go to state 42
+
+
+State 338
 
   148 while_stmt: WHILE_KEYWORD linefeed_or_empty expr delimiter stmt_list END_KEYWORD .
 
     $default  reduce using rule 148 (while_stmt)
 
 
-State 337
+State 339
 
    45 expr: NOT_KEYWORD '(' linefeed_or_empty expr linefeed_or_empty ')' .
 
     $default  reduce using rule 45 (expr)
 
 
-State 338
+State 340
 
    22 expr: IDENTIFIER '(' linefeed_or_empty expr_list linefeed_or_empty ')' .
 
     $default  reduce using rule 22 (expr)
 
 
-State 339
+State 341
 
    78 expr: expr QUESTION_SYMBOL linefeed_or_empty expr linefeed_or_empty COLON_SYMBOL . linefeed_or_empty expr
 
@@ -9526,11 +9574,11 @@ State 339
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
-    linefeed_or_empty  go to state 375
+    linefeed_or_empty  go to state 376
     linefeed           go to state 46
 
 
-State 340
+State 342
 
    38 expr: expr '.' linefeed_or_empty METHOD_MARK_QUESTION '(' linefeed_or_empty . expr_list linefeed_or_empty ')'
 
@@ -9554,11 +9602,11 @@ State 340
     CLASS_VAR_NAME       shift, and go to state 27
     CONSTANT_NAME        shift, and go to state 28
 
-    expr       go to state 137
-    expr_list  go to state 376
+    expr       go to state 138
+    expr_list  go to state 377
 
 
-State 341
+State 343
 
    40 expr: expr '.' linefeed_or_empty METHOD_MARK_EXCLAMATION '(' linefeed_or_empty . expr_list linefeed_or_empty ')'
 
@@ -9582,11 +9630,11 @@ State 341
     CLASS_VAR_NAME       shift, and go to state 27
     CONSTANT_NAME        shift, and go to state 28
 
-    expr       go to state 137
-    expr_list  go to state 377
+    expr       go to state 138
+    expr_list  go to state 378
 
 
-State 342
+State 344
 
    42 expr: expr '.' linefeed_or_empty METHOD_MARK_EQUAL '(' linefeed_or_empty . expr_list linefeed_or_empty ')'
 
@@ -9610,11 +9658,11 @@ State 342
     CLASS_VAR_NAME       shift, and go to state 27
     CONSTANT_NAME        shift, and go to state 28
 
-    expr       go to state 137
-    expr_list  go to state 378
+    expr       go to state 138
+    expr_list  go to state 379
 
 
-State 343
+State 345
 
    28 expr: expr '.' linefeed_or_empty IDENTIFIER '(' linefeed_or_empty . expr_list linefeed_or_empty ')'
 
@@ -9638,32 +9686,34 @@ State 343
     CLASS_VAR_NAME       shift, and go to state 27
     CONSTANT_NAME        shift, and go to state 28
 
-    expr       go to state 137
-    expr_list  go to state 379
+    expr       go to state 138
+    expr_list  go to state 380
 
 
-State 344
+State 346
 
    14 expr: expr '[' linefeed_or_empty expr linefeed_or_empty ']' .
 
     $default  reduce using rule 14 (expr)
 
 
-State 345
+State 347
 
    93 expr_list: expr_list . COMMA_SYMBOL expr
-  155 when_list: WHEN_KEYWORD linefeed_or_empty expr_list . delimiter stmt_list
-  156          | WHEN_KEYWORD linefeed_or_empty expr_list . THEN_KEYWORD stmt_list
+  157 when_stmt: WHEN_KEYWORD linefeed_or_empty expr_list . delimiter stmt_list
+  158          | WHEN_KEYWORD linefeed_or_empty expr_list . delimeter_or_empty THEN_KEYWORD stmt_list
 
-    THEN_KEYWORD      shift, and go to state 380
     NEW_LINE_SYMBOL   shift, and go to state 104
-    COMMA_SYMBOL      shift, and go to state 209
+    COMMA_SYMBOL      shift, and go to state 210
     SEMICOLON_SYMBOL  shift, and go to state 105
 
-    delimiter  go to state 381
+    $default  reduce using rule 127 (delimeter_or_empty)
+
+    delimiter           go to state 381
+    delimeter_or_empty  go to state 382
 
 
-State 346
+State 348
 
   154 case_stmt: CASE_KEYWORD linefeed_or_empty expr delimeter_or_empty when_list ELSE_KEYWORD delimeter_or_empty . stmt_list END_KEYWORD
 
@@ -9695,8 +9745,8 @@ State 346
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt_list    go to state 382
-    stmt         go to state 267
+    stmt_list    go to state 383
+    stmt         go to state 269
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -9706,43 +9756,14 @@ State 346
     alias_stmt   go to state 42
 
 
-State 347
-
-  157 when_list: when_list WHEN_KEYWORD linefeed_or_empty . expr_list delimiter stmt_list
-  158          | when_list WHEN_KEYWORD linefeed_or_empty . expr_list delimeter_or_empty THEN_KEYWORD stmt_list
-
-    DEFINED_KEYWORD      shift, and go to state 5
-    FALSE_KEYWORD        shift, and go to state 7
-    NIL_KEYWORD          shift, and go to state 9
-    SELF_KEYWORD         shift, and go to state 11
-    SUPER_KEYWORD        shift, and go to state 12
-    TRUE_KEYWORD         shift, and go to state 13
-    NOT_KEYWORD          shift, and go to state 16
-    '-'                  shift, and go to state 17
-    LOGICAL_NOT_OP       shift, and go to state 18
-    '('                  shift, and go to state 19
-    '['                  shift, and go to state 20
-    DOUBLE_COLON_SYMBOL  shift, and go to state 21
-    STRING               shift, and go to state 22
-    INTEGER_NUMBER       shift, and go to state 23
-    FLOAT_NUMBER         shift, and go to state 24
-    IDENTIFIER           shift, and go to state 25
-    OBJECT_VAR_NAME      shift, and go to state 26
-    CLASS_VAR_NAME       shift, and go to state 27
-    CONSTANT_NAME        shift, and go to state 28
-
-    expr       go to state 137
-    expr_list  go to state 383
-
-
-State 348
+State 349
 
   117 class_stmt: CLASS_KEYWORD linefeed_or_empty CONSTANT_NAME '<' CONSTANT_NAME delimiter class_body . END_KEYWORD
 
     END_KEYWORD  shift, and go to state 384
 
 
-State 349
+State 350
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -9834,7 +9855,7 @@ State 349
     delimiter  go to state 385
 
 
-State 350
+State 351
 
    13 expr: expr . '=' linefeed_or_empty expr
    14     | expr . '[' linefeed_or_empty expr linefeed_or_empty ']'
@@ -9926,14 +9947,14 @@ State 350
     delimiter  go to state 386
 
 
-State 351
+State 352
 
   104 param_list_not_empty: IDENTIFIER linefeed_or_empty .
 
     $default  reduce using rule 104 (param_list_not_empty)
 
 
-State 352
+State 353
 
   105 param_list_not_empty: param_list_not_empty COMMA_SYMBOL . linefeed_or_empty IDENTIFIER linefeed_or_empty
 
@@ -9945,7 +9966,7 @@ State 352
     linefeed           go to state 46
 
 
-State 353
+State 354
 
   109 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_QUESTION '(' linefeed_or_empty param_list ')' . delimiter stmt_list END_KEYWORD
 
@@ -9955,7 +9976,7 @@ State 353
     delimiter  go to state 388
 
 
-State 354
+State 355
 
   112 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_EXCLAMATION '(' linefeed_or_empty param_list ')' . delimiter stmt_list END_KEYWORD
 
@@ -9965,7 +9986,7 @@ State 354
     delimiter  go to state 389
 
 
-State 355
+State 356
 
   114 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_EQUAL '(' linefeed_or_empty param_list ')' . delimiter stmt_list END_KEYWORD
 
@@ -9975,7 +9996,7 @@ State 355
     delimiter  go to state 390
 
 
-State 356
+State 357
 
   108 method_stmt: DEF_KEYWORD linefeed_or_empty IDENTIFIER '(' linefeed_or_empty param_list ')' . delimiter stmt_list END_KEYWORD
 
@@ -9985,7 +10006,7 @@ State 356
     delimiter  go to state 391
 
 
-State 357
+State 358
 
    95 stmt_list: stmt_list . stmt
   131 if_stmt: IF_KEYWORD linefeed_or_empty expr delimiter stmt_list ELSE_KEYWORD stmt_list . END_KEYWORD
@@ -10019,7 +10040,7 @@ State 357
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt         go to state 313
+    stmt         go to state 315
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -10029,7 +10050,7 @@ State 357
     alias_stmt   go to state 42
 
 
-State 358
+State 359
 
   145 elsif_stmt: ELSIF_KEYWORD linefeed_or_empty . expr delimiter stmt_list
   146           | ELSIF_KEYWORD linefeed_or_empty . expr delimeter_or_empty THEN_KEYWORD stmt_list
@@ -10057,7 +10078,7 @@ State 358
     expr  go to state 393
 
 
-State 359
+State 360
 
   135 if_stmt: IF_KEYWORD linefeed_or_empty expr delimiter stmt_list elsif_list ELSE_KEYWORD . stmt_list END_KEYWORD
 
@@ -10090,7 +10111,7 @@ State 359
 
     expr         go to state 30
     stmt_list    go to state 394
-    stmt         go to state 267
+    stmt         go to state 269
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -10100,21 +10121,21 @@ State 359
     alias_stmt   go to state 42
 
 
-State 360
+State 361
 
   133 if_stmt: IF_KEYWORD linefeed_or_empty expr delimiter stmt_list elsif_list END_KEYWORD .
 
     $default  reduce using rule 133 (if_stmt)
 
 
-State 361
+State 362
 
   144 elsif_list: elsif_list elsif_stmt .
 
     $default  reduce using rule 144 (elsif_list)
 
 
-State 362
+State 363
 
   132 if_stmt: IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list ELSE_KEYWORD . stmt_list END_KEYWORD
 
@@ -10147,7 +10168,7 @@ State 362
 
     expr         go to state 30
     stmt_list    go to state 395
-    stmt         go to state 267
+    stmt         go to state 269
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -10157,27 +10178,27 @@ State 362
     alias_stmt   go to state 42
 
 
-State 363
+State 364
 
   130 if_stmt: IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list END_KEYWORD .
 
     $default  reduce using rule 130 (if_stmt)
 
 
-State 364
+State 365
 
   134 if_stmt: IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list elsif_list . END_KEYWORD
   136        | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list elsif_list . ELSE_KEYWORD stmt_list END_KEYWORD
   144 elsif_list: elsif_list . elsif_stmt
 
     ELSE_KEYWORD   shift, and go to state 396
-    ELSIF_KEYWORD  shift, and go to state 321
+    ELSIF_KEYWORD  shift, and go to state 323
     END_KEYWORD    shift, and go to state 397
 
-    elsif_stmt  go to state 361
+    elsif_stmt  go to state 362
 
 
-State 365
+State 366
 
   149 for_stmt: FOR_KEYWORD linefeed_or_empty expr IN_KEYWORD linefeed_or_empty expr DO_KEYWORD . delimeter_or_empty stmt_list END_KEYWORD
 
@@ -10186,11 +10207,11 @@ State 365
 
     $default  reduce using rule 127 (delimeter_or_empty)
 
-    delimiter           go to state 182
+    delimiter           go to state 183
     delimeter_or_empty  go to state 398
 
 
-State 366
+State 367
 
    90 delimiter: delimiter . SEMICOLON_SYMBOL
    91          | delimiter . NEW_LINE_SYMBOL
@@ -10215,8 +10236,8 @@ State 366
     '('                  shift, and go to state 19
     '['                  shift, and go to state 20
     DOUBLE_COLON_SYMBOL  shift, and go to state 21
-    NEW_LINE_SYMBOL      shift, and go to state 180
-    SEMICOLON_SYMBOL     shift, and go to state 181
+    NEW_LINE_SYMBOL      shift, and go to state 181
+    SEMICOLON_SYMBOL     shift, and go to state 182
     STRING               shift, and go to state 22
     INTEGER_NUMBER       shift, and go to state 23
     FLOAT_NUMBER         shift, and go to state 24
@@ -10227,7 +10248,7 @@ State 366
 
     expr         go to state 30
     stmt_list    go to state 399
-    stmt         go to state 267
+    stmt         go to state 269
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -10237,13 +10258,13 @@ State 366
     alias_stmt   go to state 42
 
 
-State 367
+State 368
 
    32 expr: SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_QUESTION '(' linefeed_or_empty expr_list . linefeed_or_empty ')'
    93 expr_list: expr_list . COMMA_SYMBOL expr
 
     NEW_LINE_SYMBOL  shift, and go to state 44
-    COMMA_SYMBOL     shift, and go to state 209
+    COMMA_SYMBOL     shift, and go to state 210
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
@@ -10251,13 +10272,13 @@ State 367
     linefeed           go to state 46
 
 
-State 368
+State 369
 
    34 expr: SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_EXCLAMATION '(' linefeed_or_empty expr_list . linefeed_or_empty ')'
    93 expr_list: expr_list . COMMA_SYMBOL expr
 
     NEW_LINE_SYMBOL  shift, and go to state 44
-    COMMA_SYMBOL     shift, and go to state 209
+    COMMA_SYMBOL     shift, and go to state 210
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
@@ -10265,13 +10286,13 @@ State 368
     linefeed           go to state 46
 
 
-State 369
+State 370
 
    36 expr: SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_EQUAL '(' linefeed_or_empty expr_list . linefeed_or_empty ')'
    93 expr_list: expr_list . COMMA_SYMBOL expr
 
     NEW_LINE_SYMBOL  shift, and go to state 44
-    COMMA_SYMBOL     shift, and go to state 209
+    COMMA_SYMBOL     shift, and go to state 210
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
@@ -10279,13 +10300,13 @@ State 369
     linefeed           go to state 46
 
 
-State 370
+State 371
 
    30 expr: SELF_KEYWORD '.' linefeed_or_empty IDENTIFIER '(' linefeed_or_empty expr_list . linefeed_or_empty ')'
    93 expr_list: expr_list . COMMA_SYMBOL expr
 
     NEW_LINE_SYMBOL  shift, and go to state 44
-    COMMA_SYMBOL     shift, and go to state 209
+    COMMA_SYMBOL     shift, and go to state 210
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
@@ -10293,7 +10314,7 @@ State 370
     linefeed           go to state 46
 
 
-State 371
+State 372
 
    95 stmt_list: stmt_list . stmt
   141 unless_stmt: UNLESS_KEYWORD linefeed_or_empty expr delimiter stmt_list ELSE_KEYWORD stmt_list . END_KEYWORD
@@ -10327,7 +10348,7 @@ State 371
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt         go to state 313
+    stmt         go to state 315
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -10337,7 +10358,7 @@ State 371
     alias_stmt   go to state 42
 
 
-State 372
+State 373
 
   140 unless_stmt: UNLESS_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list ELSE_KEYWORD . stmt_list END_KEYWORD
 
@@ -10370,7 +10391,7 @@ State 372
 
     expr         go to state 30
     stmt_list    go to state 405
-    stmt         go to state 267
+    stmt         go to state 269
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -10380,21 +10401,21 @@ State 372
     alias_stmt   go to state 42
 
 
-State 373
+State 374
 
   138 unless_stmt: UNLESS_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list END_KEYWORD .
 
     $default  reduce using rule 138 (unless_stmt)
 
 
-State 374
+State 375
 
   147 while_stmt: WHILE_KEYWORD linefeed_or_empty expr DO_KEYWORD delimeter_or_empty stmt_list END_KEYWORD .
 
     $default  reduce using rule 147 (while_stmt)
 
 
-State 375
+State 376
 
    78 expr: expr QUESTION_SYMBOL linefeed_or_empty expr linefeed_or_empty COLON_SYMBOL linefeed_or_empty . expr
 
@@ -10421,13 +10442,13 @@ State 375
     expr  go to state 406
 
 
-State 376
+State 377
 
    38 expr: expr '.' linefeed_or_empty METHOD_MARK_QUESTION '(' linefeed_or_empty expr_list . linefeed_or_empty ')'
    93 expr_list: expr_list . COMMA_SYMBOL expr
 
     NEW_LINE_SYMBOL  shift, and go to state 44
-    COMMA_SYMBOL     shift, and go to state 209
+    COMMA_SYMBOL     shift, and go to state 210
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
@@ -10435,13 +10456,13 @@ State 376
     linefeed           go to state 46
 
 
-State 377
+State 378
 
    40 expr: expr '.' linefeed_or_empty METHOD_MARK_EXCLAMATION '(' linefeed_or_empty expr_list . linefeed_or_empty ')'
    93 expr_list: expr_list . COMMA_SYMBOL expr
 
     NEW_LINE_SYMBOL  shift, and go to state 44
-    COMMA_SYMBOL     shift, and go to state 209
+    COMMA_SYMBOL     shift, and go to state 210
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
@@ -10449,13 +10470,13 @@ State 377
     linefeed           go to state 46
 
 
-State 378
+State 379
 
    42 expr: expr '.' linefeed_or_empty METHOD_MARK_EQUAL '(' linefeed_or_empty expr_list . linefeed_or_empty ')'
    93 expr_list: expr_list . COMMA_SYMBOL expr
 
     NEW_LINE_SYMBOL  shift, and go to state 44
-    COMMA_SYMBOL     shift, and go to state 209
+    COMMA_SYMBOL     shift, and go to state 210
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
@@ -10463,13 +10484,13 @@ State 378
     linefeed           go to state 46
 
 
-State 379
+State 380
 
    28 expr: expr '.' linefeed_or_empty IDENTIFIER '(' linefeed_or_empty expr_list . linefeed_or_empty ')'
    93 expr_list: expr_list . COMMA_SYMBOL expr
 
     NEW_LINE_SYMBOL  shift, and go to state 44
-    COMMA_SYMBOL     shift, and go to state 209
+    COMMA_SYMBOL     shift, and go to state 210
 
     $default  reduce using rule 79 (linefeed_or_empty)
 
@@ -10477,54 +10498,12 @@ State 379
     linefeed           go to state 46
 
 
-State 380
-
-  156 when_list: WHEN_KEYWORD linefeed_or_empty expr_list THEN_KEYWORD . stmt_list
-
-    ALIAS_KEYWORD        shift, and go to state 1
-    CASE_KEYWORD         shift, and go to state 2
-    DEFINED_KEYWORD      shift, and go to state 5
-    IF_KEYWORD           shift, and go to state 6
-    FALSE_KEYWORD        shift, and go to state 7
-    FOR_KEYWORD          shift, and go to state 8
-    NIL_KEYWORD          shift, and go to state 9
-    RETURN_KEYWORD       shift, and go to state 10
-    SELF_KEYWORD         shift, and go to state 11
-    SUPER_KEYWORD        shift, and go to state 12
-    TRUE_KEYWORD         shift, and go to state 13
-    UNLESS_KEYWORD       shift, and go to state 14
-    WHILE_KEYWORD        shift, and go to state 15
-    NOT_KEYWORD          shift, and go to state 16
-    '-'                  shift, and go to state 17
-    LOGICAL_NOT_OP       shift, and go to state 18
-    '('                  shift, and go to state 19
-    '['                  shift, and go to state 20
-    DOUBLE_COLON_SYMBOL  shift, and go to state 21
-    STRING               shift, and go to state 22
-    INTEGER_NUMBER       shift, and go to state 23
-    FLOAT_NUMBER         shift, and go to state 24
-    IDENTIFIER           shift, and go to state 25
-    OBJECT_VAR_NAME      shift, and go to state 26
-    CLASS_VAR_NAME       shift, and go to state 27
-    CONSTANT_NAME        shift, and go to state 28
-
-    expr         go to state 30
-    stmt_list    go to state 411
-    stmt         go to state 267
-    if_stmt      go to state 36
-    unless_stmt  go to state 37
-    while_stmt   go to state 38
-    for_stmt     go to state 39
-    return_stmt  go to state 40
-    case_stmt    go to state 41
-    alias_stmt   go to state 42
-
-
 State 381
 
    90 delimiter: delimiter . SEMICOLON_SYMBOL
    91          | delimiter . NEW_LINE_SYMBOL
-  155 when_list: WHEN_KEYWORD linefeed_or_empty expr_list delimiter . stmt_list
+  128 delimeter_or_empty: delimiter .
+  157 when_stmt: WHEN_KEYWORD linefeed_or_empty expr_list delimiter . stmt_list
 
     ALIAS_KEYWORD        shift, and go to state 1
     CASE_KEYWORD         shift, and go to state 2
@@ -10545,8 +10524,8 @@ State 381
     '('                  shift, and go to state 19
     '['                  shift, and go to state 20
     DOUBLE_COLON_SYMBOL  shift, and go to state 21
-    NEW_LINE_SYMBOL      shift, and go to state 180
-    SEMICOLON_SYMBOL     shift, and go to state 181
+    NEW_LINE_SYMBOL      shift, and go to state 181
+    SEMICOLON_SYMBOL     shift, and go to state 182
     STRING               shift, and go to state 22
     INTEGER_NUMBER       shift, and go to state 23
     FLOAT_NUMBER         shift, and go to state 24
@@ -10555,9 +10534,11 @@ State 381
     CLASS_VAR_NAME       shift, and go to state 27
     CONSTANT_NAME        shift, and go to state 28
 
+    $default  reduce using rule 128 (delimeter_or_empty)
+
     expr         go to state 30
-    stmt_list    go to state 412
-    stmt         go to state 267
+    stmt_list    go to state 411
+    stmt         go to state 269
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -10568,6 +10549,13 @@ State 381
 
 
 State 382
+
+  158 when_stmt: WHEN_KEYWORD linefeed_or_empty expr_list delimeter_or_empty . THEN_KEYWORD stmt_list
+
+    THEN_KEYWORD  shift, and go to state 412
+
+
+State 383
 
    95 stmt_list: stmt_list . stmt
   154 case_stmt: CASE_KEYWORD linefeed_or_empty expr delimeter_or_empty when_list ELSE_KEYWORD delimeter_or_empty stmt_list . END_KEYWORD
@@ -10601,7 +10589,7 @@ State 382
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt         go to state 313
+    stmt         go to state 315
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -10609,22 +10597,6 @@ State 382
     return_stmt  go to state 40
     case_stmt    go to state 41
     alias_stmt   go to state 42
-
-
-State 383
-
-   93 expr_list: expr_list . COMMA_SYMBOL expr
-  157 when_list: when_list WHEN_KEYWORD linefeed_or_empty expr_list . delimiter stmt_list
-  158          | when_list WHEN_KEYWORD linefeed_or_empty expr_list . delimeter_or_empty THEN_KEYWORD stmt_list
-
-    NEW_LINE_SYMBOL   shift, and go to state 104
-    COMMA_SYMBOL      shift, and go to state 209
-    SEMICOLON_SYMBOL  shift, and go to state 105
-
-    $default  reduce using rule 127 (delimeter_or_empty)
-
-    delimiter           go to state 414
-    delimeter_or_empty  go to state 415
 
 
 State 384
@@ -10640,8 +10612,8 @@ State 385
    91          | delimiter . NEW_LINE_SYMBOL
   122 class_body_stmt: OBJECT_VAR_NAME '=' expr delimiter .
 
-    NEW_LINE_SYMBOL   shift, and go to state 180
-    SEMICOLON_SYMBOL  shift, and go to state 181
+    NEW_LINE_SYMBOL   shift, and go to state 181
+    SEMICOLON_SYMBOL  shift, and go to state 182
 
     $default  reduce using rule 122 (class_body_stmt)
 
@@ -10652,8 +10624,8 @@ State 386
    91          | delimiter . NEW_LINE_SYMBOL
   120 class_body_stmt: CLASS_VAR_NAME '=' expr delimiter .
 
-    NEW_LINE_SYMBOL   shift, and go to state 180
-    SEMICOLON_SYMBOL  shift, and go to state 181
+    NEW_LINE_SYMBOL   shift, and go to state 181
+    SEMICOLON_SYMBOL  shift, and go to state 182
 
     $default  reduce using rule 120 (class_body_stmt)
 
@@ -10662,7 +10634,7 @@ State 387
 
   105 param_list_not_empty: param_list_not_empty COMMA_SYMBOL linefeed_or_empty . IDENTIFIER linefeed_or_empty
 
-    IDENTIFIER  shift, and go to state 416
+    IDENTIFIER  shift, and go to state 414
 
 
 State 388
@@ -10690,8 +10662,8 @@ State 388
     '('                  shift, and go to state 19
     '['                  shift, and go to state 20
     DOUBLE_COLON_SYMBOL  shift, and go to state 21
-    NEW_LINE_SYMBOL      shift, and go to state 180
-    SEMICOLON_SYMBOL     shift, and go to state 181
+    NEW_LINE_SYMBOL      shift, and go to state 181
+    SEMICOLON_SYMBOL     shift, and go to state 182
     STRING               shift, and go to state 22
     INTEGER_NUMBER       shift, and go to state 23
     FLOAT_NUMBER         shift, and go to state 24
@@ -10701,8 +10673,8 @@ State 388
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt_list    go to state 417
-    stmt         go to state 267
+    stmt_list    go to state 415
+    stmt         go to state 269
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -10737,8 +10709,8 @@ State 389
     '('                  shift, and go to state 19
     '['                  shift, and go to state 20
     DOUBLE_COLON_SYMBOL  shift, and go to state 21
-    NEW_LINE_SYMBOL      shift, and go to state 180
-    SEMICOLON_SYMBOL     shift, and go to state 181
+    NEW_LINE_SYMBOL      shift, and go to state 181
+    SEMICOLON_SYMBOL     shift, and go to state 182
     STRING               shift, and go to state 22
     INTEGER_NUMBER       shift, and go to state 23
     FLOAT_NUMBER         shift, and go to state 24
@@ -10748,8 +10720,8 @@ State 389
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt_list    go to state 418
-    stmt         go to state 267
+    stmt_list    go to state 416
+    stmt         go to state 269
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -10784,8 +10756,8 @@ State 390
     '('                  shift, and go to state 19
     '['                  shift, and go to state 20
     DOUBLE_COLON_SYMBOL  shift, and go to state 21
-    NEW_LINE_SYMBOL      shift, and go to state 180
-    SEMICOLON_SYMBOL     shift, and go to state 181
+    NEW_LINE_SYMBOL      shift, and go to state 181
+    SEMICOLON_SYMBOL     shift, and go to state 182
     STRING               shift, and go to state 22
     INTEGER_NUMBER       shift, and go to state 23
     FLOAT_NUMBER         shift, and go to state 24
@@ -10795,8 +10767,8 @@ State 390
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt_list    go to state 419
-    stmt         go to state 267
+    stmt_list    go to state 417
+    stmt         go to state 269
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -10831,8 +10803,8 @@ State 391
     '('                  shift, and go to state 19
     '['                  shift, and go to state 20
     DOUBLE_COLON_SYMBOL  shift, and go to state 21
-    NEW_LINE_SYMBOL      shift, and go to state 180
-    SEMICOLON_SYMBOL     shift, and go to state 181
+    NEW_LINE_SYMBOL      shift, and go to state 181
+    SEMICOLON_SYMBOL     shift, and go to state 182
     STRING               shift, and go to state 22
     INTEGER_NUMBER       shift, and go to state 23
     FLOAT_NUMBER         shift, and go to state 24
@@ -10842,8 +10814,8 @@ State 391
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt_list    go to state 420
-    stmt         go to state 267
+    stmt_list    go to state 418
+    stmt         go to state 269
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -10952,8 +10924,8 @@ State 393
 
     $default  reduce using rule 127 (delimeter_or_empty)
 
-    delimiter           go to state 421
-    delimeter_or_empty  go to state 422
+    delimiter           go to state 419
+    delimeter_or_empty  go to state 420
 
 
 State 394
@@ -10965,7 +10937,7 @@ State 394
     CASE_KEYWORD         shift, and go to state 2
     DEFINED_KEYWORD      shift, and go to state 5
     IF_KEYWORD           shift, and go to state 6
-    END_KEYWORD          shift, and go to state 423
+    END_KEYWORD          shift, and go to state 421
     FALSE_KEYWORD        shift, and go to state 7
     FOR_KEYWORD          shift, and go to state 8
     NIL_KEYWORD          shift, and go to state 9
@@ -10990,7 +10962,7 @@ State 394
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt         go to state 313
+    stmt         go to state 315
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -11009,7 +10981,7 @@ State 395
     CASE_KEYWORD         shift, and go to state 2
     DEFINED_KEYWORD      shift, and go to state 5
     IF_KEYWORD           shift, and go to state 6
-    END_KEYWORD          shift, and go to state 424
+    END_KEYWORD          shift, and go to state 422
     FALSE_KEYWORD        shift, and go to state 7
     FOR_KEYWORD          shift, and go to state 8
     NIL_KEYWORD          shift, and go to state 9
@@ -11034,7 +11006,7 @@ State 395
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt         go to state 313
+    stmt         go to state 315
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -11076,8 +11048,8 @@ State 396
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt_list    go to state 425
-    stmt         go to state 267
+    stmt_list    go to state 423
+    stmt         go to state 269
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -11126,8 +11098,8 @@ State 398
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt_list    go to state 426
-    stmt         go to state 267
+    stmt_list    go to state 424
+    stmt         go to state 269
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -11146,7 +11118,7 @@ State 399
     CASE_KEYWORD         shift, and go to state 2
     DEFINED_KEYWORD      shift, and go to state 5
     IF_KEYWORD           shift, and go to state 6
-    END_KEYWORD          shift, and go to state 427
+    END_KEYWORD          shift, and go to state 425
     FALSE_KEYWORD        shift, and go to state 7
     FOR_KEYWORD          shift, and go to state 8
     NIL_KEYWORD          shift, and go to state 9
@@ -11171,7 +11143,7 @@ State 399
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt         go to state 313
+    stmt         go to state 315
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -11185,28 +11157,28 @@ State 400
 
    32 expr: SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_QUESTION '(' linefeed_or_empty expr_list linefeed_or_empty . ')'
 
-    ')'  shift, and go to state 428
+    ')'  shift, and go to state 426
 
 
 State 401
 
    34 expr: SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_EXCLAMATION '(' linefeed_or_empty expr_list linefeed_or_empty . ')'
 
-    ')'  shift, and go to state 429
+    ')'  shift, and go to state 427
 
 
 State 402
 
    36 expr: SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_EQUAL '(' linefeed_or_empty expr_list linefeed_or_empty . ')'
 
-    ')'  shift, and go to state 430
+    ')'  shift, and go to state 428
 
 
 State 403
 
    30 expr: SELF_KEYWORD '.' linefeed_or_empty IDENTIFIER '(' linefeed_or_empty expr_list linefeed_or_empty . ')'
 
-    ')'  shift, and go to state 431
+    ')'  shift, and go to state 429
 
 
 State 404
@@ -11225,7 +11197,7 @@ State 405
     CASE_KEYWORD         shift, and go to state 2
     DEFINED_KEYWORD      shift, and go to state 5
     IF_KEYWORD           shift, and go to state 6
-    END_KEYWORD          shift, and go to state 432
+    END_KEYWORD          shift, and go to state 430
     FALSE_KEYWORD        shift, and go to state 7
     FOR_KEYWORD          shift, and go to state 8
     NIL_KEYWORD          shift, and go to state 9
@@ -11250,7 +11222,7 @@ State 405
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt         go to state 313
+    stmt         go to state 315
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -11344,34 +11316,34 @@ State 407
 
    38 expr: expr '.' linefeed_or_empty METHOD_MARK_QUESTION '(' linefeed_or_empty expr_list linefeed_or_empty . ')'
 
-    ')'  shift, and go to state 433
+    ')'  shift, and go to state 431
 
 
 State 408
 
    40 expr: expr '.' linefeed_or_empty METHOD_MARK_EXCLAMATION '(' linefeed_or_empty expr_list linefeed_or_empty . ')'
 
-    ')'  shift, and go to state 434
+    ')'  shift, and go to state 432
 
 
 State 409
 
    42 expr: expr '.' linefeed_or_empty METHOD_MARK_EQUAL '(' linefeed_or_empty expr_list linefeed_or_empty . ')'
 
-    ')'  shift, and go to state 435
+    ')'  shift, and go to state 433
 
 
 State 410
 
    28 expr: expr '.' linefeed_or_empty IDENTIFIER '(' linefeed_or_empty expr_list linefeed_or_empty . ')'
 
-    ')'  shift, and go to state 436
+    ')'  shift, and go to state 434
 
 
 State 411
 
    95 stmt_list: stmt_list . stmt
-  156 when_list: WHEN_KEYWORD linefeed_or_empty expr_list THEN_KEYWORD stmt_list .
+  157 when_stmt: WHEN_KEYWORD linefeed_or_empty expr_list delimiter stmt_list .
 
     ALIAS_KEYWORD        shift, and go to state 1
     CASE_KEYWORD         shift, and go to state 2
@@ -11400,10 +11372,10 @@ State 411
     CLASS_VAR_NAME       shift, and go to state 27
     CONSTANT_NAME        shift, and go to state 28
 
-    $default  reduce using rule 156 (when_list)
+    $default  reduce using rule 157 (when_stmt)
 
     expr         go to state 30
-    stmt         go to state 313
+    stmt         go to state 315
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -11415,8 +11387,7 @@ State 411
 
 State 412
 
-   95 stmt_list: stmt_list . stmt
-  155 when_list: WHEN_KEYWORD linefeed_or_empty expr_list delimiter stmt_list .
+  158 when_stmt: WHEN_KEYWORD linefeed_or_empty expr_list delimeter_or_empty THEN_KEYWORD . stmt_list
 
     ALIAS_KEYWORD        shift, and go to state 1
     CASE_KEYWORD         shift, and go to state 2
@@ -11445,10 +11416,9 @@ State 412
     CLASS_VAR_NAME       shift, and go to state 27
     CONSTANT_NAME        shift, and go to state 28
 
-    $default  reduce using rule 155 (when_list)
-
     expr         go to state 30
-    stmt         go to state 313
+    stmt_list    go to state 435
+    stmt         go to state 269
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -11467,15 +11437,26 @@ State 413
 
 State 414
 
-   90 delimiter: delimiter . SEMICOLON_SYMBOL
-   91          | delimiter . NEW_LINE_SYMBOL
-  128 delimeter_or_empty: delimiter .
-  157 when_list: when_list WHEN_KEYWORD linefeed_or_empty expr_list delimiter . stmt_list
+  105 param_list_not_empty: param_list_not_empty COMMA_SYMBOL linefeed_or_empty IDENTIFIER . linefeed_or_empty
+
+    NEW_LINE_SYMBOL  shift, and go to state 44
+
+    $default  reduce using rule 79 (linefeed_or_empty)
+
+    linefeed_or_empty  go to state 436
+    linefeed           go to state 46
+
+
+State 415
+
+   95 stmt_list: stmt_list . stmt
+  109 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_QUESTION '(' linefeed_or_empty param_list ')' delimiter stmt_list . END_KEYWORD
 
     ALIAS_KEYWORD        shift, and go to state 1
     CASE_KEYWORD         shift, and go to state 2
     DEFINED_KEYWORD      shift, and go to state 5
     IF_KEYWORD           shift, and go to state 6
+    END_KEYWORD          shift, and go to state 437
     FALSE_KEYWORD        shift, and go to state 7
     FOR_KEYWORD          shift, and go to state 8
     NIL_KEYWORD          shift, and go to state 9
@@ -11491,8 +11472,6 @@ State 414
     '('                  shift, and go to state 19
     '['                  shift, and go to state 20
     DOUBLE_COLON_SYMBOL  shift, and go to state 21
-    NEW_LINE_SYMBOL      shift, and go to state 180
-    SEMICOLON_SYMBOL     shift, and go to state 181
     STRING               shift, and go to state 22
     INTEGER_NUMBER       shift, and go to state 23
     FLOAT_NUMBER         shift, and go to state 24
@@ -11501,11 +11480,8 @@ State 414
     CLASS_VAR_NAME       shift, and go to state 27
     CONSTANT_NAME        shift, and go to state 28
 
-    $default  reduce using rule 128 (delimeter_or_empty)
-
     expr         go to state 30
-    stmt_list    go to state 437
-    stmt         go to state 267
+    stmt         go to state 315
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -11515,29 +11491,98 @@ State 414
     alias_stmt   go to state 42
 
 
-State 415
-
-  158 when_list: when_list WHEN_KEYWORD linefeed_or_empty expr_list delimeter_or_empty . THEN_KEYWORD stmt_list
-
-    THEN_KEYWORD  shift, and go to state 438
-
-
 State 416
 
-  105 param_list_not_empty: param_list_not_empty COMMA_SYMBOL linefeed_or_empty IDENTIFIER . linefeed_or_empty
+   95 stmt_list: stmt_list . stmt
+  112 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_EXCLAMATION '(' linefeed_or_empty param_list ')' delimiter stmt_list . END_KEYWORD
 
-    NEW_LINE_SYMBOL  shift, and go to state 44
+    ALIAS_KEYWORD        shift, and go to state 1
+    CASE_KEYWORD         shift, and go to state 2
+    DEFINED_KEYWORD      shift, and go to state 5
+    IF_KEYWORD           shift, and go to state 6
+    END_KEYWORD          shift, and go to state 438
+    FALSE_KEYWORD        shift, and go to state 7
+    FOR_KEYWORD          shift, and go to state 8
+    NIL_KEYWORD          shift, and go to state 9
+    RETURN_KEYWORD       shift, and go to state 10
+    SELF_KEYWORD         shift, and go to state 11
+    SUPER_KEYWORD        shift, and go to state 12
+    TRUE_KEYWORD         shift, and go to state 13
+    UNLESS_KEYWORD       shift, and go to state 14
+    WHILE_KEYWORD        shift, and go to state 15
+    NOT_KEYWORD          shift, and go to state 16
+    '-'                  shift, and go to state 17
+    LOGICAL_NOT_OP       shift, and go to state 18
+    '('                  shift, and go to state 19
+    '['                  shift, and go to state 20
+    DOUBLE_COLON_SYMBOL  shift, and go to state 21
+    STRING               shift, and go to state 22
+    INTEGER_NUMBER       shift, and go to state 23
+    FLOAT_NUMBER         shift, and go to state 24
+    IDENTIFIER           shift, and go to state 25
+    OBJECT_VAR_NAME      shift, and go to state 26
+    CLASS_VAR_NAME       shift, and go to state 27
+    CONSTANT_NAME        shift, and go to state 28
 
-    $default  reduce using rule 79 (linefeed_or_empty)
-
-    linefeed_or_empty  go to state 439
-    linefeed           go to state 46
+    expr         go to state 30
+    stmt         go to state 315
+    if_stmt      go to state 36
+    unless_stmt  go to state 37
+    while_stmt   go to state 38
+    for_stmt     go to state 39
+    return_stmt  go to state 40
+    case_stmt    go to state 41
+    alias_stmt   go to state 42
 
 
 State 417
 
    95 stmt_list: stmt_list . stmt
-  109 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_QUESTION '(' linefeed_or_empty param_list ')' delimiter stmt_list . END_KEYWORD
+  114 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_EQUAL '(' linefeed_or_empty param_list ')' delimiter stmt_list . END_KEYWORD
+
+    ALIAS_KEYWORD        shift, and go to state 1
+    CASE_KEYWORD         shift, and go to state 2
+    DEFINED_KEYWORD      shift, and go to state 5
+    IF_KEYWORD           shift, and go to state 6
+    END_KEYWORD          shift, and go to state 439
+    FALSE_KEYWORD        shift, and go to state 7
+    FOR_KEYWORD          shift, and go to state 8
+    NIL_KEYWORD          shift, and go to state 9
+    RETURN_KEYWORD       shift, and go to state 10
+    SELF_KEYWORD         shift, and go to state 11
+    SUPER_KEYWORD        shift, and go to state 12
+    TRUE_KEYWORD         shift, and go to state 13
+    UNLESS_KEYWORD       shift, and go to state 14
+    WHILE_KEYWORD        shift, and go to state 15
+    NOT_KEYWORD          shift, and go to state 16
+    '-'                  shift, and go to state 17
+    LOGICAL_NOT_OP       shift, and go to state 18
+    '('                  shift, and go to state 19
+    '['                  shift, and go to state 20
+    DOUBLE_COLON_SYMBOL  shift, and go to state 21
+    STRING               shift, and go to state 22
+    INTEGER_NUMBER       shift, and go to state 23
+    FLOAT_NUMBER         shift, and go to state 24
+    IDENTIFIER           shift, and go to state 25
+    OBJECT_VAR_NAME      shift, and go to state 26
+    CLASS_VAR_NAME       shift, and go to state 27
+    CONSTANT_NAME        shift, and go to state 28
+
+    expr         go to state 30
+    stmt         go to state 315
+    if_stmt      go to state 36
+    unless_stmt  go to state 37
+    while_stmt   go to state 38
+    for_stmt     go to state 39
+    return_stmt  go to state 40
+    case_stmt    go to state 41
+    alias_stmt   go to state 42
+
+
+State 418
+
+   95 stmt_list: stmt_list . stmt
+  108 method_stmt: DEF_KEYWORD linefeed_or_empty IDENTIFIER '(' linefeed_or_empty param_list ')' delimiter stmt_list . END_KEYWORD
 
     ALIAS_KEYWORD        shift, and go to state 1
     CASE_KEYWORD         shift, and go to state 2
@@ -11568,51 +11613,7 @@ State 417
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt         go to state 313
-    if_stmt      go to state 36
-    unless_stmt  go to state 37
-    while_stmt   go to state 38
-    for_stmt     go to state 39
-    return_stmt  go to state 40
-    case_stmt    go to state 41
-    alias_stmt   go to state 42
-
-
-State 418
-
-   95 stmt_list: stmt_list . stmt
-  112 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_EXCLAMATION '(' linefeed_or_empty param_list ')' delimiter stmt_list . END_KEYWORD
-
-    ALIAS_KEYWORD        shift, and go to state 1
-    CASE_KEYWORD         shift, and go to state 2
-    DEFINED_KEYWORD      shift, and go to state 5
-    IF_KEYWORD           shift, and go to state 6
-    END_KEYWORD          shift, and go to state 441
-    FALSE_KEYWORD        shift, and go to state 7
-    FOR_KEYWORD          shift, and go to state 8
-    NIL_KEYWORD          shift, and go to state 9
-    RETURN_KEYWORD       shift, and go to state 10
-    SELF_KEYWORD         shift, and go to state 11
-    SUPER_KEYWORD        shift, and go to state 12
-    TRUE_KEYWORD         shift, and go to state 13
-    UNLESS_KEYWORD       shift, and go to state 14
-    WHILE_KEYWORD        shift, and go to state 15
-    NOT_KEYWORD          shift, and go to state 16
-    '-'                  shift, and go to state 17
-    LOGICAL_NOT_OP       shift, and go to state 18
-    '('                  shift, and go to state 19
-    '['                  shift, and go to state 20
-    DOUBLE_COLON_SYMBOL  shift, and go to state 21
-    STRING               shift, and go to state 22
-    INTEGER_NUMBER       shift, and go to state 23
-    FLOAT_NUMBER         shift, and go to state 24
-    IDENTIFIER           shift, and go to state 25
-    OBJECT_VAR_NAME      shift, and go to state 26
-    CLASS_VAR_NAME       shift, and go to state 27
-    CONSTANT_NAME        shift, and go to state 28
-
-    expr         go to state 30
-    stmt         go to state 313
+    stmt         go to state 315
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -11624,14 +11625,15 @@ State 418
 
 State 419
 
-   95 stmt_list: stmt_list . stmt
-  114 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_EQUAL '(' linefeed_or_empty param_list ')' delimiter stmt_list . END_KEYWORD
+   90 delimiter: delimiter . SEMICOLON_SYMBOL
+   91          | delimiter . NEW_LINE_SYMBOL
+  128 delimeter_or_empty: delimiter .
+  145 elsif_stmt: ELSIF_KEYWORD linefeed_or_empty expr delimiter . stmt_list
 
     ALIAS_KEYWORD        shift, and go to state 1
     CASE_KEYWORD         shift, and go to state 2
     DEFINED_KEYWORD      shift, and go to state 5
     IF_KEYWORD           shift, and go to state 6
-    END_KEYWORD          shift, and go to state 442
     FALSE_KEYWORD        shift, and go to state 7
     FOR_KEYWORD          shift, and go to state 8
     NIL_KEYWORD          shift, and go to state 9
@@ -11647,6 +11649,8 @@ State 419
     '('                  shift, and go to state 19
     '['                  shift, and go to state 20
     DOUBLE_COLON_SYMBOL  shift, and go to state 21
+    NEW_LINE_SYMBOL      shift, and go to state 181
+    SEMICOLON_SYMBOL     shift, and go to state 182
     STRING               shift, and go to state 22
     INTEGER_NUMBER       shift, and go to state 23
     FLOAT_NUMBER         shift, and go to state 24
@@ -11655,8 +11659,11 @@ State 419
     CLASS_VAR_NAME       shift, and go to state 27
     CONSTANT_NAME        shift, and go to state 28
 
+    $default  reduce using rule 128 (delimeter_or_empty)
+
     expr         go to state 30
-    stmt         go to state 313
+    stmt_list    go to state 441
+    stmt         go to state 269
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -11668,8 +11675,29 @@ State 419
 
 State 420
 
+  146 elsif_stmt: ELSIF_KEYWORD linefeed_or_empty expr delimeter_or_empty . THEN_KEYWORD stmt_list
+
+    THEN_KEYWORD  shift, and go to state 442
+
+
+State 421
+
+  135 if_stmt: IF_KEYWORD linefeed_or_empty expr delimiter stmt_list elsif_list ELSE_KEYWORD stmt_list END_KEYWORD .
+
+    $default  reduce using rule 135 (if_stmt)
+
+
+State 422
+
+  132 if_stmt: IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list ELSE_KEYWORD stmt_list END_KEYWORD .
+
+    $default  reduce using rule 132 (if_stmt)
+
+
+State 423
+
    95 stmt_list: stmt_list . stmt
-  108 method_stmt: DEF_KEYWORD linefeed_or_empty IDENTIFIER '(' linefeed_or_empty param_list ')' delimiter stmt_list . END_KEYWORD
+  136 if_stmt: IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list elsif_list ELSE_KEYWORD stmt_list . END_KEYWORD
 
     ALIAS_KEYWORD        shift, and go to state 1
     CASE_KEYWORD         shift, and go to state 2
@@ -11700,7 +11728,7 @@ State 420
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt         go to state 313
+    stmt         go to state 315
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -11708,124 +11736,9 @@ State 420
     return_stmt  go to state 40
     case_stmt    go to state 41
     alias_stmt   go to state 42
-
-
-State 421
-
-   90 delimiter: delimiter . SEMICOLON_SYMBOL
-   91          | delimiter . NEW_LINE_SYMBOL
-  128 delimeter_or_empty: delimiter .
-  145 elsif_stmt: ELSIF_KEYWORD linefeed_or_empty expr delimiter . stmt_list
-
-    ALIAS_KEYWORD        shift, and go to state 1
-    CASE_KEYWORD         shift, and go to state 2
-    DEFINED_KEYWORD      shift, and go to state 5
-    IF_KEYWORD           shift, and go to state 6
-    FALSE_KEYWORD        shift, and go to state 7
-    FOR_KEYWORD          shift, and go to state 8
-    NIL_KEYWORD          shift, and go to state 9
-    RETURN_KEYWORD       shift, and go to state 10
-    SELF_KEYWORD         shift, and go to state 11
-    SUPER_KEYWORD        shift, and go to state 12
-    TRUE_KEYWORD         shift, and go to state 13
-    UNLESS_KEYWORD       shift, and go to state 14
-    WHILE_KEYWORD        shift, and go to state 15
-    NOT_KEYWORD          shift, and go to state 16
-    '-'                  shift, and go to state 17
-    LOGICAL_NOT_OP       shift, and go to state 18
-    '('                  shift, and go to state 19
-    '['                  shift, and go to state 20
-    DOUBLE_COLON_SYMBOL  shift, and go to state 21
-    NEW_LINE_SYMBOL      shift, and go to state 180
-    SEMICOLON_SYMBOL     shift, and go to state 181
-    STRING               shift, and go to state 22
-    INTEGER_NUMBER       shift, and go to state 23
-    FLOAT_NUMBER         shift, and go to state 24
-    IDENTIFIER           shift, and go to state 25
-    OBJECT_VAR_NAME      shift, and go to state 26
-    CLASS_VAR_NAME       shift, and go to state 27
-    CONSTANT_NAME        shift, and go to state 28
-
-    $default  reduce using rule 128 (delimeter_or_empty)
-
-    expr         go to state 30
-    stmt_list    go to state 444
-    stmt         go to state 267
-    if_stmt      go to state 36
-    unless_stmt  go to state 37
-    while_stmt   go to state 38
-    for_stmt     go to state 39
-    return_stmt  go to state 40
-    case_stmt    go to state 41
-    alias_stmt   go to state 42
-
-
-State 422
-
-  146 elsif_stmt: ELSIF_KEYWORD linefeed_or_empty expr delimeter_or_empty . THEN_KEYWORD stmt_list
-
-    THEN_KEYWORD  shift, and go to state 445
-
-
-State 423
-
-  135 if_stmt: IF_KEYWORD linefeed_or_empty expr delimiter stmt_list elsif_list ELSE_KEYWORD stmt_list END_KEYWORD .
-
-    $default  reduce using rule 135 (if_stmt)
 
 
 State 424
-
-  132 if_stmt: IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list ELSE_KEYWORD stmt_list END_KEYWORD .
-
-    $default  reduce using rule 132 (if_stmt)
-
-
-State 425
-
-   95 stmt_list: stmt_list . stmt
-  136 if_stmt: IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list elsif_list ELSE_KEYWORD stmt_list . END_KEYWORD
-
-    ALIAS_KEYWORD        shift, and go to state 1
-    CASE_KEYWORD         shift, and go to state 2
-    DEFINED_KEYWORD      shift, and go to state 5
-    IF_KEYWORD           shift, and go to state 6
-    END_KEYWORD          shift, and go to state 446
-    FALSE_KEYWORD        shift, and go to state 7
-    FOR_KEYWORD          shift, and go to state 8
-    NIL_KEYWORD          shift, and go to state 9
-    RETURN_KEYWORD       shift, and go to state 10
-    SELF_KEYWORD         shift, and go to state 11
-    SUPER_KEYWORD        shift, and go to state 12
-    TRUE_KEYWORD         shift, and go to state 13
-    UNLESS_KEYWORD       shift, and go to state 14
-    WHILE_KEYWORD        shift, and go to state 15
-    NOT_KEYWORD          shift, and go to state 16
-    '-'                  shift, and go to state 17
-    LOGICAL_NOT_OP       shift, and go to state 18
-    '('                  shift, and go to state 19
-    '['                  shift, and go to state 20
-    DOUBLE_COLON_SYMBOL  shift, and go to state 21
-    STRING               shift, and go to state 22
-    INTEGER_NUMBER       shift, and go to state 23
-    FLOAT_NUMBER         shift, and go to state 24
-    IDENTIFIER           shift, and go to state 25
-    OBJECT_VAR_NAME      shift, and go to state 26
-    CLASS_VAR_NAME       shift, and go to state 27
-    CONSTANT_NAME        shift, and go to state 28
-
-    expr         go to state 30
-    stmt         go to state 313
-    if_stmt      go to state 36
-    unless_stmt  go to state 37
-    while_stmt   go to state 38
-    for_stmt     go to state 39
-    return_stmt  go to state 40
-    case_stmt    go to state 41
-    alias_stmt   go to state 42
-
-
-State 426
 
    95 stmt_list: stmt_list . stmt
   149 for_stmt: FOR_KEYWORD linefeed_or_empty expr IN_KEYWORD linefeed_or_empty expr DO_KEYWORD delimeter_or_empty stmt_list . END_KEYWORD
@@ -11834,7 +11747,7 @@ State 426
     CASE_KEYWORD         shift, and go to state 2
     DEFINED_KEYWORD      shift, and go to state 5
     IF_KEYWORD           shift, and go to state 6
-    END_KEYWORD          shift, and go to state 447
+    END_KEYWORD          shift, and go to state 444
     FALSE_KEYWORD        shift, and go to state 7
     FOR_KEYWORD          shift, and go to state 8
     NIL_KEYWORD          shift, and go to state 9
@@ -11859,7 +11772,7 @@ State 426
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt         go to state 313
+    stmt         go to state 315
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -11869,80 +11782,80 @@ State 426
     alias_stmt   go to state 42
 
 
-State 427
+State 425
 
   150 for_stmt: FOR_KEYWORD linefeed_or_empty expr IN_KEYWORD linefeed_or_empty expr delimiter stmt_list END_KEYWORD .
 
     $default  reduce using rule 150 (for_stmt)
 
 
-State 428
+State 426
 
    32 expr: SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_QUESTION '(' linefeed_or_empty expr_list linefeed_or_empty ')' .
 
     $default  reduce using rule 32 (expr)
 
 
-State 429
+State 427
 
    34 expr: SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_EXCLAMATION '(' linefeed_or_empty expr_list linefeed_or_empty ')' .
 
     $default  reduce using rule 34 (expr)
 
 
-State 430
+State 428
 
    36 expr: SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_EQUAL '(' linefeed_or_empty expr_list linefeed_or_empty ')' .
 
     $default  reduce using rule 36 (expr)
 
 
-State 431
+State 429
 
    30 expr: SELF_KEYWORD '.' linefeed_or_empty IDENTIFIER '(' linefeed_or_empty expr_list linefeed_or_empty ')' .
 
     $default  reduce using rule 30 (expr)
 
 
-State 432
+State 430
 
   140 unless_stmt: UNLESS_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list ELSE_KEYWORD stmt_list END_KEYWORD .
 
     $default  reduce using rule 140 (unless_stmt)
 
 
-State 433
+State 431
 
    38 expr: expr '.' linefeed_or_empty METHOD_MARK_QUESTION '(' linefeed_or_empty expr_list linefeed_or_empty ')' .
 
     $default  reduce using rule 38 (expr)
 
 
-State 434
+State 432
 
    40 expr: expr '.' linefeed_or_empty METHOD_MARK_EXCLAMATION '(' linefeed_or_empty expr_list linefeed_or_empty ')' .
 
     $default  reduce using rule 40 (expr)
 
 
-State 435
+State 433
 
    42 expr: expr '.' linefeed_or_empty METHOD_MARK_EQUAL '(' linefeed_or_empty expr_list linefeed_or_empty ')' .
 
     $default  reduce using rule 42 (expr)
 
 
-State 436
+State 434
 
    28 expr: expr '.' linefeed_or_empty IDENTIFIER '(' linefeed_or_empty expr_list linefeed_or_empty ')' .
 
     $default  reduce using rule 28 (expr)
 
 
-State 437
+State 435
 
    95 stmt_list: stmt_list . stmt
-  157 when_list: when_list WHEN_KEYWORD linefeed_or_empty expr_list delimiter stmt_list .
+  158 when_stmt: WHEN_KEYWORD linefeed_or_empty expr_list delimeter_or_empty THEN_KEYWORD stmt_list .
 
     ALIAS_KEYWORD        shift, and go to state 1
     CASE_KEYWORD         shift, and go to state 2
@@ -11971,10 +11884,10 @@ State 437
     CLASS_VAR_NAME       shift, and go to state 27
     CONSTANT_NAME        shift, and go to state 28
 
-    $default  reduce using rule 157 (when_list)
+    $default  reduce using rule 158 (when_stmt)
 
     expr         go to state 30
-    stmt         go to state 313
+    stmt         go to state 315
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -11984,85 +11897,42 @@ State 437
     alias_stmt   go to state 42
 
 
-State 438
-
-  158 when_list: when_list WHEN_KEYWORD linefeed_or_empty expr_list delimeter_or_empty THEN_KEYWORD . stmt_list
-
-    ALIAS_KEYWORD        shift, and go to state 1
-    CASE_KEYWORD         shift, and go to state 2
-    DEFINED_KEYWORD      shift, and go to state 5
-    IF_KEYWORD           shift, and go to state 6
-    FALSE_KEYWORD        shift, and go to state 7
-    FOR_KEYWORD          shift, and go to state 8
-    NIL_KEYWORD          shift, and go to state 9
-    RETURN_KEYWORD       shift, and go to state 10
-    SELF_KEYWORD         shift, and go to state 11
-    SUPER_KEYWORD        shift, and go to state 12
-    TRUE_KEYWORD         shift, and go to state 13
-    UNLESS_KEYWORD       shift, and go to state 14
-    WHILE_KEYWORD        shift, and go to state 15
-    NOT_KEYWORD          shift, and go to state 16
-    '-'                  shift, and go to state 17
-    LOGICAL_NOT_OP       shift, and go to state 18
-    '('                  shift, and go to state 19
-    '['                  shift, and go to state 20
-    DOUBLE_COLON_SYMBOL  shift, and go to state 21
-    STRING               shift, and go to state 22
-    INTEGER_NUMBER       shift, and go to state 23
-    FLOAT_NUMBER         shift, and go to state 24
-    IDENTIFIER           shift, and go to state 25
-    OBJECT_VAR_NAME      shift, and go to state 26
-    CLASS_VAR_NAME       shift, and go to state 27
-    CONSTANT_NAME        shift, and go to state 28
-
-    expr         go to state 30
-    stmt_list    go to state 448
-    stmt         go to state 267
-    if_stmt      go to state 36
-    unless_stmt  go to state 37
-    while_stmt   go to state 38
-    for_stmt     go to state 39
-    return_stmt  go to state 40
-    case_stmt    go to state 41
-    alias_stmt   go to state 42
-
-
-State 439
+State 436
 
   105 param_list_not_empty: param_list_not_empty COMMA_SYMBOL linefeed_or_empty IDENTIFIER linefeed_or_empty .
 
     $default  reduce using rule 105 (param_list_not_empty)
 
 
-State 440
+State 437
 
   109 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_QUESTION '(' linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD .
 
     $default  reduce using rule 109 (method_stmt)
 
 
-State 441
+State 438
 
   112 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_EXCLAMATION '(' linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD .
 
     $default  reduce using rule 112 (method_stmt)
 
 
-State 442
+State 439
 
   114 method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_EQUAL '(' linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD .
 
     $default  reduce using rule 114 (method_stmt)
 
 
-State 443
+State 440
 
   108 method_stmt: DEF_KEYWORD linefeed_or_empty IDENTIFIER '(' linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD .
 
     $default  reduce using rule 108 (method_stmt)
 
 
-State 444
+State 441
 
    95 stmt_list: stmt_list . stmt
   145 elsif_stmt: ELSIF_KEYWORD linefeed_or_empty expr delimiter stmt_list .
@@ -12097,7 +11967,7 @@ State 444
     $default  reduce using rule 145 (elsif_stmt)
 
     expr         go to state 30
-    stmt         go to state 313
+    stmt         go to state 315
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -12107,7 +11977,7 @@ State 444
     alias_stmt   go to state 42
 
 
-State 445
+State 442
 
   146 elsif_stmt: ELSIF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD . stmt_list
 
@@ -12139,8 +12009,8 @@ State 445
     CONSTANT_NAME        shift, and go to state 28
 
     expr         go to state 30
-    stmt_list    go to state 449
-    stmt         go to state 267
+    stmt_list    go to state 445
+    stmt         go to state 269
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38
@@ -12150,66 +12020,21 @@ State 445
     alias_stmt   go to state 42
 
 
-State 446
+State 443
 
   136 if_stmt: IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list elsif_list ELSE_KEYWORD stmt_list END_KEYWORD .
 
     $default  reduce using rule 136 (if_stmt)
 
 
-State 447
+State 444
 
   149 for_stmt: FOR_KEYWORD linefeed_or_empty expr IN_KEYWORD linefeed_or_empty expr DO_KEYWORD delimeter_or_empty stmt_list END_KEYWORD .
 
     $default  reduce using rule 149 (for_stmt)
 
 
-State 448
-
-   95 stmt_list: stmt_list . stmt
-  158 when_list: when_list WHEN_KEYWORD linefeed_or_empty expr_list delimeter_or_empty THEN_KEYWORD stmt_list .
-
-    ALIAS_KEYWORD        shift, and go to state 1
-    CASE_KEYWORD         shift, and go to state 2
-    DEFINED_KEYWORD      shift, and go to state 5
-    IF_KEYWORD           shift, and go to state 6
-    FALSE_KEYWORD        shift, and go to state 7
-    FOR_KEYWORD          shift, and go to state 8
-    NIL_KEYWORD          shift, and go to state 9
-    RETURN_KEYWORD       shift, and go to state 10
-    SELF_KEYWORD         shift, and go to state 11
-    SUPER_KEYWORD        shift, and go to state 12
-    TRUE_KEYWORD         shift, and go to state 13
-    UNLESS_KEYWORD       shift, and go to state 14
-    WHILE_KEYWORD        shift, and go to state 15
-    NOT_KEYWORD          shift, and go to state 16
-    '-'                  shift, and go to state 17
-    LOGICAL_NOT_OP       shift, and go to state 18
-    '('                  shift, and go to state 19
-    '['                  shift, and go to state 20
-    DOUBLE_COLON_SYMBOL  shift, and go to state 21
-    STRING               shift, and go to state 22
-    INTEGER_NUMBER       shift, and go to state 23
-    FLOAT_NUMBER         shift, and go to state 24
-    IDENTIFIER           shift, and go to state 25
-    OBJECT_VAR_NAME      shift, and go to state 26
-    CLASS_VAR_NAME       shift, and go to state 27
-    CONSTANT_NAME        shift, and go to state 28
-
-    $default  reduce using rule 158 (when_list)
-
-    expr         go to state 30
-    stmt         go to state 313
-    if_stmt      go to state 36
-    unless_stmt  go to state 37
-    while_stmt   go to state 38
-    for_stmt     go to state 39
-    return_stmt  go to state 40
-    case_stmt    go to state 41
-    alias_stmt   go to state 42
-
-
-State 449
+State 445
 
    95 stmt_list: stmt_list . stmt
   146 elsif_stmt: ELSIF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list .
@@ -12244,7 +12069,7 @@ State 449
     $default  reduce using rule 146 (elsif_stmt)
 
     expr         go to state 30
-    stmt         go to state 313
+    stmt         go to state 315
     if_stmt      go to state 36
     unless_stmt  go to state 37
     while_stmt   go to state 38

@@ -230,7 +230,7 @@ linefeed: NEW_LINE_SYMBOL
 
 programm_element: class_stmt delimiter {$$=createClassProgramElementNode($1);}
     | method_stmt delimiter {$$=createMethodProgramElementNode($1);}
-    | stmt delimiter {$$=createStmtProgramElementNode($1);}
+    | stmt {$$=createStmtProgramElementNode($1);}
     ;
 
 programm_el_list_not_empty: programm_element {$$=createProgramElementList($1);}
