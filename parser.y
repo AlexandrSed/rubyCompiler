@@ -13,6 +13,7 @@
     #include "parser_classes/CaseStmt/CaseStmtNode.h"
     #include "parser_classes/AliasStmt/AliasStmtNode.h"
     #include "parser_classes/ReturnStmt/ReturnStmtNode.h"
+    #include "parser_classes/StmtNode/StmtNode.h"
 %}
 
 %union {
@@ -32,6 +33,8 @@
     CaseStmtNode* case_union;
     AliasStmtNode* alias_union;
     ReturnStmtNode* return_union;
+    StmtNode* stmt_union;
+    std::vector<StmtNode*>* stmt_list_union;
     
 }
 
@@ -112,6 +115,8 @@
 %type<case_union> case_stmt
 %type<alias_union> alias_stmt
 %type<return_union> return_stmt
+%type<stmt_union> stmt
+%type<stmt_list_union> stmt_list
 
 %%
 
@@ -224,18 +229,18 @@ expr_list: expr {$$=createExprList($1);}
     | expr_list COMMA_SYMBOL expr {$$=addExprToList($1, $3);}
     ;
 
-stmt_list: stmt
-    | stmt_list stmt
+stmt_list: stmt {$$=createStmtList($1);}
+    | stmt_list stmt {$$=addStmtToList($1, $2);}
     ;
     
-stmt: expr delimiter
-    | if_stmt delimiter
-    | while_stmt delimiter
-    | for_stmt delimiter
-    | case_stmt delimiter
-    | unless_stmt delimiter
-    | return_stmt delimiter
-    | alias_stmt delimiter
+stmt: expr delimiter {$$=createStmtNodeExpr($1);}
+    | if_stmt delimiter  {$$=createStmtNodeIf($1);}
+    | while_stmt delimiter {$$=createStmtNodeWhile($1);}
+    | for_stmt delimiter {$$=createStmtNodeFor($1);}
+    | case_stmt delimiter {$$=createStmtNodeCase($1);}
+    | unless_stmt delimiter {$$=createStmtNodeUnless($1);}
+    | return_stmt delimiter {$$=createStmtNodeReturn($1);}
+    | alias_stmt delimiter {$$=createStmtNodeAlias($1);}
     ;
 
 param_list_not_empty: IDENTIFIER linefeed_or_empty
