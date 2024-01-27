@@ -7,7 +7,8 @@
     #include "ExprNode.h"
     #include "IfStmtNode.h"
     #include "UnlessStmtNode.h"
-    #include "WhileStmtNode"
+    #include "WhileStmtNode.h"
+    #include "ForStmtNode.h"
 %}
 
 %union {
@@ -19,6 +20,7 @@
     UnlessStmtNode* unless_union;
     ElsifNode* elsif_union;
     WhileStmtNode* while_union;
+    ForStmtNode* for_union;
 	std::vector<ExprNode*>* expr_list_union;
     std::vector<ElsifNode*>* elsif_list_union;
 }
@@ -94,6 +96,7 @@
 %type<elsif_list_union> elsif_list
 %type<expr_list_union> expr_list
 %type<while_union> while_stmt
+%type<for_union> for_stmt
 
 %%
 
@@ -291,8 +294,8 @@ while_stmt: WHILE_KEYWORD linefeed_or_empty expr DO_KEYWORD delimeter_or_empty s
     | WHILE_KEYWORD linefeed_or_empty expr delimiter stmt_list END_KEYWORD  {$$=WhileStmtNode::createWhileStmtNode($3, $5);}
     ;
 
-for_stmt: FOR_KEYWORD linefeed_or_empty expr IN_KEYWORD linefeed_or_empty expr DO_KEYWORD delimeter_or_empty stmt_list END_KEYWORD
-    | FOR_KEYWORD linefeed_or_empty expr IN_KEYWORD linefeed_or_empty expr delimiter stmt_list END_KEYWORD
+for_stmt: FOR_KEYWORD linefeed_or_empty expr IN_KEYWORD linefeed_or_empty expr DO_KEYWORD delimeter_or_empty stmt_list END_KEYWORD  {$$=ForStmtNode::createForStmtNode($3, $6, $9);}
+    | FOR_KEYWORD linefeed_or_empty expr IN_KEYWORD linefeed_or_empty expr delimiter stmt_list END_KEYWORD  {$$=ForStmtNode::createForStmtNode($3, $6, $8);}
     ;
 
 return_stmt: RETURN_KEYWORD expr
