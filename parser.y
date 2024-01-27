@@ -10,6 +10,7 @@
     #include "WhileStmtNode.h"
     #include "ForStmtNode.h"
     #include "WhenStmtNode.h"
+    #include "CaseStmtNode.h"
 %}
 
 %union {
@@ -26,6 +27,7 @@
     std::vector<ElsifNode*>* elsif_list_union;
     WhenStmtNode* when_union;
     std::vector<WhenStmtNode*>* when_list_union;
+    CaseStmtNode* case_union;
 }
 
 %token ALIAS_KEYWORD
@@ -102,6 +104,7 @@
 %type<for_union> for_stmt
 %type<when_union> when_stmt
 %type<when_list_union> when_list
+type<case_union> case_stmt
 
 %%
 
@@ -307,8 +310,8 @@ return_stmt: RETURN_KEYWORD expr
     | RETURN_KEYWORD
     ;
 
-case_stmt: CASE_KEYWORD linefeed_or_empty expr delimeter_or_empty when_list END_KEYWORD
-    | CASE_KEYWORD linefeed_or_empty expr delimeter_or_empty when_list ELSE_KEYWORD delimeter_or_empty stmt_list END_KEYWORD
+case_stmt: CASE_KEYWORD linefeed_or_empty expr delimeter_or_empty when_list END_KEYWORD {$$=CaseStmtNode::createCaseStmt($3, $5);}
+    | CASE_KEYWORD linefeed_or_empty expr delimeter_or_empty when_list ELSE_KEYWORD delimeter_or_empty stmt_list END_KEYWORD    {$$=CaseStmtNode::createCaseStmtWithElse($3, $5, $8);}
     ;
 
 when_list: when_stmt    {$$=createWhenList($1);}
