@@ -25,6 +25,7 @@
 	std::vector<ExprNode*>* expr_list_union;
     std::vector<ElsifNode*>* elsif_list_union;
     WhenStmtNode* when_union;
+    std::vector<WhenStmtNode*>* when_list_union;
 }
 
 %token ALIAS_KEYWORD
@@ -100,6 +101,7 @@
 %type<while_union> while_stmt
 %type<for_union> for_stmt
 %type<when_union> when_stmt
+%type<when_list_union> when_list
 
 %%
 
@@ -309,8 +311,8 @@ case_stmt: CASE_KEYWORD linefeed_or_empty expr delimeter_or_empty when_list END_
     | CASE_KEYWORD linefeed_or_empty expr delimeter_or_empty when_list ELSE_KEYWORD delimeter_or_empty stmt_list END_KEYWORD
     ;
 
-when_list: when_stmt
-    | when_list when_stmt
+when_list: when_stmt    {$$=createWhenList($1);}
+    | when_list when_stmt   {$$=addWhenToList($1, $2);}
     ;
 
 when_stmt:WHEN_KEYWORD linefeed_or_empty expr_list delimiter stmt_list  {$$=WhenStmtNode::createWhenStmt($3, $5);}

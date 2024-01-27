@@ -12,3 +12,13 @@ public:
     }
 
 };
+
+std::vector<WhenStmtNode*>* createWhenList(WhenStmtNode* when) {
+    std::vector<WhenStmtNode*> result = {when};
+    return &result;
+}
+
+std::vector<WhenStmtNode*>* addWhenToList(std::vector<WhenStmtNode*>* whenList, WhenStmtNode* when) {
+    whenList->push_back(when);
+    return whenList;
+}
