@@ -43,42 +43,42 @@ _+[0-9_]+\.?[0-9_]*  { printf("Error: Underscore at the start of a number: %s\n"
 {DIGIT}+(_{DIGIT}+)*\._[0-9_]+ { printf("Error: Underscore right after point: %s\n", yytext); }
 
 
-alias		{ printf("Found keyword: %s\n", yytext); }
-and			{ printf("Found keyword: %s\n", yytext); }
+alias		{ return ALIAS_KEYWORD; }
+and			{ return AND_KEYWORD; }
 begin		{ printf("Found keyword: %s\n", yytext); }
 break		{ printf("Found keyword: %s\n", yytext); }
-case		{ printf("Found keyword: %s\n", yytext); }
-class		{ printf("Found keyword: %s\n", yytext); }
-def			{ printf("Found keyword: %s\n", yytext); }
+case		{ return CASE_KEYWORD; }
+class		{ return CLASS_KEYWORD; }
+def			{ return DEF_KEYWORD; }
 "defined?"	{ printf("Found keyword: %s\n", yytext); }
-do			{ printf("Found keyword: %s\n", yytext); }
-if			{ printf("Found keyword: %s\n", yytext); }
-else		{ printf("Found keyword: %s\n", yytext); }
-elsif		{ printf("Found keyword: %s\n", yytext); }
-end			{ printf("Found keyword: %s\n", yytext); }
+do			{ return DO_KEYWORD; }
+if			{ return IF_KEYWORD; }
+else		{ return ELSE_KEYWORD; }
+elsif		{ return ELSIF_KEYWORD; }
+end			{ return END_KEYWORD; }
 ensure		{ printf("Found keyword: %s\n", yytext); }
-false		{ printf("Found keyword: %s\n", yytext); }
-for			{ printf("Found keyword: %s\n", yytext); }
-in			{ printf("Found keyword: %s\n", yytext); }
+false		{ return FALSE_KEYWORD; }
+for			{ return FOR_KEYWORD; }
+in			{ return IN_KEYWORD; }
 module		{ printf("Found keyword: %s\n", yytext); }
 next		{ printf("Found keyword: %s\n", yytext); }
-nil			{ printf("Found keyword: %s\n", yytext); }
-not			{ printf("Found keyword: %s\n", yytext); }
-or			{ printf("Found keyword: %s\n", yytext); }
+nil			{ return NIL_KEYWORD; }
+not			{ return NOT_KEYWORD; }
+or			{ return OR_KEYWORD; }
 redo		{ printf("Found keyword: %s\n", yytext); }
 rescue		{ printf("Found keyword: %s\n", yytext); }
 retry		{ printf("Found keyword: %s\n", yytext); }
-return		{ printf("Found keyword: %s\n", yytext); }
-self		{ printf("Found keyword: %s\n", yytext); }
-super		{ printf("Found keyword: %s\n", yytext); }
-superclass  { printf("Found keyword: %s\n", yytext); }
-then		{ printf("Found keyword: %s\n", yytext); }
-true		{ printf("Found keyword: %s\n", yytext); }
+return		{ return RETURN_KEYWORD; }
+self		{ return SELF_KEYWORD; }
+super		{ return SUPER_KEYWORD; }
+superclass  { return SUPERCLASS_KEYWORD; }
+then		{ return THEN_KEYWORD; }
+true		{ return TRUE_KEYWORD; }
 undef		{ printf("Found keyword: %s\n", yytext); }
-unless		{ printf("Found keyword: %s\n", yytext); }
+unless		{ return UNLESS_KEYWORD; }
 until		{ printf("Found keyword: %s\n", yytext); }
-when		{ printf("Found keyword: %s\n", yytext); }
-while		{ printf("Found keyword: %s\n", yytext); }
+when		{ return WHEN_KEYWORD; }
+while		{ return WHILE_KEYWORD;  }
 yield		{ printf("Found keyword: %s\n", yytext); }
 
 "+"         { printf("Found arithmetic operation: %s\n", yytext); }   
@@ -86,40 +86,40 @@ yield		{ printf("Found keyword: %s\n", yytext); }
 "*"         { printf("Found arithmetic operation: %s\n", yytext); }
 "/"         { printf("Found arithmetic operation: %s\n", yytext); }
 "%"         { printf("Found arithmetic operation: %s\n", yytext); }
-"**"        { printf("Found arithmetic operation: %s\n", yytext); }
+"**"        { return ARITHMETIC_POW_OP; }
 
-"=="        { printf("Found arithmetic operation: %s\n", yytext); }
-"!="        { printf("Found arithmetic operation: %s\n", yytext); }
-">"         { printf("Found arithmetic operation: %s\n", yytext); }
-"<"         { printf("Found arithmetic operation: %s\n", yytext); }
-">="        { printf("Found arithmetic operation: %s\n", yytext); }
-"<="        { printf("Found arithmetic operation: %s\n", yytext); }
-"<=>"       { printf("Found arithmetic operation: %s\n", yytext); }
-"==="       { printf("Found arithmetic operation: %s\n", yytext); }
+"=="        { return EQL_OP; }
+"!="        { return NOT_EQL_OP; }
+">"         { return GREATER_OP; }
+"<"         { return LESS_OP; }
+">="        { return GREATER_OR_EQL_OP; }
+"<="        { return LESS_OR_EQL_OP; }
+"<=>"       { return COMB_COMPARISON_OP; }
+"==="       { return CASE_EQL_OP; }
 "eql?"      { printf("Found arithmetic operation: %s\n", yytext); }
 "equal?"    { printf("Found arithmetic operation: %s\n", yytext); }
 
 "="         { printf("Found arithmetic operation: %s\n", yytext); }
-"+="        { printf("Found arithmetic operation: %s\n", yytext); }
-"-="        { printf("Found arithmetic operation: %s\n", yytext); }
-"*="        { printf("Found arithmetic operation: %s\n", yytext); }
-"/="        { printf("Found arithmetic operation: %s\n", yytext); }
-"%="        { printf("Found arithmetic operation: %s\n", yytext); }
-"**="       { printf("Found arithmetic operation: %s\n", yytext); }
+"+="        { return ADD_ASSIGN_OP; }
+"-="        { return SUB_ASSIGN_OP; }
+"*="        { return MUL_ASSIGN_OP; }
+"/="        { return DIV_ASSIGN_OP; }
+"%="        { return MOD_ASSIGN_OP; }
+"**="       { return POW_ASSIGN_OP; }
 
-"&"         { printf("Found operation: %s\n", yytext); }
-"|"         { printf("Found operation: %s\n", yytext); }
-"^"         { printf("Found operation: %s\n", yytext); }
-"~"         { printf("Found operation: %s\n", yytext); }
-"<<"        { printf("Found comparison operation: %s\n", yytext); }
-">>"        { printf("Found comparison operation: %s\n", yytext); }
+"&"         { return BIN_AND_OP; }
+"|"         { return BIN_OR_OP; }
+"^"         { return BIN_XOR_OP}
+"~"         { return BIN_ONES_COMPLEMENT_OP; }
+"<<"        { return BIN_LEFT_SHIFT_OP; }
+">>"        { return BIN_RIGHT_SHIFT_OP; }
 
-"&&"        { printf("Found operation: %s\n", yytext); }
-"||"        { printf("Found operation: %s\n", yytext); }
-"!"         { printf("Found operation: %s\n", yytext); }
+"&&"        { return LOGICAL_AND_OP; }
+"||"        { return LOGICAL_OR_OP; }
+"!"         { return LOGICAL_NOT_OP; }
 
-".."        { printf("Found operation: %s\n", yytext); }
-"..."       { printf("Found operation: %s\n", yytext); }
+".."        { return EXCLUSIVE_RANGE_OP; }
+"..."       { return INCLUSIVE_RANGE_OP; }
 
 "("         { printf("Found bracket: %s\n", yytext); }
 ")"         { printf("Found bracket: %s\n", yytext); }
@@ -137,13 +137,13 @@ yield		{ printf("Found keyword: %s\n", yytext); }
 "["         { printf("Found bracket: %s\n", yytext); }
 "]"         { printf("Found bracket: %s\n", yytext); }
 
-"?"         { printf("Found question symbol: %s\n", yytext); }
+"?"         { return QUESTION_SYMBOL; }
 
 "."         { printf("Found special symbol: %s\n", yytext); }
-","         { printf("Found special symbol: %s\n", yytext); }
-":"         { printf("Found special symbol: %s\n", yytext); }
-"::"        { printf("Found special symbol: %s\n", yytext); }
-";"         { printf("Found special symbol: %s\n", yytext); }
+","         { return COMMA_SYMBOL; }
+":"         { return COLON_SYMBOL; }
+"::"        { return DOUBLE_COLON_SYMBOL; }
+";"         { return SEMICOLON_SYMBOL; }
 "\n"        { printf("Found line feed: %s\n", yytext); }
 
 \"          {
