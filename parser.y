@@ -15,6 +15,8 @@
     #include "parser_classes/ReturnStmt/ReturnStmtNode.h"
     #include "parser_classes/MethodStmtNode/MethodStmtNode.h"
     #include "parser_classes/StmtNode/StmtNode.h"
+    #include "parser_classes/ClassBodyStmt/ClassBodyStmtNode.h"
+    #include "parser_classes/ClassStmt/ClassStmtNode.h"
     #include "parser_classes/ProgramElementNode/ProgramElementNode.h"
 %}
 
@@ -39,6 +41,9 @@
     std::vector<StmtNode*>* stmt_list_union;
     MethodStmtNode* method_union;
     std::vector<std::string>* param_list_union;
+    ClassBodyStmtNode* class_body_stmt_union;
+    std::vector<ClassBodyStmtNode*>* class_body_union;
+    ClassStmtNode* class_stmt_union;
     ProgramElementNode* programm_el_union;
     std::vector<ProgramElementNode*>* programm_el_list_union;
 }
@@ -124,6 +129,9 @@
 %type<stmt_list_union> stmt_list
 %type<method_union> method_stmt
 %type<param_list_union> param_list_not_empty param_list
+%type<class_body_stmt_union> class_body_stmt
+%type<class_body_union> class_body_not_empty class_body
+%type<class_stmt_union> class_stmt
 %type<programm_el_union> programm_element
 %type<programm_el_list_union> programm_el_list_not_empty
 %%
@@ -269,23 +277,23 @@ method_stmt: DEF_KEYWORD linefeed_or_empty IDENTIFIER '(' linefeed_or_empty para
     | DEF_KEYWORD linefeed_or_empty METHOD_MARK_EQUAL delimiter stmt_list END_KEYWORD   {$$=MethodStmtNode::createMethodStmtWithoutParams(MethodType.markEqual, $3, $5);}
     ;
 
-class_stmt: CLASS_KEYWORD linefeed_or_empty CONSTANT_NAME delimiter class_body END_KEYWORD
-    | CLASS_KEYWORD linefeed_or_empty CONSTANT_NAME '<' CONSTANT_NAME delimiter class_body END_KEYWORD
+class_stmt: CLASS_KEYWORD linefeed_or_empty CONSTANT_NAME delimiter class_body END_KEYWORD  {$$=ClassStmtNode::createClassStmt($3, $5);}
+    | CLASS_KEYWORD linefeed_or_empty CONSTANT_NAME '<' CONSTANT_NAME delimiter class_body END_KEYWORD {$$=ClassStmtNode::createClassStmtWithParent($3, $5, $7);}
     ;
 
-class_body_stmt: method_stmt delimiter
-    | CLASS_VAR_NAME delimiter
-    | CLASS_VAR_NAME '=' expr delimiter
-    | OBJECT_VAR_NAME delimiter
-    | OBJECT_VAR_NAME '=' expr delimiter
+class_body_stmt: method_stmt delimiter  {$$=ClassBodyStmtNode::createClassBodyStmtMethod($1);}
+    | CLASS_VAR_NAME delimiter  {$$=ClassBodyStmtNode::createClassBodyStmtClassVarName($1, null);}
+    | CLASS_VAR_NAME '=' expr delimiter {$$=ClassBodyStmtNode::createClassBodyStmtClassVarName($1, $3);}
+    | OBJECT_VAR_NAME delimiter {$$=ClassBodyStmtNode::createClassBodyStmtobjectVarName($1, null);}
+    | OBJECT_VAR_NAME '=' expr delimiter    {$$=ClassBodyStmtNode::createClassBodyStmtobjectVarName($1, $3);}
     ;
 
-class_body_not_empty: class_body_stmt
-    | class_body_not_empty class_body_stmt
+class_body_not_empty: class_body_stmt   {$$=createClassBody($1);}
+    | class_body_not_empty class_body_stmt  {$$=addStmtToClassBody($1, $2);}
     ;
 
-class_body: /* empty */
-    | class_body_not_empty
+class_body: /* empty */ {$$=null;}
+    | class_body_not_empty  {$$=$1;}
     ;
 
 delimeter_or_empty: /* empty */
