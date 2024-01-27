@@ -306,10 +306,12 @@ case_stmt: CASE_KEYWORD linefeed_or_empty expr delimeter_or_empty when_list END_
     | CASE_KEYWORD linefeed_or_empty expr delimeter_or_empty when_list ELSE_KEYWORD delimeter_or_empty stmt_list END_KEYWORD
     ;
 
-when_list: WHEN_KEYWORD linefeed_or_empty expr_list delimiter stmt_list
-    | WHEN_KEYWORD linefeed_or_empty expr_list THEN_KEYWORD stmt_list
-    | when_list WHEN_KEYWORD linefeed_or_empty expr_list delimiter stmt_list
-    | when_list WHEN_KEYWORD linefeed_or_empty expr_list delimeter_or_empty THEN_KEYWORD stmt_list
+when_list: when_stmt
+    | when_list when_stmt
+    ;
+
+when_stmt:WHEN_KEYWORD linefeed_or_empty expr_list delimiter stmt_list
+    | WHEN_KEYWORD linefeed_or_empty expr_list delimeter_or_empty THEN_KEYWORD stmt_list
     ;
 
 alias_stmt: ALIAS_KEYWORD IDENTIFIER IDENTIFIER
