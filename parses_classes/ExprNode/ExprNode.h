@@ -110,9 +110,7 @@ public:
     static ExprNode* createExprFromSuper(ExprType* type, std::vector<ExprNode*>* params);
     static ExprNode* createExprFromMethod(ExprType* type, std::vector<ExprNode*>* params, std::string& id, ExprNode* left);
     static ExprNode* createExprFromSelf(ExprType* type, std::vector<ExprNode*>* params, std::string& id);
+    static std::vector<ExprNode*>* createExprList(ExprNode* expr);
+    static std::vector<ExprNode*>* addExprToList(std::vector<ExprNode*>* exprList, ExprNode* expr);
     static int maxId;
 };
-
-std::vector<ExprNode*>* createExprList(ExprNode* expr);
-
-std::vector<ExprNode*>* addExprToList(std::vector<ExprNode*>* exprList, ExprNode* expr);

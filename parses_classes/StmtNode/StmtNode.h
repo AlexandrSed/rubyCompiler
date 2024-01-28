@@ -21,8 +21,7 @@ public:
     static StmtNode* createStmtNodeUnless(UnlessStmtNode* unlessStmt);
     static StmtNode* createStmtNodeReturn(ReturnStmtNode* returnStmt);
     static StmtNode* createStmtNodeAlias(AliasStmtNode* aliasStmt);
+    static std::vector<StmtNode*>* createStmtList(StmtNode* stmt);
+    static std::vector<StmtNode*>* addStmtToList(std::vector<StmtNode*>* stmtList, StmtNode* stmt);
     static int maxId;
 };
-
-std::vector<StmtNode*>* createStmtList(StmtNode* stmt);
-std::vector<StmtNode*>* addStmtToList(std::vector<StmtNode*>* stmtList, StmtNode* stmt);

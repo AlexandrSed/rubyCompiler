@@ -19,12 +19,12 @@ ProgramElementNode* ProgramElementNode::createStmtProgramElementNode(StmtNode* s
     return result;
 }
 
-std::vector<ProgramElementNode*>* createProgramElementList(ProgramElementNode* programElement) {
+std::vector<ProgramElementNode*>* ProgramElementNode::createProgramElementList(ProgramElementNode* programElement) {
     std::vector<ProgramElementNode*>* result = new std::vector<ProgramElementNode*>;
     result->push_back(programElement);
     return result;
 }
-std::vector<ProgramElementNode*>* addProgramElementToList(std::vector<ProgramElementNode*>* programElementList, ProgramElementNode* programElement) {
+std::vector<ProgramElementNode*>* ProgramElementNode::addProgramElementToList(std::vector<ProgramElementNode*>* programElementList, ProgramElementNode* programElement) {
     programElementList->push_back(programElement);
     return programElementList;
 }

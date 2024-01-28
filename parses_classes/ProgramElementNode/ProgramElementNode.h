@@ -11,8 +11,7 @@ class ProgramElementNode  {
         static ProgramElementNode* createClassProgramElementNode(ClassStmtNode* classNode);
         static ProgramElementNode* createMethodProgramElementNode(MethodStmtNode* methodNode);
         static ProgramElementNode* createStmtProgramElementNode(StmtNode* stmtNode);
+        static std::vector<ProgramElementNode*>* createProgramElementList(ProgramElementNode* programElement);
+        static std::vector<ProgramElementNode*>* addProgramElementToList(std::vector<ProgramElementNode*>* programElementList, ProgramElementNode* programElement);
         static int maxId;
-}
-
-std::vector<ProgramElementNode*>* createProgramElementList(ProgramElementNode* programElement);
-std::vector<ProgramElementNode*>* addProgramElementToList(std::vector<ProgramElementNode*>* programElementList, ProgramElementNode* programElement);
+};

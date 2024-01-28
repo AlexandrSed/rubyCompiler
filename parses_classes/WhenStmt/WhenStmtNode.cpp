@@ -8,12 +8,12 @@ WhenStmtNode* WhenStmtNode::createWhenStmt(std::vector<ExprNode*>* condition, st
     return result;
 }
 
-std::vector<WhenStmtNode*>* createWhenList(WhenStmtNode* when) {
+std::vector<WhenStmtNode*>* WhenStmtNode::createWhenList(WhenStmtNode* when) {
     std::vector<WhenStmtNode*> result = {when};
     return &result;
 }
 
-std::vector<WhenStmtNode*>* addWhenToList(std::vector<WhenStmtNode*>* whenList, WhenStmtNode* when) {
+std::vector<WhenStmtNode*>* WhenStmtNode::addWhenToList(std::vector<WhenStmtNode*>* whenList, WhenStmtNode* when) {
     whenList->push_back(when);
     return whenList;
 }

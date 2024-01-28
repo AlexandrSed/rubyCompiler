@@ -56,13 +56,13 @@ StmtNode* StmtNode::createStmtNodeAlias(AliasStmtNode* aliasStmt) {
     return result;
 }
 
-std::vector<StmtNode*>* createStmtList(StmtNode* stmt) {
+std::vector<StmtNode*>* StmtNode::createStmtList(StmtNode* stmt) {
     std::vector<StmtNode*>* result = new std::vector<StmtNode*>;
     result->push_back(stmt);
     return result;
 }
 
-std::vector<StmtNode*>* addStmtToList(std::vector<StmtNode*>* stmtList, StmtNode* stmt) {
+std::vector<StmtNode*>* StmtNode::addStmtToList(std::vector<StmtNode*>* stmtList, StmtNode* stmt) {
     stmtList->push_back(stmt);
     return stmtList;
 }
