@@ -9,5 +9,5 @@ public:
 
     static ReturnStmtNode* createReturnStmt(ExprNode* returnValue);
     static ReturnStmtNode* createSingleReturnStmt();
-    statuc int maxId;
+    static int maxId;
 };

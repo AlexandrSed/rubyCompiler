@@ -231,13 +231,13 @@ linefeed: NEW_LINE_SYMBOL
     | linefeed NEW_LINE_SYMBOL
     ;
 
-programm_element: class_stmt delimiter {$$=createClassProgramElementNode($1);}
-    | method_stmt delimiter {$$=createMethodProgramElementNode($1);}
-    | stmt {$$=createStmtProgramElementNode($1);}
+programm_element: class_stmt delimiter {$$=ProgramElementNode::createClassProgramElementNode($1);}
+    | method_stmt delimiter {$$=ProgramElementNode::createMethodProgramElementNode($1);}
+    | stmt {$$=ProgramElementNode::createStmtProgramElementNode($1);}
     ;
 
-programm_el_list_not_empty: programm_element {$$=createProgramElementList($1);}
-    | programm_el_list_not_empty programm_element {$$=addProgramElementToList($1, $2);}
+programm_el_list_not_empty: programm_element {$$=ProgramElementNode::createProgramElementList($1);}
+    | programm_el_list_not_empty programm_element {$$=ProgramElementNode::addProgramElementToList($1, $2);}
     ;
 
 delimiter: NEW_LINE_SYMBOL
@@ -246,26 +246,26 @@ delimiter: NEW_LINE_SYMBOL
     | delimiter NEW_LINE_SYMBOL
     ;
 
-expr_list: expr {$$=createExprList($1);}
-    | expr_list COMMA_SYMBOL expr {$$=addExprToList($1, $3);}
+expr_list: expr {$$=ExprNode::createExprList($1);}
+    | expr_list COMMA_SYMBOL expr {$$=ExprNode::addExprToList($1, $3);}
     ;
 
-stmt_list: stmt {$$=createStmtList($1);}
-    | stmt_list stmt {$$=addStmtToList($1, $2);}
+stmt_list: stmt {$$=StmtNode::createStmtList($1);}
+    | stmt_list stmt {$$=StmtNode::addStmtToList($1, $2);}
     ;
     
-stmt: expr delimiter {$$=createStmtNodeExpr($1);}
-    | if_stmt delimiter  {$$=createStmtNodeIf($1);}
-    | while_stmt delimiter {$$=createStmtNodeWhile($1);}
-    | for_stmt delimiter {$$=createStmtNodeFor($1);}
-    | case_stmt delimiter {$$=createStmtNodeCase($1);}
-    | unless_stmt delimiter {$$=createStmtNodeUnless($1);}
-    | return_stmt delimiter {$$=createStmtNodeReturn($1);}
-    | alias_stmt delimiter {$$=createStmtNodeAlias($1);}
+stmt: expr delimiter {$$=StmtNode::createStmtNodeExpr($1);}
+    | if_stmt delimiter  {$$=StmtNode::createStmtNodeIf($1);}
+    | while_stmt delimiter {$$=StmtNode::createStmtNodeWhile($1);}
+    | for_stmt delimiter {$$=StmtNode::createStmtNodeFor($1);}
+    | case_stmt delimiter {$$=StmtNode::createStmtNodeCase($1);}
+    | unless_stmt delimiter {$$=StmtNode::createStmtNodeUnless($1);}
+    | return_stmt delimiter {$$=StmtNode::createStmtNodeReturn($1);}
+    | alias_stmt delimiter {$$=StmtNode::createStmtNodeAlias($1);}
     ;
 
-param_list_not_empty: IDENTIFIER linefeed_or_empty  {$$=createParamList($1);}
-    | param_list_not_empty COMMA_SYMBOL linefeed_or_empty IDENTIFIER linefeed_or_empty  {$$=addParametrToList($1, $4);}
+param_list_not_empty: IDENTIFIER linefeed_or_empty  {$$=MethodStmtNode::createParamList($1);}
+    | param_list_not_empty COMMA_SYMBOL linefeed_or_empty IDENTIFIER linefeed_or_empty  {$$=MethodStmtNode::addParametrToList($1, $4);}
     ;
 
 param_list: /* empty */ {$$=null;}
@@ -293,8 +293,8 @@ class_body_stmt: method_stmt delimiter  {$$=ClassBodyStmtNode::createClassBodySt
     | OBJECT_VAR_NAME '=' expr delimiter    {$$=ClassBodyStmtNode::createClassBodyStmtobjectVarName($1, $3);}
     ;
 
-class_body_not_empty: class_body_stmt   {$$=createClassBody($1);}
-    | class_body_not_empty class_body_stmt  {$$=addStmtToClassBody($1, $2);}
+class_body_not_empty: class_body_stmt   {$$=ClassBodyStmtNode::createClassBody($1);}
+    | class_body_not_empty class_body_stmt  {$$=ClassBodyStmtNode::addStmtToClassBody($1, $2);}
     ;
 
 class_body: /* empty */ {$$=null;}
@@ -323,8 +323,8 @@ unless_stmt: UNLESS_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWO
     | expr UNLESS_KEYWORD linefeed_or_empty expr    {$$=UnlessStmtNode::createSingleLineUnlessStmt($1, $4);}
     ;
 
-elsif_list: elsif_stmt  {$$=createElsifList($1);}
-    | elsif_list elsif_stmt {$$=addElsifToList($1, $2);}
+elsif_list: elsif_stmt  {$$=ElsifNode::createElsifList($1);}
+    | elsif_list elsif_stmt {$$=ElsifNode::addElsifToList($1, $2);}
     ;
 
 elsif_stmt: ELSIF_KEYWORD linefeed_or_empty expr delimiter stmt_list    {$$=ElsifNode::createElsifStmt($3, $5);}
@@ -347,8 +347,8 @@ case_stmt: CASE_KEYWORD linefeed_or_empty expr delimeter_or_empty when_list END_
     | CASE_KEYWORD linefeed_or_empty expr delimeter_or_empty when_list ELSE_KEYWORD delimeter_or_empty stmt_list END_KEYWORD    {$$=CaseStmtNode::createCaseStmtWithElse($3, $5, $8);}
     ;
 
-when_list: when_stmt    {$$=createWhenList($1);}
-    | when_list when_stmt   {$$=addWhenToList($1, $2);}
+when_list: when_stmt    {$$=WhenStmtNode::createWhenList($1);}
+    | when_list when_stmt   {$$=WhenStmtNode::addWhenToList($1, $2);}
     ;
 
 when_stmt:WHEN_KEYWORD linefeed_or_empty expr_list delimiter stmt_list  {$$=WhenStmtNode::createWhenStmt($3, $5);}
