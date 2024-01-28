@@ -296,15 +296,8 @@ yield		{ printf("Found keyword: %s\n", yytext); }
 
 %%
 
-int main(int argc, char** argv) {
-    if (argc != 2) {
-        printf("You need to specify file name");
-        return 1;
-    }
+int l_main(FILE* file) {
 
-    const char *filename = argv[1];
-    
-    FILE *file = fopen(filename, "r");
     if (file == NULL) {
         printf("File opening error");
         return 1;

@@ -1,4 +1,9 @@
 %{
+    #include "parser.tab.hpp"
+    extern int yylex(void);
+%}
+
+%code requires {
     #include <string>
     #include <vector>
 	#include <stdio.h>
@@ -18,9 +23,7 @@
     #include "parser_classes/ClassBodyStmt/ClassBodyStmtNode.h"
     #include "parser_classes/ClassStmt/ClassStmtNode.h"
     #include "parser_classes/ProgramElementNode/ProgramElementNode.h"
-
-    extern int yylex(void);
-%}
+}
 
 %union {
     int Int;
