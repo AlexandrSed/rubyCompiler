@@ -5,7 +5,7 @@
 	#include <stdio.h>
     #include <stdlib.h>
     #include <string>
-    #include "parser.tab.h"
+    #include "parser.tab.hpp"
     extern int yyparse(void);
 
     char* removeUnderscores(const char* input);
@@ -81,11 +81,26 @@ when		{ return WHEN_KEYWORD; }
 while		{ return WHILE_KEYWORD;  }
 yield		{ printf("Found keyword: %s\n", yytext); }
 
-"+"         { printf("Found arithmetic operation: %s\n", yytext); }   
-"-"         { printf("Found arithmetic operation: %s\n", yytext); }
-"*"         { printf("Found arithmetic operation: %s\n", yytext); }
-"/"         { printf("Found arithmetic operation: %s\n", yytext); }
-"%"         { printf("Found arithmetic operation: %s\n", yytext); }
+"+"         { 
+                return '+';
+                // printf("Found arithmetic operation: %s\n", yytext); 
+            }   
+"-"         { 
+                return '-';
+                // printf("Found arithmetic operation: %s\n", yytext);
+            }
+"*"         {
+                return '*';
+                // printf("Found arithmetic operation: %s\n", yytext); 
+            }
+"/"         { 
+                return '/';
+                // printf("Found arithmetic operation: %s\n", yytext);
+            }
+"%"         {
+                return '%';
+                // printf("Found arithmetic operation: %s\n", yytext);
+            }
 "**"        { return ARITHMETIC_POW_OP; }
 
 "=="        { return EQL_OP; }
@@ -121,30 +136,54 @@ yield		{ printf("Found keyword: %s\n", yytext); }
 ".."        { return EXCLUSIVE_RANGE_OP; }
 "..."       { return INCLUSIVE_RANGE_OP; }
 
-"("         { printf("Found bracket: %s\n", yytext); }
-")"         { printf("Found bracket: %s\n", yytext); }
-"{"         { printf("Found bracket: %s\n", yytext); }
+"("         { 
+                return '(';
+                // printf("Found bracket: %s\n", yytext);
+            }
+")"         { 
+                return ')';
+                // printf("Found bracket: %s\n", yytext);
+            }
+"{"         { 
+                return '{';
+                // printf("Found bracket: %s\n", yytext);
+            }
 "}"         {
                 if(nestingCount == 0) {
-                    printf("Found bracket: %s\n", yytext);
+                    return '}';
+                    // printf("Found bracket: %s\n", yytext);
                 } else {
+                    //TODO: сделать правильно интерполяцию
                     nestingCount--;
                     BEGIN(DOUBLE_QUOTE_STRING);
                     str = "";
-                    printf("Found interpolation: ) + \n");
+                    // yylval.Str = new std::string(')');
+                    return '+';
+                    // printf("Found interpolation: ) + \n");
                 }
             }
-"["         { printf("Found bracket: %s\n", yytext); }
-"]"         { printf("Found bracket: %s\n", yytext); }
+"["         {
+                return '[';
+                printf("Found bracket: %s\n", yytext);
+            }
+"]"         {
+                return ']';
+                printf("Found bracket: %s\n", yytext);
+            }
 
 "?"         { return QUESTION_SYMBOL; }
 
-"."         { printf("Found special symbol: %s\n", yytext); }
+"."         {
+                return '.';
+            }
 ","         { return COMMA_SYMBOL; }
 ":"         { return COLON_SYMBOL; }
 "::"        { return DOUBLE_COLON_SYMBOL; }
 ";"         { return SEMICOLON_SYMBOL; }
-"\n"        { printf("Found line feed: %s\n", yytext); }
+"\n"        { 
+                return NEW_LINE_SYMBOL;
+                // printf("Found line feed: %s\n", yytext);
+            }
 
 \"          {
                 str = ""; 
@@ -159,19 +198,49 @@ yield		{ printf("Found keyword: %s\n", yytext); }
 
 
 
-[A-Z][a-zA-Z0-9_]* {printf("Found constant: %s\n", yytext); }
+[A-Z][a-zA-Z0-9_]*  {
+                        yylval.Str = new std::string(yytext);
+                        return CONSTANT_NAME;
+                        // printf("Found constant: %s\n", yytext);
+                    }
 
-{IDENTIFIER}\?  { printf("Found method with question: %s\n", yytext); }
-{IDENTIFIER}\!  { printf("Found method with !: %s\n", yytext); }
-{IDENTIFIER}\=  { printf("Found method with =: %s\n", yytext); }
-{IDENTIFIER}    { printf("Found identifier: %s\n", yytext); }
-\@{IDENTIFIER} {printf("Found var name: %s\n", yytext); }
-\@\@{IDENTIFIER} {printf("Found class var name: %s\n", yytext); }
+{IDENTIFIER}\?  {
+                    yylval.Str = new std::string(yytext);
+                    return METHOD_MARK_QUESTION;
+                    // printf("Found method with question: %s\n", yytext);
+                }
+{IDENTIFIER}\!  {
+                    yylval.Str = new std::string(yytext);
+                    return METHOD_MARK_EXCLAMATION;
+                    // printf("Found method with !: %s\n", yytext);
+                }
+{IDENTIFIER}\=  {
+                    yylval.Str = new std::string(yytext);
+                    return METHOD_MARK_EQUAL;
+                    // printf("Found method with =: %s\n", yytext);
+                }
+{IDENTIFIER}    {
+                    yylval.Str = new std::string(yytext);
+                    return IDENTIFIER; 
+                    // printf("Found identifier: %s\n", yytext);
+                }
+\@{IDENTIFIER}  {
+                    yylval.Str = new std::string(yytext);
+                    return OBJECT_VAR_NAME;
+                    // printf("Found var name: %s\n", yytext);
+                }
+\@\@{IDENTIFIER} {
+                    yylval.Str = new std::string(yytext);
+                    return CLASS_VAR_NAME;
+                    // printf("Found class var name: %s\n", yytext);
+                    }
 
-<DOUBLE_QUOTE_STRING>"#{"   { 
-                                printf("Found string \"%s\"\n", str.c_str());
-                                printf("Found interpolation: + ( \n");
+<DOUBLE_QUOTE_STRING>"#{"   {
+                                yylval.Str = new std::string(str.c_str() + "(");
                                 nestingCount++;
+                                return STRING;
+                                // printf("Found string \"%s\"\n", str.c_str());
+                                // printf("Found interpolation: + ( \n");
                                 BEGIN(INITIAL);
                             }
 
@@ -210,19 +279,26 @@ yield		{ printf("Found keyword: %s\n", yytext); }
                                 str.append(temp1);
                             }
 
-<DOUBLE_QUOTE_STRING>\" { 
-                                printf("String literal: \"%s\" \n", str.c_str());
+<DOUBLE_QUOTE_STRING>\" {
+                                yylval.Str = new std::string(str.c_str());
+                                return STRING;
+                                // printf("String literal: \"%s\" \n", str.c_str());
                                 BEGIN(INITIAL);
                         }
 <DOUBLE_QUOTE_STRING>\\             { str.append(""); }
 
 <SINGLE_QUOTE_STRING>\' { 
-                            printf("String literal: \"%s\" \n", str.c_str());
+                            yylval.Str = new std::string(str.c_str());
+                            return STRING;
+                            // printf("String literal: \"%s\" \n", str.c_str());
                             BEGIN(INITIAL);
                         }
 
 
-#.* { printf("Found single-line comment: %s\n", yytext + 1); }
+#.* {
+    printf("Found single-line comment: %s\n", yytext + 1); 
+    
+    }
 
 
 
@@ -243,37 +319,56 @@ yield		{ printf("Found keyword: %s\n", yytext); }
     
     char* cleanedText = removeUnderscores(yytext);
     int number = atoi(cleanedText);
-    printf("Found integer: %d\n", number); 
+
+    yylval.Int = number;
     free(cleanedText); 
+    return INTEGER_NUMBER;
+
+    // printf("Found integer: %d\n", number); 
 }
 0[xX]{HEX_DIGIT}+(_{HEX_DIGIT}+)* { 
     char* cleanedText = removeUnderscores(yytext);
     int number = strtol(cleanedText, NULL, 16);
-    printf("Found hexadecimal integer: %d\n", number); 
+
+    yylval.Int = number;
+    return INTEGER_NUMBER;
+    // printf("Found hexadecimal integer: %d\n", number); 
 }
 
 0[bB]{BIN_DIGIT}+(_{BIN_DIGIT}+)* {
     char* cleanedText = removeUnderscores(yytext + 2);
     int number = strtol( cleanedText, NULL, 2);
-    printf("Found binary integer: %d\n", yytext);
+
+    yylval.Int = number;
+    return INTEGER_NUMBER;
+    // printf("Found binary integer: %d\n", yytext);
 }
 
 {DIGIT}+(_{DIGIT}+)*\.({DIGIT}+(_{DIGIT}+)*)? { 
     char* cleanedText = removeUnderscores(yytext);
     double number = atof(cleanedText);
-    printf("Found floating-point number: %f\n", number); 
+
+    yylval.Float = number;
+    return FLOAT_NUMBER;
+    // printf("Found floating-point number: %f\n", number); 
 }
 
 {DIGIT}+(_{DIGIT}+)*\.{DIGIT}+(_{DIGIT}+)*{EXPONENT}  { 
     char* cleanedText = removeUnderscores(yytext);
     double number = atof(cleanedText);
-    printf("Found floating-point number with exponent: %f\n", number); 
+
+    yylval.Float = number;
+    return FLOAT_NUMBER;
+    // printf("Found floating-point number with exponent: %f\n", number); 
 }
 
 {DIGIT}+(_{DIGIT}+)*{EXPONENT}  {
     char* cleanedText = removeUnderscores(yytext);
     double number = atof(cleanedText);
-    printf("Found number with exponent: %f\n", number); 
+
+    yylval.Float = number;
+    return FLOAT_NUMBER;
+    // printf("Found number with exponent: %f\n", number); 
 }
 
 {DIGIT}+(_+{DIGIT}+)*(\.{DIGIT}+(_+{DIGIT}+)*)?{EXPONENT}?  {
