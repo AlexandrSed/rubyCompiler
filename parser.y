@@ -33,7 +33,7 @@
     StmtNode* stmt_union;
     std::vector<StmtNode*>* stmt_list_union;
     MethodStmtNode* method_union;
-    std::vector<std::string>* param_list_union;
+    std::vector<std::string*>* param_list_union;
     ClassBodyStmtNode* class_body_stmt_union;
     std::vector<ClassBodyStmtNode*>* class_body_union;
     ClassStmtNode* class_stmt_union;
@@ -171,7 +171,7 @@ expr: IDENTIFIER    {$$=ExprNode::createExprFromVarName(ExprType::id, $1);}
     | expr '.' linefeed_or_empty METHOD_MARK_QUESTION '(' linefeed_or_empty expr_list linefeed_or_empty ')' {$$=ExprNode::createExprFromMethod(ExprType::callOfMethodMarkQuestion, $7, $4, $1);}
     | expr '.' linefeed_or_empty METHOD_MARK_EXCLAMATION    {$$=ExprNode::createExprFromMethod(ExprType::callOfMethodMarkExclamationWithoutParams, NULL, $4, $1);}
     | expr '.' linefeed_or_empty METHOD_MARK_EXCLAMATION '(' linefeed_or_empty expr_list linefeed_or_empty ')'  {$$=ExprNode::createExprFromMethod(ExprType::callOfMethodMarkExclamation, $7, $4, $1);}
-    | expr '.' linefeed_or_empty METHOD_MARK_EQUAL  {$$=ExprNode::createExprFromMethod(ExprType::callOfMethodEqualWithoutParams, NULL, $4, $1)}
+    | expr '.' linefeed_or_empty METHOD_MARK_EQUAL  {$$=ExprNode::createExprFromMethod(ExprType::callOfMethodEqualWithoutParams, NULL, $4, $1);}
     | expr '.' linefeed_or_empty METHOD_MARK_EQUAL '(' linefeed_or_empty expr_list linefeed_or_empty ')'    {$$=ExprNode::createExprFromMethod(ExprType::callOfMethodEqual, $7, $4, $1);}
     | expr AND_KEYWORD linefeed_or_empty expr   {$$=ExprNode::createExprFromBinOp(ExprType::andType, $1, $4);}
     | expr OR_KEYWORD linefeed_or_empty expr    {$$=ExprNode::createExprFromBinOp(ExprType::orType, $1, $4);}
