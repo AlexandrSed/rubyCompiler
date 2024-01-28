@@ -1,6 +1,6 @@
 #include "ExprNode.h"
 
-ExprNode* ExprNode::createExprFromVarName(ExprType* type, std::string& id) {
+ExprNode* ExprNode::createExprFromVarName(ExprType* type, std::string* id) {
     ExprNode* result = new ExprNode;
     result->type = *type;
     result->varName = id;
@@ -8,7 +8,7 @@ ExprNode* ExprNode::createExprFromVarName(ExprType* type, std::string& id) {
     return result;
 }
 
-ExprNode* ExprNode::createExprFromString(std::string& str) {
+ExprNode* ExprNode::createExprFromString(std::string* str) {
     ExprNode* result = new ExprNode;
     result->type = ExprType::stringType;
     result->strValue = str;
@@ -64,7 +64,7 @@ ExprNode* ExprNode::createExprFromBinOp(ExprType typeOp, ExprNode* left, ExprNod
     return result;
 }
 
-ExprNode* ExprNode::createExprFromFuncCall(ExprType* type, std::vector<ExprNode*>* params, std::string& id) {
+ExprNode* ExprNode::createExprFromFuncCall(ExprType* type, std::vector<ExprNode*>* params, std::string* id) {
     ExprNode* result = new ExprNode;
     result->type = type;
     result->params = params;
@@ -107,7 +107,7 @@ ExprNode* ExprNode::createExprFromSuper(ExprType* type, std::vector<ExprNode*>* 
     return result;
 }
 
-ExprNode* ExprNode::createExprFromMethod(ExprType* type, std::vector<ExprNode*>* params, std::string& id, ExprNode* left) {
+ExprNode* ExprNode::createExprFromMethod(ExprType* type, std::vector<ExprNode*>* params, std::string* id, ExprNode* left) {
     ExprNode* result = new ExprNode;
     result->type = type;
     result->params = params;
@@ -117,7 +117,7 @@ ExprNode* ExprNode::createExprFromMethod(ExprType* type, std::vector<ExprNode*>*
     return result;
 }
 
-ExprNode* ExprNode::createExprFromSelf(ExprType* type, std::vector<ExprNode*>* params, std::string& id) {
+ExprNode* ExprNode::createExprFromSelf(ExprType* type, std::vector<ExprNode*>* params, std::string* id) {
     ExprNode* result = new ExprNode;
     result->type = type;
     result->params = params;
