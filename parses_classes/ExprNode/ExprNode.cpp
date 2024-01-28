@@ -1,8 +1,8 @@
 #include "ExprNode.h"
 
-ExprNode* ExprNode::createExprFromVarName(ExprType* type, std::string* id) {
+ExprNode* ExprNode::createExprFromVarName(ExprType type, std::string* id) {
     ExprNode* result = new ExprNode;
-    result->type = *type;
+    result->type = type;
     result->varName = id;
     result->idNode = ++ExprNode::maxId;
     return result;
@@ -64,7 +64,7 @@ ExprNode* ExprNode::createExprFromBinOp(ExprType typeOp, ExprNode* left, ExprNod
     return result;
 }
 
-ExprNode* ExprNode::createExprFromFuncCall(ExprType* type, std::vector<ExprNode*>* params, std::string* id) {
+ExprNode* ExprNode::createExprFromFuncCall(ExprType type, std::vector<ExprNode*>* params, std::string* id) {
     ExprNode* result = new ExprNode;
     result->type = type;
     result->params = params;
@@ -91,7 +91,7 @@ ExprNode* ExprNode::createExprFromTernary(ExprNode* left, ExprNode* center, Expr
     return result;
 }
 
-ExprNode* ExprNode::createExprFromArray(ExprType* type, std::vector<ExprNode*>* list) {
+ExprNode* ExprNode::createExprFromArray(ExprType type, std::vector<ExprNode*>* list) {
     ExprNode* result = new ExprNode;
     result->type = type;
     result->list=list;
@@ -99,7 +99,7 @@ ExprNode* ExprNode::createExprFromArray(ExprType* type, std::vector<ExprNode*>* 
     return result;
 }
 
-ExprNode* ExprNode::createExprFromSuper(ExprType* type, std::vector<ExprNode*>* params) {
+ExprNode* ExprNode::createExprFromSuper(ExprType type, std::vector<ExprNode*>* params) {
     ExprNode* result = new ExprNode;
     result->type = type;
     result->params = params;
@@ -107,7 +107,7 @@ ExprNode* ExprNode::createExprFromSuper(ExprType* type, std::vector<ExprNode*>* 
     return result;
 }
 
-ExprNode* ExprNode::createExprFromMethod(ExprType* type, std::vector<ExprNode*>* params, std::string* id, ExprNode* left) {
+ExprNode* ExprNode::createExprFromMethod(ExprType type, std::vector<ExprNode*>* params, std::string* id, ExprNode* left) {
     ExprNode* result = new ExprNode;
     result->type = type;
     result->params = params;
@@ -117,7 +117,7 @@ ExprNode* ExprNode::createExprFromMethod(ExprType* type, std::vector<ExprNode*>*
     return result;
 }
 
-ExprNode* ExprNode::createExprFromSelf(ExprType* type, std::vector<ExprNode*>* params, std::string* id) {
+ExprNode* ExprNode::createExprFromSelf(ExprType type, std::vector<ExprNode*>* params, std::string* id) {
     ExprNode* result = new ExprNode;
     result->type = type;
     result->params = params;
