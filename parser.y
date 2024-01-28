@@ -8,27 +8,15 @@
     #include <vector>
 	#include <stdio.h>
 	#include <malloc.h>
-    #include "parser_classes/ElsifNode/ElsifNode.h"
-    #include "parser_classes/ExprNode/ExprNode.h"
-    #include "parser_classes/IfStmt/IfStmtNode.h"
-    #include "parser_classes/UnlessStmt/UnlessStmtNode.h"
-    #include "parser_classes/WhileStmt/WhileStmtNode.h"
-    #include "parser_classes/ForStmt/ForStmtNode.h"
-    #include "parser_classes/WhenStmt/WhenStmtNode.h"
-    #include "parser_classes/CaseStmt/CaseStmtNode.h"
-    #include "parser_classes/AliasStmt/AliasStmtNode.h"
-    #include "parser_classes/ReturnStmt/ReturnStmtNode.h"
-    #include "parser_classes/MethodStmtNode/MethodStmtNode.h"
-    #include "parser_classes/StmtNode/StmtNode.h"
-    #include "parser_classes/ClassBodyStmt/ClassBodyStmtNode.h"
-    #include "parser_classes/ClassStmt/ClassStmtNode.h"
-    #include "parser_classes/ProgramElementNode/ProgramElementNode.h"
+
+    #include "parses_classes/ProgramElementNode/ProgramElementNode.h"
 }
 
 %union {
     int Int;
     float Float;
-    string Str;
+    //TODO: строки поправить - везде в программе должны быть со зведочкой
+    string* Str;
 	ExprNode* expr_union;
 	IfStmtNode* if_union;
     UnlessStmtNode* unless_union;

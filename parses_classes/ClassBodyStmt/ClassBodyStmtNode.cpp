@@ -7,7 +7,7 @@ ClassBodyStmtNode* ClassBodyStmtNode::createClassBodyStmtMethod(MethodStmtNode* 
     return result;
 }
 
-ClassBodyStmtNode* ClassBodyStmtNode::createClassBodyStmtClassVarName(std::string classVarName, ExprNode* value) {
+ClassBodyStmtNode* ClassBodyStmtNode::createClassBodyStmtClassVarName(std::string* classVarName, ExprNode* value) {
     ClassBodyStmtNode* result = new ClassBodyStmtNode;
     result->classVarName = classVarName;
     result->value = value;
@@ -15,7 +15,7 @@ ClassBodyStmtNode* ClassBodyStmtNode::createClassBodyStmtClassVarName(std::strin
     return result;
 }
 
-ClassBodyStmtNode* ClassBodyStmtNode::createClassBodyStmtobjectVarName(std::string objectVarName, ExprNode* value) {
+ClassBodyStmtNode* ClassBodyStmtNode::createClassBodyStmtobjectVarName(std::string* objectVarName, ExprNode* value) {
     ClassBodyStmtNode* result = new ClassBodyStmtNode;
     result->objectVarName = objectVarName;
     result->value = value;

@@ -1,6 +1,6 @@
 #include "MethodStmtNode.h"
 
-MethodStmtNode* MethodStmtNode::createMethodStmt(MethodType type, std::string methodName, std::vector<std::string>* paramList, std::vector<StmtNode*>* body) {
+MethodStmtNode* MethodStmtNode::createMethodStmt(MethodType type, std::string* methodName, std::vector<std::string*>* paramList, std::vector<StmtNode*>* body) {
     MethodStmtNode* result = new MethodStmtNode;
     result->methodName = methodName;
     result->type = type;
@@ -10,7 +10,7 @@ MethodStmtNode* MethodStmtNode::createMethodStmt(MethodType type, std::string me
     return result;
 }
 
-MethodStmtNode* MethodStmtNode::createMethodStmtWithoutParams(MethodType type, std::string methodName, std::vector<StmtNode*>* body) {
+MethodStmtNode* MethodStmtNode::createMethodStmtWithoutParams(MethodType type, std::string* methodName, std::vector<StmtNode*>* body) {
     MethodStmtNode* result = new MethodStmtNode;
     result->methodName = methodName;
     result->type = type;
@@ -19,12 +19,12 @@ MethodStmtNode* MethodStmtNode::createMethodStmtWithoutParams(MethodType type, s
     return result;
 }
 
-std::vector<std::string>* MethodStmtNode::createParamList(std::string parametr) {
-    std::vector<std::string> result = {parametr};
+std::vector<std::string*>* MethodStmtNode::createParamList(std::string* parametr) {
+    std::vector<std::string*> result = {parametr};
     return &result;
 }
 
-std::vector<std::string>* MethodStmtNode::addParametrToList(std::vector<std::string>* paramList, std::string parametr) {
+std::vector<std::string*>* MethodStmtNode::addParametrToList(std::vector<std::string*>* paramList, std::string* parametr) {
     paramList->push_back(parametr);
     return paramList;
 }

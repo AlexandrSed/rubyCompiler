@@ -85,9 +85,9 @@ public:
     ExprType type;
     int intValue;
     float floatValue;
-    std::string strValue;
+    std::string* strValue;
     bool boolValue;
-    std::string varName;
+    std::string* varName;
     int idNode;
     ExprNode* left;
     ExprNode* center;

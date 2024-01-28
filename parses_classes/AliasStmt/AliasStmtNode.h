@@ -4,10 +4,10 @@
 class AliasStmtNode {
 public:
 
-    std::string alias;
-    std::string startName;
+    std::string* alias;
+    std::string* startName;
     int idNode;
 
-    static AliasStmtNode* createAliasStmt(std::string alias, std::string startName);
+    static AliasStmtNode* createAliasStmt(std::string* alias, std::string* startName);
     static int maxId;
 };
