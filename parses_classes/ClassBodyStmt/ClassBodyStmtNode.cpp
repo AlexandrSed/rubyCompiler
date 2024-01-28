@@ -25,8 +25,9 @@ ClassBodyStmtNode* ClassBodyStmtNode::createClassBodyStmtobjectVarName(std::stri
 
 
 std::vector<ClassBodyStmtNode*>* ClassBodyStmtNode::createClassBody(ClassBodyStmtNode* classEl) {
-    std::vector<ClassBodyStmtNode*> result = {classEl};
-    return &result;
+    std::vector<ClassBodyStmtNode*>* result = new std::vector<ClassBodyStmtNode*>;
+    result->push_back(classEl);
+    return result;
 }
 
 std::vector<ClassBodyStmtNode*>* ClassBodyStmtNode::addStmtToClassBody(std::vector<ClassBodyStmtNode*>* classBody, ClassBodyStmtNode* classEl) {

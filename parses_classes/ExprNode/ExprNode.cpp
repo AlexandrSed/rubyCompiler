@@ -127,8 +127,9 @@ ExprNode* ExprNode::createExprFromSelf(ExprType type, std::vector<ExprNode*>* pa
 }
 
 std::vector<ExprNode*>* ExprNode::createExprList(ExprNode* expr) {
-    std::vector<ExprNode*> result = {expr};
-    return &result;
+    std::vector<ExprNode*>* result = new std::vector<ExprNode*>;
+    result->push_back(expr);
+    return result;
 }
 
 std::vector<ExprNode*>* ExprNode::addExprToList(std::vector<ExprNode*>* exprList, ExprNode* expr) {

@@ -9,8 +9,9 @@ ElsifNode* ElsifNode::createElsifStmt(ExprNode* condition, std::vector<StmtNode*
 }
 
 std::vector<ElsifNode*>* ElsifNode::createElsifList(ElsifNode* elsif) {
-    std::vector<ElsifNode*> result = {elsif};
-    return &result;
+    std::vector<ElsifNode*>* result = new std::vector<ElsifNode*>;
+    result->push_back(elsif);
+    return result;
 }
 
 std::vector<ElsifNode*>* ElsifNode::addElsifToList(std::vector<ElsifNode*>* elsifList, ElsifNode* elsif) {

@@ -20,8 +20,9 @@ MethodStmtNode* MethodStmtNode::createMethodStmtWithoutParams(MethodType type, s
 }
 
 std::vector<std::string*>* MethodStmtNode::createParamList(std::string* parametr) {
-    std::vector<std::string*> result = {parametr};
-    return &result;
+    std::vector<std::string*>* result = new std::vector<std::string*>;
+    result->push_back(parametr);
+    return result;
 }
 
 std::vector<std::string*>* MethodStmtNode::addParametrToList(std::vector<std::string*>* paramList, std::string* parametr) {
