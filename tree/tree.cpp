@@ -65,3 +65,33 @@ void tree::printStmtNodeTree(StmtNode *node) {
         }
     }
 }
+
+void tree::printIfStmtTree(IfStmtNode *node) {
+    if (node != nullptr) {
+        outfile << "ifStmt_" << node->idNode << " -> expr_" << node->condition->idNode << ";\n";
+        printExprNodeTree(node->condition);
+        for (auto i : *(node->trueBranch)) {
+            outfile << "ifStmt_" << node->idNode << " -> stmt_" << i->idNode << ";\n";
+            printStmtNodeTree(i);
+            
+        }
+        if (node->falseBranch != nullptr) {
+            for (auto i : *(node->falseBranch)) {
+                outfile << "ifStmt_" << node->idNode << " -> stmt_" << i->idNode << ";\n";
+                printStmtNodeTree(i);
+            }
+        }
+        if (node->elsif != nullptr) {
+            for (auto i : *(node->elsif)) {
+                outfile << "ifStmt_" << node->idNode << " -> elsifStmt_" << i->idNode << ";\n";
+                printElseifNodeTree(i);
+            }
+        }
+        if (node->action != nullptr) {
+            outfile << "ifStmt_" << node->idNode << " -> expr_" << node->action->idNode << ";\n";
+            printExprNodeTree(node->action);
+
+        }
+    }
+
+}
