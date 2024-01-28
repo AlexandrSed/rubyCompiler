@@ -1,4 +1,8 @@
-#include "../MethodStmtNode/MethodStmtNode.h"
+//#include "../MethodStmtNode/MethodStmtNode.h"
+#include <vector>
+#include <string>
+class MethodStmtNode;
+class ExprNode;
 
 class ClassBodyStmtNode {
 public:

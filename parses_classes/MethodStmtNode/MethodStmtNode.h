@@ -1,4 +1,7 @@
-#include "../StmtNode/StmtNode.h"
+//#include "../StmtNode/StmtNode.h"
+#include <vector>
+#include <string>
+class StmtNode;
 
 enum class MethodType {
     simple,

@@ -1,11 +1,21 @@
-#include "../WhileStmt/WhileStmtNode.h"
-#include "../ForStmt/ForStmtNode.h"
-#include "../CaseStmt/CaseStmtNode.h"
-#include "../ReturnStmt/ReturnStmtNode.h"
-#include "../UnlessStmt/UnlessStmtNode.h"
-#include "../AliasStmt/AliasStmtNode.h"
-#include "../IfStmt/IfStmtNode.h"
-#include "../ExprNode/ExprNode.h"
+//#include "../WhileStmt/WhileStmtNode.h"
+//#include "../ForStmt/ForStmtNode.h"
+//#include "../CaseStmt/CaseStmtNode.h"
+//#include "../ReturnStmt/ReturnStmtNode.h"
+//#include "../UnlessStmt/UnlessStmtNode.h"
+//
+//#include "../IfStmt/IfStmtNode.h"
+//#include "../ExprNode/ExprNode.h"
+#include <vector>
+
+class WhileStmtNode;
+class ForStmtNode;
+class CaseStmtNode;
+class ReturnStmtNode;
+class UnlessStmtNode;
+class IfStmtNode;
+class ExprNode;
+class AliasStmtNode;
 
 class StmtNode {
 public:

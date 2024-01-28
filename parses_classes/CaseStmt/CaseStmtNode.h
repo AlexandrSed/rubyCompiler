@@ -1,4 +1,10 @@
-#include "../WhenStmt/WhenStmtNode.h"
+//#include "../WhenStmt/WhenStmtNode.h"
+#include <vector>
+#include <string>
+
+class WhenStmtNode;
+class ExprNode;
+class StmtNode;
 
 class CaseStmtNode {
 public:

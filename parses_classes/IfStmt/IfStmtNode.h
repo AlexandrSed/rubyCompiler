@@ -1,4 +1,10 @@
-#include "../ElseifNode/ElsifNode.h"
+//#include "../ElseifNode/ElsifNode.h"
+#include <vector>
+#include <string>
+
+class ElsifNode;
+class StmtNode;
+class ExprNode;
 
 class IfStmtNode {
 public:

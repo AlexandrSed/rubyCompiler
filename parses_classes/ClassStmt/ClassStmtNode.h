@@ -1,4 +1,7 @@
-#include "../ClassBodyStmt/ClassBodyStmtNode.h"
+//#include "../ClassBodyStmt/ClassBodyStmtNode.h"
+#include <vector>
+#include <string>
+class ClassBodyStmtNode;
 
 class ClassStmtNode {
 public:

@@ -1,4 +1,10 @@
-#include "../ClassStmt/ClassStmtNode.h"
+//#include "../ClassStmt/ClassStmtNode.h"
+#include <vector>
+#include <string>
+
+class ClassStmtNode;
+class MethodStmtNode;
+class StmtNode;
 
 class ProgramElementNode  {
     public:
