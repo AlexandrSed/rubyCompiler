@@ -1,7 +1,7 @@
 #include <vector>
 #include <string>
 
-enum ExprType {
+enum class ExprType {
     id,
     objectVarName,
     classVarName,

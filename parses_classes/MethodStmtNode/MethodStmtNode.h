@@ -1,6 +1,6 @@
 #include "../StmtNode/StmtNode.h"
 
-enum MethodType {
+enum class MethodType {
     simple,
     markQuestion,
     markExclamation,
