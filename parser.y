@@ -9,7 +9,22 @@
 	#include <stdio.h>
 	#include <malloc.h>
 
+    #include "parses_classes/AliasStmt/AliasStmtNode.h"
+    #include "parses_classes/CaseStmt/CaseStmtNode.h"
+    #include "parses_classes/ClassBodyStmt/ClassBodyStmtNode.h"
+    #include "parses_classes/ClassStmt/ClassStmtNode.h"
+    #include "parses_classes/ElseifNode/ElsifNode.h"
+    #include "parses_classes/ExprNode/ExprNode.h"
+    #include "parses_classes/ForStmt/ForStmtNode.h"
+    #include "parses_classes/IfStmt/IfStmtNode.h"
+    #include "parses_classes/MethodStmtNode/MethodStmtNode.h"
     #include "parses_classes/ProgramElementNode/ProgramElementNode.h"
+    #include "parses_classes/ReturnStmt/ReturnStmtNode.h"
+    #include "parses_classes/StmtNode/StmtNode.h"
+    #include "parses_classes/UnlessStmt/UnlessStmtNode.h"
+    #include "parses_classes/WhenStmt/WhenStmtNode.h"
+    #include "parses_classes/WhileStmt/WhileStmtNode.h"
+    
 }
 
 %union {
