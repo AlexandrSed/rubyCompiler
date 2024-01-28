@@ -1,4 +1,5 @@
-#include "../StmtNode/StmtNode.h"
+#include "../ExprNode/ExprNode.h"
+class StmtNode;
 
 class ForStmtNode {
 public:

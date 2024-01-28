@@ -1,4 +1,4 @@
-#include "../MethodStmtNode/MethodStmtNode.h"
+#include "../ClassStmt/ClassStmtNode.h"
 
 class ProgramElementNode  {
     public:
