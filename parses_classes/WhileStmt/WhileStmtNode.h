@@ -1,4 +1,4 @@
-#include "../ExprNode/ExprNode.h"
+class ExprNode;
 class StmtNode;
 
 class WhileStmtNode {
