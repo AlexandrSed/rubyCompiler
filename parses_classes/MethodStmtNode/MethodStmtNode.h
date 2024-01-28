@@ -1,5 +1,3 @@
-#include <string>
-#include <vector>
 #include "../StmtNode/StmtNode.h"
 
 enum MethodType {

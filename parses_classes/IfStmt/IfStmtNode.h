@@ -1,7 +1,3 @@
-#include <vector>
-#include <string>
-#include "../ExprNode/ExprNode.h"
-#include "../StmtNode/StmtNode.h"
 #include "../ElseifNode/ElsifNode.h"
 
 class IfStmtNode {
