@@ -26,35 +26,42 @@ void tree::printStmtNodeTree(StmtNode *node) {
        
 
         if (node->exprStmt != nullptr) {
-            outfile << "stmt_" << node->exprStmt << " [label=\"" << node->exprStmt << "\"];\n";
+            outfile << "stmt_" << node->idNode << " -> exprStmt_" << node->exprStmt->idNode << "\"];\n";
+            printExprNodeTree(node->exprStmt);
         }
         if (node->ifStmt != nullptr) {
-            outfile << "stmt_" << node->ifStmt << " [label=\"" << node->ifStmt << "\"];\n";
+            outfile << "stmt_" << node->idNode << " -> ifStmt_" << node->ifStmt->idNode << ";\n";
+            printIfStmtTree(node->ifStmt);
         }
 
         if (node->whileStmt != nullptr) {
-            outfile << "stmt_" << node->whileStmt << " [label=\"" << node->whileStmt << "\"];\n";
+            outfile << "stmt_" << node->idNode << " -> whileStmt_" << node->whileStmt->idNode << ";\n";
+            printWhileStmtTree(node->whileStmt);
         }   
 
         if (node->forStmt != nullptr) {
-            outfile << "stmt_" << node->forStmt << " [label=\"" << node->forStmt << "\"];\n";
+            outfile << "stmt_" << node->idNode << " -> forStmt_" << node->forStmt->idNode << ";\n";
+            printForStmtTree(node->forStmt);
         }
 
         if (node->caseStmt != nullptr) {
-            outfile << "stmt_" << node->caseStmt << " [label=\"" << node->caseStmt << "\"];\n";
+            outfile << "stmt_" << node->idNode << " -> caseStmt_" << node->caseStmt->idNode << ";\n";
+            printCaseStmtTree(node->caseStmt);
         }
 
         if (node->unlessStmt != nullptr) {
-            outfile << "stmt_" << node->unlessStmt << " [label=\"" << node->unlessStmt << "\"];\n";
+            outfile << "stmt_" << node->idNode << " -> unlessStmt_" << node->unlessStmt->idNode << ";\n";
+            printUnlessStmtTree(node->unlessStmt);
         }
 
         if (node->returnStmt != nullptr) {
-            outfile << "stmt_" << node->returnStmt << " [label=\"" << node->returnStmt << "\"];\n";
+            outfile << "stmt_" << node->idNode << " -> returnStmt_" << node->returnStmt->idNode << ";\n";
+            printReturnStmtTree(node->returnStmt);
         }
 
         if (node->aliasStmt != nullptr) {
-            outfile << "stmt_" << node->aliasStmt << " [label=\"" << node->aliasStmt << "\"];\n";
-            printStmtNodeTree(node)
+            outfile << "stmt_" << node->idNode << " -> aliasStmt_" << node->aliasStmt->idNode << ";\n";
+            prinAliasStmtTree(node->aliasStmt);
         }
     }
 }
