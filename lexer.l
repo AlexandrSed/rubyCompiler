@@ -124,7 +124,7 @@ yield		{ printf("Found keyword: %s\n", yytext); }
 
 "&"         { return BIN_AND_OP; }
 "|"         { return BIN_OR_OP; }
-"^"         { return BIN_XOR_OP}
+"^"         { return BIN_XOR_OP; }
 "~"         { return BIN_ONES_COMPLEMENT_OP; }
 "<<"        { return BIN_LEFT_SHIFT_OP; }
 ">>"        { return BIN_RIGHT_SHIFT_OP; }
@@ -236,7 +236,7 @@ yield		{ printf("Found keyword: %s\n", yytext); }
                     }
 
 <DOUBLE_QUOTE_STRING>"#{"   {
-                                yylval.Str = new std::string(str.c_str() + "(");
+                                yylval.Str = new std::string(str + "(");
                                 nestingCount++;
                                 return STRING;
                                 // printf("Found string \"%s\"\n", str.c_str());

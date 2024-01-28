@@ -1,6 +1,7 @@
 %{
     #include "parser.tab.hpp"
     extern int yylex(void);
+    void yyerror(char* str);
 %}
 
 %code requires {
@@ -361,3 +362,7 @@ when_stmt:WHEN_KEYWORD linefeed_or_empty expr_list delimiter stmt_list  {$$=When
 alias_stmt: ALIAS_KEYWORD IDENTIFIER IDENTIFIER {$$=AliasStmtNode::createAliasStmt($2, $3);}
     ;
 %%
+
+void yyerror(char* str) {
+    fprintf(stderr, "ERROR: %s\n", str);
+}
