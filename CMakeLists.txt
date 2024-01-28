@@ -40,7 +40,9 @@ add_executable(CompilerLab
         parses_classes/CaseStmt/CaseStmtNode.cpp
         parses_classes/AliasStmt/AliasStmtNode.h
         parses_classes/AliasStmt/AliasStmtNode.cpp
-        lex.yy.c
+        lex.yy.cpp
         parser.tab.cpp
         parser.tab.hpp
-        main.cpp)
+        main.cpp
+        tree/tree.cpp
+        tree/tree.h)
