@@ -1,5 +1,12 @@
 #include <vector>
 #include <string>
+#include "../ExprNode/ExprNode.h"
+#include "../WhileStmt/WhileStmtNode.h"
+#include "../ForStmt/ForStmtNode.h"
+#include "../CaseStmt/CaseStmtNode.h"
+#include "../ReturnStmt/ReturnStmtNode.h"
+#include "../UnlessStmt/UnlessStmtNode.h"
+#include "../AliasStmt/AliasStmtNode.h"
 
 class StmtNode {
 public:

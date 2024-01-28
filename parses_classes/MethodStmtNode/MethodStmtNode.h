@@ -1,12 +1,13 @@
 #include <string>
 #include <vector>
+#include "../StmtNode/StmtNode.h"
 
 enum MethodType {
     simple,
     markQuestion,
     markExclamation,
     markEqual
-}
+};
 
 class MethodStmtNode {
 public:

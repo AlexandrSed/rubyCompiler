@@ -1,5 +1,8 @@
 #include <vector>
 #include <string>
+#include "../ExprNode/ExprNode.h"
+#include "../WhenStmt/WhenStmtNode.h"
+#include "../StmtNode/StmtNode.h"
 
 class CaseStmtNode {
 public:

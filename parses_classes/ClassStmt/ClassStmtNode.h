@@ -1,5 +1,6 @@
 #include <string>
 #include <vector>
+#include "../ClassBodyStmt/ClassBodyStmtNode.h"
 
 class ClassStmtNode {
 public:

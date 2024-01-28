@@ -1,5 +1,8 @@
 #include <vector>
 #include <string>
+#include "../StmtNode/StmtNode.h"
+#include "../ClassStmt/ClassStmtNode.h"
+#include "../MethodStmtNode/MethodStmtNode.h"
 
 class ProgramElementNode  {
     public:
