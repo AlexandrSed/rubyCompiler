@@ -857,14 +857,18 @@ void tree::printUnlessStmtTree(UnlessStmtNode *node) {
         outfile << "unlessStmt_" << node->idNode << " -> expr_" << node->condition->idNode << ";\n";
         printExprNodeTree(node->condition);
 
-        for (auto i : *(node->trueBranch)) {
-            outfile << "unlessStmt_" << node->idNode << " -> stmt_" << i->idNode << ";\n";
-            printStmtNodeTree(i);
+        if (node->trueBranch != nullptr) {
+            for (auto i : *(node->trueBranch)) {
+                outfile << "unlessStmt_" << node->idNode << " -> stmt_" << i->idNode << ";\n";
+                printStmtNodeTree(i);
+            }
         }
 
-        for (auto i : *(node->falseBranch)) {
-            outfile << "unlessStmt_" << node->idNode << " -> stmt_" << i->idNode << ";\n";
-            printStmtNodeTree(i);
+        if (node->falseBranch != nullptr) {
+            for (auto i : *(node->falseBranch)) {
+                outfile << "unlessStmt_" << node->idNode << " -> stmt_" << i->idNode << ";\n";
+                printStmtNodeTree(i);
+            }
         }
 
         if (node->action != nullptr) {
