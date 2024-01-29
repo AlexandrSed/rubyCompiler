@@ -182,4 +182,17 @@ void tree::printForStmtTree(ForStmtNode *node) {
             outfile << "forStmt_" << node->idNode << " -> stmt_" << i->idNode << ";\n";
             printStmtNodeTree(i);
         }
-    }}
+    }
+}
+
+void tree::prinAliasStmtTree(AliasStmtNode *node) {
+    if(node != nullptr) {
+        if (node->startName != nullptr) {
+            outfile << "aliasStmt_" << node->idNode << " -> alias_" << node->idNode << ";\n";
+            outfile << "alias_" << node->idNode << " -> " << node->alias << ";\n";
+            outfile << "aliasStmt_" << node->idNode << " -> startName_" << node->idNode << ";\n";
+            outfile << "startName_" << node->idNode << " -> " << node->startName << ";\n";
+        }
+    }
+}
+
