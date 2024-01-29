@@ -845,6 +845,35 @@ void tree::printWhenStmtTree(WhenStmtNode *node) {
     }
 }
 
+void tree::printReturnStmtTree(ReturnStmtNode *node) {
+    if(node != nullptr) {
+        outfile << "returnStmt_" << node->idNode << " -> expr_" << node->returnValue->idNode << ";\n";
+        printExprNodeTree(node->returnValue);
+    }
+}
+
+void tree::printUnlessStmtTree(UnlessStmtNode *node) {
+    if(node != nullptr) {
+        outfile << "unlessStmt_" << node->idNode << " -> expr_" << node->condition->idNode << ";\n";
+        printExprNodeTree(node->condition);
+
+        for (auto i : *(node->trueBranch)) {
+            outfile << "unlessStmt_" << node->idNode << " -> stmt_" << i->idNode << ";\n";
+            printStmtNodeTree(i);
+        }
+
+        for (auto i : *(node->falseBranch)) {
+            outfile << "unlessStmt_" << node->idNode << " -> stmt_" << i->idNode << ";\n";
+            printStmtNodeTree(i);
+        }
+
+        if (node->action != nullptr) {
+            outfile << "unlessStmt_" << node->idNode << " -> expr_" << node->action->idNode << ";\n";
+            printExprNodeTree(node->action);
+        }
+    }
+}
+
 void tree::printProgramElementNodeTree(ProgramElementNode* node) {
     if(node != nullptr) {
         if(node->classNode != nullptr) {
