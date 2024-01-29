@@ -844,3 +844,22 @@ void tree::printWhenStmtTree(WhenStmtNode *node) {
         }
     }
 }
+
+void tree::printProgramElementNodeTree(ProgramElementNode* node) {
+    if(node != nullptr) {
+        if(node->classNode != nullptr) {
+            outfile << "programmElement_" << node->idNode << " -> classStmt_" << node->classNode->idNode << ";\n";
+            printClassStmt(node->classNode);
+        }
+
+        if(node->methodNode != nullptr) {
+            outfile << "programmElement_" << node->idNode << " -> methodStmt_" << node->methodNode->idNode << ";\n";
+            printMethodStmtNodeTree(node->methodNode);
+        }
+
+        if(node->stmtNode != nullptr) {
+            outfile << "programmElement_" << node->idNode << " -> stmt_" << node->stmtNode->idNode << ";\n";
+            printStmtNodeTree(node->stmtNode);
+        }
+    }
+}
