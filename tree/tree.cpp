@@ -93,5 +93,23 @@ void tree::printIfStmtTree(IfStmtNode *node) {
 
         }
     }
-
 }
+
+void tree::printCaseStmtTree(CaseStmtNode* node) {
+        if(node != nullptr) {
+            outfile << "caseStmt_" << node->idNode << "expr_" << node->condition->idNode << ";\n";
+            printExprNodeTree(node->condition);
+
+            for(auto i : *(node->whenList)) {
+                outfile << "caseStmt_" << node->idNode << "whenStmt_" << i << ";\n";
+                printWhenStmtTree(i);
+            }
+
+            if(node->falseBranch != nullptr) {
+                for(auto i : *(node->falseBranch)) {
+                    outfile << "caseStmt_" << node->idNode << "stmt_" << i << ";\n";
+                    printStmtNodeTree(i);
+                }
+            }
+        }
+    }
