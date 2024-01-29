@@ -13,7 +13,12 @@ void tree::printTree(std::vector<ProgramElementNode*>* nodes) {
     outfile = ofstream("tree.dot");
     outfile << "digraph Tree {\n";
 
-    printProgramElementNodeTree();
+    if(nodes != nullptr) {
+        for(auto i : *nodes) {
+            outfile << "startSymbol -> programmElementStmt_" << i->idNode << ";\n";
+            printProgramElementNodeTree(i);
+        }
+    }
 
     outfile << "}\n";
     outfile.close();
