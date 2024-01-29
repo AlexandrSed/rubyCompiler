@@ -154,3 +154,14 @@ void tree::printClassStmt(ClassStmtNode* node) {
         }
     }
 }
+
+void tree::printElseifNodeTree(ElsifNode* node) {
+    if(node != nullptr) {
+        outfile << "elsifStmt_" << node->idNode << " -> expr_" << node->condition->idNode << ";\n";
+        printExprNodeTree(node->condition);
+
+        for(auto i : *(node->action)) {
+            outfile << "elsifStmt_" << node->idNode << " -> stmt_" << i->idNode << ";\n";
+        }
+    }
+}
