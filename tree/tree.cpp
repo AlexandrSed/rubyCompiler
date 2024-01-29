@@ -182,7 +182,21 @@ void tree::printForStmtTree(ForStmtNode *node) {
             outfile << "forStmt_" << node->idNode << " -> stmt_" << i->idNode << ";\n";
             printStmtNodeTree(i);
         }
-    }}
+    }
+}
+
+void tree::prinAliasStmtTree(AliasStmtNode *node) {
+    if(node != nullptr) {
+        if (node->startName != nullptr) {
+            outfile << "aliasStmt_" << node->idNode << " -> alias_" << node->idNode << ";\n";
+            outfile << "alias_" << node->idNode << " -> " << node->alias << ";\n";
+            outfile << "aliasStmt_" << node->idNode << " -> startName_" << node->idNode << ";\n";
+            outfile << "startName_" << node->idNode << " -> " << node->startName << ";\n";
+        }
+    }
+}
+
+
 
 void tree::printExprNodeTree(ExprNode* node) {
     if(node != nullptr) {
@@ -732,6 +746,19 @@ void tree::printExprNodeTree(ExprNode* node) {
             outfile << "unaryMinus_" << node->idNode << " -> expr_" << node->left->idNode << ";\n";
             printExprNodeTree(node->left);
         }
+    }
+}
+
+void tree::printWhileStmtTree(WhileStmtNode *node) {
+    if(node != nullptr) {
+        outfile << "whileStmt_" << node->idNode << " -> expr_" << node->condition->idNode << ";\n";
+        printExprNodeTree(node->condition);
+
+        for(auto i : *(node->body)) {
+            outfile << "whileStmt_" << node->idNode << " -> stmt_" << i->idNode << ";\n";
+            printStmtNodeTree(i);
+        }
+
     }
 }
 
