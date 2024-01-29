@@ -15,10 +15,6 @@ public:
     ExprNode* action;
     int idNode;
 
-    IfStmtNode() {
-        if(maxId == NULL)
-            maxId = 0;
-    }
 
     static IfStmtNode* createIfStmt(ExprNode* condition, std::vector<StmtNode*>* trueBranch);
     static IfStmtNode* createIfStmtWithElse(ExprNode* condition, std::vector<StmtNode*>* trueBranch, std::vector<StmtNode*>* falseBranch);
@@ -29,5 +25,5 @@ public:
     std::vector<StmtNode*>* falseBranch);
 
     static IfStmtNode* createSingleLineIfStmt(ExprNode* action, ExprNode* condition);
-    static int maxId;
+static inline int maxId;
 };

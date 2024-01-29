@@ -95,10 +95,6 @@ public:
     std::vector<ExprNode*>* params;
     std::vector<ExprNode*>* list;
 
-    ExprNode() {
-        if(maxId == NULL)
-            maxId = 0;
-    }
 
     static ExprNode* createExprFromVarName(ExprType type, std::string* id);
     static ExprNode* createExprFromString(std::string* str);
@@ -117,5 +113,5 @@ public:
     static ExprNode* createExprFromSelf(ExprType type, std::vector<ExprNode*>* params, std::string* id);
     static std::vector<ExprNode*>* createExprList(ExprNode* expr);
     static std::vector<ExprNode*>* addExprToList(std::vector<ExprNode*>* exprList, ExprNode* expr);
-    static int maxId;
+static inline int maxId;
 };

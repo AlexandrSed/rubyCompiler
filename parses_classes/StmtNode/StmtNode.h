@@ -29,10 +29,6 @@ public:
     AliasStmtNode* aliasStmt;
     int idNode;
 
-    StmtNode() {
-        if(maxId == NULL)
-            maxId = 0;
-    }
 
     static StmtNode* createStmtNodeExpr(ExprNode* exprStmt);
     static StmtNode* createStmtNodeIf(IfStmtNode* ifStmt);
@@ -44,5 +40,5 @@ public:
     static StmtNode* createStmtNodeAlias(AliasStmtNode* aliasStmt);
     static std::vector<StmtNode*>* createStmtList(StmtNode* stmt);
     static std::vector<StmtNode*>* addStmtToList(std::vector<StmtNode*>* stmtList, StmtNode* stmt);
-    static int maxId;
+    static inline int maxId;
 };
