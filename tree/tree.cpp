@@ -24,7 +24,6 @@ void tree::printTree(std::vector<ProgramElementNode*>* nodes) {
     outfile.close();
 }
 
-void tree::printExprNodeTree(ExprNode *node) {}
 
 void tree::printStmtNodeTree(StmtNode *node) {
     if (node != nullptr) {
