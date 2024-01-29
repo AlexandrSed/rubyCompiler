@@ -43,144 +43,311 @@ _+[0-9_]+\.?[0-9_]*  { printf("Error: Underscore at the start of a number: %s\n"
 {DIGIT}+(_{DIGIT}+)*\._[0-9_]+ { printf("Error: Underscore right after point: %s\n", yytext); }
 
 
-alias		{ return ALIAS_KEYWORD; }
-and			{ return AND_KEYWORD; }
-begin		{ printf("Found keyword: %s\n", yytext); }
-break		{ printf("Found keyword: %s\n", yytext); }
-case		{ return CASE_KEYWORD; }
-class		{ return CLASS_KEYWORD; }
-def			{ return DEF_KEYWORD; }
-"defined?"	{ printf("Found keyword: %s\n", yytext); }
-do			{ return DO_KEYWORD; }
-if			{ return IF_KEYWORD; }
-else		{ return ELSE_KEYWORD; }
-elsif		{ return ELSIF_KEYWORD; }
-end			{ return END_KEYWORD; }
+alias		{
+                printf("Found alias keyword: %s\n", yytext);    
+                return ALIAS_KEYWORD;
+            }
+and			{
+                printf("Found and keyword: %s\n", yytext);
+                return AND_KEYWORD; 
+            }
+begin		{ printf("Found begin keyword: %s\n", yytext); }
+break		{ printf("Found break keyword: %s\n", yytext); }
+case		{
+                printf("Found case keyword: %s\n", yytext);    
+                return CASE_KEYWORD;
+            }
+class		{
+                printf("Found class keyword: %s\n", yytext);
+                return CLASS_KEYWORD;
+            }
+def			{
+                printf("Found def keyword: %s\n", yytext);
+                return DEF_KEYWORD;
+            }
+"defined?"	{ printf("Found  defined? keyword: %s\n", yytext); }
+do			{
+                printf("Found do keyword: %s\n", yytext);
+                return DO_KEYWORD;
+            }
+if			{
+                printf("Found if keyword: %s\n", yytext);
+                return IF_KEYWORD;
+            }
+else		{
+                printf("Found else keyword: %s\n", yytext);
+                return ELSE_KEYWORD;
+            }
+elsif		{
+                printf("Found elsif keyword: %s\n", yytext);
+                return ELSIF_KEYWORD;
+            }
+end			{
+                printf("Found end keyword: %s\n", yytext);
+                return END_KEYWORD;
+            }
 ensure		{ printf("Found keyword: %s\n", yytext); }
-false		{ return FALSE_KEYWORD; }
-for			{ return FOR_KEYWORD; }
-in			{ return IN_KEYWORD; }
+false		{
+                printf("Found false keyword: %s\n", yytext);
+                return FALSE_KEYWORD;
+            }
+for			{
+                printf("Found for keyword: %s\n", yytext);
+                return FOR_KEYWORD;
+            }
+in			{
+                printf("Found in keyword: %s\n", yytext);
+                return IN_KEYWORD;
+            }
 module		{ printf("Found keyword: %s\n", yytext); }
 next		{ printf("Found keyword: %s\n", yytext); }
-nil			{ return NIL_KEYWORD; }
-not			{ return NOT_KEYWORD; }
-or			{ return OR_KEYWORD; }
+nil			{
+                printf("Found nil keyword: %s\n", yytext);
+                return NIL_KEYWORD;
+            }
+not			{
+                printf("Found not keyword: %s\n", yytext);
+                return NOT_KEYWORD;
+            }
+or			{ 
+                printf("Found or keyword: %s\n", yytext);
+                return OR_KEYWORD;
+            }
 redo		{ printf("Found keyword: %s\n", yytext); }
 rescue		{ printf("Found keyword: %s\n", yytext); }
 retry		{ printf("Found keyword: %s\n", yytext); }
-return		{ return RETURN_KEYWORD; }
-self		{ return SELF_KEYWORD; }
-super		{ return SUPER_KEYWORD; }
-superclass  { return SUPERCLASS_KEYWORD; }
-then		{ return THEN_KEYWORD; }
-true		{ return TRUE_KEYWORD; }
+return		{
+                printf("Found return keyword: %s\n", yytext);
+                return RETURN_KEYWORD;
+            }
+self		{
+                printf("Found self keyword: %s\n", yytext);
+                return SELF_KEYWORD;
+            }
+super		{
+                printf("Found super keyword: %s\n", yytext);
+                return SUPER_KEYWORD;
+            }
+superclass  {
+                printf("Found superclass keyword: %s\n", yytext);
+                return SUPERCLASS_KEYWORD;
+            }
+then		{
+                printf("Found then keyword: %s\n", yytext);
+                return THEN_KEYWORD;
+            }
+true		{
+                printf("Found true keyword: %s\n", yytext);
+                return TRUE_KEYWORD;
+            }
 undef		{ printf("Found keyword: %s\n", yytext); }
-unless		{ return UNLESS_KEYWORD; }
+unless		{
+                printf("Found unless keyword: %s\n", yytext);
+                return UNLESS_KEYWORD;
+            }
 until		{ printf("Found keyword: %s\n", yytext); }
-when		{ return WHEN_KEYWORD; }
-while		{ return WHILE_KEYWORD;  }
+when		{
+                printf("Found when keyword: %s\n", yytext);
+                return WHEN_KEYWORD;
+            }
+while		{
+                printf("Found while keyword: %s\n", yytext);
+                return WHILE_KEYWORD;
+            }
 yield		{ printf("Found keyword: %s\n", yytext); }
 
 "+"         { 
+                printf("Found arithmetic operation +: %s\n", yytext); 
                 return '+';
-                // printf("Found arithmetic operation: %s\n", yytext); 
             }   
 "-"         { 
+                printf("Found arithmetic operation -: %s\n", yytext);
                 return '-';
-                // printf("Found arithmetic operation: %s\n", yytext);
             }
 "*"         {
+                printf("Found arithmetic operation *: %s\n", yytext); 
                 return '*';
-                // printf("Found arithmetic operation: %s\n", yytext); 
             }
 "/"         { 
+                printf("Found arithmetic operation: / %s\n", yytext);
                 return '/';
-                // printf("Found arithmetic operation: %s\n", yytext);
             }
 "%"         {
+                printf("Found arithmetic operation percent: %s\n", yytext);
                 return '%';
-                // printf("Found arithmetic operation: %s\n", yytext);
             }
 "**"        { return ARITHMETIC_POW_OP; }
 
-"=="        { return EQL_OP; }
-"!="        { return NOT_EQL_OP; }
-">"         { return GREATER_OP; }
-"<"         { return LESS_OP; }
-">="        { return GREATER_OR_EQL_OP; }
-"<="        { return LESS_OR_EQL_OP; }
-"<=>"       { return COMB_COMPARISON_OP; }
-"==="       { return CASE_EQL_OP; }
+"=="        {
+                printf("Found arithmetic operation EQL_OP: %s\n", yytext);
+                return EQL_OP;
+            }
+"!="        {
+                printf("Found arithmetic operation NOT_EQL_OP: %s\n", yytext);
+                return NOT_EQL_OP;
+            }
+">"         {
+                printf("Found arithmetic operation Greater_op: %s\n", yytext);
+                return GREATER_OP;
+            }
+"<"         {
+                printf("Found arithmetic operation Less_op: %s\n", yytext);
+                return LESS_OP;
+            }
+">="        {
+                printf("Found arithmetic operation Greater_or_eql_op: %s\n", yytext);
+                return GREATER_OR_EQL_OP;
+            }
+"<="        {
+                printf("Found arithmetic operation Less_or_eql_op: %s\n", yytext);
+                return LESS_OR_EQL_OP;
+            }
+"<=>"       {
+               printf("Found  operation <=>: %s\n", yytext); 
+                return COMB_COMPARISON_OP;
+            }
+"==="       {
+                printf("Found arithmetic operation CASE_EQL_OP: %s\n", yytext);
+                return CASE_EQL_OP;
+            }
 "eql?"      { printf("Found arithmetic operation: %s\n", yytext); }
 "equal?"    { printf("Found arithmetic operation: %s\n", yytext); }
 
 "="         { printf("Found arithmetic operation: %s\n", yytext); }
-"+="        { return ADD_ASSIGN_OP; }
-"-="        { return SUB_ASSIGN_OP; }
-"*="        { return MUL_ASSIGN_OP; }
-"/="        { return DIV_ASSIGN_OP; }
-"%="        { return MOD_ASSIGN_OP; }
-"**="       { return POW_ASSIGN_OP; }
+"+="        {
+                printf("Found add assign op: %s\n", yytext);
+                return ADD_ASSIGN_OP;
+            }
+"-="        { 
+                printf("Found sub assign op: %s\n", yytext);
+                return SUB_ASSIGN_OP;
+            }
+"*="        { 
+                printf("Found mul assign op: %s\n", yytext);
+                return MUL_ASSIGN_OP;
+            }
+"/="        { 
+                printf("Found div assign op: %s\n", yytext);
+                return DIV_ASSIGN_OP;
+            }
+"%="        { 
+                printf("Found mod assign op: %s\n", yytext);
+                return MOD_ASSIGN_OP;
+            }
+"**="       { 
+                printf("Found pow assign op: %s\n", yytext);
+                return POW_ASSIGN_OP;
+            }
 
-"&"         { return BIN_AND_OP; }
-"|"         { return BIN_OR_OP; }
-"^"         { return BIN_XOR_OP; }
-"~"         { return BIN_ONES_COMPLEMENT_OP; }
-"<<"        { return BIN_LEFT_SHIFT_OP; }
-">>"        { return BIN_RIGHT_SHIFT_OP; }
+"&"         {
+                printf("Found bin and op: %s\n", yytext);
+                return BIN_AND_OP;
+            }
+"|"         {
+                printf("Found bin or op: %s\n", yytext);
+                return BIN_OR_OP;
+            }
+"^"         {
+                printf("Found bin xor op: %s\n", yytext);
+                return BIN_XOR_OP;
+            }
+"~"         {
+                printf("Found bin ones complement op: %s\n", yytext);
+                return BIN_ONES_COMPLEMENT_OP;
+            }
+"<<"        {
+                printf("Found bin left shift op: %s\n", yytext);
+                return BIN_LEFT_SHIFT_OP;
+            }
+">>"        {
+                printf("Found bin right shift op: %s\n", yytext);
+                return BIN_RIGHT_SHIFT_OP;
+            }
 
-"&&"        { return LOGICAL_AND_OP; }
-"||"        { return LOGICAL_OR_OP; }
-"!"         { return LOGICAL_NOT_OP; }
+"&&"        {
+                printf("Found logical and op: %s\n", yytext);
+                return LOGICAL_AND_OP;
+            }
+"||"        {
+                printf("Found logical or op: %s\n", yytext);
+                return LOGICAL_OR_OP; 
+            }
+"!"         {
+                printf("Found logical not op: %s\n", yytext);
+                return LOGICAL_NOT_OP;
+            }
 
-".."        { return EXCLUSIVE_RANGE_OP; }
-"..."       { return INCLUSIVE_RANGE_OP; }
+".."        {
+                printf("Found range op: EXCLUSIVE_RANGE_OP %s\n", yytext);
+                return EXCLUSIVE_RANGE_OP;
+            }
+"..."       {
+                printf("Found range op: INCLUSIVE_RANGE_OP %s\n", yytext);
+                return INCLUSIVE_RANGE_OP;
+            }
 
 "("         { 
+                printf("Found bracket: %s\n", yytext);
                 return '(';
-                // printf("Found bracket: %s\n", yytext);
             }
 ")"         { 
+                printf("Found bracket: %s\n", yytext);
                 return ')';
-                // printf("Found bracket: %s\n", yytext);
             }
 "{"         { 
+                printf("Found bracket: %s\n", yytext);
                 return '{';
-                // printf("Found bracket: %s\n", yytext);
             }
 "}"         {
                 if(nestingCount == 0) {
                     return '}';
-                    // printf("Found bracket: %s\n", yytext);
+                    printf("Found bracket: %s\n", yytext);
                 } else {
                     //TODO: сделать правильно интерполяцию
                     nestingCount--;
                     BEGIN(DOUBLE_QUOTE_STRING);
                     str = "";
                     // yylval.Str = new std::string(')');
+                    printf("Found interpolation: ) + \n");
                     return '+';
-                    // printf("Found interpolation: ) + \n");
                 }
             }
 "["         {
-                return '[';
                 printf("Found bracket: %s\n", yytext);
+                return '[';
             }
 "]"         {
-                return ']';
                 printf("Found bracket: %s\n", yytext);
+                return ']';
             }
 
-"?"         { return QUESTION_SYMBOL; }
+"?"         {
+                printf("Found question mark: %s\n", yytext);
+                return QUESTION_SYMBOL;
+            }
 
 "."         {
+                printf("Found dot: %s\n", yytext);
                 return '.';
             }
-","         { return COMMA_SYMBOL; }
-":"         { return COLON_SYMBOL; }
-"::"        { return DOUBLE_COLON_SYMBOL; }
-";"         { return SEMICOLON_SYMBOL; }
+","         {
+                printf("Found comma: %s\n", yytext);
+                return COMMA_SYMBOL;
+            }
+":"         {
+                printf("Found colon: %s\n", yytext);
+                return COLON_SYMBOL;
+            }
+"::"        {
+                printf("Found double colon: %s\n", yytext);
+                return DOUBLE_COLON_SYMBOL;
+            }
+";"         {
+                printf("Found semicolon: %s\n", yytext);
+                return SEMICOLON_SYMBOL;
+            }
 "\n"        { 
+                printf("Found line feed: %s\n", yytext);
                 return NEW_LINE_SYMBOL;
                 // printf("Found line feed: %s\n", yytext);
             }
@@ -200,47 +367,47 @@ yield		{ printf("Found keyword: %s\n", yytext); }
 
 [A-Z][a-zA-Z0-9_]*  {
                         yylval.Str = new std::string(yytext);
+                        printf("Found constant: %s\n", yytext);
                         return CONSTANT_NAME;
-                        // printf("Found constant: %s\n", yytext);
                     }
 
 {IDENTIFIER}\?  {
                     yylval.Str = new std::string(yytext);
+                    printf("Found method with question: %s\n", yytext);
                     return METHOD_MARK_QUESTION;
-                    // printf("Found method with question: %s\n", yytext);
                 }
 {IDENTIFIER}\!  {
                     yylval.Str = new std::string(yytext);
+                    printf("Found method with !: %s\n", yytext);
                     return METHOD_MARK_EXCLAMATION;
-                    // printf("Found method with !: %s\n", yytext);
                 }
 {IDENTIFIER}\=  {
                     yylval.Str = new std::string(yytext);
+                    printf("Found method with =: %s\n", yytext);
                     return METHOD_MARK_EQUAL;
-                    // printf("Found method with =: %s\n", yytext);
                 }
 {IDENTIFIER}    {
                     yylval.Str = new std::string(yytext);
+                    printf("Found identifier: %s\n", yytext);
                     return IDENTIFIER; 
-                    // printf("Found identifier: %s\n", yytext);
                 }
 \@{IDENTIFIER}  {
                     yylval.Str = new std::string(yytext);
+                    printf("Found var name: %s\n", yytext);
                     return OBJECT_VAR_NAME;
-                    // printf("Found var name: %s\n", yytext);
                 }
 \@\@{IDENTIFIER} {
                     yylval.Str = new std::string(yytext);
+                    printf("Found class var name: %s\n", yytext);
                     return CLASS_VAR_NAME;
-                    // printf("Found class var name: %s\n", yytext);
                     }
 
 <DOUBLE_QUOTE_STRING>"#{"   {
-                                yylval.Str = new std::string(str + "(");
+                                yylval.Str = new std::string(str);
                                 nestingCount++;
                                 return STRING;
-                                // printf("Found string \"%s\"\n", str.c_str());
-                                // printf("Found interpolation: + ( \n");
+                                printf("Found string \"%s\"\n", str.c_str());
+                                printf("Found interpolation: + ( \n");
                                 BEGIN(INITIAL);
                             }
 
@@ -281,16 +448,16 @@ yield		{ printf("Found keyword: %s\n", yytext); }
 
 <DOUBLE_QUOTE_STRING>\" {
                                 yylval.Str = new std::string(str.c_str());
+                                printf("String literal: \"%s\" \n", str.c_str());
                                 return STRING;
-                                // printf("String literal: \"%s\" \n", str.c_str());
                                 BEGIN(INITIAL);
                         }
 <DOUBLE_QUOTE_STRING>\\             { str.append(""); }
 
 <SINGLE_QUOTE_STRING>\' { 
                             yylval.Str = new std::string(str.c_str());
+                            printf("String literal: \"%s\" \n", str.c_str());
                             return STRING;
-                            // printf("String literal: \"%s\" \n", str.c_str());
                             BEGIN(INITIAL);
                         }
 
@@ -322,17 +489,17 @@ yield		{ printf("Found keyword: %s\n", yytext); }
 
     yylval.Int = number;
     free(cleanedText); 
+    printf("Found integer: %d\n", number); 
     return INTEGER_NUMBER;
 
-    // printf("Found integer: %d\n", number); 
 }
 0[xX]{HEX_DIGIT}+(_{HEX_DIGIT}+)* { 
     char* cleanedText = removeUnderscores(yytext);
     int number = strtol(cleanedText, NULL, 16);
 
     yylval.Int = number;
+    printf("Found hexadecimal integer: %d\n", number); 
     return INTEGER_NUMBER;
-    // printf("Found hexadecimal integer: %d\n", number); 
 }
 
 0[bB]{BIN_DIGIT}+(_{BIN_DIGIT}+)* {
@@ -340,8 +507,8 @@ yield		{ printf("Found keyword: %s\n", yytext); }
     int number = strtol( cleanedText, NULL, 2);
 
     yylval.Int = number;
+    printf("Found binary integer: %d\n", yytext);
     return INTEGER_NUMBER;
-    // printf("Found binary integer: %d\n", yytext);
 }
 
 {DIGIT}+(_{DIGIT}+)*\.({DIGIT}+(_{DIGIT}+)*)? { 
@@ -349,8 +516,8 @@ yield		{ printf("Found keyword: %s\n", yytext); }
     double number = atof(cleanedText);
 
     yylval.Float = number;
+    printf("Found floating-point number: %f\n", number); 
     return FLOAT_NUMBER;
-    // printf("Found floating-point number: %f\n", number); 
 }
 
 {DIGIT}+(_{DIGIT}+)*\.{DIGIT}+(_{DIGIT}+)*{EXPONENT}  { 
@@ -358,8 +525,8 @@ yield		{ printf("Found keyword: %s\n", yytext); }
     double number = atof(cleanedText);
 
     yylval.Float = number;
+    printf("Found floating-point number with exponent: %f\n", number); 
     return FLOAT_NUMBER;
-    // printf("Found floating-point number with exponent: %f\n", number); 
 }
 
 {DIGIT}+(_{DIGIT}+)*{EXPONENT}  {
@@ -367,8 +534,8 @@ yield		{ printf("Found keyword: %s\n", yytext); }
     double number = atof(cleanedText);
 
     yylval.Float = number;
+    printf("Found number with exponent: %f\n", number); 
     return FLOAT_NUMBER;
-    // printf("Found number with exponent: %f\n", number); 
 }
 
 {DIGIT}+(_+{DIGIT}+)*(\.{DIGIT}+(_+{DIGIT}+)*)?{EXPONENT}?  {
