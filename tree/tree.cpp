@@ -137,3 +137,20 @@ void tree::printClassBodyTree(ClassBodyStmtNode* node) {
         }
     }
 }
+
+void tree::printClassStmt(ClassStmtNode* node) {
+    if(node != nullptr) {
+        outfile << "classStmt_" << node->idNode << " -> className_" << node->idNode << ";\n";
+        outfile << "className_" << node->idNode << " -> " << node->className << ";\n";
+        
+        for(auto i : *(node->classBody)) {
+            outfile << "classStmt_" << node->idNode << " -> classBodyStmt_" << i->idNode << ";\n";
+            printClassBodyTree(i);
+        }
+
+        if(node->parentName != nullptr) {
+            outfile << "classStmt_" << node->idNode << " -> parentName_" << node->idNode << ";\n";
+            outfile << "parentName_" << node->idNode << " -> " << node->className << ";\n";
+        }
+    }
+}
