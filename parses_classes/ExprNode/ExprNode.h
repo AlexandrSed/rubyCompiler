@@ -112,5 +112,5 @@ public:
     static ExprNode* createExprFromSelf(ExprType type, std::vector<ExprNode*>* params, std::string* id);
     static std::vector<ExprNode*>* createExprList(ExprNode* expr);
     static std::vector<ExprNode*>* addExprToList(std::vector<ExprNode*>* exprList, ExprNode* expr);
-    static int maxId;
+    static int maxId=0;
 };

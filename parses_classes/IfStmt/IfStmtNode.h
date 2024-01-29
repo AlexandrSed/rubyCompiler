@@ -24,5 +24,5 @@ public:
     std::vector<StmtNode*>* falseBranch);
 
     static IfStmtNode* createSingleLineIfStmt(ExprNode* action, ExprNode* condition);
-    static int maxId;
+    static int maxId=0;
 };

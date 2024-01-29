@@ -11,5 +11,5 @@ public:
     int idNode;
 
     static WhileStmtNode* createWhileStmtNode(ExprNode* condition, std::vector<StmtNode*>* body);
-    static int maxId;
+    static int maxId=0;
 };

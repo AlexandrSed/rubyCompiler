@@ -39,5 +39,5 @@ public:
     static StmtNode* createStmtNodeAlias(AliasStmtNode* aliasStmt);
     static std::vector<StmtNode*>* createStmtList(StmtNode* stmt);
     static std::vector<StmtNode*>* addStmtToList(std::vector<StmtNode*>* stmtList, StmtNode* stmt);
-    static int maxId;
+    static int maxId=0;
 };

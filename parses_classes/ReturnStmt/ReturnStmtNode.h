@@ -11,5 +11,5 @@ public:
 
     static ReturnStmtNode* createReturnStmt(ExprNode* returnValue);
     static ReturnStmtNode* createSingleReturnStmt();
-    static int maxId;
+    static int maxId=0;
 };

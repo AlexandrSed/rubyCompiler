@@ -12,5 +12,5 @@ public:
     int idNode;
 
     static ForStmtNode* createForStmtNode(ExprNode* variable, ExprNode* array, std::vector<StmtNode*>* body);
-    static int maxId;
+    static int maxId=0;
 };

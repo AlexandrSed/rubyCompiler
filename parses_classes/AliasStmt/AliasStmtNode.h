@@ -9,5 +9,5 @@ public:
     int idNode;
 
     static AliasStmtNode* createAliasStmt(std::string* alias, std::string* startName);
-    static int maxId;
+    static int maxId=0;
 };
