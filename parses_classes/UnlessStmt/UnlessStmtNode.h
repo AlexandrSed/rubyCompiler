@@ -12,8 +12,13 @@ public:
     ExprNode* action;
     int idNode;
 
+    UnlessStmtNode() {
+        if(maxId == NULL)
+            maxId = 0;
+    }
+
     static UnlessStmtNode* createUnlessStmt(ExprNode* condition, std::vector<StmtNode*>* trueBranch);
     static UnlessStmtNode* createUnlessStmtwithElse(ExprNode* condition, std::vector<StmtNode*>* trueBranch, std::vector<StmtNode*>* falseBranch);
     static UnlessStmtNode* createSingleLineUnlessStmt(ExprNode* condition, ExprNode* action);
-    static int maxId=0;
+    static int maxId;
 };

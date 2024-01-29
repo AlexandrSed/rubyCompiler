@@ -11,7 +11,12 @@ public:
     std::string* parentName;
     int idNode;
 
+    ClassStmtNode() {
+        if(maxId == NULL)
+            maxId = 0;
+    }
+
     static ClassStmtNode* createClassStmt(std::string* className, std::vector<ClassBodyStmtNode*>* classBody);
     static ClassStmtNode* createClassStmtWithParent(std::string* className, std::string* parentName, std::vector<ClassBodyStmtNode*>* classBody);
-    static int maxId=0;
+    static int maxId;
 };
