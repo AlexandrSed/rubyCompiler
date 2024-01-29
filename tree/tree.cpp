@@ -844,3 +844,10 @@ void tree::printWhenStmtTree(WhenStmtNode *node) {
         }
     }
 }
+
+void tree::printReturnStmtTree(ReturnStmtNode *node) {
+    if(node != nullptr) {
+        outfile << "returnStmt_" << node->idNode << " -> expr_" << node->returnValue->idNode << ";\n";
+        printExprNodeTree(node->returnValue);
+    }
+}
