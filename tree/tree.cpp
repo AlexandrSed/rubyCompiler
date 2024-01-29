@@ -762,6 +762,75 @@ void tree::printWhileStmtTree(WhileStmtNode *node) {
     }
 }
 
+void tree::printMethodStmtNodeTree(MethodStmtNode* node) {
+    if(node != nullptr) {
+        if(node->type == MethodType::markEqual) {
+            outfile << "methodStmt_" << node->idNode << " -> markEqual_" << node->idNode <<";\n";
+            outfile << "markEqual_" << node->idNode << " -> " << node->methodName << ";\n";
+
+            if(node->paramList != nullptr) {
+                for (auto i : *(node->paramList)) {
+                    outfile << "markEqual_" << node->idNode << " -> " << i << ";\n";
+                }
+            }
+
+            for (auto i : *(node->body)) {
+                outfile << "markEqual_" << node->idNode << " -> stmt_" << i->idNode << ";\n";
+                printStmtNodeTree(i);
+                
+            }
+        }
+        else if(node->type == MethodType::markExclamation) {
+            outfile << "methodStmt_" << node->idNode << " -> markExclamation_" << node->idNode <<";\n";
+            outfile << "markExclamation_" << node->idNode << " -> " << node->methodName << ";\n";
+
+            if(node->paramList != nullptr) {
+                for (auto i : *(node->paramList)) {
+                    outfile << "markExclamation_" << node->idNode << " -> " << i << ";\n";
+                }
+            }
+
+            for (auto i : *(node->body)) {
+                outfile << "markExclamation_" << node->idNode << " -> stmt_" << i->idNode << ";\n";
+                printStmtNodeTree(i);
+                
+            }
+        }
+        else if(node->type == MethodType::markQuestion) {
+            outfile << "methodStmt_" << node->idNode << " -> markQuestion_" << node->idNode <<";\n";
+            outfile << "markQuestion_" << node->idNode << " -> " << node->methodName << ";\n";
+
+            if(node->paramList != nullptr) {
+                for (auto i : *(node->paramList)) {
+                    outfile << "markQuestion_" << node->idNode << " -> " << i << ";\n";
+                }
+            }
+
+            for (auto i : *(node->body)) {
+                outfile << "markQuestion_" << node->idNode << " -> stmt_" << i->idNode << ";\n";
+                printStmtNodeTree(i);
+                
+            }
+        }
+        else if(node->type == MethodType::simple) {
+            outfile << "methodStmt_" << node->idNode << " -> simple_" << node->idNode <<";\n";
+            outfile << "simple_" << node->idNode << " -> " << node->methodName << ";\n";
+
+            if(node->paramList != nullptr) {
+                for (auto i : *(node->paramList)) {
+                    outfile << "simple_" << node->idNode << " -> " << i << ";\n";
+                }
+            }
+
+            for (auto i : *(node->body)) {
+                outfile << "simple_" << node->idNode << " -> stmt_" << i->idNode << ";\n";
+                printStmtNodeTree(i);
+                
+            }
+        }
+    }
+}
+
 void tree::printWhenStmtTree(WhenStmtNode *node) {
     if(node != nullptr) {
         for (auto i : *(node->condition)) {
