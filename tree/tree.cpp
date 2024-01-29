@@ -4,6 +4,8 @@
 
 using namespace std;
 
+std::vector<ProgramElementNode*>* root;
+
 tree::tree() {
 
 }
