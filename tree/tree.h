@@ -38,7 +38,7 @@ public:
     void printClassBodyTree(ClassBodyStmtNode* node);
     void printClassStmt(ClassStmtNode* node);
     void printElseifNodeTree(ElsifNode* node);
-    void printExprNodeTree(Expr* node);
+    void printExprNodeTree(ExprNode* node);
     void printForStmtTree(ForStmtNode* node);
     void printIfStmtTree(IfStmtNode* node);
     void printMethodStmtNodeTree(MethodStmtNode* node);
