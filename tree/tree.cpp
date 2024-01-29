@@ -761,3 +761,17 @@ void tree::printWhileStmtTree(WhileStmtNode *node) {
 
     }
 }
+
+void tree::printWhenStmtTree(WhenStmtNode *node) {
+    if(node != nullptr) {
+        for (auto i : *(node->condition)) {
+            outfile << "whenStmt_" << node->idNode << " -> expr_" << i->idNode << ";\n";
+            printExprNodeTree(i);
+        }
+
+        for (auto i : *(node->action)) {
+            outfile << "whenStmt_" << node->idNode << " -> stmt_" << i->idNode << ";\n";
+            printStmtNodeTree(i);
+        }
+    }
+}
