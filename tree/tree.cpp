@@ -96,20 +96,44 @@ void tree::printIfStmtTree(IfStmtNode *node) {
 }
 
 void tree::printCaseStmtTree(CaseStmtNode* node) {
-        if(node != nullptr) {
-            outfile << "caseStmt_" << node->idNode << "expr_" << node->condition->idNode << ";\n";
-            printExprNodeTree(node->condition);
+    if(node != nullptr) {
+        outfile << "caseStmt_" << node->idNode << " -> expr_" << node->condition->idNode << ";\n";
+        printExprNodeTree(node->condition);
 
-            for(auto i : *(node->whenList)) {
-                outfile << "caseStmt_" << node->idNode << "whenStmt_" << i << ";\n";
-                printWhenStmtTree(i);
-            }
+        for(auto i : *(node->whenList)) {
+            outfile << "caseStmt_" << node->idNode << " -> whenStmt_" << i->idNode << ";\n";
+            printWhenStmtTree(i);
+        }
 
-            if(node->falseBranch != nullptr) {
-                for(auto i : *(node->falseBranch)) {
-                    outfile << "caseStmt_" << node->idNode << "stmt_" << i << ";\n";
-                    printStmtNodeTree(i);
-                }
+        if(node->falseBranch != nullptr) {
+            for(auto i : *(node->falseBranch)) {
+                outfile << "caseStmt_" << node->idNode << " -> stmt_" << i->idNode << ";\n";
+                printStmtNodeTree(i);
             }
         }
     }
+}
+
+void tree::printClassBodyTree(ClassBodyStmtNode* node) {
+    if(node != nullptr) {
+        if(node->method != nullptr) {
+            outfile << "classBodyStmt_" << node->idNode << " -> methodStmt_" << node->method->idNode << ";\n";
+            printMethodStmtNodeTree(node->method);
+        }
+
+        if(node->classVarName != nullptr) {
+            outfile << "classBodyStmt_" << node->idNode << " -> classVarName_" << node->idNode << ";\n";
+            outfile << "classVarName_" << node->idNode << " -> " << node->classVarName << ";\n";
+        }
+
+        if(node->objectVarName != nullptr) {
+            outfile << "classBodyStmt_" << node->idNode << " -> objectVarName_" << node->idNode << ";\n";
+            outfile << "objectVarName_" << node->idNode << " -> " << node->objectVarName << ";\n";
+        }
+
+        if(node->value != nullptr) {
+            outfile << "classBodyStmt_" << node->idNode << " -> expr_" << node->value->idNode << ";\n";
+            printExprNodeTree(node->value);
+        }
+    }
+}
