@@ -166,6 +166,24 @@ void tree::printElseifNodeTree(ElsifNode* node) {
     }
 }
 
+void tree::printForStmtTree(ForStmtNode *node) {
+    if(node != nullptr) {
+        if (node->variable != nullptr) {
+            outfile << "forStmt_" << node->idNode << " -> expr_" << node->variable->idNode << ";\n";
+            printExprNodeTree(node->variable);
+        }
+
+        if (node->array != nullptr) {
+            outfile << "forStmt_" << node->idNode << " -> expr_" << node->array->idNode << ";\n";
+            printExprNodeTree(node->array);
+        }
+
+        for (auto i : *(node->body)) {
+            outfile << "forStmt_" << node->idNode << " -> stmt_" << i->idNode << ";\n";
+            printStmtNodeTree(i);
+        }
+    }}
+
 void tree::printExprNodeTree(ExprNode* node) {
     if(node != nullptr) {
         if(node->type == ExprType::addAssign) {
