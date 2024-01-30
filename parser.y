@@ -56,7 +56,6 @@
     ClassStmtNode* class_stmt_union;
     ProgramElementNode* programm_el_union;
     std::vector<ProgramElementNode*>* programm_el_list_union;
-    std::vector<
 }
 
 %token ALIAS_KEYWORD

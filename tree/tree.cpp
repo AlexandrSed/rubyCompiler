@@ -28,11 +28,12 @@ void tree::printTree(std::vector<ProgramElementNode*>* nodes) {
 
 
 void tree::printStmtNodeTree(StmtNode *node) {
+    printf("Node name: %s\n", typeid(node).name());
     if (node != nullptr) {
        
 
         if (node->exprStmt != nullptr) {
-            outfile << "stmt_" << node->idNode << " -> exprStmt_" << node->exprStmt->idNode << "\"];\n";
+            outfile << "stmt_" << node->idNode << " -> exprStmt_" << node->exprStmt->idNode << ";\n";
             printExprNodeTree(node->exprStmt);
         }
         if (node->ifStmt != nullptr) {
@@ -73,6 +74,7 @@ void tree::printStmtNodeTree(StmtNode *node) {
 }
 
 void tree::printIfStmtTree(IfStmtNode *node) {
+    printf("Node name: %s\n", typeid(node).name());
     if (node != nullptr) {
         outfile << "ifStmt_" << node->idNode << " -> expr_" << node->condition->idNode << ";\n";
         printExprNodeTree(node->condition);
@@ -102,6 +104,7 @@ void tree::printIfStmtTree(IfStmtNode *node) {
 }
 
 void tree::printCaseStmtTree(CaseStmtNode* node) {
+    printf("Node name: %s\n", typeid(node).name());
     if(node != nullptr) {
         outfile << "caseStmt_" << node->idNode << " -> expr_" << node->condition->idNode << ";\n";
         printExprNodeTree(node->condition);
@@ -121,6 +124,7 @@ void tree::printCaseStmtTree(CaseStmtNode* node) {
 }
 
 void tree::printClassBodyTree(ClassBodyStmtNode* node) {
+    printf("Node name: %s\n", typeid(node).name());
     if(node != nullptr) {
         if(node->method != nullptr) {
             outfile << "classBodyStmt_" << node->idNode << " -> methodStmt_" << node->method->idNode << ";\n";
@@ -145,9 +149,10 @@ void tree::printClassBodyTree(ClassBodyStmtNode* node) {
 }
 
 void tree::printClassStmt(ClassStmtNode* node) {
+    printf("Node name: %s\n", typeid(node).name());
     if(node != nullptr) {
         outfile << "classStmt_" << node->idNode << " -> className_" << node->idNode << ";\n";
-        outfile << "className_" << node->idNode << " -> " << node->className << ";\n";
+        outfile << "className_" << node->idNode << " -> " << (*node->className) << "_" << node->idNode << ";\n";
         
         for(auto i : *(node->classBody)) {
             outfile << "classStmt_" << node->idNode << " -> classBodyStmt_" << i->idNode << ";\n";
@@ -156,12 +161,13 @@ void tree::printClassStmt(ClassStmtNode* node) {
 
         if(node->parentName != nullptr) {
             outfile << "classStmt_" << node->idNode << " -> parentName_" << node->idNode << ";\n";
-            outfile << "parentName_" << node->idNode << " -> " << node->className << ";\n";
+            outfile << "parentName_" << node->idNode << " -> " << (*node->className) << ";\n";
         }
     }
 }
 
 void tree::printElseifNodeTree(ElsifNode* node) {
+    printf("Node name: %s\n", typeid(node).name());
     if(node != nullptr) {
         outfile << "elsifStmt_" << node->idNode << " -> expr_" << node->condition->idNode << ";\n";
         printExprNodeTree(node->condition);
@@ -173,6 +179,7 @@ void tree::printElseifNodeTree(ElsifNode* node) {
 }
 
 void tree::printForStmtTree(ForStmtNode *node) {
+    printf("Node name: %s\n", typeid(node).name());
     if(node != nullptr) {
         if (node->variable != nullptr) {
             outfile << "forStmt_" << node->idNode << " -> expr_" << node->variable->idNode << ";\n";
@@ -192,6 +199,7 @@ void tree::printForStmtTree(ForStmtNode *node) {
 }
 
 void tree::prinAliasStmtTree(AliasStmtNode *node) {
+    printf("Node name: %s\n", typeid(node).name());
     if(node != nullptr) {
         if (node->startName != nullptr) {
             outfile << "aliasStmt_" << node->idNode << " -> alias_" << node->idNode << ";\n";
@@ -205,6 +213,7 @@ void tree::prinAliasStmtTree(AliasStmtNode *node) {
 
 
 void tree::printExprNodeTree(ExprNode* node) {
+    printf("Node name: %s\n", typeid(node).name());
     if(node != nullptr) {
         if(node->type == ExprType::addAssign) {
             outfile << "expr_" << node->idNode << " -> addAssign_" << node->idNode << ";\n";
@@ -304,7 +313,7 @@ void tree::printExprNodeTree(ExprNode* node) {
             outfile << "callOfMethod_" << node->idNode << " -> expr_" << node->left->idNode << ";\n";
             printExprNodeTree(node->left);
 
-            outfile << "callOfMethod_" << node->idNode << " -> " << node->varName << ";\n";
+            outfile << "callOfMethod_" << node->idNode << " -> \"" << (*node->varName) << "_" << node->idNode << "\";\n";
             
             for(auto i : *(node->params)) {
                 outfile << "callOfMethod_" << node->idNode << " -> expr_" << i->idNode << ";\n";
@@ -316,7 +325,7 @@ void tree::printExprNodeTree(ExprNode* node) {
             outfile << "callOfMethodEqual_" << node->idNode << " -> expr_" << node->left->idNode << ";\n";
             printExprNodeTree(node->left);
 
-            outfile << "callOfMethodEqual_" << node->idNode << " -> " << node->varName << ";\n";
+            outfile << "callOfMethodEqual_" << node->idNode << " -> \"" << (*node->varName) << "_" << node->idNode << "\";\n";
             
             for(auto i : *(node->params)) {
                 outfile << "callOfMethodEqual_" << node->idNode << " -> expr_" << i->idNode << ";\n";
@@ -328,14 +337,14 @@ void tree::printExprNodeTree(ExprNode* node) {
             outfile << "callOfMethodEqualWithoutParams_" << node->idNode << " -> expr_" << node->left->idNode << ";\n";
             printExprNodeTree(node->left);
 
-            outfile << "callOfMethodEqualWithoutParams_" << node->idNode << " -> " << node->varName << ";\n";
+            outfile << "callOfMethodEqualWithoutParams_" << node->idNode << " -> \"" << (*node->varName) << "_" << node->idNode << "\";\n";
         }
         else if(node->type == ExprType::callOfMethodMarkExclamation) {
             outfile << "expr_" << node->idNode << " -> callOfMethodMarkExclamation_" << node->idNode << ";\n";
             outfile << "callOfMethodMarkExclamation_" << node->idNode << " -> expr_" << node->left->idNode << ";\n";
             printExprNodeTree(node->left);
 
-            outfile << "callOfMethodMarkExclamation_" << node->idNode << " -> " << node->varName << ";\n";
+            outfile << "callOfMethodMarkExclamation_" << node->idNode << " -> \"" << (*node->varName) << "_" << node->idNode << "\";\n";
             
             for(auto i : *(node->params)) {
                 outfile << "callOfMethodMarkExclamation_" << node->idNode << " -> expr_" << i->idNode << ";\n";
@@ -347,14 +356,14 @@ void tree::printExprNodeTree(ExprNode* node) {
             outfile << "callOfMethodMarkExclamationWithoutParams_" << node->idNode << " -> expr_" << node->left->idNode << ";\n";
             printExprNodeTree(node->left);
 
-            outfile << "callOfMethodMarkExclamationWithoutParams_" << node->idNode << " -> " << node->varName << ";\n";
+            outfile << "callOfMethodMarkExclamationWithoutParams_" << node->idNode << " -> \"" << (*node->varName) << "_" << node->idNode << "\";\n";
         }
         else if(node->type == ExprType::callOfMethodMarkQuestion) {
             outfile << "expr_" << node->idNode << " -> callOfMethodMarkQuestion_" << node->idNode << ";\n";
             outfile << "callOfMethodMarkQuestion_" << node->idNode << " -> expr_" << node->left->idNode << ";\n";
             printExprNodeTree(node->left);
 
-            outfile << "callOfMethodMarkQuestion_" << node->idNode << " -> " << node->varName << ";\n";
+            outfile << "callOfMethodMarkQuestion_" << node->idNode << " -> \"" << (*node->varName) << "_" << node->idNode << "\";\n";
             
             for(auto i : *(node->params)) {
                 outfile << "callOfMethodMarkQuestion_" << node->idNode << " -> expr_" << i->idNode << ";\n";
@@ -366,14 +375,14 @@ void tree::printExprNodeTree(ExprNode* node) {
             outfile << "callOfMethodMarkQuestionWithoutParams_" << node->idNode << " -> expr_" << node->left->idNode << ";\n";
             printExprNodeTree(node->left);
 
-            outfile << "callOfMethodMarkQuestionWithoutParams_" << node->idNode << " -> " << node->varName << ";\n";
+            outfile << "callOfMethodMarkQuestionWithoutParams_" << node->idNode << " -> \"" << (*node->varName) << "_" << node->idNode << "\";\n";
         }
         else if(node->type == ExprType::callOfMethodWithoutParams) {
             outfile << "expr_" << node->idNode << " -> callOfMethodWithoutParams_" << node->idNode << ";\n";
             outfile << "callOfMethodWithoutParams_" << node->idNode << " -> expr_" << node->left->idNode << ";\n";
             printExprNodeTree(node->left);
 
-            outfile << "callOfMethodWithoutParams_" << node->idNode << " -> " << node->varName << ";\n";
+            outfile << "callOfMethodWithoutParams_" << node->idNode << " -> \"" << (*node->varName) << "_" << node->idNode << "\";\n";
         }
         else if(node->type == ExprType::caseEqual) {
             outfile << "expr_" << node->idNode << " -> caseEqual_" << node->idNode << ";\n";
@@ -385,7 +394,7 @@ void tree::printExprNodeTree(ExprNode* node) {
         }
         else if(node->type == ExprType::classVarName) {
             outfile << "expr_" << node->idNode << " -> classVarName_" << node->idNode << ";\n";
-            outfile << "classVarName_" << node->idNode << " -> " << node->varName << ";\n";
+            outfile << "classVarName_" << node->idNode << " -> \"" << (*node->varName) << "_" << node->idNode << "\";\n";
         }
         else if(node->type == ExprType::combComparison) {
             outfile << "expr_" << node->idNode << " -> combComparison_" << node->idNode << ";\n";
@@ -397,7 +406,7 @@ void tree::printExprNodeTree(ExprNode* node) {
         }
         else if(node->type == ExprType::constantName) {
             outfile << "expr_" << node->idNode << " -> constantName_" << node->idNode << ";\n";
-            outfile << "constantName_" << node->idNode << " -> " << node->varName << ";\n";
+            outfile << "constantName_" << node->idNode << " -> \"" << (*node->varName) << "_" << node->idNode << "\";\n";
         }
         else if(node->type == ExprType::defined) {
             outfile << "expr_" << node->idNode << " -> defined_" << node->idNode << ";\n";
@@ -458,12 +467,12 @@ void tree::printExprNodeTree(ExprNode* node) {
         }
         else if(node->type == ExprType::floatNumber) {
             outfile << "expr_" << node->idNode << " -> floatNumber_" << node->idNode << ";\n";
-            outfile << "floatNumber_" << node->idNode << " -> " << node->floatValue << ";\n";
+            outfile << "floatNumber_" << node->idNode << " -> \"" <<node->floatValue << "_" << node->idNode << "\";\n";
         }
         else if(node->type == ExprType::function) {
             outfile << "expr_" << node->idNode << " -> function_" << node->idNode << ";\n";
 
-            outfile << "function_" << node->idNode << " -> " << node->varName << ";\n";
+            outfile << "function_" << node->idNode << " -> \"" << (*node->varName) << "_" << node->idNode << "\";\n";
             
             for(auto i : *(node->params)) {
                 outfile << "function_" << node->idNode << " -> expr_" << i->idNode << ";\n";
@@ -473,7 +482,7 @@ void tree::printExprNodeTree(ExprNode* node) {
         else if(node->type == ExprType::funcWithoutParams) {
             outfile << "expr_" << node->idNode << " -> funcWithoutParams_" << node->idNode << ";\n";
 
-            outfile << "funcWithoutParams_" << node->idNode << " -> " << node->varName << ";\n";
+            outfile << "funcWithoutParams_" << node->idNode << " -> \"" << (*node->varName) << "_" << node->idNode << "\";\n";
         }
         else if(node->type == ExprType::greater) {
             outfile << "expr_" << node->idNode << " -> greater_" << node->idNode << ";\n";
@@ -493,7 +502,7 @@ void tree::printExprNodeTree(ExprNode* node) {
         }
         else if(node->type == ExprType::id) {
             outfile << "expr_" << node->idNode << " -> id_" << node->idNode << ";\n";
-            outfile << "id_" << node->idNode << " -> " << node->varName << ";\n";
+            outfile << "id_" << node->idNode << " -> \"" << (*node->varName) << "_" << node->idNode << "\" ;\n";
         }
         else if(node->type == ExprType::inclusiveRange) {
             outfile << "expr_" << node->idNode << " -> inclusiveRange_" << node->idNode << ";\n";
@@ -505,7 +514,7 @@ void tree::printExprNodeTree(ExprNode* node) {
         }
         else if(node->type == ExprType::intNumber) {
             outfile << "expr_" << node->idNode << " -> intNumber_" << node->idNode << ";\n";
-            outfile << "intNumber_" << node->idNode << " -> " << node->intValue << ";\n";
+            outfile << "intNumber_" << node->idNode << " -> \"" << node->intValue << "_" << node->idNode << "\";\n";
         }
         else if(node->type == ExprType::less) {
             outfile << "expr_" << node->idNode << " -> less_" << node->idNode << ";\n";
@@ -586,7 +595,7 @@ void tree::printExprNodeTree(ExprNode* node) {
         }
         else if(node->type == ExprType::objectVarName) {
             outfile << "expr_" << node->idNode << " -> objectVarName_" << node->idNode << ";\n";
-            outfile << "objectVarName_" << node->idNode << " -> " << node->varName << ";\n";
+            outfile << "objectVarName_" << node->idNode << " -> \"" << (*node->varName) << "_" << node->idNode << "\";\n";
         }
         else if(node->type == ExprType::orType) {
             outfile << "expr_" << node->idNode << " -> orType_" << node->idNode << ";\n";
@@ -623,7 +632,7 @@ void tree::printExprNodeTree(ExprNode* node) {
         else if(node->type == ExprType::self) {
             outfile << "expr_" << node->idNode << " -> self_" << node->idNode << ";\n";
 
-            outfile << "self_" << node->idNode << " -> " << node->varName << ";\n";
+            outfile << "self_" << node->idNode << " -> \"" << (*node->varName) << "_" << node->idNode << "\";\n";
             
             for(auto i : *(node->params)) {
                 outfile << "self_" << node->idNode << " -> expr_" << i->idNode << ";\n";
@@ -633,7 +642,7 @@ void tree::printExprNodeTree(ExprNode* node) {
         else if(node->type == ExprType::selfEqual) {
             outfile << "expr_" << node->idNode << " -> selfEqual_" << node->idNode << ";\n";
 
-            outfile << "selfEqual_" << node->idNode << " -> " << node->varName << ";\n";
+            outfile << "selfEqual_" << node->idNode << " -> \"" << (*node->varName) << "_" << node->idNode << "\";\n";
             
             for(auto i : *(node->params)) {
                 outfile << "selfEqual_" << node->idNode << " -> expr_" << i->idNode << ";\n";
@@ -643,7 +652,7 @@ void tree::printExprNodeTree(ExprNode* node) {
         else if(node->type == ExprType::selfEqualWithoutParams) {
             outfile << "expr_" << node->idNode << " -> selfEqualWithoutParams_" << node->idNode << ";\n";
 
-            outfile << "selfEqualWithoutParams_" << node->idNode << " -> " << node->varName << ";\n";
+            outfile << "selfEqualWithoutParams_" << node->idNode << " -> \"" << (*node->varName) << "_" << node->idNode << "\";\n";
             
             for(auto i : *(node->params)) {
                 outfile << "selfEqualWithoutParams_" << node->idNode << " -> expr_" << i->idNode << ";\n";
@@ -653,7 +662,7 @@ void tree::printExprNodeTree(ExprNode* node) {
         else if(node->type == ExprType::selfMarkExclamation) {
             outfile << "expr_" << node->idNode << " -> selfMarkExclamation_" << node->idNode << ";\n";
 
-            outfile << "selfMarkExclamation_" << node->idNode << " -> " << node->varName << ";\n";
+            outfile << "selfMarkExclamation_" << node->idNode << " -> \"" << (*node->varName) << "_" << node->idNode << "\";\n";
             
             for(auto i : *(node->params)) {
                 outfile << "selfMarkExclamation_" << node->idNode << " -> expr_" << i->idNode << ";\n";
@@ -663,12 +672,12 @@ void tree::printExprNodeTree(ExprNode* node) {
         else if(node->type == ExprType::selfMarkExclamationWithoutParams) {
             outfile << "expr_" << node->idNode << " -> selfMarkExclamationWithoutParams_" << node->idNode << ";\n";
 
-            outfile << "selfMarkExclamationWithoutParams_" << node->idNode << " -> " << node->varName << ";\n";
+            outfile << "selfMarkExclamationWithoutParams_" << node->idNode << " -> \"" << (*node->varName) << "_" << node->idNode << "\";\n";
         }
         else if(node->type == ExprType::selfMarkQuestion) {
             outfile << "expr_" << node->idNode << " -> selfMarkQuestion_" << node->idNode << ";\n";
 
-            outfile << "selfMarkQuestion_" << node->idNode << " -> " << node->varName << ";\n";
+            outfile << "selfMarkQuestion_" << node->idNode << " -> \"" << (*node->varName) << "_" << node->idNode << "\";\n";
             
             for(auto i : *(node->params)) {
                 outfile << "selfMarkQuestion_" << node->idNode << " -> expr_" << i->idNode << ";\n";
@@ -678,16 +687,16 @@ void tree::printExprNodeTree(ExprNode* node) {
         else if(node->type == ExprType::selfMarkQuestionWithoutParams) {
             outfile << "expr_" << node->idNode << " -> selfMarkQuestionWithoutParams_" << node->idNode << ";\n";
 
-            outfile << "selfMarkQuestionWithoutParams_" << node->idNode << " -> " << node->varName << ";\n";
+            outfile << "selfMarkQuestionWithoutParams_" << node->idNode << " -> \"" << (*node->varName) << "_" << node->idNode << "\";\n";
         }
         else if(node->type == ExprType::selfWithoutParams) {
             outfile << "expr_" << node->idNode << " -> selfWithoutParams_" << node->idNode << ";\n";
 
-            outfile << "selfWithoutParams_" << node->idNode << " -> " << node->varName << ";\n";
+            outfile << "selfWithoutParams_" << node->idNode << " -> \"" << (*node->varName) << "_" << node->idNode << "\";\n";
         }
         else if(node->type == ExprType::stringType) {
             outfile << "expr_" << node->idNode << " -> stringType_" << node->idNode << ";\n";
-            outfile << "stringType_" << node->idNode << " -> " << node->strValue << ";\n";
+            outfile << "stringType_" << node->idNode << " -> \"" << (*node->strValue) << "\";\n";
         }
         else if(node->type == ExprType::subAssign) {
             outfile << "expr_" << node->idNode << " -> subAssign_" << node->idNode << ";\n";
@@ -756,6 +765,7 @@ void tree::printExprNodeTree(ExprNode* node) {
 }
 
 void tree::printWhileStmtTree(WhileStmtNode *node) {
+    printf("Node name: %s\n", typeid(node).name());
     if(node != nullptr) {
         outfile << "whileStmt_" << node->idNode << " -> expr_" << node->condition->idNode << ";\n";
         printExprNodeTree(node->condition);
@@ -769,10 +779,11 @@ void tree::printWhileStmtTree(WhileStmtNode *node) {
 }
 
 void tree::printMethodStmtNodeTree(MethodStmtNode* node) {
+    printf("Node name: %s\n", typeid(node).name());
     if(node != nullptr) {
         if(node->type == MethodType::markEqual) {
             outfile << "methodStmt_" << node->idNode << " -> markEqual_" << node->idNode <<";\n";
-            outfile << "markEqual_" << node->idNode << " -> " << node->methodName << ";\n";
+            outfile << "markEqual_" << node->idNode << " -> " << (*node->methodName) << ";\n";
 
             if(node->paramList != nullptr) {
                 for (auto i : *(node->paramList)) {
@@ -788,7 +799,7 @@ void tree::printMethodStmtNodeTree(MethodStmtNode* node) {
         }
         else if(node->type == MethodType::markExclamation) {
             outfile << "methodStmt_" << node->idNode << " -> markExclamation_" << node->idNode <<";\n";
-            outfile << "markExclamation_" << node->idNode << " -> " << node->methodName << ";\n";
+            outfile << "markExclamation_" << node->idNode << " -> " << (*node->methodName) << ";\n";
 
             if(node->paramList != nullptr) {
                 for (auto i : *(node->paramList)) {
@@ -804,7 +815,7 @@ void tree::printMethodStmtNodeTree(MethodStmtNode* node) {
         }
         else if(node->type == MethodType::markQuestion) {
             outfile << "methodStmt_" << node->idNode << " -> markQuestion_" << node->idNode <<";\n";
-            outfile << "markQuestion_" << node->idNode << " -> " << node->methodName << ";\n";
+            outfile << "markQuestion_" << node->idNode << " -> " << (*node->methodName) << ";\n";
 
             if(node->paramList != nullptr) {
                 for (auto i : *(node->paramList)) {
@@ -820,11 +831,11 @@ void tree::printMethodStmtNodeTree(MethodStmtNode* node) {
         }
         else if(node->type == MethodType::simple) {
             outfile << "methodStmt_" << node->idNode << " -> simple_" << node->idNode <<";\n";
-            outfile << "simple_" << node->idNode << " -> " << node->methodName << ";\n";
+            outfile << "simple_" << node->idNode << " -> \"" << (*node->methodName) << "_" << node->idNode << "\";\n";
 
             if(node->paramList != nullptr) {
                 for (auto i : *(node->paramList)) {
-                    outfile << "simple_" << node->idNode << " -> " << i << ";\n";
+                    outfile << "simple_" << node->idNode << " -> " << *i << ";\n";
                 }
             }
 
@@ -838,6 +849,7 @@ void tree::printMethodStmtNodeTree(MethodStmtNode* node) {
 }
 
 void tree::printWhenStmtTree(WhenStmtNode *node) {
+    printf("Node name: %s\n", typeid(node).name());
     if(node != nullptr) {
         for (auto i : *(node->condition)) {
             outfile << "whenStmt_" << node->idNode << " -> expr_" << i->idNode << ";\n";
@@ -852,13 +864,16 @@ void tree::printWhenStmtTree(WhenStmtNode *node) {
 }
 
 void tree::printReturnStmtTree(ReturnStmtNode *node) {
-    if(node != nullptr) {
+    printf("Node name: %s\n", typeid(node).name());
+    if(node != nullptr && node->returnValue != nullptr) {
+
         outfile << "returnStmt_" << node->idNode << " -> expr_" << node->returnValue->idNode << ";\n";
         printExprNodeTree(node->returnValue);
     }
 }
 
 void tree::printUnlessStmtTree(UnlessStmtNode *node) {
+    printf("Node name: %s\n", typeid(node).name());
     if(node != nullptr) {
         outfile << "unlessStmt_" << node->idNode << " -> expr_" << node->condition->idNode << ";\n";
         printExprNodeTree(node->condition);
@@ -884,7 +899,8 @@ void tree::printUnlessStmtTree(UnlessStmtNode *node) {
     }
 }
 
-void tree::printProgramElementNodeTree(ProgramElementNode* node) {
+void tree::printProgramElementNodeTree(ProgramElementNode *node) {
+    printf("Node name: %s\n", typeid(node).name());
     if(node != nullptr) {
         if(node->classNode != nullptr) {
             outfile << "programmElement_" << node->idNode << " -> classStmt_" << node->classNode->idNode << ";\n";
