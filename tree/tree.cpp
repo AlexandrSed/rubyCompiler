@@ -33,7 +33,7 @@ void tree::printStmtNodeTree(StmtNode *node) {
        
 
         if (node->exprStmt != nullptr) {
-            outfile << "stmt_" << node->idNode << " -> exprStmt_" << node->exprStmt->idNode << ";\n";
+            outfile << "stmt_" << node->idNode << " -> expr_" << node->exprStmt->idNode << ";\n";
             printExprNodeTree(node->exprStmt);
         }
         if (node->ifStmt != nullptr) {
@@ -903,17 +903,17 @@ void tree::printProgramElementNodeTree(ProgramElementNode *node) {
     printf("Node name: %s\n", typeid(node).name());
     if(node != nullptr) {
         if(node->classNode != nullptr) {
-            outfile << "programmElement_" << node->idNode << " -> classStmt_" << node->classNode->idNode << ";\n";
+            outfile << "programmElementStmt_" << node->idNode << " -> classStmt_" << node->classNode->idNode << ";\n";
             printClassStmt(node->classNode);
         }
 
         if(node->methodNode != nullptr) {
-            outfile << "programmElement_" << node->idNode << " -> methodStmt_" << node->methodNode->idNode << ";\n";
+            outfile << "programmElementStmt_" << node->idNode << " -> methodStmt_" << node->methodNode->idNode << ";\n";
             printMethodStmtNodeTree(node->methodNode);
         }
 
         if(node->stmtNode != nullptr) {
-            outfile << "programmElement_" << node->idNode << " -> stmt_" << node->stmtNode->idNode << ";\n";
+            outfile << "programmElementStmt_" << node->idNode << " -> stmt_" << node->stmtNode->idNode << ";\n";
             printStmtNodeTree(node->stmtNode);
         }
     }
