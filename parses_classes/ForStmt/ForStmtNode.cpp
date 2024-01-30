@@ -8,3 +8,9 @@ ForStmtNode* ForStmtNode::createForStmtNode(ExprNode* variable, ExprNode* array,
     result->idNode = ++ForStmtNode::maxId;
     return result;
 }
+
+ForStmtNode::ForStmtNode() {
+    this->body = nullptr;
+    this->variable = nullptr;
+    this->array = nullptr;
+}

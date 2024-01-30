@@ -45,7 +45,7 @@
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 7 ".\\parser.y"
+#line 8 ".\\parser.y"
 
     #include <string>
     #include <vector>
@@ -69,7 +69,7 @@ extern int yydebug;
     #include "parses_classes/WhileStmt/WhileStmtNode.h"
     
 
-#line 73 ".\\parser.tab.hpp"
+#line 73 "parser.tab.hpp"
 
 /* Token kinds.  */
 #ifndef YYTOKENTYPE
@@ -157,7 +157,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 31 ".\\parser.y"
+#line 32 ".\\parser.y"
 
     int Int;
     float Float;
@@ -186,7 +186,7 @@ union YYSTYPE
     ProgramElementNode* programm_el_union;
     std::vector<ProgramElementNode*>* programm_el_list_union;
 
-#line 190 ".\\parser.tab.hpp"
+#line 190 "parser.tab.hpp"
 
 };
 typedef union YYSTYPE YYSTYPE;

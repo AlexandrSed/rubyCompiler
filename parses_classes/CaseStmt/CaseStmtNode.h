@@ -14,6 +14,8 @@ public:
     std::vector<StmtNode*>* falseBranch;
     int idNode;
 
+    CaseStmtNode();
+
 
 
     static CaseStmtNode* createCaseStmt(ExprNode* condition, std::vector<WhenStmtNode*>* whenList);

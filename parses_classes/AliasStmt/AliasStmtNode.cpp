@@ -7,3 +7,8 @@ AliasStmtNode* AliasStmtNode::createAliasStmt(std::string* alias, std::string* s
     result->idNode = ++AliasStmtNode::maxId;
     return result;
 }
+
+AliasStmtNode::AliasStmtNode() {
+    this->alias = nullptr;
+    this->startName = nullptr;
+}

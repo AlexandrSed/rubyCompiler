@@ -4,6 +4,7 @@
 class MethodStmtNode;
 class ExprNode;
 
+
 class ClassBodyStmtNode {
 public:
 
@@ -12,6 +13,8 @@ public:
     std::string* objectVarName;
     ExprNode* value;
     int idNode;
+
+    ClassBodyStmtNode();
 
 
     static ClassBodyStmtNode* createClassBodyStmtMethod(MethodStmtNode* method);

@@ -18,3 +18,8 @@ std::vector<ElsifNode*>* ElsifNode::addElsifToList(std::vector<ElsifNode*>* elsi
     elsifList->push_back(elsif);
     return elsifList;
 }
+
+ElsifNode::ElsifNode() {
+    this->condition = nullptr;
+    this->action = nullptr;
+}

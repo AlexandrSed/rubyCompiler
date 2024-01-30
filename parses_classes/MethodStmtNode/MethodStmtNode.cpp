@@ -29,3 +29,9 @@ std::vector<std::string*>* MethodStmtNode::addParametrToList(std::vector<std::st
     paramList->push_back(parametr);
     return paramList;
 }
+
+MethodStmtNode::MethodStmtNode() {
+    this->methodName = nullptr;
+    this->paramList = nullptr;
+    this->body = nullptr;
+}

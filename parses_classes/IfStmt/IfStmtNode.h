@@ -15,6 +15,7 @@ public:
     ExprNode* action;
     int idNode;
 
+    IfStmtNode();
 
     static IfStmtNode* createIfStmt(ExprNode* condition, std::vector<StmtNode*>* trueBranch);
     static IfStmtNode* createIfStmtWithElse(ExprNode* condition, std::vector<StmtNode*>* trueBranch, std::vector<StmtNode*>* falseBranch);

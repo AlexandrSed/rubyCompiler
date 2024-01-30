@@ -1,5 +1,17 @@
 #include "StmtNode.h"
 
+StmtNode::StmtNode() {
+    this->forStmt = nullptr;
+    this->caseStmt = nullptr;
+    this->ifStmt = nullptr;
+    this->unlessStmt = nullptr;
+    this->returnStmt = nullptr;
+    this->whileStmt = nullptr;
+    this->aliasStmt = nullptr;
+    this->exprStmt = nullptr;
+
+}
+
 StmtNode* StmtNode::createStmtNodeExpr(ExprNode* exprStmt) {
     StmtNode* result = new StmtNode;
     result->exprStmt = exprStmt;

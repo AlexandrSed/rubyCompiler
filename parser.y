@@ -1,6 +1,7 @@
 %{
     #include "parser.tab.hpp"
     extern int yylex(void);
+    extern  std::vector<ProgramElementNode*>* root;
     void yyerror(char* str);
 %}
 
@@ -146,24 +147,32 @@
 %type<programm_el_list_union> programm_el_list_not_empty programm
 %%
 
-programm: /*empty*/ {$$=NULL;}
-    |programm_el_list_not_empty {$$=$1;}
+programm: /*empty*/ {$$=NULL; root = NULL;}
+    |programm_el_list_not_empty {$$=$1; root = $1;}
     ;
 
 expr: IDENTIFIER    {
-                        printf("String with identifier: %s", $1);
                         $$=ExprNode::createExprFromVarName(ExprType::id, $1);
                     }
     | OBJECT_VAR_NAME   {$$=ExprNode::createExprFromVarName(ExprType::objectVarName, $1);}
-    | CLASS_VAR_NAME    {$$=ExprNode::createExprFromVarName(ExprType::classVarName, $1);}
-    | CONSTANT_NAME {$$=ExprNode::createExprFromVarName(ExprType::constantName, $1);}
+    | CLASS_VAR_NAME    {
+                            printf("CLASS_VAR_NAME from parser: %s", $1);
+                            $$=ExprNode::createExprFromVarName(ExprType::classVarName, $1);
+                            }
+    | CONSTANT_NAME {
+                        printf("CONSTANT_NAME from parser: %s", $1);
+                        $$=ExprNode::createExprFromVarName(ExprType::constantName, $1);
+                    }
     | STRING    {$$=ExprNode::createExprFromString($1);}
     | TRUE_KEYWORD  {$$=ExprNode::createExprFromTrue();}
     | FALSE_KEYWORD {$$=ExprNode::createExprFromFalse();}
     | NIL_KEYWORD   {$$=ExprNode::createExprFromNil();}
     | INTEGER_NUMBER    {$$=ExprNode::createExprFromInt($1);}
     | FLOAT_NUMBER  {$$=ExprNode::createExprFromFloat($1);}
-    | expr '=' linefeed_or_empty expr   {$$=ExprNode::createExprFromBinOp(ExprType::assign, $1, $4);}
+    | expr '=' linefeed_or_empty expr   {
+
+                                            $$=ExprNode::createExprFromBinOp(ExprType::assign, $1, $4);
+                                        }
     | expr '[' linefeed_or_empty expr linefeed_or_empty ']' {$$=ExprNode::createExprFromBinOp(ExprType::arrayElement, $1, $4);}
     | expr '/' linefeed_or_empty expr   {$$=ExprNode::createExprFromBinOp(ExprType::division, $1, $4);}
     | expr '%' linefeed_or_empty expr   {$$=ExprNode::createExprFromBinOp(ExprType::remainderOfDivision, $1, $4);}
@@ -315,12 +324,12 @@ delimeter_or_empty: /* empty */
 
 if_stmt: IF_KEYWORD linefeed_or_empty expr delimiter stmt_list END_KEYWORD  {$$=IfStmtNode::createIfStmt($3, $5);}
     | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list END_KEYWORD   {$$=IfStmtNode::createIfStmt($3, $6);}
-    | IF_KEYWORD linefeed_or_empty expr delimiter stmt_list ELSE_KEYWORD stmt_list END_KEYWORD  {$$=IfStmtNode::createIfStmtWithElse($3, $5, $7);}
-    | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list ELSE_KEYWORD stmt_list END_KEYWORD    {$$=IfStmtNode::createIfStmtWithElse($3, $6, $8);}
+    | IF_KEYWORD linefeed_or_empty expr delimiter stmt_list ELSE_KEYWORD linefeed_or_empty stmt_list END_KEYWORD  {$$=IfStmtNode::createIfStmtWithElse($3, $5, $8);}
+    | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list ELSE_KEYWORD linefeed_or_empty stmt_list END_KEYWORD    {$$=IfStmtNode::createIfStmtWithElse($3, $6, $9);}
     | IF_KEYWORD linefeed_or_empty expr delimiter stmt_list elsif_list END_KEYWORD  {$$=IfStmtNode::createIfStmtWithElsif($3, $5, $6);}
     | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list elsif_list END_KEYWORD    {$$=IfStmtNode::createIfStmtWithElsif($3, $6, $7);}
-    | IF_KEYWORD linefeed_or_empty expr delimiter stmt_list elsif_list ELSE_KEYWORD stmt_list END_KEYWORD   {$$=IfStmtNode::createIfStmtWithElseAndElsif($3, $5, $6, $8);}
-    | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list elsif_list ELSE_KEYWORD stmt_list END_KEYWORD {$$=IfStmtNode::createIfStmtWithElseAndElsif($3, $6, $7, $9);}
+    | IF_KEYWORD linefeed_or_empty expr delimiter stmt_list elsif_list ELSE_KEYWORD linefeed_or_empty stmt_list END_KEYWORD   {$$=IfStmtNode::createIfStmtWithElseAndElsif($3, $5, $6, $9);}
+    | IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list elsif_list ELSE_KEYWORD linefeed_or_empty stmt_list END_KEYWORD {$$=IfStmtNode::createIfStmtWithElseAndElsif($3, $6, $7, $10);}
     | expr IF_KEYWORD linefeed_or_empty expr    {$$=IfStmtNode::createSingleLineIfStmt($1, $4);}
     ;
 

@@ -95,6 +95,7 @@ public:
     std::vector<ExprNode*>* params;
     std::vector<ExprNode*>* list;
 
+    ExprNode();
 
     static ExprNode* createExprFromVarName(ExprType type, std::string* id);
     static ExprNode* createExprFromString(std::string* str);
