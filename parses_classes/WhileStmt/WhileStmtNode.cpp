@@ -7,3 +7,8 @@ WhileStmtNode* WhileStmtNode::createWhileStmtNode(ExprNode* condition, std::vect
     result->idNode = ++WhileStmtNode::maxId;
     return result;
 }
+
+WhileStmtNode::WhileStmtNode() {
+    this->body = nullptr;
+    this->condition = nullptr;
+}

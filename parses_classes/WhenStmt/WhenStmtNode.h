@@ -10,7 +10,7 @@ public:
     std::vector<StmtNode*>* action;
     int idNode;
 
-
+    WhenStmtNode();
 
     static WhenStmtNode* createWhenStmt(std::vector<ExprNode*>* condition, std::vector<StmtNode*>* action);
     static std::vector<WhenStmtNode*>* createWhenList(WhenStmtNode* when);

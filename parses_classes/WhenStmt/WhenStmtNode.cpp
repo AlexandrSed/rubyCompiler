@@ -18,3 +18,8 @@ std::vector<WhenStmtNode*>* WhenStmtNode::addWhenToList(std::vector<WhenStmtNode
     whenList->push_back(when);
     return whenList;
 }
+
+WhenStmtNode::WhenStmtNode() {
+    this->action = nullptr;
+    this->condition = nullptr;
+}

@@ -12,7 +12,7 @@ public:
     ExprNode* action;
     int idNode;
 
-
+    UnlessStmtNode();
 
     static UnlessStmtNode* createUnlessStmt(ExprNode* condition, std::vector<StmtNode*>* trueBranch);
     static UnlessStmtNode* createUnlessStmtwithElse(ExprNode* condition, std::vector<StmtNode*>* trueBranch, std::vector<StmtNode*>* falseBranch);

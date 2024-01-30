@@ -26,3 +26,10 @@ UnlessStmtNode* UnlessStmtNode::createSingleLineUnlessStmt(ExprNode* condition, 
     result->idNode = ++UnlessStmtNode::maxId;
     return result;
 }
+
+UnlessStmtNode::UnlessStmtNode() {
+    this->action=nullptr;
+    this->condition=nullptr;
+    this->falseBranch=nullptr;
+    this->trueBranch=nullptr;
+}

@@ -6,6 +6,8 @@ class StmtNode;
 
 class WhileStmtNode {
 public:
+
+    WhileStmtNode();
     ExprNode* condition;
     std::vector<StmtNode*>* body;
     int idNode;
