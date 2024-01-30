@@ -212,7 +212,9 @@ yield		{ printf("Found keyword: %s\n", yytext); }
 "eql?"      { printf("Found arithmetic operation: %s\n", yytext); }
 "equal?"    { printf("Found arithmetic operation: %s\n", yytext); }
 
-"="         { printf("Found arithmetic operation: %s\n", yytext); }
+"="         { printf("Found arithmetic operation: %s\n", yytext);
+              return '=';
+            }
 "+="        {
                 printf("Found add assign op: %s\n", yytext);
                 return ADD_ASSIGN_OP;
@@ -387,8 +389,8 @@ yield		{ printf("Found keyword: %s\n", yytext); }
                     char ident[1000];
                     strcpy(ident, yytext);
                     yylval.Str = new std::string(ident);
-                    printf("Found identifier: %s\n", yytext);
-                    return IDENTIFIER; 
+                    printf("Found identifier: %s\n", ident);
+                    return IDENTIFIER;
                 }
 \@{IDENTIFIER}  {
                     char ident[1000];
