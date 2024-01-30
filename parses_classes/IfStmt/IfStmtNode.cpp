@@ -46,3 +46,11 @@ IfStmtNode* IfStmtNode::createSingleLineIfStmt(ExprNode* action, ExprNode* condi
     result->idNode = ++IfStmtNode::maxId;
     return result;
 }
+
+IfStmtNode::IfStmtNode() {
+    this->condition = nullptr;
+    this->action = nullptr;
+    this->trueBranch = nullptr;
+    this->falseBranch = nullptr;
+    this->elsif = nullptr;
+}

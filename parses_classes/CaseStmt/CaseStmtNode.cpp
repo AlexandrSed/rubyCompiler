@@ -18,3 +18,9 @@ std::vector<StmtNode*>* falseBranch) {
     result->idNode = ++CaseStmtNode::maxId;
     return result;
 }
+
+CaseStmtNode::CaseStmtNode() {
+    this->condition = nullptr;
+    this->whenList = nullptr;
+    this->falseBranch = nullptr;
+}

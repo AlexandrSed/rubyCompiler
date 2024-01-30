@@ -136,3 +136,17 @@ std::vector<ExprNode*>* ExprNode::addExprToList(std::vector<ExprNode*>* exprList
     exprList->push_back(expr);
     return exprList;
 }
+
+ExprNode::ExprNode() {
+    this->idNode = 0;
+    this->varName = nullptr;
+    this->strValue = nullptr;
+    this->boolValue = false;
+    this->intValue = 0;
+    this->floatValue = 0;
+    this->left = nullptr;
+    this->right = nullptr;
+    this->center = nullptr;
+    this->params = nullptr;
+    this->list = nullptr;
+}

@@ -13,6 +13,7 @@ class ProgramElementNode  {
         StmtNode* stmtNode;
         int idNode;
 
+        ProgramElementNode();
 
         static ProgramElementNode* createClassProgramElementNode(ClassStmtNode* classNode);
         static ProgramElementNode* createMethodProgramElementNode(MethodStmtNode* methodNode);

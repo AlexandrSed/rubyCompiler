@@ -12,3 +12,7 @@ ReturnStmtNode* ReturnStmtNode::createSingleReturnStmt() {
     result->idNode = ++ReturnStmtNode::maxId;
     return result;
 }
+
+ReturnStmtNode::ReturnStmtNode() {
+    this->returnValue = nullptr;
+}

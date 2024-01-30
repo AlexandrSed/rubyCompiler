@@ -10,6 +10,7 @@ public:
     std::vector<StmtNode*>* action;
     int idNode;
 
+    ElsifNode();
 
     static ElsifNode* createElsifStmt(ExprNode* condition, std::vector<StmtNode*>* action);
     static std::vector<ElsifNode*>* createElsifList(ElsifNode* elsif);

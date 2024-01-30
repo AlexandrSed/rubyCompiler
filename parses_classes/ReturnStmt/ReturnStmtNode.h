@@ -9,6 +9,7 @@ public:
     ExprNode* returnValue;
     int idNode;
 
+    ReturnStmtNode();
 
     static ReturnStmtNode* createReturnStmt(ExprNode* returnValue);
     static ReturnStmtNode* createSingleReturnStmt();

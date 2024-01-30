@@ -2,6 +2,7 @@
 
 ClassBodyStmtNode* ClassBodyStmtNode::createClassBodyStmtMethod(MethodStmtNode* method) {
     ClassBodyStmtNode* result = new ClassBodyStmtNode;
+    result->value = nullptr;
     result->method = method;
     result->idNode = ++ClassBodyStmtNode::maxId;
     return result;
@@ -33,4 +34,11 @@ std::vector<ClassBodyStmtNode*>* ClassBodyStmtNode::createClassBody(ClassBodyStm
 std::vector<ClassBodyStmtNode*>* ClassBodyStmtNode::addStmtToClassBody(std::vector<ClassBodyStmtNode*>* classBody, ClassBodyStmtNode* classEl) {
     classBody->push_back(classEl);
     return classBody;
+}
+
+ClassBodyStmtNode::ClassBodyStmtNode() {
+    this->value = nullptr;
+    this->method = nullptr;
+    this->classVarName = nullptr;
+    this->objectVarName = nullptr;
 }

@@ -29,6 +29,7 @@ public:
     AliasStmtNode* aliasStmt;
     int idNode;
 
+    StmtNode();
 
     static StmtNode* createStmtNodeExpr(ExprNode* exprStmt);
     static StmtNode* createStmtNodeIf(IfStmtNode* ifStmt);

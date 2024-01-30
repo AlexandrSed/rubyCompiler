@@ -15,3 +15,9 @@ ClassStmtNode* ClassStmtNode::createClassStmtWithParent(std::string* className, 
     result->idNode = ++ClassStmtNode::maxId;
     return result;
 }
+
+ClassStmtNode::ClassStmtNode() {
+    this->className = nullptr;
+    this->parentName = nullptr;
+    this->classBody = nullptr;
+}

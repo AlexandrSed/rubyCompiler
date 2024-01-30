@@ -28,3 +28,9 @@ std::vector<ProgramElementNode*>* ProgramElementNode::addProgramElementToList(st
     programElementList->push_back(programElement);
     return programElementList;
 }
+
+ProgramElementNode::ProgramElementNode() {
+    this->classNode = nullptr;
+    this->methodNode = nullptr;
+    this->stmtNode = nullptr;
+}
