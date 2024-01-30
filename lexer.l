@@ -9,7 +9,6 @@
     extern int yyparse(void);
 
     char* removeUnderscores(const char* input);
-
 %}
 
 DIGIT [0-9]
@@ -299,18 +298,8 @@ yield		{ printf("Found keyword: %s\n", yytext); }
                 return '{';
             }
 "}"         {
-                if(nestingCount == 0) {
                     return '}';
                     printf("Found bracket: %s\n", yytext);
-                } else {
-                    //TODO: сделать правильно интерполяцию
-                    nestingCount--;
-                    BEGIN(DOUBLE_QUOTE_STRING);
-                    str = "";
-                    // yylval.Str = new std::string(')');
-                    printf("Found interpolation: ) + \n");
-                    return '+';
-                }
             }
 "["         {
                 printf("Found bracket: %s\n", yytext);
@@ -366,49 +355,58 @@ yield		{ printf("Found keyword: %s\n", yytext); }
 
 
 [A-Z][a-zA-Z0-9_]*  {
-                        yylval.Str = new std::string(yytext);
+                        char ident[1000];
+                        strcpy(ident, yytext);
+                        yylval.Str = new std::string(ident);
                         printf("Found constant: %s\n", yytext);
                         return CONSTANT_NAME;
                     }
 
 {IDENTIFIER}\?  {
-                    yylval.Str = new std::string(yytext);
+                    char ident[1000];
+                    strcpy(ident, yytext);
+                    yylval.Str = new std::string(ident);
                     printf("Found method with question: %s\n", yytext);
                     return METHOD_MARK_QUESTION;
                 }
 {IDENTIFIER}\!  {
-                    yylval.Str = new std::string(yytext);
+                    char ident[1000];
+                    strcpy(ident, yytext);
+                    yylval.Str = new std::string(ident);
                     printf("Found method with !: %s\n", yytext);
                     return METHOD_MARK_EXCLAMATION;
                 }
 {IDENTIFIER}\=  {
-                    yylval.Str = new std::string(yytext);
+                    char ident[1000];
+                    strcpy(ident, yytext);
+                    yylval.Str = new std::string(ident);
                     printf("Found method with =: %s\n", yytext);
                     return METHOD_MARK_EQUAL;
                 }
 {IDENTIFIER}    {
-                    yylval.Str = new std::string(yytext);
+                    char ident[1000];
+                    strcpy(ident, yytext);
+                    yylval.Str = new std::string(ident);
                     printf("Found identifier: %s\n", yytext);
                     return IDENTIFIER; 
                 }
 \@{IDENTIFIER}  {
-                    yylval.Str = new std::string(yytext);
+                    char ident[1000];
+                    strcpy(ident, yytext);
+                    yylval.Str = new std::string(ident);
                     printf("Found var name: %s\n", yytext);
                     return OBJECT_VAR_NAME;
                 }
 \@\@{IDENTIFIER} {
-                    yylval.Str = new std::string(yytext);
+                    char ident[1000];
+                    strcpy(ident, yytext);
+                    yylval.Str = new std::string(ident);
                     printf("Found class var name: %s\n", yytext);
                     return CLASS_VAR_NAME;
                     }
 
 <DOUBLE_QUOTE_STRING>"#{"   {
-                                yylval.Str = new std::string(str);
-                                nestingCount++;
-                                return STRING;
-                                printf("Found string \"%s\"\n", str.c_str());
-                                printf("Found interpolation: + ( \n");
-                                BEGIN(INITIAL);
+                                str.append(yytext);
                             }
 
 <SINGLE_QUOTE_STRING>[^\\\']+ { str.append(yytext); }
@@ -449,16 +447,16 @@ yield		{ printf("Found keyword: %s\n", yytext); }
 <DOUBLE_QUOTE_STRING>\" {
                                 yylval.Str = new std::string(str.c_str());
                                 printf("String literal: \"%s\" \n", str.c_str());
-                                return STRING;
                                 BEGIN(INITIAL);
+                                return STRING;
                         }
 <DOUBLE_QUOTE_STRING>\\             { str.append(""); }
 
 <SINGLE_QUOTE_STRING>\' { 
                             yylval.Str = new std::string(str.c_str());
                             printf("String literal: \"%s\" \n", str.c_str());
-                            return STRING;
                             BEGIN(INITIAL);
+                            return STRING;
                         }
 
 

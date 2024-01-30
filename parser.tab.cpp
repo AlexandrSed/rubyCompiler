@@ -73,7 +73,7 @@
     extern int yylex(void);
     void yyerror(char* str);
 
-#line 77 "parser.tab.cpp"
+#line 77 ".\\parser.tab.cpp"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -609,23 +609,23 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,   148,   148,   149,   152,   153,   154,   155,   156,   157,
-     158,   159,   160,   161,   162,   163,   164,   165,   166,   167,
-     168,   169,   170,   171,   172,   173,   174,   175,   176,   177,
-     178,   179,   180,   181,   182,   183,   184,   185,   186,   187,
-     188,   189,   190,   191,   192,   193,   194,   195,   196,   197,
-     198,   199,   200,   201,   202,   203,   204,   205,   206,   207,
-     208,   209,   210,   211,   212,   213,   214,   215,   216,   217,
-     218,   219,   220,   221,   222,   223,   224,   225,   226,   227,
-     230,   231,   234,   235,   238,   239,   240,   243,   244,   247,
-     248,   249,   250,   253,   254,   257,   258,   261,   262,   263,
-     264,   265,   266,   267,   268,   271,   272,   275,   276,   279,
-     280,   281,   282,   283,   284,   285,   286,   289,   290,   293,
-     294,   295,   296,   297,   300,   301,   304,   305,   308,   309,
-     312,   313,   314,   315,   316,   317,   318,   319,   320,   323,
-     324,   325,   326,   327,   330,   331,   334,   335,   338,   339,
-     342,   343,   346,   347,   350,   351,   354,   355,   358,   359,
-     362
+       0,   148,   148,   149,   152,   156,   157,   158,   159,   160,
+     161,   162,   163,   164,   165,   166,   167,   168,   169,   170,
+     171,   172,   173,   174,   175,   176,   177,   178,   179,   180,
+     181,   182,   183,   184,   185,   186,   187,   188,   189,   190,
+     191,   192,   193,   194,   195,   196,   197,   198,   199,   200,
+     201,   202,   203,   204,   205,   206,   207,   208,   209,   210,
+     211,   212,   213,   214,   215,   216,   217,   218,   219,   220,
+     221,   222,   223,   224,   225,   226,   227,   228,   229,   230,
+     233,   234,   237,   238,   241,   242,   243,   246,   247,   250,
+     251,   252,   253,   256,   257,   260,   261,   264,   265,   266,
+     267,   268,   269,   270,   271,   274,   275,   278,   279,   282,
+     283,   284,   285,   286,   287,   288,   289,   292,   293,   296,
+     297,   298,   299,   300,   303,   304,   307,   308,   311,   312,
+     315,   316,   317,   318,   319,   320,   321,   322,   323,   326,
+     327,   328,   329,   330,   333,   334,   337,   338,   341,   342,
+     345,   346,   349,   350,   353,   354,   357,   358,   361,   362,
+     365
 };
 #endif
 
@@ -1912,899 +1912,902 @@ yyreduce:
   case 2: /* programm: %empty  */
 #line 148 ".\\parser.y"
                     {(yyval.programm_el_list_union)=NULL;}
-#line 1916 "parser.tab.cpp"
+#line 1916 ".\\parser.tab.cpp"
     break;
 
   case 3: /* programm: programm_el_list_not_empty  */
 #line 149 ".\\parser.y"
                                 {(yyval.programm_el_list_union)=(yyvsp[0].programm_el_list_union);}
-#line 1922 "parser.tab.cpp"
+#line 1922 ".\\parser.tab.cpp"
     break;
 
   case 4: /* expr: IDENTIFIER  */
 #line 152 ".\\parser.y"
-                    {(yyval.expr_union)=ExprNode::createExprFromVarName(ExprType::id, (yyvsp[0].Str));}
-#line 1928 "parser.tab.cpp"
+                    {
+                        printf("String with identifier: %s", (yyvsp[0].Str));
+                        (yyval.expr_union)=ExprNode::createExprFromVarName(ExprType::id, (yyvsp[0].Str));
+                    }
+#line 1931 ".\\parser.tab.cpp"
     break;
 
   case 5: /* expr: OBJECT_VAR_NAME  */
-#line 153 ".\\parser.y"
+#line 156 ".\\parser.y"
                         {(yyval.expr_union)=ExprNode::createExprFromVarName(ExprType::objectVarName, (yyvsp[0].Str));}
-#line 1934 "parser.tab.cpp"
+#line 1937 ".\\parser.tab.cpp"
     break;
 
   case 6: /* expr: CLASS_VAR_NAME  */
-#line 154 ".\\parser.y"
+#line 157 ".\\parser.y"
                         {(yyval.expr_union)=ExprNode::createExprFromVarName(ExprType::classVarName, (yyvsp[0].Str));}
-#line 1940 "parser.tab.cpp"
+#line 1943 ".\\parser.tab.cpp"
     break;
 
   case 7: /* expr: CONSTANT_NAME  */
-#line 155 ".\\parser.y"
+#line 158 ".\\parser.y"
                     {(yyval.expr_union)=ExprNode::createExprFromVarName(ExprType::constantName, (yyvsp[0].Str));}
-#line 1946 "parser.tab.cpp"
+#line 1949 ".\\parser.tab.cpp"
     break;
 
   case 8: /* expr: STRING  */
-#line 156 ".\\parser.y"
+#line 159 ".\\parser.y"
                 {(yyval.expr_union)=ExprNode::createExprFromString((yyvsp[0].Str));}
-#line 1952 "parser.tab.cpp"
+#line 1955 ".\\parser.tab.cpp"
     break;
 
   case 9: /* expr: TRUE_KEYWORD  */
-#line 157 ".\\parser.y"
+#line 160 ".\\parser.y"
                     {(yyval.expr_union)=ExprNode::createExprFromTrue();}
-#line 1958 "parser.tab.cpp"
+#line 1961 ".\\parser.tab.cpp"
     break;
 
   case 10: /* expr: FALSE_KEYWORD  */
-#line 158 ".\\parser.y"
+#line 161 ".\\parser.y"
                     {(yyval.expr_union)=ExprNode::createExprFromFalse();}
-#line 1964 "parser.tab.cpp"
+#line 1967 ".\\parser.tab.cpp"
     break;
 
   case 11: /* expr: NIL_KEYWORD  */
-#line 159 ".\\parser.y"
+#line 162 ".\\parser.y"
                     {(yyval.expr_union)=ExprNode::createExprFromNil();}
-#line 1970 "parser.tab.cpp"
+#line 1973 ".\\parser.tab.cpp"
     break;
 
   case 12: /* expr: INTEGER_NUMBER  */
-#line 160 ".\\parser.y"
+#line 163 ".\\parser.y"
                         {(yyval.expr_union)=ExprNode::createExprFromInt((yyvsp[0].Int));}
-#line 1976 "parser.tab.cpp"
+#line 1979 ".\\parser.tab.cpp"
     break;
 
   case 13: /* expr: FLOAT_NUMBER  */
-#line 161 ".\\parser.y"
+#line 164 ".\\parser.y"
                     {(yyval.expr_union)=ExprNode::createExprFromFloat((yyvsp[0].Float));}
-#line 1982 "parser.tab.cpp"
+#line 1985 ".\\parser.tab.cpp"
     break;
 
   case 14: /* expr: expr '=' linefeed_or_empty expr  */
-#line 162 ".\\parser.y"
+#line 165 ".\\parser.y"
                                         {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::assign, (yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 1988 "parser.tab.cpp"
+#line 1991 ".\\parser.tab.cpp"
     break;
 
   case 15: /* expr: expr '[' linefeed_or_empty expr linefeed_or_empty ']'  */
-#line 163 ".\\parser.y"
+#line 166 ".\\parser.y"
                                                             {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::arrayElement, (yyvsp[-5].expr_union), (yyvsp[-2].expr_union));}
-#line 1994 "parser.tab.cpp"
+#line 1997 ".\\parser.tab.cpp"
     break;
 
   case 16: /* expr: expr '/' linefeed_or_empty expr  */
-#line 164 ".\\parser.y"
+#line 167 ".\\parser.y"
                                         {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::division, (yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2000 "parser.tab.cpp"
+#line 2003 ".\\parser.tab.cpp"
     break;
 
   case 17: /* expr: expr '%' linefeed_or_empty expr  */
-#line 165 ".\\parser.y"
+#line 168 ".\\parser.y"
                                         {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::remainderOfDivision, (yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2006 "parser.tab.cpp"
+#line 2009 ".\\parser.tab.cpp"
     break;
 
   case 18: /* expr: expr '*' linefeed_or_empty expr  */
-#line 166 ".\\parser.y"
+#line 169 ".\\parser.y"
                                         {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::multiplication, (yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2012 "parser.tab.cpp"
+#line 2015 ".\\parser.tab.cpp"
     break;
 
   case 19: /* expr: expr '+' linefeed_or_empty expr  */
-#line 167 ".\\parser.y"
+#line 170 ".\\parser.y"
                                         {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::sum, (yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2018 "parser.tab.cpp"
+#line 2021 ".\\parser.tab.cpp"
     break;
 
   case 20: /* expr: expr '-' linefeed_or_empty expr  */
-#line 168 ".\\parser.y"
+#line 171 ".\\parser.y"
                                         {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::subtraction, (yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2024 "parser.tab.cpp"
+#line 2027 ".\\parser.tab.cpp"
     break;
 
   case 21: /* expr: '-' linefeed_or_empty expr  */
-#line 169 ".\\parser.y"
+#line 172 ".\\parser.y"
                                               {(yyval.expr_union)=ExprNode::createExprFromUnary(ExprType::unaryMinus, (yyvsp[0].expr_union));}
-#line 2030 "parser.tab.cpp"
+#line 2033 ".\\parser.tab.cpp"
     break;
 
   case 22: /* expr: expr '.' linefeed_or_empty SUPERCLASS_KEYWORD  */
-#line 170 ".\\parser.y"
+#line 173 ".\\parser.y"
                                                     {(yyval.expr_union)=ExprNode::createExprFromUnary(ExprType::superclass, (yyvsp[-3].expr_union));}
-#line 2036 "parser.tab.cpp"
+#line 2039 ".\\parser.tab.cpp"
     break;
 
   case 23: /* expr: IDENTIFIER '(' linefeed_or_empty expr_list linefeed_or_empty ')'  */
-#line 171 ".\\parser.y"
+#line 174 ".\\parser.y"
                                                                         {(yyval.expr_union)=ExprNode::createExprFromFuncCall(ExprType::function, (yyvsp[-2].expr_list_union), (yyvsp[-5].Str));}
-#line 2042 "parser.tab.cpp"
+#line 2045 ".\\parser.tab.cpp"
     break;
 
   case 24: /* expr: IDENTIFIER '(' linefeed_or_empty ')'  */
-#line 172 ".\\parser.y"
+#line 175 ".\\parser.y"
                                             {(yyval.expr_union)=ExprNode::createExprFromFuncCall(ExprType::funcWithoutParams, NULL, (yyvsp[-3].Str));}
-#line 2048 "parser.tab.cpp"
+#line 2051 ".\\parser.tab.cpp"
     break;
 
   case 25: /* expr: SUPER_KEYWORD  */
-#line 173 ".\\parser.y"
+#line 176 ".\\parser.y"
                     {(yyval.expr_union)=ExprNode::createExprFromSuper(ExprType::superWithoutParamsAndBrackets, NULL);}
-#line 2054 "parser.tab.cpp"
+#line 2057 ".\\parser.tab.cpp"
     break;
 
   case 26: /* expr: SUPER_KEYWORD '(' linefeed_or_empty expr_list linefeed_or_empty ')'  */
-#line 174 ".\\parser.y"
+#line 177 ".\\parser.y"
                                                                             {(yyval.expr_union)=ExprNode::createExprFromSuper(ExprType::super, (yyvsp[-2].expr_list_union));}
-#line 2060 "parser.tab.cpp"
+#line 2063 ".\\parser.tab.cpp"
     break;
 
   case 27: /* expr: SUPER_KEYWORD '(' linefeed_or_empty ')'  */
-#line 175 ".\\parser.y"
+#line 178 ".\\parser.y"
                                                 {(yyval.expr_union)=ExprNode::createExprFromSuper(ExprType::superWithoutParams, NULL);}
-#line 2066 "parser.tab.cpp"
+#line 2069 ".\\parser.tab.cpp"
     break;
 
   case 28: /* expr: expr '.' linefeed_or_empty IDENTIFIER  */
-#line 176 ".\\parser.y"
+#line 179 ".\\parser.y"
                                             {(yyval.expr_union)=ExprNode::createExprFromMethod(ExprType::callOfMethodWithoutParams, NULL, (yyvsp[0].Str), (yyvsp[-3].expr_union));}
-#line 2072 "parser.tab.cpp"
+#line 2075 ".\\parser.tab.cpp"
     break;
 
   case 29: /* expr: expr '.' linefeed_or_empty IDENTIFIER '(' linefeed_or_empty expr_list linefeed_or_empty ')'  */
-#line 177 ".\\parser.y"
+#line 180 ".\\parser.y"
                                                                                                     {(yyval.expr_union)=ExprNode::createExprFromMethod(ExprType::callOfMethod, (yyvsp[-2].expr_list_union), (yyvsp[-5].Str), (yyvsp[-8].expr_union));}
-#line 2078 "parser.tab.cpp"
+#line 2081 ".\\parser.tab.cpp"
     break;
 
   case 30: /* expr: SELF_KEYWORD '.' linefeed_or_empty IDENTIFIER  */
-#line 178 ".\\parser.y"
+#line 181 ".\\parser.y"
                                                     {(yyval.expr_union)=ExprNode::createExprFromSelf(ExprType::selfWithoutParams, NULL, (yyvsp[0].Str));}
-#line 2084 "parser.tab.cpp"
+#line 2087 ".\\parser.tab.cpp"
     break;
 
   case 31: /* expr: SELF_KEYWORD '.' linefeed_or_empty IDENTIFIER '(' linefeed_or_empty expr_list linefeed_or_empty ')'  */
-#line 179 ".\\parser.y"
+#line 182 ".\\parser.y"
                                                                                                             {(yyval.expr_union)=ExprNode::createExprFromSelf(ExprType::self, (yyvsp[-2].expr_list_union), (yyvsp[-5].Str));}
-#line 2090 "parser.tab.cpp"
+#line 2093 ".\\parser.tab.cpp"
     break;
 
   case 32: /* expr: SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_QUESTION  */
-#line 180 ".\\parser.y"
+#line 183 ".\\parser.y"
                                                                 {(yyval.expr_union)=ExprNode::createExprFromSelf(ExprType::selfMarkQuestionWithoutParams, NULL, (yyvsp[0].Str));}
-#line 2096 "parser.tab.cpp"
+#line 2099 ".\\parser.tab.cpp"
     break;
 
   case 33: /* expr: SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_QUESTION '(' linefeed_or_empty expr_list linefeed_or_empty ')'  */
-#line 181 ".\\parser.y"
+#line 184 ".\\parser.y"
                                                                                                                     {(yyval.expr_union)=ExprNode::createExprFromSelf(ExprType::selfMarkQuestion, (yyvsp[-2].expr_list_union), (yyvsp[-5].Str));}
-#line 2102 "parser.tab.cpp"
+#line 2105 ".\\parser.tab.cpp"
     break;
 
   case 34: /* expr: SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_EXCLAMATION  */
-#line 182 ".\\parser.y"
+#line 185 ".\\parser.y"
                                                                     {(yyval.expr_union)=ExprNode::createExprFromSelf(ExprType::selfMarkExclamationWithoutParams, NULL, (yyvsp[0].Str));}
-#line 2108 "parser.tab.cpp"
+#line 2111 ".\\parser.tab.cpp"
     break;
 
   case 35: /* expr: SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_EXCLAMATION '(' linefeed_or_empty expr_list linefeed_or_empty ')'  */
-#line 183 ".\\parser.y"
+#line 186 ".\\parser.y"
                                                                                                                         {(yyval.expr_union)=ExprNode::createExprFromSelf(ExprType::selfMarkExclamation, (yyvsp[-2].expr_list_union), (yyvsp[-5].Str));}
-#line 2114 "parser.tab.cpp"
+#line 2117 ".\\parser.tab.cpp"
     break;
 
   case 36: /* expr: SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_EQUAL  */
-#line 184 ".\\parser.y"
+#line 187 ".\\parser.y"
                                                             {(yyval.expr_union)=ExprNode::createExprFromSelf(ExprType::selfEqualWithoutParams, NULL, (yyvsp[0].Str));}
-#line 2120 "parser.tab.cpp"
+#line 2123 ".\\parser.tab.cpp"
     break;
 
   case 37: /* expr: SELF_KEYWORD '.' linefeed_or_empty METHOD_MARK_EQUAL '(' linefeed_or_empty expr_list linefeed_or_empty ')'  */
-#line 185 ".\\parser.y"
+#line 188 ".\\parser.y"
                                                                                                                     {(yyval.expr_union)=ExprNode::createExprFromSelf(ExprType::selfEqual, (yyvsp[-2].expr_list_union), (yyvsp[-5].Str));}
-#line 2126 "parser.tab.cpp"
+#line 2129 ".\\parser.tab.cpp"
     break;
 
   case 38: /* expr: expr '.' linefeed_or_empty METHOD_MARK_QUESTION  */
-#line 186 ".\\parser.y"
+#line 189 ".\\parser.y"
                                                         {(yyval.expr_union)=ExprNode::createExprFromMethod(ExprType::callOfMethodMarkQuestionWithoutParams, NULL, (yyvsp[0].Str), (yyvsp[-3].expr_union));}
-#line 2132 "parser.tab.cpp"
+#line 2135 ".\\parser.tab.cpp"
     break;
 
   case 39: /* expr: expr '.' linefeed_or_empty METHOD_MARK_QUESTION '(' linefeed_or_empty expr_list linefeed_or_empty ')'  */
-#line 187 ".\\parser.y"
+#line 190 ".\\parser.y"
                                                                                                             {(yyval.expr_union)=ExprNode::createExprFromMethod(ExprType::callOfMethodMarkQuestion, (yyvsp[-2].expr_list_union), (yyvsp[-5].Str), (yyvsp[-8].expr_union));}
-#line 2138 "parser.tab.cpp"
+#line 2141 ".\\parser.tab.cpp"
     break;
 
   case 40: /* expr: expr '.' linefeed_or_empty METHOD_MARK_EXCLAMATION  */
-#line 188 ".\\parser.y"
+#line 191 ".\\parser.y"
                                                             {(yyval.expr_union)=ExprNode::createExprFromMethod(ExprType::callOfMethodMarkExclamationWithoutParams, NULL, (yyvsp[0].Str), (yyvsp[-3].expr_union));}
-#line 2144 "parser.tab.cpp"
+#line 2147 ".\\parser.tab.cpp"
     break;
 
   case 41: /* expr: expr '.' linefeed_or_empty METHOD_MARK_EXCLAMATION '(' linefeed_or_empty expr_list linefeed_or_empty ')'  */
-#line 189 ".\\parser.y"
+#line 192 ".\\parser.y"
                                                                                                                 {(yyval.expr_union)=ExprNode::createExprFromMethod(ExprType::callOfMethodMarkExclamation, (yyvsp[-2].expr_list_union), (yyvsp[-5].Str), (yyvsp[-8].expr_union));}
-#line 2150 "parser.tab.cpp"
+#line 2153 ".\\parser.tab.cpp"
     break;
 
   case 42: /* expr: expr '.' linefeed_or_empty METHOD_MARK_EQUAL  */
-#line 190 ".\\parser.y"
+#line 193 ".\\parser.y"
                                                     {(yyval.expr_union)=ExprNode::createExprFromMethod(ExprType::callOfMethodEqualWithoutParams, NULL, (yyvsp[0].Str), (yyvsp[-3].expr_union));}
-#line 2156 "parser.tab.cpp"
+#line 2159 ".\\parser.tab.cpp"
     break;
 
   case 43: /* expr: expr '.' linefeed_or_empty METHOD_MARK_EQUAL '(' linefeed_or_empty expr_list linefeed_or_empty ')'  */
-#line 191 ".\\parser.y"
+#line 194 ".\\parser.y"
                                                                                                             {(yyval.expr_union)=ExprNode::createExprFromMethod(ExprType::callOfMethodEqual, (yyvsp[-2].expr_list_union), (yyvsp[-5].Str), (yyvsp[-8].expr_union));}
-#line 2162 "parser.tab.cpp"
+#line 2165 ".\\parser.tab.cpp"
     break;
 
   case 44: /* expr: expr AND_KEYWORD linefeed_or_empty expr  */
-#line 192 ".\\parser.y"
+#line 195 ".\\parser.y"
                                                 {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::andType, (yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2168 "parser.tab.cpp"
+#line 2171 ".\\parser.tab.cpp"
     break;
 
   case 45: /* expr: expr OR_KEYWORD linefeed_or_empty expr  */
-#line 193 ".\\parser.y"
+#line 196 ".\\parser.y"
                                                 {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::orType, (yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2174 "parser.tab.cpp"
+#line 2177 ".\\parser.tab.cpp"
     break;
 
   case 46: /* expr: NOT_KEYWORD '(' linefeed_or_empty expr linefeed_or_empty ')'  */
-#line 194 ".\\parser.y"
+#line 197 ".\\parser.y"
                                                                     {(yyval.expr_union)=ExprNode::createExprFromUnary(ExprType::notType, (yyvsp[-2].expr_union));}
-#line 2180 "parser.tab.cpp"
+#line 2183 ".\\parser.tab.cpp"
     break;
 
   case 47: /* expr: expr ARITHMETIC_POW_OP linefeed_or_empty expr  */
-#line 195 ".\\parser.y"
+#line 198 ".\\parser.y"
                                                     {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::pow, (yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2186 "parser.tab.cpp"
+#line 2189 ".\\parser.tab.cpp"
     break;
 
   case 48: /* expr: expr EQL_OP linefeed_or_empty expr  */
-#line 196 ".\\parser.y"
+#line 199 ".\\parser.y"
                                             {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::equal, (yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2192 "parser.tab.cpp"
+#line 2195 ".\\parser.tab.cpp"
     break;
 
   case 49: /* expr: expr NOT_EQL_OP linefeed_or_empty expr  */
-#line 197 ".\\parser.y"
+#line 200 ".\\parser.y"
                                                 {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::notEqual, (yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2198 "parser.tab.cpp"
+#line 2201 ".\\parser.tab.cpp"
     break;
 
   case 50: /* expr: expr GREATER_OP linefeed_or_empty expr  */
-#line 198 ".\\parser.y"
+#line 201 ".\\parser.y"
                                                 {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::greater, (yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2204 "parser.tab.cpp"
+#line 2207 ".\\parser.tab.cpp"
     break;
 
   case 51: /* expr: expr LESS_OP linefeed_or_empty expr  */
-#line 199 ".\\parser.y"
+#line 202 ".\\parser.y"
                                             {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::less, (yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2210 "parser.tab.cpp"
+#line 2213 ".\\parser.tab.cpp"
     break;
 
   case 52: /* expr: expr GREATER_OR_EQL_OP linefeed_or_empty expr  */
-#line 200 ".\\parser.y"
+#line 203 ".\\parser.y"
                                                     {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::greaterOrEqual, (yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2216 "parser.tab.cpp"
+#line 2219 ".\\parser.tab.cpp"
     break;
 
   case 53: /* expr: expr LESS_OR_EQL_OP linefeed_or_empty expr  */
-#line 201 ".\\parser.y"
+#line 204 ".\\parser.y"
                                                     {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::lessOrEqual, (yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2222 "parser.tab.cpp"
+#line 2225 ".\\parser.tab.cpp"
     break;
 
   case 54: /* expr: expr COMB_COMPARISON_OP linefeed_or_empty expr  */
-#line 202 ".\\parser.y"
+#line 205 ".\\parser.y"
                                                         {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::combComparison, (yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2228 "parser.tab.cpp"
+#line 2231 ".\\parser.tab.cpp"
     break;
 
   case 55: /* expr: expr CASE_EQL_OP linefeed_or_empty expr  */
-#line 203 ".\\parser.y"
+#line 206 ".\\parser.y"
                                                 {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::caseEqual, (yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2234 "parser.tab.cpp"
+#line 2237 ".\\parser.tab.cpp"
     break;
 
   case 56: /* expr: expr ADD_ASSIGN_OP linefeed_or_empty expr  */
-#line 204 ".\\parser.y"
+#line 207 ".\\parser.y"
                                                     {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::addAssign, (yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2240 "parser.tab.cpp"
+#line 2243 ".\\parser.tab.cpp"
     break;
 
   case 57: /* expr: expr SUB_ASSIGN_OP linefeed_or_empty expr  */
-#line 205 ".\\parser.y"
+#line 208 ".\\parser.y"
                                                     {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::subAssign, (yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2246 "parser.tab.cpp"
+#line 2249 ".\\parser.tab.cpp"
     break;
 
   case 58: /* expr: expr MUL_ASSIGN_OP linefeed_or_empty expr  */
-#line 206 ".\\parser.y"
+#line 209 ".\\parser.y"
                                                     {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::mulAssign, (yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2252 "parser.tab.cpp"
+#line 2255 ".\\parser.tab.cpp"
     break;
 
   case 59: /* expr: expr DIV_ASSIGN_OP linefeed_or_empty expr  */
-#line 207 ".\\parser.y"
+#line 210 ".\\parser.y"
                                                     {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::divAssign, (yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2258 "parser.tab.cpp"
+#line 2261 ".\\parser.tab.cpp"
     break;
 
   case 60: /* expr: expr MOD_ASSIGN_OP linefeed_or_empty expr  */
-#line 208 ".\\parser.y"
+#line 211 ".\\parser.y"
                                                     {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::modAssign, (yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2264 "parser.tab.cpp"
+#line 2267 ".\\parser.tab.cpp"
     break;
 
   case 61: /* expr: expr POW_ASSIGN_OP linefeed_or_empty expr  */
-#line 209 ".\\parser.y"
+#line 212 ".\\parser.y"
                                                     {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::powAssign, (yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2270 "parser.tab.cpp"
+#line 2273 ".\\parser.tab.cpp"
     break;
 
   case 62: /* expr: expr BIN_AND_OP linefeed_or_empty expr  */
-#line 210 ".\\parser.y"
+#line 213 ".\\parser.y"
                                                 {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::binAnd, (yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2276 "parser.tab.cpp"
+#line 2279 ".\\parser.tab.cpp"
     break;
 
   case 63: /* expr: expr BIN_OR_OP linefeed_or_empty expr  */
-#line 211 ".\\parser.y"
+#line 214 ".\\parser.y"
                                                     {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::binOr, (yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2282 "parser.tab.cpp"
+#line 2285 ".\\parser.tab.cpp"
     break;
 
   case 64: /* expr: expr BIN_XOR_OP linefeed_or_empty expr  */
-#line 212 ".\\parser.y"
+#line 215 ".\\parser.y"
                                                     {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::binXor, (yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2288 "parser.tab.cpp"
+#line 2291 ".\\parser.tab.cpp"
     break;
 
   case 65: /* expr: expr BIN_ONES_COMPLEMENT_OP linefeed_or_empty expr  */
-#line 213 ".\\parser.y"
+#line 216 ".\\parser.y"
                                                              {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::binOnesComplement, (yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2294 "parser.tab.cpp"
+#line 2297 ".\\parser.tab.cpp"
     break;
 
   case 66: /* expr: expr BIN_LEFT_SHIFT_OP linefeed_or_empty expr  */
-#line 214 ".\\parser.y"
+#line 217 ".\\parser.y"
                                                         {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::binLeftShift, (yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2300 "parser.tab.cpp"
+#line 2303 ".\\parser.tab.cpp"
     break;
 
   case 67: /* expr: expr BIN_RIGHT_SHIFT_OP linefeed_or_empty expr  */
-#line 215 ".\\parser.y"
+#line 218 ".\\parser.y"
                                                             {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::binRightShift, (yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2306 "parser.tab.cpp"
+#line 2309 ".\\parser.tab.cpp"
     break;
 
   case 68: /* expr: expr LOGICAL_AND_OP linefeed_or_empty expr  */
-#line 216 ".\\parser.y"
+#line 219 ".\\parser.y"
                                                         {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::logicalAnd, (yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2312 "parser.tab.cpp"
+#line 2315 ".\\parser.tab.cpp"
     break;
 
   case 69: /* expr: expr LOGICAL_OR_OP linefeed_or_empty expr  */
-#line 217 ".\\parser.y"
+#line 220 ".\\parser.y"
                                                     {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::logicalOr, (yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2318 "parser.tab.cpp"
+#line 2321 ".\\parser.tab.cpp"
     break;
 
   case 70: /* expr: LOGICAL_NOT_OP linefeed_or_empty expr  */
-#line 218 ".\\parser.y"
+#line 221 ".\\parser.y"
                                                 {(yyval.expr_union)=ExprNode::createExprFromUnary(ExprType::logicalNot, (yyvsp[0].expr_union));}
-#line 2324 "parser.tab.cpp"
+#line 2327 ".\\parser.tab.cpp"
     break;
 
   case 71: /* expr: expr INCLUSIVE_RANGE_OP linefeed_or_empty expr  */
-#line 219 ".\\parser.y"
+#line 222 ".\\parser.y"
                                                         {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::inclusiveRange, (yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2330 "parser.tab.cpp"
+#line 2333 ".\\parser.tab.cpp"
     break;
 
   case 72: /* expr: expr EXCLUSIVE_RANGE_OP linefeed_or_empty expr  */
-#line 220 ".\\parser.y"
+#line 223 ".\\parser.y"
                                                             {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::exclusiveRange, (yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2336 "parser.tab.cpp"
+#line 2339 ".\\parser.tab.cpp"
     break;
 
   case 73: /* expr: '(' linefeed_or_empty expr linefeed_or_empty ')'  */
-#line 221 ".\\parser.y"
+#line 224 ".\\parser.y"
                                                         {(yyval.expr_union)=ExprNode::createExprFromUnary(ExprType::brackets, (yyvsp[-2].expr_union));}
-#line 2342 "parser.tab.cpp"
+#line 2345 ".\\parser.tab.cpp"
     break;
 
   case 74: /* expr: '[' linefeed_or_empty expr_list linefeed_or_empty ']'  */
-#line 222 ".\\parser.y"
+#line 225 ".\\parser.y"
                                                             {(yyval.expr_union)=ExprNode::createExprFromArray(ExprType::array, (yyvsp[-2].expr_list_union));}
-#line 2348 "parser.tab.cpp"
+#line 2351 ".\\parser.tab.cpp"
     break;
 
   case 75: /* expr: '[' linefeed_or_empty ']'  */
-#line 223 ".\\parser.y"
+#line 226 ".\\parser.y"
                                 {(yyval.expr_union)=ExprNode::createExprFromArray(ExprType::emptyArray, NULL);}
-#line 2354 "parser.tab.cpp"
+#line 2357 ".\\parser.tab.cpp"
     break;
 
   case 76: /* expr: DEFINED_KEYWORD linefeed_or_empty expr  */
-#line 224 ".\\parser.y"
+#line 227 ".\\parser.y"
                                                 {(yyval.expr_union)=ExprNode::createExprFromUnary(ExprType::defined, (yyvsp[0].expr_union));}
-#line 2360 "parser.tab.cpp"
+#line 2363 ".\\parser.tab.cpp"
     break;
 
   case 77: /* expr: DOUBLE_COLON_SYMBOL linefeed_or_empty expr  */
-#line 225 ".\\parser.y"
+#line 228 ".\\parser.y"
                                                         {(yyval.expr_union)=ExprNode::createExprFromUnary(ExprType::doubleColon, (yyvsp[0].expr_union));}
-#line 2366 "parser.tab.cpp"
+#line 2369 ".\\parser.tab.cpp"
     break;
 
   case 78: /* expr: expr DOUBLE_COLON_SYMBOL linefeed_or_empty expr  */
-#line 226 ".\\parser.y"
+#line 229 ".\\parser.y"
                                                           {(yyval.expr_union)=ExprNode::createExprFromBinOp(ExprType::doubleColonWithLeftOperand, (yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2372 "parser.tab.cpp"
+#line 2375 ".\\parser.tab.cpp"
     break;
 
   case 79: /* expr: expr QUESTION_SYMBOL linefeed_or_empty expr linefeed_or_empty COLON_SYMBOL linefeed_or_empty expr  */
-#line 227 ".\\parser.y"
+#line 230 ".\\parser.y"
                                                                                                         {(yyval.expr_union)=ExprNode::createExprFromTernary((yyvsp[-7].expr_union), (yyvsp[-4].expr_union), (yyvsp[0].expr_union));}
-#line 2378 "parser.tab.cpp"
+#line 2381 ".\\parser.tab.cpp"
     break;
 
   case 84: /* programm_element: class_stmt delimiter  */
-#line 238 ".\\parser.y"
+#line 241 ".\\parser.y"
                                        {(yyval.programm_el_union)=ProgramElementNode::createClassProgramElementNode((yyvsp[-1].class_stmt_union));}
-#line 2384 "parser.tab.cpp"
+#line 2387 ".\\parser.tab.cpp"
     break;
 
   case 85: /* programm_element: method_stmt delimiter  */
-#line 239 ".\\parser.y"
+#line 242 ".\\parser.y"
                             {(yyval.programm_el_union)=ProgramElementNode::createMethodProgramElementNode((yyvsp[-1].method_union));}
-#line 2390 "parser.tab.cpp"
+#line 2393 ".\\parser.tab.cpp"
     break;
 
   case 86: /* programm_element: stmt  */
-#line 240 ".\\parser.y"
+#line 243 ".\\parser.y"
            {(yyval.programm_el_union)=ProgramElementNode::createStmtProgramElementNode((yyvsp[0].stmt_union));}
-#line 2396 "parser.tab.cpp"
+#line 2399 ".\\parser.tab.cpp"
     break;
 
   case 87: /* programm_el_list_not_empty: programm_element  */
-#line 243 ".\\parser.y"
+#line 246 ".\\parser.y"
                                              {(yyval.programm_el_list_union)=ProgramElementNode::createProgramElementList((yyvsp[0].programm_el_union));}
-#line 2402 "parser.tab.cpp"
+#line 2405 ".\\parser.tab.cpp"
     break;
 
   case 88: /* programm_el_list_not_empty: programm_el_list_not_empty programm_element  */
-#line 244 ".\\parser.y"
+#line 247 ".\\parser.y"
                                                   {(yyval.programm_el_list_union)=ProgramElementNode::addProgramElementToList((yyvsp[-1].programm_el_list_union), (yyvsp[0].programm_el_union));}
-#line 2408 "parser.tab.cpp"
+#line 2411 ".\\parser.tab.cpp"
     break;
 
   case 93: /* expr_list: expr  */
-#line 253 ".\\parser.y"
+#line 256 ".\\parser.y"
                 {(yyval.expr_list_union)=ExprNode::createExprList((yyvsp[0].expr_union));}
-#line 2414 "parser.tab.cpp"
+#line 2417 ".\\parser.tab.cpp"
     break;
 
   case 94: /* expr_list: expr_list COMMA_SYMBOL expr  */
-#line 254 ".\\parser.y"
+#line 257 ".\\parser.y"
                                   {(yyval.expr_list_union)=ExprNode::addExprToList((yyvsp[-2].expr_list_union), (yyvsp[0].expr_union));}
-#line 2420 "parser.tab.cpp"
+#line 2423 ".\\parser.tab.cpp"
     break;
 
   case 95: /* stmt_list: stmt  */
-#line 257 ".\\parser.y"
+#line 260 ".\\parser.y"
                 {(yyval.stmt_list_union)=StmtNode::createStmtList((yyvsp[0].stmt_union));}
-#line 2426 "parser.tab.cpp"
+#line 2429 ".\\parser.tab.cpp"
     break;
 
   case 96: /* stmt_list: stmt_list stmt  */
-#line 258 ".\\parser.y"
+#line 261 ".\\parser.y"
                      {(yyval.stmt_list_union)=StmtNode::addStmtToList((yyvsp[-1].stmt_list_union), (yyvsp[0].stmt_union));}
-#line 2432 "parser.tab.cpp"
+#line 2435 ".\\parser.tab.cpp"
     break;
 
   case 97: /* stmt: expr delimiter  */
-#line 261 ".\\parser.y"
+#line 264 ".\\parser.y"
                      {(yyval.stmt_union)=StmtNode::createStmtNodeExpr((yyvsp[-1].expr_union));}
-#line 2438 "parser.tab.cpp"
+#line 2441 ".\\parser.tab.cpp"
     break;
 
   case 98: /* stmt: if_stmt delimiter  */
-#line 262 ".\\parser.y"
+#line 265 ".\\parser.y"
                          {(yyval.stmt_union)=StmtNode::createStmtNodeIf((yyvsp[-1].if_union));}
-#line 2444 "parser.tab.cpp"
+#line 2447 ".\\parser.tab.cpp"
     break;
 
   case 99: /* stmt: while_stmt delimiter  */
-#line 263 ".\\parser.y"
+#line 266 ".\\parser.y"
                            {(yyval.stmt_union)=StmtNode::createStmtNodeWhile((yyvsp[-1].while_union));}
-#line 2450 "parser.tab.cpp"
+#line 2453 ".\\parser.tab.cpp"
     break;
 
   case 100: /* stmt: for_stmt delimiter  */
-#line 264 ".\\parser.y"
+#line 267 ".\\parser.y"
                          {(yyval.stmt_union)=StmtNode::createStmtNodeFor((yyvsp[-1].for_union));}
-#line 2456 "parser.tab.cpp"
+#line 2459 ".\\parser.tab.cpp"
     break;
 
   case 101: /* stmt: case_stmt delimiter  */
-#line 265 ".\\parser.y"
+#line 268 ".\\parser.y"
                           {(yyval.stmt_union)=StmtNode::createStmtNodeCase((yyvsp[-1].case_union));}
-#line 2462 "parser.tab.cpp"
+#line 2465 ".\\parser.tab.cpp"
     break;
 
   case 102: /* stmt: unless_stmt delimiter  */
-#line 266 ".\\parser.y"
+#line 269 ".\\parser.y"
                             {(yyval.stmt_union)=StmtNode::createStmtNodeUnless((yyvsp[-1].unless_union));}
-#line 2468 "parser.tab.cpp"
+#line 2471 ".\\parser.tab.cpp"
     break;
 
   case 103: /* stmt: return_stmt delimiter  */
-#line 267 ".\\parser.y"
+#line 270 ".\\parser.y"
                             {(yyval.stmt_union)=StmtNode::createStmtNodeReturn((yyvsp[-1].return_union));}
-#line 2474 "parser.tab.cpp"
+#line 2477 ".\\parser.tab.cpp"
     break;
 
   case 104: /* stmt: alias_stmt delimiter  */
-#line 268 ".\\parser.y"
+#line 271 ".\\parser.y"
                            {(yyval.stmt_union)=StmtNode::createStmtNodeAlias((yyvsp[-1].alias_union));}
-#line 2480 "parser.tab.cpp"
+#line 2483 ".\\parser.tab.cpp"
     break;
 
   case 105: /* param_list_not_empty: IDENTIFIER linefeed_or_empty  */
-#line 271 ".\\parser.y"
+#line 274 ".\\parser.y"
                                                     {(yyval.param_list_union)=MethodStmtNode::createParamList((yyvsp[-1].Str));}
-#line 2486 "parser.tab.cpp"
+#line 2489 ".\\parser.tab.cpp"
     break;
 
   case 106: /* param_list_not_empty: param_list_not_empty COMMA_SYMBOL linefeed_or_empty IDENTIFIER linefeed_or_empty  */
-#line 272 ".\\parser.y"
+#line 275 ".\\parser.y"
                                                                                         {(yyval.param_list_union)=MethodStmtNode::addParametrToList((yyvsp[-4].param_list_union), (yyvsp[-1].Str));}
-#line 2492 "parser.tab.cpp"
+#line 2495 ".\\parser.tab.cpp"
     break;
 
   case 107: /* param_list: %empty  */
-#line 275 ".\\parser.y"
+#line 278 ".\\parser.y"
                         {(yyval.param_list_union)=NULL;}
-#line 2498 "parser.tab.cpp"
+#line 2501 ".\\parser.tab.cpp"
     break;
 
   case 108: /* param_list: param_list_not_empty  */
-#line 276 ".\\parser.y"
+#line 279 ".\\parser.y"
                             {(yyval.param_list_union)=(yyvsp[0].param_list_union);}
-#line 2504 "parser.tab.cpp"
+#line 2507 ".\\parser.tab.cpp"
     break;
 
   case 109: /* method_stmt: DEF_KEYWORD linefeed_or_empty IDENTIFIER '(' linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD  */
-#line 279 ".\\parser.y"
+#line 282 ".\\parser.y"
                                                                                                                             {(yyval.method_union)=MethodStmtNode::createMethodStmt(MethodType::simple, (yyvsp[-7].Str), (yyvsp[-4].param_list_union), (yyvsp[-1].stmt_list_union));}
-#line 2510 "parser.tab.cpp"
+#line 2513 ".\\parser.tab.cpp"
     break;
 
   case 110: /* method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_QUESTION '(' linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD  */
-#line 280 ".\\parser.y"
+#line 283 ".\\parser.y"
                                                                                                                                 {(yyval.method_union)=MethodStmtNode::createMethodStmt(MethodType::markQuestion, (yyvsp[-7].Str), (yyvsp[-4].param_list_union), (yyvsp[-1].stmt_list_union));}
-#line 2516 "parser.tab.cpp"
+#line 2519 ".\\parser.tab.cpp"
     break;
 
   case 111: /* method_stmt: DEF_KEYWORD linefeed_or_empty IDENTIFIER delimiter stmt_list END_KEYWORD  */
-#line 281 ".\\parser.y"
+#line 284 ".\\parser.y"
                                                                                 {(yyval.method_union)=MethodStmtNode::createMethodStmtWithoutParams(MethodType::simple, (yyvsp[-3].Str), (yyvsp[-1].stmt_list_union));}
-#line 2522 "parser.tab.cpp"
+#line 2525 ".\\parser.tab.cpp"
     break;
 
   case 112: /* method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_QUESTION delimiter stmt_list END_KEYWORD  */
-#line 282 ".\\parser.y"
+#line 285 ".\\parser.y"
                                                                                             {(yyval.method_union)=MethodStmtNode::createMethodStmtWithoutParams(MethodType::markQuestion, (yyvsp[-3].Str), (yyvsp[-1].stmt_list_union));}
-#line 2528 "parser.tab.cpp"
+#line 2531 ".\\parser.tab.cpp"
     break;
 
   case 113: /* method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_EXCLAMATION '(' linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD  */
-#line 283 ".\\parser.y"
+#line 286 ".\\parser.y"
                                                                                                                                     {(yyval.method_union)=MethodStmtNode::createMethodStmt(MethodType::markExclamation, (yyvsp[-7].Str), (yyvsp[-4].param_list_union), (yyvsp[-1].stmt_list_union));}
-#line 2534 "parser.tab.cpp"
+#line 2537 ".\\parser.tab.cpp"
     break;
 
   case 114: /* method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_EXCLAMATION delimiter stmt_list END_KEYWORD  */
-#line 284 ".\\parser.y"
+#line 287 ".\\parser.y"
                                                                                             {(yyval.method_union)=MethodStmtNode::createMethodStmtWithoutParams(MethodType::markExclamation, (yyvsp[-3].Str), (yyvsp[-1].stmt_list_union));}
-#line 2540 "parser.tab.cpp"
+#line 2543 ".\\parser.tab.cpp"
     break;
 
   case 115: /* method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_EQUAL '(' linefeed_or_empty param_list ')' delimiter stmt_list END_KEYWORD  */
-#line 285 ".\\parser.y"
+#line 288 ".\\parser.y"
                                                                                                                             {(yyval.method_union)=MethodStmtNode::createMethodStmt(MethodType::markEqual, (yyvsp[-7].Str), (yyvsp[-4].param_list_union), (yyvsp[-1].stmt_list_union));}
-#line 2546 "parser.tab.cpp"
+#line 2549 ".\\parser.tab.cpp"
     break;
 
   case 116: /* method_stmt: DEF_KEYWORD linefeed_or_empty METHOD_MARK_EQUAL delimiter stmt_list END_KEYWORD  */
-#line 286 ".\\parser.y"
+#line 289 ".\\parser.y"
                                                                                         {(yyval.method_union)=MethodStmtNode::createMethodStmtWithoutParams(MethodType::markEqual, (yyvsp[-3].Str), (yyvsp[-1].stmt_list_union));}
-#line 2552 "parser.tab.cpp"
+#line 2555 ".\\parser.tab.cpp"
     break;
 
   case 117: /* class_stmt: CLASS_KEYWORD linefeed_or_empty CONSTANT_NAME delimiter class_body END_KEYWORD  */
-#line 289 ".\\parser.y"
+#line 292 ".\\parser.y"
                                                                                             {(yyval.class_stmt_union)=ClassStmtNode::createClassStmt((yyvsp[-3].Str), (yyvsp[-1].class_body_union));}
-#line 2558 "parser.tab.cpp"
+#line 2561 ".\\parser.tab.cpp"
     break;
 
   case 118: /* class_stmt: CLASS_KEYWORD linefeed_or_empty CONSTANT_NAME '<' CONSTANT_NAME delimiter class_body END_KEYWORD  */
-#line 290 ".\\parser.y"
+#line 293 ".\\parser.y"
                                                                                                        {(yyval.class_stmt_union)=ClassStmtNode::createClassStmtWithParent((yyvsp[-5].Str), (yyvsp[-3].Str), (yyvsp[-1].class_body_union));}
-#line 2564 "parser.tab.cpp"
+#line 2567 ".\\parser.tab.cpp"
     break;
 
   case 119: /* class_body_stmt: method_stmt delimiter  */
-#line 293 ".\\parser.y"
+#line 296 ".\\parser.y"
                                         {(yyval.class_body_stmt_union)=ClassBodyStmtNode::createClassBodyStmtMethod((yyvsp[-1].method_union));}
-#line 2570 "parser.tab.cpp"
+#line 2573 ".\\parser.tab.cpp"
     break;
 
   case 120: /* class_body_stmt: CLASS_VAR_NAME delimiter  */
-#line 294 ".\\parser.y"
+#line 297 ".\\parser.y"
                                 {(yyval.class_body_stmt_union)=ClassBodyStmtNode::createClassBodyStmtClassVarName((yyvsp[-1].Str), NULL);}
-#line 2576 "parser.tab.cpp"
+#line 2579 ".\\parser.tab.cpp"
     break;
 
   case 121: /* class_body_stmt: CLASS_VAR_NAME '=' expr delimiter  */
-#line 295 ".\\parser.y"
+#line 298 ".\\parser.y"
                                         {(yyval.class_body_stmt_union)=ClassBodyStmtNode::createClassBodyStmtClassVarName((yyvsp[-3].Str), (yyvsp[-1].expr_union));}
-#line 2582 "parser.tab.cpp"
+#line 2585 ".\\parser.tab.cpp"
     break;
 
   case 122: /* class_body_stmt: OBJECT_VAR_NAME delimiter  */
-#line 296 ".\\parser.y"
+#line 299 ".\\parser.y"
                                 {(yyval.class_body_stmt_union)=ClassBodyStmtNode::createClassBodyStmtobjectVarName((yyvsp[-1].Str), NULL);}
-#line 2588 "parser.tab.cpp"
+#line 2591 ".\\parser.tab.cpp"
     break;
 
   case 123: /* class_body_stmt: OBJECT_VAR_NAME '=' expr delimiter  */
-#line 297 ".\\parser.y"
+#line 300 ".\\parser.y"
                                             {(yyval.class_body_stmt_union)=ClassBodyStmtNode::createClassBodyStmtobjectVarName((yyvsp[-3].Str), (yyvsp[-1].expr_union));}
-#line 2594 "parser.tab.cpp"
+#line 2597 ".\\parser.tab.cpp"
     break;
 
   case 124: /* class_body_not_empty: class_body_stmt  */
-#line 300 ".\\parser.y"
+#line 303 ".\\parser.y"
                                         {(yyval.class_body_union)=ClassBodyStmtNode::createClassBody((yyvsp[0].class_body_stmt_union));}
-#line 2600 "parser.tab.cpp"
+#line 2603 ".\\parser.tab.cpp"
     break;
 
   case 125: /* class_body_not_empty: class_body_not_empty class_body_stmt  */
-#line 301 ".\\parser.y"
+#line 304 ".\\parser.y"
                                             {(yyval.class_body_union)=ClassBodyStmtNode::addStmtToClassBody((yyvsp[-1].class_body_union), (yyvsp[0].class_body_stmt_union));}
-#line 2606 "parser.tab.cpp"
+#line 2609 ".\\parser.tab.cpp"
     break;
 
   case 126: /* class_body: %empty  */
-#line 304 ".\\parser.y"
+#line 307 ".\\parser.y"
                         {(yyval.class_body_union)=NULL;}
-#line 2612 "parser.tab.cpp"
+#line 2615 ".\\parser.tab.cpp"
     break;
 
   case 127: /* class_body: class_body_not_empty  */
-#line 305 ".\\parser.y"
+#line 308 ".\\parser.y"
                             {(yyval.class_body_union)=(yyvsp[0].class_body_union);}
-#line 2618 "parser.tab.cpp"
+#line 2621 ".\\parser.tab.cpp"
     break;
 
   case 130: /* if_stmt: IF_KEYWORD linefeed_or_empty expr delimiter stmt_list END_KEYWORD  */
-#line 312 ".\\parser.y"
+#line 315 ".\\parser.y"
                                                                             {(yyval.if_union)=IfStmtNode::createIfStmt((yyvsp[-3].expr_union), (yyvsp[-1].stmt_list_union));}
-#line 2624 "parser.tab.cpp"
+#line 2627 ".\\parser.tab.cpp"
     break;
 
   case 131: /* if_stmt: IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list END_KEYWORD  */
-#line 313 ".\\parser.y"
+#line 316 ".\\parser.y"
                                                                                                 {(yyval.if_union)=IfStmtNode::createIfStmt((yyvsp[-4].expr_union), (yyvsp[-1].stmt_list_union));}
-#line 2630 "parser.tab.cpp"
+#line 2633 ".\\parser.tab.cpp"
     break;
 
   case 132: /* if_stmt: IF_KEYWORD linefeed_or_empty expr delimiter stmt_list ELSE_KEYWORD stmt_list END_KEYWORD  */
-#line 314 ".\\parser.y"
+#line 317 ".\\parser.y"
                                                                                                 {(yyval.if_union)=IfStmtNode::createIfStmtWithElse((yyvsp[-5].expr_union), (yyvsp[-3].stmt_list_union), (yyvsp[-1].stmt_list_union));}
-#line 2636 "parser.tab.cpp"
+#line 2639 ".\\parser.tab.cpp"
     break;
 
   case 133: /* if_stmt: IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list ELSE_KEYWORD stmt_list END_KEYWORD  */
-#line 315 ".\\parser.y"
+#line 318 ".\\parser.y"
                                                                                                                         {(yyval.if_union)=IfStmtNode::createIfStmtWithElse((yyvsp[-6].expr_union), (yyvsp[-3].stmt_list_union), (yyvsp[-1].stmt_list_union));}
-#line 2642 "parser.tab.cpp"
+#line 2645 ".\\parser.tab.cpp"
     break;
 
   case 134: /* if_stmt: IF_KEYWORD linefeed_or_empty expr delimiter stmt_list elsif_list END_KEYWORD  */
-#line 316 ".\\parser.y"
+#line 319 ".\\parser.y"
                                                                                     {(yyval.if_union)=IfStmtNode::createIfStmtWithElsif((yyvsp[-4].expr_union), (yyvsp[-2].stmt_list_union), (yyvsp[-1].elsif_list_union));}
-#line 2648 "parser.tab.cpp"
+#line 2651 ".\\parser.tab.cpp"
     break;
 
   case 135: /* if_stmt: IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list elsif_list END_KEYWORD  */
-#line 317 ".\\parser.y"
+#line 320 ".\\parser.y"
                                                                                                             {(yyval.if_union)=IfStmtNode::createIfStmtWithElsif((yyvsp[-5].expr_union), (yyvsp[-2].stmt_list_union), (yyvsp[-1].elsif_list_union));}
-#line 2654 "parser.tab.cpp"
+#line 2657 ".\\parser.tab.cpp"
     break;
 
   case 136: /* if_stmt: IF_KEYWORD linefeed_or_empty expr delimiter stmt_list elsif_list ELSE_KEYWORD stmt_list END_KEYWORD  */
-#line 318 ".\\parser.y"
+#line 321 ".\\parser.y"
                                                                                                             {(yyval.if_union)=IfStmtNode::createIfStmtWithElseAndElsif((yyvsp[-6].expr_union), (yyvsp[-4].stmt_list_union), (yyvsp[-3].elsif_list_union), (yyvsp[-1].stmt_list_union));}
-#line 2660 "parser.tab.cpp"
+#line 2663 ".\\parser.tab.cpp"
     break;
 
   case 137: /* if_stmt: IF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list elsif_list ELSE_KEYWORD stmt_list END_KEYWORD  */
-#line 319 ".\\parser.y"
+#line 322 ".\\parser.y"
                                                                                                                                 {(yyval.if_union)=IfStmtNode::createIfStmtWithElseAndElsif((yyvsp[-7].expr_union), (yyvsp[-4].stmt_list_union), (yyvsp[-3].elsif_list_union), (yyvsp[-1].stmt_list_union));}
-#line 2666 "parser.tab.cpp"
+#line 2669 ".\\parser.tab.cpp"
     break;
 
   case 138: /* if_stmt: expr IF_KEYWORD linefeed_or_empty expr  */
-#line 320 ".\\parser.y"
+#line 323 ".\\parser.y"
                                                 {(yyval.if_union)=IfStmtNode::createSingleLineIfStmt((yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2672 "parser.tab.cpp"
+#line 2675 ".\\parser.tab.cpp"
     break;
 
   case 139: /* unless_stmt: UNLESS_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list END_KEYWORD  */
-#line 323 ".\\parser.y"
+#line 326 ".\\parser.y"
                                                                                                             {(yyval.unless_union)=UnlessStmtNode::createUnlessStmt((yyvsp[-4].expr_union), (yyvsp[-1].stmt_list_union));}
-#line 2678 "parser.tab.cpp"
+#line 2681 ".\\parser.tab.cpp"
     break;
 
   case 140: /* unless_stmt: UNLESS_KEYWORD linefeed_or_empty expr delimiter stmt_list END_KEYWORD  */
-#line 324 ".\\parser.y"
+#line 327 ".\\parser.y"
                                                                             {(yyval.unless_union)=UnlessStmtNode::createUnlessStmt((yyvsp[-3].expr_union), (yyvsp[-1].stmt_list_union));}
-#line 2684 "parser.tab.cpp"
+#line 2687 ".\\parser.tab.cpp"
     break;
 
   case 141: /* unless_stmt: UNLESS_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list ELSE_KEYWORD stmt_list END_KEYWORD  */
-#line 325 ".\\parser.y"
+#line 328 ".\\parser.y"
                                                                                                                             {(yyval.unless_union)=UnlessStmtNode::createUnlessStmtwithElse((yyvsp[-6].expr_union), (yyvsp[-3].stmt_list_union), (yyvsp[-1].stmt_list_union));}
-#line 2690 "parser.tab.cpp"
+#line 2693 ".\\parser.tab.cpp"
     break;
 
   case 142: /* unless_stmt: UNLESS_KEYWORD linefeed_or_empty expr delimiter stmt_list ELSE_KEYWORD stmt_list END_KEYWORD  */
-#line 326 ".\\parser.y"
+#line 329 ".\\parser.y"
                                                                                                     {(yyval.unless_union)=UnlessStmtNode::createUnlessStmtwithElse((yyvsp[-5].expr_union), (yyvsp[-3].stmt_list_union), (yyvsp[-1].stmt_list_union));}
-#line 2696 "parser.tab.cpp"
+#line 2699 ".\\parser.tab.cpp"
     break;
 
   case 143: /* unless_stmt: expr UNLESS_KEYWORD linefeed_or_empty expr  */
-#line 327 ".\\parser.y"
+#line 330 ".\\parser.y"
                                                     {(yyval.unless_union)=UnlessStmtNode::createSingleLineUnlessStmt((yyvsp[-3].expr_union), (yyvsp[0].expr_union));}
-#line 2702 "parser.tab.cpp"
+#line 2705 ".\\parser.tab.cpp"
     break;
 
   case 144: /* elsif_list: elsif_stmt  */
-#line 330 ".\\parser.y"
+#line 333 ".\\parser.y"
                         {(yyval.elsif_list_union)=ElsifNode::createElsifList((yyvsp[0].elsif_union));}
-#line 2708 "parser.tab.cpp"
+#line 2711 ".\\parser.tab.cpp"
     break;
 
   case 145: /* elsif_list: elsif_list elsif_stmt  */
-#line 331 ".\\parser.y"
+#line 334 ".\\parser.y"
                             {(yyval.elsif_list_union)=ElsifNode::addElsifToList((yyvsp[-1].elsif_list_union), (yyvsp[0].elsif_union));}
-#line 2714 "parser.tab.cpp"
+#line 2717 ".\\parser.tab.cpp"
     break;
 
   case 146: /* elsif_stmt: ELSIF_KEYWORD linefeed_or_empty expr delimiter stmt_list  */
-#line 334 ".\\parser.y"
+#line 337 ".\\parser.y"
                                                                         {(yyval.elsif_union)=ElsifNode::createElsifStmt((yyvsp[-2].expr_union), (yyvsp[0].stmt_list_union));}
-#line 2720 "parser.tab.cpp"
+#line 2723 ".\\parser.tab.cpp"
     break;
 
   case 147: /* elsif_stmt: ELSIF_KEYWORD linefeed_or_empty expr delimeter_or_empty THEN_KEYWORD stmt_list  */
-#line 335 ".\\parser.y"
+#line 338 ".\\parser.y"
                                                                                         {(yyval.elsif_union)=ElsifNode::createElsifStmt((yyvsp[-3].expr_union), (yyvsp[0].stmt_list_union));}
-#line 2726 "parser.tab.cpp"
+#line 2729 ".\\parser.tab.cpp"
     break;
 
   case 148: /* while_stmt: WHILE_KEYWORD linefeed_or_empty expr DO_KEYWORD delimeter_or_empty stmt_list END_KEYWORD  */
-#line 338 ".\\parser.y"
+#line 341 ".\\parser.y"
                                                                                                         {(yyval.while_union)=WhileStmtNode::createWhileStmtNode((yyvsp[-4].expr_union), (yyvsp[-1].stmt_list_union));}
-#line 2732 "parser.tab.cpp"
+#line 2735 ".\\parser.tab.cpp"
     break;
 
   case 149: /* while_stmt: WHILE_KEYWORD linefeed_or_empty expr delimiter stmt_list END_KEYWORD  */
-#line 339 ".\\parser.y"
+#line 342 ".\\parser.y"
                                                                             {(yyval.while_union)=WhileStmtNode::createWhileStmtNode((yyvsp[-3].expr_union), (yyvsp[-1].stmt_list_union));}
-#line 2738 "parser.tab.cpp"
+#line 2741 ".\\parser.tab.cpp"
     break;
 
   case 150: /* for_stmt: FOR_KEYWORD linefeed_or_empty expr IN_KEYWORD linefeed_or_empty expr DO_KEYWORD delimeter_or_empty stmt_list END_KEYWORD  */
-#line 342 ".\\parser.y"
+#line 345 ".\\parser.y"
                                                                                                                                     {(yyval.for_union)=ForStmtNode::createForStmtNode((yyvsp[-7].expr_union), (yyvsp[-4].expr_union), (yyvsp[-1].stmt_list_union));}
-#line 2744 "parser.tab.cpp"
+#line 2747 ".\\parser.tab.cpp"
     break;
 
   case 151: /* for_stmt: FOR_KEYWORD linefeed_or_empty expr IN_KEYWORD linefeed_or_empty expr delimiter stmt_list END_KEYWORD  */
-#line 343 ".\\parser.y"
+#line 346 ".\\parser.y"
                                                                                                             {(yyval.for_union)=ForStmtNode::createForStmtNode((yyvsp[-6].expr_union), (yyvsp[-3].expr_union), (yyvsp[-1].stmt_list_union));}
-#line 2750 "parser.tab.cpp"
+#line 2753 ".\\parser.tab.cpp"
     break;
 
   case 152: /* return_stmt: RETURN_KEYWORD expr  */
-#line 346 ".\\parser.y"
+#line 349 ".\\parser.y"
                                  {(yyval.return_union)=ReturnStmtNode::createReturnStmt((yyvsp[0].expr_union));}
-#line 2756 "parser.tab.cpp"
+#line 2759 ".\\parser.tab.cpp"
     break;
 
   case 153: /* return_stmt: RETURN_KEYWORD  */
-#line 347 ".\\parser.y"
+#line 350 ".\\parser.y"
                      {(yyval.return_union)=ReturnStmtNode::createSingleReturnStmt();}
-#line 2762 "parser.tab.cpp"
+#line 2765 ".\\parser.tab.cpp"
     break;
 
   case 154: /* case_stmt: CASE_KEYWORD linefeed_or_empty expr delimeter_or_empty when_list END_KEYWORD  */
-#line 350 ".\\parser.y"
+#line 353 ".\\parser.y"
                                                                                         {(yyval.case_union)=CaseStmtNode::createCaseStmt((yyvsp[-3].expr_union), (yyvsp[-1].when_list_union));}
-#line 2768 "parser.tab.cpp"
+#line 2771 ".\\parser.tab.cpp"
     break;
 
   case 155: /* case_stmt: CASE_KEYWORD linefeed_or_empty expr delimeter_or_empty when_list ELSE_KEYWORD delimeter_or_empty stmt_list END_KEYWORD  */
-#line 351 ".\\parser.y"
+#line 354 ".\\parser.y"
                                                                                                                                 {(yyval.case_union)=CaseStmtNode::createCaseStmtWithElse((yyvsp[-6].expr_union), (yyvsp[-4].when_list_union), (yyvsp[-1].stmt_list_union));}
-#line 2774 "parser.tab.cpp"
+#line 2777 ".\\parser.tab.cpp"
     break;
 
   case 156: /* when_list: when_stmt  */
-#line 354 ".\\parser.y"
+#line 357 ".\\parser.y"
                         {(yyval.when_list_union)=WhenStmtNode::createWhenList((yyvsp[0].when_union));}
-#line 2780 "parser.tab.cpp"
+#line 2783 ".\\parser.tab.cpp"
     break;
 
   case 157: /* when_list: when_list when_stmt  */
-#line 355 ".\\parser.y"
+#line 358 ".\\parser.y"
                             {(yyval.when_list_union)=WhenStmtNode::addWhenToList((yyvsp[-1].when_list_union), (yyvsp[0].when_union));}
-#line 2786 "parser.tab.cpp"
+#line 2789 ".\\parser.tab.cpp"
     break;
 
   case 158: /* when_stmt: WHEN_KEYWORD linefeed_or_empty expr_list delimiter stmt_list  */
-#line 358 ".\\parser.y"
+#line 361 ".\\parser.y"
                                                                         {(yyval.when_union)=WhenStmtNode::createWhenStmt((yyvsp[-2].expr_list_union), (yyvsp[0].stmt_list_union));}
-#line 2792 "parser.tab.cpp"
+#line 2795 ".\\parser.tab.cpp"
     break;
 
   case 159: /* when_stmt: WHEN_KEYWORD linefeed_or_empty expr_list delimeter_or_empty THEN_KEYWORD stmt_list  */
-#line 359 ".\\parser.y"
+#line 362 ".\\parser.y"
                                                                                             {(yyval.when_union)=WhenStmtNode::createWhenStmt((yyvsp[-3].expr_list_union), (yyvsp[0].stmt_list_union));}
-#line 2798 "parser.tab.cpp"
+#line 2801 ".\\parser.tab.cpp"
     break;
 
   case 160: /* alias_stmt: ALIAS_KEYWORD IDENTIFIER IDENTIFIER  */
-#line 362 ".\\parser.y"
+#line 365 ".\\parser.y"
                                                 {(yyval.alias_union)=AliasStmtNode::createAliasStmt((yyvsp[-1].Str), (yyvsp[0].Str));}
-#line 2804 "parser.tab.cpp"
+#line 2807 ".\\parser.tab.cpp"
     break;
 
 
-#line 2808 "parser.tab.cpp"
+#line 2811 ".\\parser.tab.cpp"
 
       default: break;
     }
@@ -2997,9 +3000,9 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 364 ".\\parser.y"
+#line 367 ".\\parser.y"
 
 
 void yyerror(char* str) {
-    fprintf(stderr. "ERROR: %s\n", str);
+    fprintf(stderr, "ERROR: %s\n", str);
 }

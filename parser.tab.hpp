@@ -69,7 +69,7 @@ extern int yydebug;
     #include "parses_classes/WhileStmt/WhileStmtNode.h"
     
 
-#line 73 "parser.tab.hpp"
+#line 73 ".\\parser.tab.hpp"
 
 /* Token kinds.  */
 #ifndef YYTOKENTYPE
@@ -186,7 +186,7 @@ union YYSTYPE
     ProgramElementNode* programm_el_union;
     std::vector<ProgramElementNode*>* programm_el_list_union;
 
-#line 190 "parser.tab.hpp"
+#line 190 ".\\parser.tab.hpp"
 
 };
 typedef union YYSTYPE YYSTYPE;

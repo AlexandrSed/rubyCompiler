@@ -149,7 +149,10 @@ programm: /*empty*/ {$$=NULL;}
     |programm_el_list_not_empty {$$=$1;}
     ;
 
-expr: IDENTIFIER    {$$=ExprNode::createExprFromVarName(ExprType::id, $1);}
+expr: IDENTIFIER    {
+                        printf("String with identifier: %s", $1);
+                        $$=ExprNode::createExprFromVarName(ExprType::id, $1);
+                    }
     | OBJECT_VAR_NAME   {$$=ExprNode::createExprFromVarName(ExprType::objectVarName, $1);}
     | CLASS_VAR_NAME    {$$=ExprNode::createExprFromVarName(ExprType::classVarName, $1);}
     | CONSTANT_NAME {$$=ExprNode::createExprFromVarName(ExprType::constantName, $1);}
